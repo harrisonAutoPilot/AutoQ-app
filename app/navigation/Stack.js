@@ -47,7 +47,7 @@ const NetworkStack = createStackNavigator();
 const SplashStackNavigator = () => {
     return (
         <SplashStack.Group >
-            <SplashStack.Screen name="Splash" component={SplashScreen} />
+            <SplashStack.Screen name="Login" component={Login} />
         </SplashStack.Group>
     )
 };
