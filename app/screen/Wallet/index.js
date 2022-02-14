@@ -34,15 +34,10 @@ const Wallet = (props) => {
        <Header  drawer={openDrawer} favourite={openFavourite}  />
             <View style={styles.mainBody}>      
                 <View style={styles.subHeader}>
-                    <TouchableOpacity style={[activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(1)}>
-                        <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>MY WALLET</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[activeId === 2 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(2)}>
-                        <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>LOAN</Text>
-                    </TouchableOpacity>
+                <MyWallet detail={detail} /> 
                 </View>
               
-                {activeId === 1 ? <MyWallet detail={detail}  /> : <Loan/>}  
+            
                
             </View>
           

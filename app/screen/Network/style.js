@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
       paddingVertical: 15,
       borderRadius: 50,
-      backgroundColor: 'rgba(124, 207, 36, 1)',
+      backgroundColor: '#3858CF',
       marginTop: 150,
       // width: wp('92%'),
       // color: '#000000',

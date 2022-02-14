@@ -104,8 +104,7 @@ const Login = (props) => {
                </View>
             </View> 
              </View>  
-                {/* </LinearGradient> */}
-                {/* <Image source={require("@Assets/image/AgentElipse.png")} style={styles.agentImg} /> */}
+               
             </View>
             <View style={styles.bottomCover}>
                 <View style={styles.loginTextCover}>

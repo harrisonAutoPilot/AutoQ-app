@@ -33,9 +33,22 @@ export default styles = StyleSheet.create({
         borderRadius:15,
         // flex: 1,
     },
+    downCover:{
+        width:wp('100%'),
+        height:hp('60%'),
+        backgroundColor:'#fff',
+        borderTopRightRadius:30,
+        borderTopLeftRadius:30,
+        position:'absolute',
+        top:hp('22%'),
+        left:wp('-5%'),
+        padding:20,
+        paddingTop:10,
+     
+    },
     view: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor:'#00319D',
     },
     subHeader: {
         borderRadius: 20,
@@ -100,6 +113,7 @@ export default styles = StyleSheet.create({
         marginTop: Dimensions.get("window").height / 50,
         height: "100%",
         flexGrow: 1,
+       
     },
     labelView: {
         position: "absolute",
@@ -186,6 +200,8 @@ export default styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         marginTop:20,
+        paddingLeft:5,
+        paddingRight:20,
     },
     sortCover:{
         padding:2,

@@ -15,7 +15,7 @@ const TransactionDetail = (props) => {
                 onPress={goBack} 
                 styleView={styles.body} 
                 styles={styles.headerText}
-                statusBar="#fff" />
+                statusBar="#00319D" />
           
             <View>
         <View style={styles.cardCover}>

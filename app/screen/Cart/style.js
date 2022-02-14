@@ -63,6 +63,7 @@ zIndex:9000,
     alignItems: "center",
     paddingLeft:10,
     paddingRight:10,
+    top:-5,
 
   },
 
@@ -70,6 +71,7 @@ zIndex:9000,
     width: "20%",
     alignItems: 'center',
     justifyContent: 'center',
+    top:-5
   },
   drugImg: {
     width: 54,
@@ -79,7 +81,8 @@ zIndex:9000,
 
   descCover: {
     width: "52%",
-    marginLeft: 10
+    marginLeft: 10,
+    top:-2,
   },
   descText: {
     fontSize: 14,
@@ -90,7 +93,7 @@ zIndex:9000,
     fontWeight: "600",
   },
   priceCover: {
-    paddingTop: 15,
+    paddingTop: 25,
     paddingBottom:10,
   },
   priceText: {
@@ -116,13 +119,15 @@ zIndex:9000,
     marginTop: -5,
   },
   rightCover: {
-    // marginRight: 50
+  
+    marginTop: -10,
   },
   iconCover: {
     flexDirection: 'row',
     justifyContent: "flex-end",
     paddingLeft: 10,
     paddingRight: 10,
+ 
   },
   increaseCartMainAmountView: {
     // right: wp('4%'),
@@ -139,12 +144,15 @@ zIndex:9000,
     // justifyContent: "space-between"
   },
   cartAmountView: {
-    borderWidth: 1,
+    borderWidth: 0.5,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 2,
-    borderColor: "#EEEEEE",
+    borderColor: "#eeeeee",
     height: 30,
+    width:71,
+    borderRadius:30,
+    marginTop:15,
 
     // shadowColor: '#EEEEEE',
     // shadowOffset: {
@@ -172,7 +180,8 @@ zIndex:9000,
     paddingHorizontal: 4,
     paddingVertical: 8,
     backgroundColor: "#F5F5F5",
-    borderRadius: 2,
+    borderTopLeftRadius: 30,
+    borderBottomLeftRadius: 30,
 
   },
   decrease: {
@@ -180,6 +189,8 @@ zIndex:9000,
     paddingVertical: 8,
     backgroundColor: "#F5F5F5",
     borderRadius: 2,
+    borderTopRightRadius: 30,
+    borderBottomRightRadius: 30,
   },
   increaseText: {
     // paddingVertical: 11,
@@ -193,6 +204,29 @@ zIndex:9000,
     borderWidth: 0,
     borderStyle: 'solid',
     backgroundColor: "#fff"
+  },
+  removeCover: {
+    borderWidth: 0.5,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 2,
+    borderColor: "#eeeeee",
+    height: 30,
+    width:71,
+    borderRadius:30,
+    marginTop:0,
+    alignItems:'center',
+    textAlign:'center',
+    justifyContent:'center'
+  },
+  removeText:{
+    fontSize: 12,
+    fontFamily: "Urbanist-Regular",
+    lineHeight: 24,
+    color: "#212121",
+    letterSpacing: 0.3,
+    fontWeight: "500",
+  
   },
   bottomCover: {
     // marginTop: -5,
@@ -273,7 +307,7 @@ zIndex:9000,
     paddingHorizontal: 10,
     paddingVertical: 15,
     borderRadius: 50,
-    backgroundColor: 'rgba(124, 207, 36, 1)',
+    backgroundColor: '#3858CF',
     marginTop: 2,
     marginRight: 15,
   },

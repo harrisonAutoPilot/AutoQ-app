@@ -22,32 +22,21 @@ const List = (props) => {
                     <Text style={styles.listTitle}>{item.name}</Text>
                     <View style={styles.priceView}>
                         <Text style={styles.priceText}>&#8358;{commafy(item.price_per_pack)}/<Text style={styles.priceRoll}>{item.pack_style}</Text></Text>
+
                     </View>
+
                 </View>
+               
             </TouchableOpacity>
 
-            {item.is_saved_item && item.id !== props.likedId ?
-                <TouchableOpacity style={styles.iconView} onPress={props.onRemove}>
-                    <FIcon name="cards-heart" color="#7CCF24" size={16} />
-                </TouchableOpacity>
-                :
-                props.liked === 1 && item.id === props.likedId ?
-
-                    <TouchableOpacity style={styles.iconView} onPress={props.onRemove}>
-                        <FIcon name="cards-heart" color="#7CCF24" size={16} />
+            <TouchableOpacity style={styles.addCover}>
+                    <View style={styles.addCoverInner}>
+                  
+                        <Text style={styles.addPlus}> + </Text>
+                        <Text style={styles.addText}>Add to Cart </Text>
+              
+                    </View>
                     </TouchableOpacity>
-                    :
-                    props.liked === 3 && item.id === props.likedId ?
-
-                        <TouchableOpacity style={styles.iconView} onPress={props.onPress}>
-                            <Icon name="heart" size={18} color="#BDBDBD" />
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity style={styles.iconView} onPress={props.onPress}>
-                            <Icon name="heart" size={18} color="#BDBDBD" />
-                        </TouchableOpacity>
-            }
-
 
 
 

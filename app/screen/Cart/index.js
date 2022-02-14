@@ -245,32 +245,10 @@ const Cart = (props) => {
                             <Text style={styles.descText} numberOfLines={2}>{item.product.name}</Text>
                         </View>
 
-                        {cartAmount2.map(quantity => (
-                            quantity.cart_id === item.id ?
-                                <View style={styles.priceCover} key={quantity.cart_id}>
-                                    <Text style={styles.priceText}>₦ {quantity.total_amount !== "" ? commafy(quantity.total_amount) : 0}</Text>
-                                </View> : null
-                        ))}
-
-                    </View>
-
-                    <View style={styles.rightCover}>
-                        <View style={styles.iconCover}>
-
-                            {!item.product.is_saved_item ?
-                                <TouchableOpacity onPress={() => itemsAddedToWishlist(item.product.id)}>
-                                    <Icon name="heart" size={18} color="#BDBDBD" />
-                                </TouchableOpacity>
-                                : <TouchableOpacity onPress={() => itemsRemovedFromWishlist(item.product.id)}>
-                                    <FIcon name="cards-heart" size={18} color="#7CCF24" />
-                                </TouchableOpacity>}
-
-                            <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
-                                <Icon name="trash-2" size={18} color="#D32F2F" />
-                            </TouchableOpacity >
-                        </View>
-
-                        <View style={styles.increaseCartMainAmountView}>
+                      
+                        
+                                  
+      
                             <View style={styles.cartAmountView}>
                                 <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, item.quantity, item.product.quantity_available); }}>
                                     <Icon name="minus" color="#757575" />
@@ -286,8 +264,31 @@ const Cart = (props) => {
                                 </TouchableOpacity>
                             </View>
 
-                        </View>
+                     
+                                </View> 
 
+                
+
+                    <View style={styles.rightCover}>
+                        <View style={styles.iconCover}>
+
+                        {cartAmount2.map(quantity => (
+                            quantity.cart_id === item.id ?
+                                <View style={styles.priceCover} key={quantity.cart_id}>
+                                    <Text style={styles.priceText}>₦ {quantity.total_amount !== "" ? commafy(quantity.total_amount) : 0}</Text>
+                                </View> : null
+                        ))}
+
+                          
+                        </View>
+                        <TouchableOpacity onPress={deleteFromCart}>
+                        <View style={styles.increaseCartMainAmountView}>
+                            <View style={styles.removeCover}>
+                               <Text style={styles.removeText}>Remove</Text>
+                            </View>
+
+                        </View>
+                        </TouchableOpacity>
                     </View>
 
                 </View>
@@ -355,7 +356,7 @@ const Cart = (props) => {
                             </View>
 
                             <View style={[styles.addBtnCover, styles.orderBtn]}>
-                                <TrackBtn title="CheckOut" style={styles.addressBtn2} onPress={redirectToCheckOut} />
+                                <TrackBtn title="Proceed  to Check out" style={styles.addressBtn2} onPress={redirectToCheckOut} />
                             </View>
 
                         </View>

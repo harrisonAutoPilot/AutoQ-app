@@ -15,14 +15,14 @@ export default styles = StyleSheet.create({
 
     },
     body: {
-        backgroundColor: "#fff",
+        backgroundColor: "#00319D",
         marginBottom: 20
     },
     headerText:{
         fontSize: 20,
         fontFamily: "Urbanist-Regular",
         lineHeight: 28,
-        color: "rgba(33, 33, 33, 1)",
+        color: "#fff",
         letterSpacing: 0.2,
         fontWeight: "400",
         textAlign: "center",

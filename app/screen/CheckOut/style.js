@@ -38,7 +38,7 @@ export default styles = StyleSheet.create({
     flexWrap: 'wrap',
 },
   body: {
-    backgroundColor: "#fff",
+    backgroundColor: "#3858CF",
     marginBottom: 20
   },
 
@@ -206,7 +206,7 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 15,
     borderRadius: 50,
-    backgroundColor: 'rgba(124, 207, 36, 1)',
+    backgroundColor: '#3858CF',
     marginTop: 2,
     marginRight: 12,
   },

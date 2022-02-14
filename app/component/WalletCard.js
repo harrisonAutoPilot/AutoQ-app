@@ -11,28 +11,25 @@ const WalletCard = (props) => {
         <View>
              
             <LinearGradient
-                colors={['#3858CF', '#cc6666']}
+                colors={['#b4e87d', '#f3fbe9']}
                 style={styles.container}
-                start={{ x: 0, y: 1}}
-                end={{ x: 0.2, y: 1.9}}
+                start={{ x:0, y: 0}}
+                end={{ x: 1, y: 2}}
                 style={props.mainBody}
                >
             <Image source={require("@Assets/image/wave.png")} style={styles.waveImg} /> 
                 <View style={styles.header}>
                   <View style={styles.cardInnerCover}>
-                       <View>
+                       <View style={styles.cardTop}>
                          <Text style={styles.walletTilte}>Wallet Balance</Text>
                          <Text style={styles.walletAmount}>₦{props.walletAmount}</Text>
                       </View>
 
-                       <View>
-                         <Text style={styles.walletTilte}>Unpaid Loan</Text>
-                         <Text style={styles.walletAmount}>₦{props.unpainLoan}</Text>
-                      </View>
+                       
                       <TouchableOpacity style={styles.midBtn} onPress={props.fundWallet}>
-                       <Icon name="plus" size={16} color="#fff" />
+                       
                        <View>
-                       <Text style={styles.plusTitle}>Fund Wallet</Text>
+                       <Text style={styles.plusTitle}>Withdraw Funds</Text>
                        </View>
 
                       </TouchableOpacity>

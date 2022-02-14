@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
-
+import HeaderSearch from "../../component/HeaderSearch";
 import globalStyle from "@Helper/globalStyles";
 import styles from "./style";
 import { searchProducts, addToWishlistProducts, removeFromWishlistProducts } from "@Request/products";
@@ -44,6 +44,8 @@ const BrowseProducts = (props) => {
     }, []);
 
     const closeCart = () => setShowModal(!showModal);
+
+   
 
     useEffect(() => {
         if (props.route.params?.item) {
@@ -206,33 +208,7 @@ const BrowseProducts = (props) => {
         <View style={styles.body}>
             <StatusBar barStyle="light-content" backgroundColor='#3858CF' hidden={false} />
 
-            <LinearGradient
-                colors={['#3858CF', '#7485FF']}
-                style={styles.container}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={props.mainBody}>
-          
-                <SafeAreaView>
-                    <View style={styles.mainHeader}>
-                        <TouchableOpacity onPress={goBack}>
-                            <Image source={require("@Assets/image/leading-icon.png")} style={globalStyle.backImg} />
-                        </TouchableOpacity>
-                        <View style={styles.inputHolder}>
-                            <Icon name="search" style={styles.searchIcon} size={20} color="#a1a1a1" />
-                            <TouchableOpacity style={styles.inputText} onPress={search}>
-                                <InputField
-                                    style={styles.inputF}
-                                    placeholder="I am looking for.."
-                                    placeholderTextColor="#9E9E9E"
-                                    onChangeText={(text) => setSearch(text)}
-                                    value={search}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </SafeAreaView>
-            </LinearGradient>
+       <HeaderSearch goBack={goBack} title={props.route.params?.category}/>
 
             {err ? <Toast config={toastConfig} /> : null}
             {successMsg ? <Toast config={toastConfig} /> : null}

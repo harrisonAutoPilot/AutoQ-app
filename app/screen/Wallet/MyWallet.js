@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef} from "react";
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList,Dimensions,ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 
 import WalletCard from "@Component/WalletCard";
 import FundView from "@Screen/FundOverlay";
+import LoanApp from "@Screen/LoanOverlay";
+import WithDraw from "@Screen/WithdrawOverlay";
 import Modal from "./SortBy";
 import styles from "./style";
 import AddListEmptyComponentMd from "@Screen/Home/addListEmptyMd";
@@ -18,8 +20,9 @@ const MyWallet = (props) => {
     const [showModal2, setShowModal2] = useState(false);
     const [result, setResult] = useState([]);
     const bottomSheetFund = React.useRef();
-    const bottomSheetF= useRef();
+    const bottomSheetL= useRef();
     const bottomSheetS= useRef();
+    const bottomSheetW = useRef();
 
     const fundWallet = () => setShowModal(!showModal);
     const { wallet } = useSelector((state) => state.wallet);
@@ -30,11 +33,22 @@ const MyWallet = (props) => {
     }
 
     const closeSheet = () => {
-        bottomSheetF.current.close();
+        bottomSheetL.current.close();
     }
     const openSheet = () => {
-        bottomSheetF.current.show();
+        bottomSheetL.current.show();
     }
+    const closeSheetWithDraw = () => {
+
+        bottomSheetW.current.close();
+    }
+    const openSheetWithDraw = () => {
+    bottomSheetL.current.close();
+    console.log('Hello this is suppose to open')
+     bottomSheetW.current.show();
+       
+    }
+
     const closeSheetSort = () => {
         bottomSheetS.current.close();
     }
@@ -112,35 +126,45 @@ const MyWallet = (props) => {
                 unpainLoan="0.00"
                 fundWallet={openSheet}
             />
-            <View style={styles.sortContainer}>
-                <Text style={styles.sortText}>Transaction History</Text>
-                <TouchableOpacity style={styles.sortCover} onPress={openSheetSort}>
-                    <View style={styles.sortCon} >
-                        <Image source={require("@Assets/image/exchange.png")} style={styles.refreshImg} />
-                        <Text style={styles.sortText2}>Sort</Text>
-                    </View>
-                </TouchableOpacity>
+           
 
-            </View>
+           <View style={styles.downCover}>
+           <View style={styles.sortContainer}>
+<Text style={styles.sortText}>Transaction History</Text>
+<TouchableOpacity style={styles.sortCover} onPress={openSheetSort}>
+    <View style={styles.sortCon} >
+        <Image source={require("@Assets/image/exchange.png")} style={styles.refreshImg} />
+        <Text style={styles.sortText2}>Sort</Text>
+    </View>
+</TouchableOpacity>
 
-            <View style={styles.bottomCover}>
+</View>
 
-                <FlatList data={ !result.length ? wallet?.user?.transactions: result}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={item => item.id}
-                    renderItem={ListView}
-                    ListEmptyComponent={TransactionCardPlaceholder}
-                    ref={flatListRef}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
-                />
+<View style={styles.bottomCover}>
 
-            </View>
+<FlatList data={ !result.length ? wallet?.user?.transactions: result}
+    showsVerticalScrollIndicator={false}
+    keyExtractor={item => item.id}
+    renderItem={ListView}
+    ListEmptyComponent={TransactionCardPlaceholder}
+    ref={flatListRef}
+    ListFooterComponent={<View style={{ height: 50 }} />}
+/>
 
-            <FundView
-                bottomSheetF={bottomSheetF}
+</View>
+
+           </View>
+            <LoanApp
+                bottomSheetL={bottomSheetL}
                 bottomSheetClose = {closeSheet}
+                bottomSheetW={bottomSheetW}
                
-
+            />
+             <WithDraw
+                bottomSheetW={bottomSheetW}
+                bottomSheetWClose = {closeSheetWithDraw}
+               
+               
             />
 
             <Modal 

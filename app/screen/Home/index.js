@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { View, Text, TouchableOpacity, FlatList, RefreshControl, ScrollView, Image, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, RefreshControl, ScrollView, Image, Dimensions,ImageBackground,} from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
@@ -242,7 +242,8 @@ const Home = (props) => {
                         </View>
 
                     </View>
-                    <View style={styles.cardThree}>
+                    <View>
+                    <ImageBackground style={styles.cardThree} source={require("@Assets/image/frame9.png")} > 
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
                             <Text style={styles.cardBgText}>0</Text>
@@ -250,7 +251,7 @@ const Home = (props) => {
                         <View style={styles.cardDownInner}>
                             <Text style={styles.cardSmText}>Special Deals</Text>
                         </View>
-
+                     </ImageBackground>
                     </View>
                     <View style={styles.cardFour}>
                         <View style={styles.cardTopInner}>

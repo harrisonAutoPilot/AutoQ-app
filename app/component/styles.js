@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   trackBtn: {
     borderWidth: 0,
     borderColor: '#757575',
-    backgroundColor: '#E3F6CF',
+    backgroundColor: '#3858CF',
     padding: 10,
     borderRadius: 50,
     width: wp('80%'),
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 
   },
   trackBtnText: {
-    color: '#424242',
+    color: '#fff',
     fontSize: 16,
     fontFamily: "Urbanist-Regular",
     lineHeight: 22,
@@ -195,27 +195,32 @@ container:{
 },
 cardInnerCover:{
   width:wp('80%'),
-  flexDirection:'row',
-  justifyContent:'space-between',
+  justifyContent:'center',
   alignItems:'center',
+  textAlign:'center',
   padding:20,
- 
+},
+cardTop:{
+  width:wp('80%'),
+  justifyContent:'center',
+  alignItems:'center',
+  textAlign:'center',
 },
 walletTilte:{
-fontSize: 12,
+fontSize: 14,
 fontFamily: "Urbanist-Regular",
 lineHeight: 16,
-color: "#fff",
+color: "#000",
 letterSpacing: 0.2,
-fontWeight: "700",
+fontWeight: "400",
 textTransform:'uppercase'
 
 },
 walletAmount:{
-fontSize: 17,
+fontSize: 24,
 fontFamily: "Urbanist-Regular",
 lineHeight: 16,
-color: "#fff",
+color: "#000",
 letterSpacing: 0.2,
 fontWeight: "600",
 textTransform:'uppercase',

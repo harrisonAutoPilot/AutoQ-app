@@ -15,7 +15,7 @@ export default styles = StyleSheet.create({
         marginRight: wp('1%'),
         marginTop: 10,
         marginBottom: 10,
-        paddingVertical: Platform.OS === "ios" ?10:0
+        paddingVertical: Platform.OS === "ios" ? 10 : 0
     },
     inputText: {
         marginLeft: 10.15,
@@ -23,7 +23,8 @@ export default styles = StyleSheet.create({
     },
     inputF: {
         // position: 'absolute',
-        paddingTop: 10,
+        paddingTop: 8,
+        paddingBottom: 8,
         width: wp('90%'),
         fontSize: 14,
         fontFamily: "Urbanist-Regular",
@@ -69,7 +70,7 @@ export default styles = StyleSheet.create({
         borderRadius: 8,
         marginHorizontal: 16,
         shadowColor: "rgba(235, 238, 255, 1)",
-        shadowOffset:{
+        shadowOffset: {
             width: 0,
             height: 10
         },
@@ -107,7 +108,45 @@ export default styles = StyleSheet.create({
         flexGrow: 1
     },
     priceView: {
-        marginTop: 10
+        marginTop: 10,
+        flexDirection: 'row',
+        // justifyContent:'space-between',
+
+    },
+    addCover: {
+        position: 'absolute',
+        right: wp('5%'),
+        top: hp('8%'),
+        
+    },
+    addCoverInner: {
+        flexDirection: 'row',
+        borderWidth: 1,
+        borderColor: '#3858CF',
+        borderStyle: 'solid',
+        padding: 5,
+        paddingLeft: 7,
+        paddingRight: 7,
+        borderRadius: 30,
+       
+    },
+    addText: {
+        color: '#3858CF',
+        fontSize: 10,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 16,
+        letterSpacing: 0.1,
+        fontWeight: "500"
+
+    },
+    addPlus: {
+        color: '#3858CF',
+        fontSize: 15,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 16,
+        letterSpacing: 0.1,
+        fontWeight: "100",
+        paddingTop: -2,
     },
     priceText: {
         fontSize: 15,

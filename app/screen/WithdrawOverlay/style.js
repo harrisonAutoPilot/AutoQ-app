@@ -128,7 +128,7 @@ export default styles = StyleSheet.create({
     },
     topPrompt: {
         flexDirection: 'row',
-        backgroundColor: '#E9EBF9',
+        backgroundColor: '#FAFAFA',
         justifyContent: 'space-around',
         borderRadius: 8,
         width: wp('90%'),
@@ -142,7 +142,7 @@ export default styles = StyleSheet.create({
         color: "#212121",
         letterSpacing: 0.3,
         fontWeight: "600",
-        textAlign: "left"
+        textAlign: "center"
 
     },
     bottomPromptText: {
@@ -220,6 +220,7 @@ export default styles = StyleSheet.create({
     topPromptTextCover: {
         width: 260,
         marginLeft: 5,
+      
 
     },
     inforText: {
@@ -313,6 +314,48 @@ export default styles = StyleSheet.create({
     cover: {
         marginTop: -35,
     },
+
+    pinView: {
+        borderWidth: 1,
+        borderColor: "#a1a1a1",
+        paddingLeft:15,
+        paddingRight:15,
+        paddingVertical: Platform.OS === "android" ? 2: 8,
+        borderRadius: 3
+    },
+    pinHolder: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginHorizontal: 62,
+        marginVertical: 80
+
+    },
+    body:{
+        marginHorizontal: 29
+    },
+    inputF:{
+        fontSize:25,
+        fontFamily: "Urbanist-Regular",
+        letterSpacing: 0.2,
+        fontWeight: "400"
+
+    },
+    labelCover:{
+       position:'absolute',
+       top:hp('22%'),
+       left:wp('16%')
+    },
+    label3:{
+        fontSize: 14,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 16,
+        color: "#616161",
+        letterSpacing: 0.2,
+        fontWeight: "600"
+    },
+
+
+
     inputHolder: {
         width: wp('87%'),
         borderWidth: 1,
