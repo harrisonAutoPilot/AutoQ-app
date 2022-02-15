@@ -1,7 +1,8 @@
 package com.rhm;
 
-import com.facebook.react.ReactActivity;
 import android.os.Bundle;
+
+import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
 
