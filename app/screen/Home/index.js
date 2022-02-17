@@ -12,16 +12,20 @@ const Home = (props) => {
 
     const { user } = useSelector((state) => state.auth);
     const [dayTime, setDayTime] = useState(null);
+    const [dayTimeImage, setDayTimeImage] = useState(null);
 
     const openDrawer = () => props.navigation.openDrawer();
 
     useEffect(() => {
         if( (date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12){
-            setDayTime("Good Morning")
+            setDayTime("Good Morning");
+            setDayTimeImage(require("@Assets/image/sun.png"));
         }else if((date.getHours() > 12 || date.getHours() == 12) && date.getHours() < 18){
-            setDayTime("Good Afternoon")
+            setDayTime("Good Afternoon");
+            setDayTimeImage(require("@Assets/image/sun.png"));
         }else{
-            setDayTime("Good Evening")
+            setDayTime("Good Evening");
+            setDayTimeImage(require("@Assets/image/night.png"));
         }
     }, [])
 
@@ -33,7 +37,7 @@ const Home = (props) => {
                     <Image style={styles.agentImg} source={require("@Assets/image/agentFace.png")} />
                 </View>
                 <View style={styles.welcomeCover}>
-                    <Image style={styles.sunImg} source={require("@Assets/image/sun.png")} />
+                    <Image style={styles.sunImg} source={dayTimeImage} />
                     <Text style={styles.welcomeText}>{dayTime} {user.name?.split(" ")[0]}</Text>
                 </View>
             </View>
