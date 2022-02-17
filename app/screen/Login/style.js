@@ -76,7 +76,11 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 35,
         alignItems: 'center',
         backgroundColor: '#fff',
-        top: hp('-13%'),
+        top: hp('-13%')
+    },
+    keyboardUp: {
+        top: hp('-25%'),
+        height: hp('45%'),
     },
     loginTextCover: {
         marginTop: 30,
@@ -128,9 +132,7 @@ const styles = StyleSheet.create({
         marginTop: -30,
         position: 'absolute',
         width: wp('80%'),
-        marginLeft: wp('5%'),
-        marginRight: wp('15%'),
-
+        alignSelf: 'center'
     },
     inputHolder: {
         borderWidth: 1,
@@ -216,10 +218,8 @@ const styles = StyleSheet.create({
     inputCover: {
         width: wp('100%'),
         padding: 30,
-        paddingTop: 5,
+        paddingTop: 10,
         backgroundColor: '#fff'
-
-
     },
     inputPinCover: {
         flexDirection: 'row',
@@ -321,6 +321,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center"
+    },
+    scrollStyle: {
+        paddingBottom: 50,
+
     },
 });
 

@@ -42,9 +42,9 @@ export const authSlice = createSlice({
                 state.user = {};
             })
             .addCase(login.fulfilled, (state, action) => {
+                console.log(action)
                 state.isAuthenticated = true;
                 state.errors = {};
-                state.signedIn = true
             })
             .addCase(login.rejected, (state, { payload }) => {
                 state.status = "failed";
