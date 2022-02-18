@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { View, Text, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
+import { getAgent } from "@Request/Agent";
 import styles from './style';
 import globalStyle from "@Helper/GlobalStyles";
 import { Header } from "@Component";
@@ -15,6 +16,8 @@ const Home = (props) => {
     const [dayTimeImage, setDayTimeImage] = useState(null);
 
     const openDrawer = () => props.navigation.openDrawer();
+    const { status, errors, agent, loaded } = useSelector((state) => state.agent);
+    console.log(loaded);
 
     useEffect(() => {
         if( (date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12){
@@ -27,6 +30,8 @@ const Home = (props) => {
             setDayTime("Good Evening");
             setDayTimeImage(require("@Assets/image/night.png"));
         }
+
+        dispatch(getAgent());
     }, [])
 
     return (
@@ -58,21 +63,21 @@ const Home = (props) => {
                     </View>
                     <View style={styles.cardTwo}>
                         <View style={styles.cardTopInner}>
-                            <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
+                            <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
                             <Text style={styles.cardBgText}>05</Text>
                         </View>
                         <View style={styles.cardDownInner}>
-                            <Text style={styles.cardSmText}>All Orders</Text>
+                            <Text style={styles.cardSmText}>All {"\n"}Orders</Text>
                         </View>
 
                     </View>
                     <View style={styles.cardThree}>
                         <View style={styles.cardTopInner}>
-                            <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
+                            <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
                             <Text style={styles.cardBgText}>0</Text>
                         </View>
                         <View style={styles.cardDownInner}>
-                            <Text style={styles.cardSmText}>Special Deals</Text>
+                            <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>
                         </View>
 
                     </View>

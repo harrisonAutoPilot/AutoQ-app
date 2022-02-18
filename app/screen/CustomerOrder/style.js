@@ -17,17 +17,17 @@ const styles = StyleSheet.create({
     },
     searchSection: {
         flexDirection: 'row',
-        backgroundColor: '#3858CF',
+        backgroundColor: '#00319D',
         marginHorizontal: 16,
         borderRadius: 8,
         borderColor: "rgba(255, 255, 255, 0.3)",
         borderWidth: 1,
         alignItems: "center",
         paddingVertical: Platform.OS === "ios" ? 12 : 0,
-        marginTop: -4,
+        marginVertical: 10
     },
     searchIcon: {
-        paddingHorizontal: 14,
+        paddingHorizontal: 10,
         color: 'rgba(255, 255, 255, 0.8)',
     },
     errView: {
@@ -63,10 +63,9 @@ const styles = StyleSheet.create({
     exchangeCover: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
+        paddingBottom: 10,
         paddingRight: 15,
-        backgroundColor: '#3858CF',
-        // marginTop: -20,
+        backgroundColor:  '#00319D',
     },
     exchangeImg: {
         width: 13,
@@ -75,20 +74,14 @@ const styles = StyleSheet.create({
     },
     exchangeClickk: {
         flexDirection: 'row',
-        backgroundColor: '#3858CF',
+        backgroundColor:  '#00319D',
         borderRadius: 50,
-        paddingLeft: 10,
         paddingRight: 10,
-        borderColor: 1,
+        borderWidth: 0.3,
         borderColor: '#ffffff',
-        borderStyle: 'solid',
         zIndex: 3,
-        // paddingTop: 3,
-        // paddingBottom: 3,
+        paddingVertical: 3,
         alignItems: "center"
-        // paddingBottom:5,
-        // paddingTop:5,
-
     },
     exchangeText: {
         color: '#fff',
@@ -98,7 +91,6 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         letterSpacing: 0.1,
         marginRight: 5,
-        marginLeft: 2,
 
     },
     allOrderText: {
@@ -109,6 +101,7 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         letterSpacing: 0.1,
         marginLeft: 10,
+        alignSelf: "center"
     },
 
     bottomCover: {
@@ -296,11 +289,11 @@ const styles = StyleSheet.create({
         marginLeft: 3,
     },
     blueColor: {
-        backgroundColor: '#3858CF',
+        backgroundColor: '#00319D',
     },
-    touchstyle: {
-        backgroundColor: '#E3F6CF',
-    },
+    // touchstyle: {
+    //     backgroundColor: '#E3F6CF',
+    // },
     body: {
         backgroundColor: "#fff",
         height: Platform.OS === "android" ? "40%" : "35%",

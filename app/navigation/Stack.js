@@ -14,9 +14,9 @@ import Home from "@Screen/Home";
 import DrawerNavigator from "./Drawer";
 
 const Stack = createNativeStackNavigator();
-const RootStack = createStackNavigator();
-const LoginStack = createStackNavigator();
-const SplashStack = createStackNavigator();
+const RootStack = createNativeStackNavigator();
+const LoginStack = createNativeStackNavigator();
+const SplashStack = createNativeStackNavigator();
 const NetworkStack = createStackNavigator();
 
 const SplashStackNavigator = () => {

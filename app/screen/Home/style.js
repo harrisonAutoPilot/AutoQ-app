@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         padding: 10,
         flexDirection: 'row',
         flexWrap: "wrap",
-        paddingLeft: 20,
+        justifyContent: "center"
     },
     cardOne: {
         width: wp('40%'),
@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     },
     cardDownInner: {
         marginTop: 30,
+        // width: 90
     },
 
     sectorCover: {

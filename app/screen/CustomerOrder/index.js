@@ -8,15 +8,15 @@ import Toast from 'react-native-toast-message';
 import Modal from "./SortBy";
 import commafy from "@Helper/Commafy";
 import { InputField, COHeader as Header } from "@Component";
-import { getOrders, reOrder } from "@Request/order";
-import { cleanup } from "@Store/order";
+// import { getOrders, reOrder } from "@Request/order";
+// import { cleanup } from "@Store/order";
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
 import AddOrderEmpty from "./EmptyPlaceHolder";
-import MyOrderPlaceholder from "./MyOrderPlaceholder";
+// import MyOrderPlaceholder from "./MyOrderPlaceholder";
 
-const MyOrder = (props) => {
+const CustomerOrder = (props) => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
@@ -46,12 +46,12 @@ const MyOrder = (props) => {
         setShowModal(true)
     };
 
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(getOrders());
-            return () => dispatch(cleanup());
-        }, [])
-    );
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         dispatch(getOrders());
+    //         return () => dispatch(cleanup());
+    //     }, [])
+    // );
 
     useEffect(() => {
         if (search.length > 0) {
@@ -185,17 +185,16 @@ const MyOrder = (props) => {
 
     return (
         <View style={styles.main}>
-
             <Header title="Customer Orders" style={styles.btnText} onPress={goToCat} />
-            <View style={{backgroundColor:'#00319D', marginTop:-1}}>
-                <TouchableWithoutFeedback style={styles.touchstyle} onPress={dismissKeyboard}>
+
+                <TouchableWithoutFeedback  onPress={dismissKeyboard}>
                     <View style={styles.blueColor}>
                         <View style={[styles.searchSection]}>
                             <Icon name="search" color="rgba(255, 255, 255, 0.8)" size={24} style={styles.searchIcon} />
                             <InputField
                                 style={styles.inputField}
                                 value={search}
-                                placeholder="Search by order no..."
+                                placeholder="Search by name, order no..."
                                 placeholderTextColor="rgba(255, 255, 255, 0.8)"
                                 onChangeText={(text) => setSearch(text)}
                             />
@@ -205,7 +204,6 @@ const MyOrder = (props) => {
                             <Text style={styles.allOrderText}> All Orders</Text>
                             <TouchableOpacity style={styles.exchangeClickk} onPress={redirectToSort}>
                             <Icon name="refresh-cw" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
-                                {/* <Image source={require("@Assets/image/exchange.png")} style={styles.exchangeImg} /> */}
                                 <Text style={styles.exchangeText}>Sort by</Text>
                             </TouchableOpacity>
                         </View>
@@ -213,8 +211,6 @@ const MyOrder = (props) => {
 
 
                 </TouchableWithoutFeedback>
-
-            </View>
 
             {err ? <Toast config={toastConfig} /> : null}
 
@@ -226,7 +222,7 @@ const MyOrder = (props) => {
                         showsVerticalScrollIndicator={false}
                         data={!result.length ? orders : result}
                         renderItem={ListView}
-                        ListEmptyComponent={MyOrderPlaceholder}
+                        // ListEmptyComponent={MyOrderPlaceholder}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
                         refreshControl={
@@ -252,4 +248,4 @@ const MyOrder = (props) => {
     )
 };
 
-export default MyOrder;
+export default CustomerOrder;

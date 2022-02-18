@@ -3,6 +3,8 @@ import {persistReducer} from 'redux-persist';
 import createSensitiveStorage from 'redux-persist-sensitive-storage';
 
 import authReducer from "./Auth";
+import agentReducer from "./Agent";
+import orderReducer from "./CustomerOrder";
 
 const persistConfig = {
     key: 'root',
@@ -16,5 +18,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export default combineReducers({
-    auth: persistedReducer
+    auth: persistedReducer,
+    agent: agentReducer,
+    order: orderReducer
 });

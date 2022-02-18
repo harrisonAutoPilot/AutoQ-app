@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getOrders, placeOrder, reOrder} from "@Request/order";
+import {getOrders, placeOrder, reOrder} from "@Request/CustomerOrder";
 
 export const orderSlice = createSlice({
     name: "order",

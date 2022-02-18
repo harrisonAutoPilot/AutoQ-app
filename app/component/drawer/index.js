@@ -97,7 +97,7 @@ const Drawer = (props) => {
                     </View>
 
                     {/* <TouchableOpacity style={styles.agentView} onPress={myAgent}> */}
-                    <TouchableOpacity style={styles.agentView} >
+                    <TouchableOpacity style={styles.agentView} onPress={() => props.navigation.navigate("CustomerOrder")} >
                         <View style={styles.agentInnerView}>
                             <Text style={styles.headerTitle}>Product</Text>
                         </View>

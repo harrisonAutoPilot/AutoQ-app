@@ -1,4 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
 
@@ -25,15 +29,14 @@ const styles = StyleSheet.create({
     },
     navCover: {
         flexDirection: 'row',
-        backgroundColor: '#3858CF',
+        backgroundColor: '#00319D',
     },
     mainHeader: {
         flexDirection: "row",
         alignItems: "center",
-        height: 50,
-        borderBottomWidth: 1,
-        borderBottomColor: "rgba(238, 238, 238, 1)",
-        paddingLeft: 19
+        height: 40,
+        paddingLeft: 19,
+        marginTop: 10
 
     },
     titleCover: {

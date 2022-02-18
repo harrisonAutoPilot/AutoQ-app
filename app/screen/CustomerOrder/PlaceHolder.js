@@ -1,15 +1,11 @@
 import React from 'react';
 import {
-  Placeholder,
-  PlaceholderMedia,
   PlaceholderLine,
-  ShineOverlay,
 } from 'rn-placeholder';
 import { View } from 'react-native';
 import styles from './style';
 import {
   responsiveHeight,
-  responsiveWidth,
 } from 'react-native-responsive-dimensions';
 
 const MyOrderPlaceholder = () => (
@@ -91,5 +87,5 @@ const MyOrderPlaceholder = () => (
 
 );
 
-export default MyOrderPlaceholder;
+// export default MyOrderPlaceholder;
 
