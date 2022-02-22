@@ -2,10 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import AxiosBase from "@Request/AxiosBase";
 import { apiRequest } from "@Request/Request";
 
-export const getOrders = createAsyncThunk("order/all",
+export const getCustomerOrders = createAsyncThunk("order/all",
    async (_, thunkAPI) => {
       const Axios = await AxiosBase();
-      return apiRequest(Axios.get('api/v1/order_groups'), thunkAPI)
+      return apiRequest(Axios.get('api/v1/orders'), thunkAPI)
    });
 
 export const placeOrder = createAsyncThunk("order/place",

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAgent } from "@Request/Agent";
 import styles from './style';
-import globalStyle from "@Helper/GlobalStyles";
 import { Header } from "@Component";
+
 
 const Home = (props) => {
     const dispatch = useDispatch();
@@ -16,8 +16,9 @@ const Home = (props) => {
     const [dayTimeImage, setDayTimeImage] = useState(null);
 
     const openDrawer = () => props.navigation.openDrawer();
-    const { status, errors, agent, loaded } = useSelector((state) => state.agent);
-    console.log(loaded);
+    const { agent} = useSelector((state) => state.agent);
+
+    const redirectToDeals = () => props.navigation.navigate("Deals");
 
     useEffect(() => {
         if( (date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12){
@@ -54,37 +55,37 @@ const Home = (props) => {
                     <View style={styles.cardOne}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/ArrowsClockwise.png")} />
-                            <Text style={styles.cardBgText}>12</Text>
+                            <Text style={styles.cardBgText}>{agent.users_count}</Text>
                         </View>
                         <View style={styles.cardDownInner}>
-                            <Text style={styles.cardSmText}>New & Pending Registration</Text>
+                            <Text style={styles.cardSmText}>New &#38; Pending Registration</Text>
                         </View>
 
                     </View>
                     <View style={styles.cardTwo}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
-                            <Text style={styles.cardBgText}>05</Text>
+                            <Text style={styles.cardBgText}>{agent.orders_count}</Text>
                         </View>
                         <View style={styles.cardDownInner}>
                             <Text style={styles.cardSmText}>All {"\n"}Orders</Text>
                         </View>
 
                     </View>
-                    <View style={styles.cardThree}>
+                    <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
-                            <Text style={styles.cardBgText}>0</Text>
+                            <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
                         </View>
                         <View style={styles.cardDownInner}>
                             <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>
                         </View>
 
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.cardFour}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/UsersThree.png")} />
-                            <Text style={styles.cardBgText}>20</Text>
+                            <Text style={styles.cardBgText}>{agent.inactive_users_count}</Text>
                         </View>
                         <View style={styles.cardDownInner}>
                             <Text style={styles.cardSmText}>Inactive Customers</Text>

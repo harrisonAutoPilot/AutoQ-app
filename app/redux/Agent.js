@@ -4,7 +4,7 @@ import { getAgent, getAgentCustomer, getAgentTransaction } from "@Request/Agent"
 export const agentSlice = createSlice({
     name: "agent",
     initialState: {
-        agent: [],
+        agent: {},
         status: "idle",
         errors: {},
         customer: "idle",
@@ -22,7 +22,7 @@ export const agentSlice = createSlice({
             .addCase(getAgent.pending, state => {
                 state.status = "pending";
                 state.errors = {};
-                state.agent = [];
+                state.agent = {};
                 state.loaded = "pending"
             })
             .addCase(getAgent.fulfilled, (state, action) => {
@@ -34,7 +34,7 @@ export const agentSlice = createSlice({
             .addCase(getAgent.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
-                state.agent = [];
+                state.agent = {};
                 state.loaded = "failed";
             })
 

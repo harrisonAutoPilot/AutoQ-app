@@ -2,14 +2,15 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
+import FIcon from 'react-native-vector-icons/MaterialIcons';
 import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 import Modal from "./SortBy";
 import commafy from "@Helper/Commafy";
 import { InputField, COHeader as Header } from "@Component";
-// import { getOrders, reOrder } from "@Request/order";
-// import { cleanup } from "@Store/order";
+import { getCustomerOrders } from "@Request/CustomerOrder";
+import { cleanup } from "@Store/CustomerOrder";
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
@@ -33,6 +34,7 @@ const CustomerOrder = (props) => {
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
     const { status, errors, orders, update, loaded } = useSelector((state) => state.order);
+    console.log(orders)
 
     const toastConfig = {
         error: () => (
@@ -46,12 +48,12 @@ const CustomerOrder = (props) => {
         setShowModal(true)
     };
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         dispatch(getOrders());
-    //         return () => dispatch(cleanup());
-    //     }, [])
-    // );
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(getCustomerOrders());
+            // return () => dispatch(cleanup());
+        }, [])
+    );
 
     useEffect(() => {
         if (search.length > 0) {
@@ -203,7 +205,7 @@ const CustomerOrder = (props) => {
                         <View style={styles.exchangeCover}>
                             <Text style={styles.allOrderText}> All Orders</Text>
                             <TouchableOpacity style={styles.exchangeClickk} onPress={redirectToSort}>
-                            <Icon name="refresh-cw" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
+                            <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
                                 <Text style={styles.exchangeText}>Sort by</Text>
                             </TouchableOpacity>
                         </View>
@@ -220,7 +222,7 @@ const CustomerOrder = (props) => {
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={!result.length ? orders : result}
+                        data={[]}
                         renderItem={ListView}
                         // ListEmptyComponent={MyOrderPlaceholder}
                         keyExtractor={item => item.id}

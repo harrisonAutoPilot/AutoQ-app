@@ -44,7 +44,7 @@ const Drawer = (props) => {
         <TouchableOpacity onPress={() => redirectToScreen(item.route)} style={styles.routeInnerView}>
             <View style={styles.routeTextView}>
                 <View style={styles.routeTextIconView}>
-                    <FIcon name={item.icon} size={17} color="#7485FF" />
+                    <FIcon name={item.icon} size={17} color="#00319D" />
                 </View>
                 <Text style={styles.routeText}>{item.name}</Text>
             </View>
@@ -106,7 +106,7 @@ const Drawer = (props) => {
 
                             <View style={styles.routeTextView}>
                                 <View style={styles.routeTextIconView}>
-                                    <FIcon name="download-box" size={17} color="#7485FF" />
+                                    <FIcon name="download-box" size={17} color="#00319D" />
                                 </View>
                                 <Text style={styles.routeText}>Customer Orders</Text>
                             </View>
@@ -121,7 +121,7 @@ const Drawer = (props) => {
 
                         <View style={styles.routeTextView}>
                             <View style={styles.routeTextIconView}>
-                                <Icon name="refresh-cw" size={17} color="#7485FF" />
+                                <Icon name="refresh-cw" size={17} color="#00319D" />
                             </View>
                             <Text style={styles.routeText}>Pending Orders</Text>
                         </View>
@@ -139,7 +139,7 @@ const Drawer = (props) => {
 
                             <View style={styles.routeTextView}>
                                 <View style={styles.routeTextIconView}>
-                                    <FIcon name="comment-multiple-outline" size={17} color="#7485FF" />
+                                    <FIcon name="comment-multiple-outline" size={17} color="#00319D" />
                                 </View>
                                 <Text style={styles.routeText}>Customer Support</Text>
                             </View>
@@ -170,7 +170,7 @@ const Drawer = (props) => {
 
                             <View style={styles.routeTextView}>
                                 <View style={styles.routeTextIconView}>
-                                    <Icon name="file-text" size={17} color="#7485FF" />
+                                    <Icon name="file-text" size={17} color="#00319D" />
                                 </View>
                                 <Text style={styles.routeText}>Terms of Use &amp; Privacy Policy</Text>
                             </View>

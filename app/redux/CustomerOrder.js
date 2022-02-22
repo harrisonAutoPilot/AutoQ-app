@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getOrders, placeOrder, reOrder} from "@Request/CustomerOrder";
+import {getCustomerOrders, placeOrder, reOrder} from "@Request/CustomerOrder";
 
 export const orderSlice = createSlice({
     name: "order",
@@ -21,19 +21,20 @@ export const orderSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(getOrders.pending, state => {
+            .addCase(getCustomerOrders.pending, state => {
                 state.status = "pending";
                 state.errors = {};
                 state.orders = [];
                 state.loaded = "pending"
             })
-            .addCase(getOrders.fulfilled, (state, action) => {
+            .addCase(getCustomerOrders.fulfilled, (state, action) => {
+                console.log(action.payload)
                 state.orders = action.payload;
                 state.status = "success";
                 state.errors = {};
                 state.loaded = "success";
             })
-            .addCase(getOrders.rejected, (state, { payload }) => {
+            .addCase(getCustomerOrders.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
                 state.orders = [];

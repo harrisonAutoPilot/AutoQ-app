@@ -12,12 +12,13 @@ import SplashScreen from "@Screen/Splash";
 import Login from "@Screen/Login";
 import Home from "@Screen/Home";
 import DrawerNavigator from "./Drawer";
+import Deals from "@Screen/Deals";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createNativeStackNavigator();
 const LoginStack = createNativeStackNavigator();
 const SplashStack = createNativeStackNavigator();
-const NetworkStack = createStackNavigator();
+// const NetworkStack = createStackNavigator();
 
 const SplashStackNavigator = () => {
     return (
@@ -34,6 +35,9 @@ const RootStackNavigator = () => {
         <>
             <RootStack.Group>
                 <RootStack.Screen name="Root" component={DrawerNavigator} />
+            </RootStack.Group>
+            <RootStack.Group>
+                <RootStack.Screen name="Deals" component={Deals} />
             </RootStack.Group>
 
         </>

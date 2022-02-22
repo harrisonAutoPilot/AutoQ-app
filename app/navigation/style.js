@@ -7,22 +7,23 @@ export default styles = StyleSheet.create({
         lineHeight: 16,
         letterSpacing: 0.2,
         fontWeight: "400",
-        paddingBottom: 20,
+        paddingBottom: 15,
 
     },
     iconStyle: {
-        paddingTop: 15,
+        paddingTop: 10,
         alignItems: "center",
-        marginBottom: 5
+        // marginBottom: 5
     },
     tabLableTop:{
         position: "absolute",
-        top: Platform.OS === "android" ? -1 : -4,
+        top: Platform.OS === "android" ? -6 : -9,
         borderTopColor: "#3858CF",
         borderTopWidth: 4,
         width: 60,
         left: -20,
         alignItems: "center"
-    }
+    },
+
 
 })
