@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         fontSize: 22,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 22,
         color: "#fff",
         letterSpacing: 0.2,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     },
     cardSmText: {
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "#fff",
         letterSpacing: 0.2,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     titleCover: {
         fontSize: 18,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "#00319D",
         letterSpacing: 0.2,

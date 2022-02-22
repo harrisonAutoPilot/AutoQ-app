@@ -9,7 +9,6 @@ import Home from "@Screen/Home";
 
 const Tab = createBottomTabNavigator();
 
-
 export default TabHomeNavigator = () => {
 
     const tabBarListeners = ({ navigation, route }) => ({
@@ -22,6 +21,7 @@ export default TabHomeNavigator = () => {
             );
         }
     });
+    
     return (
         <Tab.Navigator screenOptions={{
             headerShown: false,

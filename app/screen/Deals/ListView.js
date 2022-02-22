@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import styles from "./style";
 
+
+// Get Random dark blue and orange colors
 const getRandomColor = (id) => {
     let ids = parseInt(id)
     let shade;

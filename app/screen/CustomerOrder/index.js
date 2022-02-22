@@ -34,7 +34,6 @@ const CustomerOrder = (props) => {
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
     const { status, errors, orders, update, loaded } = useSelector((state) => state.order);
-    console.log(orders)
 
     const toastConfig = {
         error: () => (
@@ -204,7 +203,7 @@ const CustomerOrder = (props) => {
 
                         <View style={styles.exchangeCover}>
                             <Text style={styles.allOrderText}> All Orders</Text>
-                            <TouchableOpacity style={styles.exchangeClickk} onPress={redirectToSort}>
+                            <TouchableOpacity style={styles.exchangeClickk} onPress={orders.length ? redirectToSort :  null}>
                             <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
                                 <Text style={styles.exchangeText}>Sort by</Text>
                             </TouchableOpacity>
@@ -222,7 +221,7 @@ const CustomerOrder = (props) => {
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={[]}
+                        data={orders}
                         renderItem={ListView}
                         // ListEmptyComponent={MyOrderPlaceholder}
                         keyExtractor={item => item.id}

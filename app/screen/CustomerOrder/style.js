@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingBottom: 10,
         paddingRight: 15,
-        backgroundColor:  '#00319D',
+        backgroundColor: '#00319D',
     },
     exchangeImg: {
         width: 13,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     },
     exchangeClickk: {
         flexDirection: 'row',
-        backgroundColor:  '#00319D',
+        backgroundColor: '#00319D',
         borderRadius: 50,
         paddingRight: 10,
         borderWidth: 0.3,
@@ -367,6 +367,43 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         textAlign: "center",
         marginLeft: 20,
+    },
+    emptyCover: {
+        backgroundColor: '#f2f3f4',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: wp('100%'),
+        textAlign: 'center',
+    },
+    emptyCoverOrder: {
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: wp('95%'),
+        textAlign: 'center',
+        justifyContent: "center",
+        height: "80%"
+    },
+    imgCoverBigOrder: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 40,
+        marginBottom: 25,
+    },
+
+    emptyCartImg: {
+        width: 85,
+        height: 85,
+        resizeMode: 'contain',
+    },
+    emptyTextBig: {
+        fontFamily: "Urbanist-Regular",
+        fontSize: 22,
+        lineHeight: 20,
+        color: "#757575",
+        letterSpacing: 0.1,
+        fontWeight: "600",
+        paddingBottom: 10,
     },
 });
 
