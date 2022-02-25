@@ -7,8 +7,15 @@ import {
 const styles = StyleSheet.create({
 
     mainBody: {
-        paddingBottom: 12,
         paddingTop: 10,
+        backgroundColor: "#00319D"
+    },
+    headerTitle:{
+        color: "#fff", 
+        textAlign: "center",
+        fontFamily: "Urbanist-SemiBold",
+        fontSize: 18,
+        lineHeight: 24
     },
     headerIconView: {
         flexDirection: "row",
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
     btnText: {
         color: '#fff',
         fontSize: 18,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         fontWeight: Platform.OS === "ios" ? "600" : "600",
         letterSpacing: 0.1,

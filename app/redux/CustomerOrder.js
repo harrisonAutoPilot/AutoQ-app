@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getCustomerOrders, placeOrder, reOrder} from "@Request/CustomerOrder";
+import {getCustomerOrders, placeOrder, reOrder, trackOrder} from "@Request/CustomerOrder";
 
 export const orderSlice = createSlice({
     name: "order",
@@ -28,7 +28,6 @@ export const orderSlice = createSlice({
                 state.loaded = "pending"
             })
             .addCase(getCustomerOrders.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.orders = action.payload;
                 state.status = "success";
                 state.errors = {};
@@ -76,6 +75,24 @@ export const orderSlice = createSlice({
                 state.update = "failed";
                 state.errors = payload;
                 state.orderDetail = []
+            })
+
+            builder
+            .addCase(trackOrder.pending, state => {
+                state.trackOrderStatus = "pending";
+                state.errors = {};
+                state.trackOrderList = []
+            })
+            .addCase(trackOrder.fulfilled, (state, action) => {
+                state.trackOrderStatus = "success";
+                state.errors = {}; 
+                state.trackOrderList = action.payload
+
+            })
+            .addCase(trackOrder.rejected, (state, { payload }) => {
+                state.trackOrderStatus = "failed";
+                state.errors = payload;
+                state.trackOrderList = []
             })
     }
 

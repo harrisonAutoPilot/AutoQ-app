@@ -19,6 +19,7 @@ const Home = (props) => {
     const { agent} = useSelector((state) => state.agent);
 
     const redirectToDeals = () => props.navigation.navigate("Deals");
+    const openNotification = () => props.navigation.navigate("Notification");
 
     useEffect(() => {
         if( (date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12){
@@ -38,7 +39,7 @@ const Home = (props) => {
     return (
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
-                <Header  drawer={openDrawer}/>
+                <Header  drawer={openDrawer} notify={openNotification}/>
                 <View style={styles.agentFaceCover}>
                     <Image style={styles.agentImg} source={require("@Assets/image/agentFace.png")} />
                 </View>

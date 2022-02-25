@@ -16,12 +16,11 @@ const styles = StyleSheet.create({
         outline:'none',
     },
     btnText:{
-        fontFamily:"Urbanist-Regular",
+        fontFamily:"Urbanist-SemiBold",
         fontSize: 16,
         lineHeight: 24,
         color: "#fff",
         letterSpacing: 0.1,
-        fontWeight: "400",
         textAlign: "center"
     },
     

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
     searchSection: {
         flexDirection: 'row',
-        backgroundColor: '#00319D',
+        backgroundColor: 'rgba(255, 255, 255, 0.02)',
         marginHorizontal: 16,
         borderRadius: 8,
         borderColor: "rgba(255, 255, 255, 0.3)",
@@ -86,19 +86,17 @@ const styles = StyleSheet.create({
     exchangeText: {
         color: '#fff',
         fontSize: 12,
-        fontFamily: "Urbanist-Regular",
-        lineHeight: 20,
-        fontWeight: "600",
-        letterSpacing: 0.1,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 16,
+        letterSpacing: 0.2,
         marginRight: 5,
 
     },
     allOrderText: {
         color: '#fff',
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        fontWeight: "600",
         letterSpacing: 0.1,
         marginLeft: 10,
         alignSelf: "center"
@@ -160,6 +158,9 @@ const styles = StyleSheet.create({
         elevation: 0,
         shadowColor: '#52006A',
     },
+    cardUpDown:{
+        marginTop: 4
+    },
 
     cardUpTop: {
         width: wp('85%'),
@@ -170,17 +171,15 @@ const styles = StyleSheet.create({
     upTextOne: {
         color: '#424242',
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        fontWeight: "600",
         letterSpacing: 0.1,
     },
     upTextTwo: {
         color: '#3858CF',
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        fontWeight: "600",
         letterSpacing: 0.1,
 
     },
@@ -202,9 +201,8 @@ const styles = StyleSheet.create({
     midTextOne: {
         color: '#424242',
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        fontWeight: "600",
         letterSpacing: 0.1,
     },
     cardMidDown: {
@@ -221,6 +219,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontWeight: "400",
         letterSpacing: 0.1,
+        textTransform: "capitalize"
     },
     cardDownCover: {
         flexDirection: 'row',
@@ -240,21 +239,10 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         height: 30,
     },
-    StatusCover: {
-
-        backgroundColor: '#E9EBF9',
-        paddingTop: 4,
-        paddingBottom: 4,
-        paddingLeft: 16,
-        paddingRight: 16,
-        borderRadius: 20,
-        height: 30,
-
-    },
     statusText: {
         color: '#469D00',
-        fontSize: 12,
-        fontFamily: "Urbanist-Regular",
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         fontWeight: "600",
         letterSpacing: 0.1,
@@ -276,9 +264,8 @@ const styles = StyleSheet.create({
     reOrderText: {
         color: '#757575',
         fontSize: 11,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         lineHeight: 20,
-        fontWeight: "400",
         letterSpacing: 0.1,
         textTransform: 'uppercase',
     },
@@ -291,9 +278,6 @@ const styles = StyleSheet.create({
     blueColor: {
         backgroundColor: '#00319D',
     },
-    // touchstyle: {
-    //     backgroundColor: '#E3F6CF',
-    // },
     body: {
         backgroundColor: "#fff",
         height: Platform.OS === "android" ? "40%" : "35%",

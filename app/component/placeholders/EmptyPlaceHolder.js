@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 
 import styles from './style';
 
-export default AddOrderEmpty = () => (
+export default EmptyPlaceHolder = () => (
   
     <View style={styles.emptyCoverOrder}>
         <View style={styles.imgCoverBigOrder}>
@@ -12,4 +12,4 @@ export default AddOrderEmpty = () => (
         <Text style={styles.emptyTextBig}>Nothing here yet</Text>
 
     </View>
-    );
+);

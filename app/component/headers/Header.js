@@ -9,14 +9,8 @@ import styles from "./style";
 const Header = (props) => {
     return (
         <View>
-            <StatusBar barStyle="light-content" backgroundColor='#002C80' hidden={false} />
-            <LinearGradient
-                colors={['#00319D', '#00319D']}
-                style={styles.container}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={props.mainBody}
-            >
+            <StatusBar barStyle="light-content" backgroundColor='#00319D' hidden={false} />
+            <View style={styles.mainBody}>
                 <View style={styles.header}>
                     <SafeAreaView>
                         <View style={[styles.innerMainHeader, styles.headerIconView, props.bottom]}>
@@ -25,11 +19,11 @@ const Header = (props) => {
                             </TouchableOpacity>
                             {props.title ?
                                 <View style={styles.browseView}>
-                                    <Text style={[styles.modalminiTitle, { color: "#fff", textAlign: "center" }]}>{props.title}</Text>
+                                    <Text style={[styles.headerTitle]}>{props.title}</Text>
                                 </View> : null
                             }
                             <View style={styles.headerSubIconView}>
-                                <TouchableOpacity onPress={props.favourite}>
+                                <TouchableOpacity onPress={props.notify}>
                                     <View>
                                         <FIcon name="bell" color="#fff" size={20} />
                                     </View>
@@ -44,7 +38,7 @@ const Header = (props) => {
                     </SafeAreaView>
                     {props.children}
                 </View>
-            </LinearGradient>
+            </View>
         </View>
     )
 };

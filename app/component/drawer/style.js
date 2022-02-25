@@ -44,19 +44,17 @@ export default styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "rgba(0, 0, 0, 1)",
         letterSpacing: 0.1,
-        fontWeight: "600",
     },
     headerTitlee: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "#fff",
-        letterSpacing: 0.1,
-        fontWeight: "600",
+        letterSpacing: 0.1
     },
     headerTitleInnerView: {
         marginTop: 6,

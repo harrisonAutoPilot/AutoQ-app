@@ -19,3 +19,9 @@ export const reOrder = createAsyncThunk("order/reorder",
       const Axios = await AxiosBase();
       return apiRequest(Axios.post('api/v1/reorder', details), thunkAPI)
    });
+
+export const trackOrder = createAsyncThunk("order/trackorder",
+   async (id, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.get(`api/v1/trackorder/${id.id}`), thunkAPI)
+   });

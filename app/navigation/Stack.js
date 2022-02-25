@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getUser } from "@Request/Auth";
@@ -10,9 +9,11 @@ import { logout } from "@Store/Auth";
 // Routes
 import SplashScreen from "@Screen/Splash";
 import Login from "@Screen/Login";
-import Home from "@Screen/Home";
+import CustomerOrderDetails from "@Screen/CustomerOrderDetails";
 import DrawerNavigator from "./Drawer";
 import Deals from "@Screen/Deals";
+import Notification from "@Screen/Notification";
+import TrackOrder from "@Screen/TrackOrder";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createNativeStackNavigator();
@@ -38,6 +39,16 @@ const RootStackNavigator = () => {
             </RootStack.Group>
             <RootStack.Group>
                 <RootStack.Screen name="Deals" component={Deals} />
+            </RootStack.Group>
+
+            <RootStack.Group>
+                <RootStack.Screen name="OrderDetails" component={CustomerOrderDetails} />
+                <RootStack.Screen name="TrackOrder" component={TrackOrder} />
+            </RootStack.Group>
+
+            <RootStack.Group>
+                <RootStack.Screen name="Notification" component={Notification} />
+                {/* <RootStack.Screen name="NotificationDetail" component={NotificationDetail} /> */}
             </RootStack.Group>
 
         </>

@@ -8,13 +8,12 @@ import Toast from 'react-native-toast-message';
 
 import Modal from "./SortBy";
 import commafy from "@Helper/Commafy";
-import { InputField, COHeader as Header } from "@Component";
+import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
 import { getCustomerOrders } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
-import AddOrderEmpty from "./EmptyPlaceHolder";
 // import MyOrderPlaceholder from "./MyOrderPlaceholder";
 
 const CustomerOrder = (props) => {
@@ -27,13 +26,10 @@ const CustomerOrder = (props) => {
     const [loader, setLoader] = useState(false);
     const flatListRef = useRef()
 
-    const browse = () => props.navigation.navigate("Home", {
-        screen: 'Browse',
-    });
-
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
-    const { status, errors, orders, update, loaded } = useSelector((state) => state.order);
+    const { errors, orders, update, loaded } = useSelector((state) => state.order);
+    console.log(orders)
 
     const toastConfig = {
         error: () => (
@@ -50,7 +46,7 @@ const CustomerOrder = (props) => {
     useFocusEffect(
         useCallback(() => {
             dispatch(getCustomerOrders());
-            // return () => dispatch(cleanup());
+            return () => dispatch(cleanup());
         }, [])
     );
 
@@ -136,7 +132,7 @@ const CustomerOrder = (props) => {
     const reOrders = (id) => {
         const details = { order_group_id: id };
         setLoader(true)
-        dispatch(reOrder(details));
+        // dispatch(reOrder(details));
     };
 
     const dismissKeyboard = () => Keyboard.dismiss();
@@ -149,7 +145,7 @@ const CustomerOrder = (props) => {
                 <View style={styles.cardUpCover}>
                     <View style={styles.cardUpTop}>
                         <Text style={styles.upTextOne}>Order No: {item.ref_no}</Text>
-                        <Text style={styles.upTextTwo}>₦ {item.total_amount ? commafy(item.total_amount) : 0}</Text>
+                        <Text style={styles.upTextTwo}>₦{item.total_amount ? commafy(item.total_amount) : 0}</Text>
                     </View>
                     <View style={styles.cardUpDown}>
                         <Text style={styles.downTextOne}>{item.created_at.substring(0, 10).split('-').reverse().join('-')}</Text>
@@ -160,11 +156,12 @@ const CustomerOrder = (props) => {
                         <Text style={styles.midTextOne}>{item.orders.length} {item.orders.length > 1 ? "Items" : "Item"}</Text>
                     </View>
                     <View style={styles.cardMidDown}>
-                        <Text style={styles.midTextTwo} numberOfLines={1}>{item.orders[0]?.product.name}.....</Text>
+                        <Text style={styles.midTextTwo} numberOfLines={1}>{item.orders[0]?.product.name} .....</Text>
                     </View>
                 </View>
 
                 <View style={styles.cardDownCover}>
+
                     <View style={styles.StatusCover}>
                         <Text style={styles.statusText}>delivered</Text>
                     </View>
@@ -216,12 +213,12 @@ const CustomerOrder = (props) => {
             {err ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.bottomCover}>
-                {!orders.length && loaded === "success" ?
-                    <AddOrderEmpty browse={browse} />
+                {orders.orders && !orders.orders.length && loaded === "success" ?
+                    <EmptyPlaceHolder />
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={orders}
+                        data={orders.orders}
                         renderItem={ListView}
                         // ListEmptyComponent={MyOrderPlaceholder}
                         keyExtractor={item => item.id}

@@ -53,12 +53,11 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
     smText: {
-        fontSize: 18,
-        fontFamily: "Urbanist-Regular",
+        fontSize: 22,
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 28,
         color: "#fff",
         letterSpacing: 0.2,
-        fontWeight: "600",
     },
     bgText: {
         fontSize: 28,
@@ -87,11 +86,10 @@ const styles = StyleSheet.create({
     },
     loginText: {
         fontSize: 20,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 28,
         color: "#424242",
         letterSpacing: 0.2,
-        fontWeight: "600"
     },
 
 
@@ -108,11 +106,10 @@ const styles = StyleSheet.create({
     },
     forgotPswTitle: {
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         color: "#757575",
         letterSpacing: 0.1,
-        fontWeight: "600",
         textAlign: "center"
     },
     forgotPswdView: {
@@ -173,12 +170,9 @@ const styles = StyleSheet.create({
     inputPinHolder: {
         marginTop: 25,
     },
-    registerInputPinHolder: {
-        // marginTop: 20,
-    },
     labelView: {
         position: "absolute",
-        top: -10,
+        top: -7,
         left: 10,
         backgroundColor: "#fff",
         paddingHorizontal: 5,
@@ -186,11 +180,10 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 12,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 16,
         color: "#616161",
         letterSpacing: 0.2,
-        fontWeight: "400"
     },
     label2: {
         fontSize: 12,
@@ -293,12 +286,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: hp('75%'),
         left: wp('50%')
-        // paddingTop: 10
-    },
-    registerImgView: {
-        // position: 'absolute',
-        // top: hp('67%'),
-        // left: Dimensions.get("window").width / 7
         // paddingTop: 10
     },
     afriCover: {

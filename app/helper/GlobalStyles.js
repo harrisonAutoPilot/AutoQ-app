@@ -7,11 +7,10 @@ import {
 export default styles = StyleSheet.create({
     title: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 22,
         color: "#212121",
-        letterSpacing: 0.1,
-        fontWeight: "600"
+        letterSpacing: 0.1
     },
     mainBody: {
         backgroundColor: "#fff",

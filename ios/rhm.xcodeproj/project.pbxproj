@@ -32,6 +32,7 @@
 		2FB0FF28B9794C82BADDC988 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B34CE3F5BB74CDCA46815E3 /* Octicons.ttf */; };
 		E59F309F6F204DE79860FF91 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBF4E4F518BB4242AEF6658B /* SimpleLineIcons.ttf */; };
 		2A5BBED439A944F9B41172F3 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09E2B46863AF4A71968B88DB /* Zocial.ttf */; };
+		AC13A30A43144D40A3687273 /* Urbanist-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A2B2DD0446E454194207BEA /* Urbanist-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		6B34CE3F5BB74CDCA46815E3 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		FBF4E4F518BB4242AEF6658B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		09E2B46863AF4A71968B88DB /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6A2B2DD0446E454194207BEA /* Urbanist-Medium.ttf */ = {isa = PBXFileReference; name = "Urbanist-Medium.ttf"; path = "../app/asset/font/Urbanist-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +209,7 @@
 				6B34CE3F5BB74CDCA46815E3 /* Octicons.ttf */,
 				FBF4E4F518BB4242AEF6658B /* SimpleLineIcons.ttf */,
 				09E2B46863AF4A71968B88DB /* Zocial.ttf */,
+				6A2B2DD0446E454194207BEA /* Urbanist-Medium.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				2FB0FF28B9794C82BADDC988 /* Octicons.ttf in Resources */,
 				E59F309F6F204DE79860FF91 /* SimpleLineIcons.ttf in Resources */,
 				2A5BBED439A944F9B41172F3 /* Zocial.ttf in Resources */,
+				AC13A30A43144D40A3687273 /* Urbanist-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

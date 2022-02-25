@@ -6,6 +6,7 @@ import { Platform, View } from "react-native"
 
 import styles from "./style";
 import Home from "@Screen/Home";
+import Catalogue from "@Screen/Catalogue";
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +66,7 @@ export default TabHomeNavigator = () => {
             }}
                 listeners={tabBarListeners}
             />
-            <Tab.Screen name="Catalogue" component={Home} options={{
+            <Tab.Screen name="Catalogue" component={Catalogue} options={{
                 tabBarLabel: 'Catalogue',
                 tabBarBadgeStyle: styles.badgeStyle,
                 tabBarIcon: ({ color, focused }) => (
