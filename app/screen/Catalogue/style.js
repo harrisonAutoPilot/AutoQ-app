@@ -10,7 +10,7 @@ export default styles = StyleSheet.create({
         paddingTop: 24,
         backgroundColor: "#fff",
         height: "100%",
-        paddingHorizontal: 16,
+        paddingHorizontal: 12,
         flex: 1
     },
     main:{
@@ -18,7 +18,7 @@ export default styles = StyleSheet.create({
         flexGrow: 1
     },
     listContainer: {
-        width: wp('44%'),
+        width: wp('45%'),
         marginTop: 15,
         borderRadius: 16,
         backgroundColor: '#F5F5F5',
@@ -47,7 +47,8 @@ export default styles = StyleSheet.create({
         borderTopColor: "#EEEEEE"
     },
     listContainerInnerTextView: {
-      width: "80%"
+      width: "85%",
+      marginRight: 10
     },
     image: {
         width: 100,
@@ -60,7 +61,8 @@ export default styles = StyleSheet.create({
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "#616161",
-        letterSpacing: 0.1
+        letterSpacing: 0.1,
+        textTransform: "capitalize"
     },
     elevation: {
         elevation: 0.6,
@@ -91,9 +93,9 @@ export default styles = StyleSheet.create({
     },
     inputField: {
         width: wp('92%'),
-        color: '#424242',
+        color: '#fff',
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         lineHeight: 20,
         letterSpacing: 0.25,
         fontWeight: "400",

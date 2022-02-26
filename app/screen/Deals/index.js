@@ -36,7 +36,6 @@ const Deals = (props) => {
             
             <View style={styles.mainBody}>
                
-
                 <Animated.FlatList
                     onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
                     showsVerticalScrollIndicator={false}

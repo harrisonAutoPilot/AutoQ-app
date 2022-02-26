@@ -14,6 +14,7 @@ import DrawerNavigator from "./Drawer";
 import Deals from "@Screen/Deals";
 import Notification from "@Screen/Notification";
 import TrackOrder from "@Screen/TrackOrder";
+import Product from "@Screen/Product";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createNativeStackNavigator();
@@ -48,6 +49,11 @@ const RootStackNavigator = () => {
 
             <RootStack.Group>
                 <RootStack.Screen name="Notification" component={Notification} />
+                {/* <RootStack.Screen name="NotificationDetail" component={NotificationDetail} /> */}
+            </RootStack.Group>
+
+            <RootStack.Group>
+                <RootStack.Screen name="Product" component={Product} />
                 {/* <RootStack.Screen name="NotificationDetail" component={NotificationDetail} /> */}
             </RootStack.Group>
 

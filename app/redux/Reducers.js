@@ -6,6 +6,7 @@ import authReducer from "./Auth";
 import agentReducer from "./Agent";
 import orderReducer from "./CustomerOrder";
 import categoryReducer from "./Category";
+import productReducer from "./Product";
 
 const persistConfig = {
     key: 'root',
@@ -22,5 +23,6 @@ export default combineReducers({
     auth: persistedReducer,
     agent: agentReducer,
     order: orderReducer,
-    category: categoryReducer
+    category: categoryReducer,
+    product: productReducer
 });

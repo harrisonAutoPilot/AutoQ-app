@@ -13,7 +13,7 @@ const Header = (props) => {
             <View style={styles.mainBody}>
                 <View style={styles.header}>
                     <SafeAreaView>
-                        <View style={[styles.innerMainHeader, styles.headerIconView, props.bottom]}>
+                        <View style={[ styles.headerIconView, props.bottom]}>
                             <TouchableOpacity style={styles.headerSubIconMenuView} onPress={props.drawer}>
                                 <Icon name="menu" color="#fff" size={24} />
                             </TouchableOpacity>

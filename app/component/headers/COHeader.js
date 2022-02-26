@@ -12,9 +12,13 @@ const NavHeader = (props) => {
 				<TouchableOpacity onPress={props.onPress} >
 					<Image source={require("@Assets/image/leading-icon.png")} style={globalStyle.backImg} />
 				</TouchableOpacity>
-				<View style={styles.titleCover}>
-					<Text style={props.styles === undefined ? styles.btnText : props.styles}>{props.title}</Text>
+				<View style={[styles.titleCover, props.titleCover]}>
+					<Text style={props.styles === undefined ? styles.btnText : props.styles} numberOfLines={2}>{props.title}</Text>
 				</View>
+				<View>
+				{props.children}
+				</View>
+			
 				</View>
 			</SafeAreaView>
 		</View>

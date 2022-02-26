@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import { useFocusEffect } from '@react-navigation/native';
+import { searchProducts } from "@Request/Product";
 
 import { InputField, Header, EmptyPlaceHolder } from "@Component";
 import { browseCategories } from "@Request/Category";
@@ -11,8 +12,8 @@ import globalStyle from "@Helper/GlobalStyles";
 
 const Catalogue = (props) => {
     const dispatch = useDispatch();
-    const [search, setSearch] = useState("");
-    const [result, setResult] = useState([]);
+    const [searchCategory, setSearchCategory] = useState("");
+    const [searchCategoryArray, setSearchCategoryArray] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [err, setErr] = useState("");
     const flatListRef = useRef()
@@ -20,28 +21,28 @@ const Catalogue = (props) => {
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
     const { status, errors, categories } = useSelector((state) => state.category);
+    const { searchedProducts } = useSelector((state) => state.product);
+
+    console.log(searchedProducts, "hooooo")
     const openDrawer = () => props.navigation.openDrawer();
 
     useFocusEffect(
         useCallback(() => {
             dispatch(browseCategories())
-
         }, [])
     );
 
     useEffect(() => {
-        if (search.length > 0) {
-            filterCatalogue();
+        if (searchCategory.length) {
+            searchCategoryItem();
+        } else if (!searchCategory.length) {
+            setSearchCategoryArray([]);
         }
-    }, [search.length]);
+    }, [searchCategory]);
 
-    const filterCatalogue = () => {
-        let searched = orders.filter(val => {
-            if (val.ref_no !== null && val.ref_no.toLowerCase().includes(search.toLowerCase())) {
-                return val
-            }
-        });
-        return setResult(searched)
+    const searchCategoryItem = () => {
+        dispatch(searchProducts(searchCategory.toLowerCase()))
+        setSearchCategoryArray(searchedProducts)
     };
 
     const wait = (timeout) => {
@@ -54,6 +55,9 @@ const Catalogue = (props) => {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
+    const getAllProducts = (category, display_name) => {
+        props.navigation.navigate("Product", { category, display_name })
+    }
 
     const dismissKeyboard = () => Keyboard.dismiss();
     const goToCat = () => props.navigation.navigate("Home");
@@ -85,14 +89,13 @@ const Catalogue = (props) => {
                         <Icon name="search" color="rgba(255, 255, 255, 0.8)" size={24} style={styles.searchIcon} />
                         <InputField
                             style={styles.inputField}
-                            value={search}
+                            value={searchCategory}
                             placeholder="Search product name"
                             placeholderTextColor="rgba(255, 255, 255, 0.8)"
-                            onChangeText={(text) => setSearch(text)}
+                            onChangeText={(text) => setSearchCategory(text)}
                         />
                     </View>
                 </View>
-
 
             </TouchableWithoutFeedback>
             </Header>
@@ -105,7 +108,7 @@ const Catalogue = (props) => {
                 </View> : null}
 
                 <FlatList
-                    data={categories}
+                    data={ searchCategoryArray.length ? searchCategoryArray : categories}
                     keyExtractor={item => item.id}
                     // ListEmptyComponent={CategoryCardPlaceholder}
                     renderItem={ListView}

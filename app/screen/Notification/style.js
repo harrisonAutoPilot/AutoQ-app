@@ -11,8 +11,9 @@ export default styles = StyleSheet.create({
 
     },
     body: {
-        backgroundColor: "#fff",
-        marginBottom: 20
+        backgroundColor: "#00319D",
+        marginBottom: 5,
+        paddingBottom: 10
     },
     headerText:{
         fontSize: 22,
@@ -30,6 +31,7 @@ export default styles = StyleSheet.create({
         flex: 1,
         flexGrow: 1,
         height: "100%",
+        backgroundColor: "#fff"
     },
     miniHeaderView: {
         flexDirection: "row",
@@ -40,8 +42,9 @@ export default styles = StyleSheet.create({
         borderColor: "rgba(224, 224, 224, 1)",
         borderWidth: 1,
         paddingVertical: 5,
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
         marginRight: 6,
+        backgroundColor: "#FAFAFA"
     },
     subHeading: {
         flexDirection: "row",
@@ -51,10 +54,11 @@ export default styles = StyleSheet.create({
     mainBody: {
         paddingHorizontal: 16,
         flex: 1,
+        paddingTop: 15
     },
     subHeadingTitle: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "rgba(33, 33, 33, 1)",
         letterSpacing: 0.3,
@@ -62,17 +66,15 @@ export default styles = StyleSheet.create({
     },
     text: {
         fontSize: 12,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 16,
         color: "#424242",
-        letterSpacing: 0.2,
-        fontWeight: "600"
+        letterSpacing: 0.2
     },
     listContainer:{
         borderWidth: 1,
-        borderColor: "#EEEEEE",
         paddingVertical: 24,
-        backgroundColor: "#fff",
+        // backgroundColor: "#fff",
         paddingHorizontal: 16,
         marginTop: 12,
         borderRadius: 12,
@@ -83,11 +85,11 @@ export default styles = StyleSheet.create({
     listIcon:{
         alignItems:'center',
         backgroundColor: "#F0F7FD",
-        borderRadius: 40,
-        paddingVertical: 16,
-        height: 47,
+        borderRadius: 20,
+        height: 40,
+        width: 40,
         alignSelf: "center",
-        paddingHorizontal: 15
+        justifyContent: "center"
     },
     listTextView:{
         marginLeft: 16,
@@ -96,17 +98,16 @@ export default styles = StyleSheet.create({
     },
     listTitle: {
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        color: "#212121",
         letterSpacing: 0.1,
         fontWeight: "600",
     },
     desc:{
         fontSize: 11,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         lineHeight: 16,
-        color: "#757575",
+        color: "#424242",
         letterSpacing: 0.2,
     },
     descView:{
@@ -119,10 +120,15 @@ export default styles = StyleSheet.create({
         alignItems: "center"
     },
     thrashIcon:{
-        marginLeft: 20
+        marginLeft: 10,
+        alignSelf: "flex-start",
+        marginTop: 3
     },
     color: {
         color: "#9E9E9E"
+    },
+    margin:{
+        marginLeft: 5
     }
     
 })

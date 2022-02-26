@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         paddingTop: Platform.OS === "ios" ? 10 : 10,
+        // alignItems: "center",
+        // justifyContent: "center"
     },
     headerSubIconView: {
         flexDirection: "row",
@@ -42,15 +44,17 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         height: 40,
-        paddingLeft: 19,
-        marginTop: 10
-
+        paddingHorizontal: 19,
+        marginTop: 10,
+        justifyContent: "space-between",
+        width: "90%"
     },
     titleCover: {
-        width: wp('79%'),
+        width: wp('75%'),
         alignItems: "center",
         alignSelf: "center",
-        justifyContent: "center"
+        paddingHorizontal: 20
+        // justifyContent: "space-between"
     },
     btnText: {
         color: '#fff',
@@ -59,7 +63,8 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontWeight: Platform.OS === "ios" ? "600" : "600",
         letterSpacing: 0.1,
-        textAlign: "center"
+        textAlign: "center",
+        textTransform: "capitalize"
     },
 
 });
