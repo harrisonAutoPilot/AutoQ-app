@@ -275,21 +275,16 @@ const styles = StyleSheet.create({
     },
     elevation: {
         elevation: 0,
-        // shadowColor: '#52006A',
     },
 
     productTitle: {
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "UrbanistMedium",
         lineHeight: 20,
         color: "gray",
         letterSpacing: 0.1,
-        fontWeight: "600"
     },
     priceView: {
-        // position:'absolute',
-        // top: 50,
-        // paddingBottom:10,
         paddingTop: 8
     },
     priceTitle: {
@@ -335,17 +330,21 @@ const styles = StyleSheet.create({
         width: 130,
         height: "90%",
         alignSelf: "center",
-        // resizeMode:'contain',
-        // marginTop:-40,
-        // marginBottom:-30,
     },
     modalTitle: {
         fontSize: 20,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 28,
         color: "#212121",
         letterSpacing: 0.2,
-        fontWeight: "400",
+        textAlign: "center"
+    },
+    modalTitle2: {
+        fontSize: 16,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 24,
+        color: "#757575",
+        letterSpacing: 0.1,
         textAlign: "center"
     },
     modalMiniBody: {
@@ -378,20 +377,18 @@ const styles = StyleSheet.create({
     },
     modalTitleView: {
         backgroundColor: "#fff",
-        // marginTop:20,
-        // paddingBottom: 10,
-        paddingHorizontal: 35.75
     },
     modalminiTitle: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "#757575",
         letterSpacing: 0.1,
-        fontWeight: "600"
     },
     modalminiSecondTitle: {
-        color: "#212121"
+        color: "#212121",
+        textTransform: "capitalize",
+        fontFamily: "Urbanist-SemiBold"
     },
     modalminiSecondView: {
         marginBottom: 8
@@ -407,11 +404,10 @@ const styles = StyleSheet.create({
     },
     modalDiscountText: {
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         lineHeight: 20,
         color: "#00319D",
         letterSpacing: 0.3,
-        fontWeight: "400",
         textAlign: "right"
     },
     modalDiscountTextView: {
@@ -444,11 +440,10 @@ const styles = StyleSheet.create({
     },
     amountText: {
         fontSize: 22,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         lineHeight: 30,
         color: "#469D00",
         letterSpacing: 0.3,
-        fontWeight: "600",
         textAlign: "right"
     },
     increase: {
@@ -474,10 +469,9 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     modalHeartIconView: {
-        flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 5
+        marginTop: 15,
+        paddingBottom: 15
     },
     modalHeartInnerIconView: {
         flexDirection: "row",
@@ -488,20 +482,17 @@ const styles = StyleSheet.create({
         marginRight: 6
     },
     modalBtnView: {
-        paddingVertical: 15,
-        paddingHorizontal: 15,
-        backgroundColor: "rgba(124, 207, 36, 1)",
+        paddingVertical: 16,
+        backgroundColor: "#3858CF",
         borderRadius: 100,
         flexDirection: "row",
-        alignItems: "center",
-        marginLeft: 10,
+        alignContent: "center",
+        width: "100%",
+        justifyContent: "center"
     },
     modalBtn: {
-        // paddingVertical: 16,
-        // paddingHorizontal: 44,
         backgroundColor: "rgba(124, 207, 36, 1)",
         paddingHorizontal: 10
-        // borderRadius: 100
     },
     modalBtnOverlay: {
         paddingHorizontal: 10
@@ -522,12 +513,11 @@ const styles = StyleSheet.create({
         marginBottom: -12,
     },
     modalBtnText: {
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         fontSize: 14,
         lineHeight: 20,
-        color: "rgba(33, 33, 33, 1)",
+        color: "#fff",
         letterSpacing: 0.1,
-        fontWeight: "600"
     },
     errModalView: {
         flex: 1,
@@ -628,7 +618,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     topModalView: {
-        height: "25%"
+        height: "24%"
     },
     topModalImageView: {
         height: 170,

@@ -31,8 +31,7 @@ const Notification = (props) => {
 
     return (
         <View style={styles.view}>
-            <Header title="Notification" onPress={goBack} styleView={styles.body}/>
-            
+            <Header title="Notification" onPress={goBack} styleView={styles.body}/> 
             <View style={styles.mainBody}>
                 <View style={styles.subHeading}>
                     <View>

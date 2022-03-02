@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 
     mainBody: {
         paddingTop: 10,
-        backgroundColor: "#00319D"
+        backgroundColor: "#00319D",
     },
     headerTitle:{
         color: "#fff", 
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         paddingTop: Platform.OS === "ios" ? 10 : 10,
-        // alignItems: "center",
-        // justifyContent: "center"
+        borderTopWidth: 1,
+        borderTopColor: "rgba(0,0,0,0.1)"
     },
     headerSubIconView: {
         flexDirection: "row",

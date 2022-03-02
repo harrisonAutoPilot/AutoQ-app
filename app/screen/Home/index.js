@@ -19,7 +19,9 @@ const Home = (props) => {
     const { agent} = useSelector((state) => state.agent);
 
     const redirectToDeals = () => props.navigation.navigate("Deals");
+    const redirectToCustomerOrder = () => props.navigation.navigate("CustomerOrder");
     const openNotification = () => props.navigation.navigate("Notification");
+    const openCart = () => props.navigation.navigate("Cart");
 
     useEffect(() => {
         if( (date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12){
@@ -39,7 +41,7 @@ const Home = (props) => {
     return (
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
-                <Header  drawer={openDrawer} notify={openNotification}/>
+                <Header  drawer={openDrawer} notify={openNotification} cart={openCart}/>
                 <View style={styles.agentFaceCover}>
                     <Image style={styles.agentImg} source={require("@Assets/image/agentFace.png")} />
                 </View>
@@ -63,7 +65,7 @@ const Home = (props) => {
                         </View>
 
                     </View>
-                    <View style={styles.cardTwo}>
+                    <TouchableOpacity style={styles.cardTwo} onPress={redirectToCustomerOrder}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
                             <Text style={styles.cardBgText}>{agent.orders_count}</Text>
@@ -72,7 +74,7 @@ const Home = (props) => {
                             <Text style={styles.cardSmText}>All {"\n"}Orders</Text>
                         </View>
 
-                    </View>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />

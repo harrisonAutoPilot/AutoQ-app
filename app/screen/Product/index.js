@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { View, Text, RefreshControl, TouchableOpacity, Animated,} from "react-native";
+import { View, Text, RefreshControl, TouchableOpacity, Animated, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -7,39 +7,34 @@ import Toast from 'react-native-toast-message';
 
 import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
-import { searchProducts} from "@Request/Product";
+import { searchProducts } from "@Request/Product";
 import { SuccessMsgViewTwo, COHeader as Header } from "@Component/index";
-// import ModalView from "@Screen/CartOverlay";
+import BottomSheet from "@Screen/Overlay";
 import List from "./ListView";
 // import BrowseCardPlaceholder from "./browseCardPlaceholder";
-import { cleanup } from "@Store/Product";
-// import { listCart } from "@Request/cart";
+import { listCart } from "@Request/Cart";
+import { cleanup } from "@Store/Product"
 
-const BrowseProducts = (props) => {
+const Products = (props) => {
     const dispatch = useDispatch();
     const scrollY = useRef(new Animated.Value(0)).current;
 
     const ITEM_SIZE = 120
     const [err, setErr] = useState("");
     const [refreshing, setRefreshing] = useState(false);
-    const [searchArray, setSearchArray] = useState([]);
     const [result, setResult] = useState({});
     const [successMsg, setSuccessMsg] = useState("");
-    const [showModal, setShowModal] = useState(false);
-    const [remove, setRemove] = useState(false);
-    const [liked, setLiked] = useState(0);
-    const [likedId, setLikedId] = useState();
-    const [cartItem, setCartItem] = useState("");
-    const [cartNewAmount, setCartNewAmount] = useState(1);
-    const [cartItemId, setCartItemId] = useState("");
+    const [visible, setVisible] = useState(false);
+    const [searchArray, setSearchArray] = useState([]);
     const bottomSheet = useRef();
 
-    const { status, errors, searchedProducts, update, wishlistStatus } = useSelector((state) => state.product);
-    // const { items } = useSelector((state) => state.cart)
+    const { status, errors, searchedProducts } = useSelector((state) => state.product);
 
     useEffect(() => {
         dispatch(searchProducts(props.route.params?.category));
-        // dispatch(listCart())
+        dispatch(listCart())
+
+        return () => dispatch(cleanup())
     }, []);
 
     useEffect(() => {
@@ -49,23 +44,15 @@ const BrowseProducts = (props) => {
     }, [errors]);
 
     useEffect(() => {
-        if (update === "success" && props.navigation.isFocused()) {
-            setSuccessMsg("Added");
-            setErr("");
-            dispatch(searchProducts(props.route.params?.category));
-        } else if (update === "failed" && props.navigation.isFocused()) {
-            setSuccessMsg("");
-            setErr(errors?.msg);
+        if (props.route.params?.item) {
+            setSearchArray(props.route.params.item)
         }
-    }, [update]);
-
+    }, [props.route.params?.item]);
 
     const closeSheet = () => {
         bottomSheet.current.close();
-    }
-    const openSheet = () => {
-        bottomSheet.current.show();
-    }
+        setVisible(false)
+    };
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -80,7 +67,8 @@ const BrowseProducts = (props) => {
 
 
     const goBack = () => props.navigation.navigate("Catalogue");
-    const redirectToFilter = () => props.navigation.navigate("Filter");
+    const redirectToFilter = () => props.navigation.navigate("Filter", { display_name: props.route.params?.display_name });
+    const redirectToSearch = () => props.navigation.navigate("Search");
 
     const toastConfig = {
         error: () => (
@@ -90,33 +78,23 @@ const BrowseProducts = (props) => {
         ),
 
         tomatoToast: () => (
-                <SuccessMsgViewTwo title={successMsg} />
+            <SuccessMsgViewTwo title={successMsg} />
         )
     };
 
     // Get the ID of the product to filter and show the Modal
     const getItem = (id) => {
         filterProduct(id);
+        setVisible(true)
         bottomSheet.current.show();
-        checkCart(id)
     };
-    
+
     // Filter Products and show them in the Modal
     const filterProduct = (id) => {
         let resultArray = searchedProducts.filter(item => item.id === id)[0];
         return setResult(resultArray)
     };
 
-    const checkCart = (id) => {
-        const cartItems = items.carts.filter((item) => {
-            if (item.product_id === id) {
-                setCartItem(item.product_id)
-                setCartNewAmount(item.quantity)
-                setCartItemId(item.id)
-            }
-        })
-        return cartItems
-    }
 
     const ListView = ({ item, index }) => {
         const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
@@ -124,27 +102,23 @@ const BrowseProducts = (props) => {
 
         return <List
             item={item}
-            onPress={() => itemsAddedToWishlist(item.id)}
             getItem={() => getItem(item.id)}
-            onRemove={() => itemsRemovedFromWishlist(item.id)}
             scale={scale}
-            liked={liked}
-            likedId={likedId}
         />
     }
 
     return (
         <View style={styles.body}>
-             <Header title={props.route.params?.display_name} styleView={styles.body2}  onPress={goBack} titleCover={styles.titleCover}>
-               <View style={styles.headerSubIconView}>
-                   <TouchableOpacity>
-                   <IonIcon name="search" size={20} color="#fff"/>
-                   </TouchableOpacity>
-                   <TouchableOpacity style={styles.headerSubLastIconView}>
-                   <IonIcon name="md-cart-outline" size={20} color="#fff"/>
-                   </TouchableOpacity>
-               </View>
-                 </Header>
+            <Header title={props.route.params?.display_name} styleView={styles.body2} onPress={goBack} titleCover={styles.titleCover}>
+                <View style={styles.headerSubIconView}>
+                    <TouchableOpacity onPress={redirectToSearch}>
+                        <IonIcon name="search" size={20} color="#fff" />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.headerSubLastIconView}>
+                        <IonIcon name="md-cart-outline" size={20} color="#fff" />
+                    </TouchableOpacity>
+                </View>
+            </Header>
 
             {err ? <Toast config={toastConfig} /> : null}
             {successMsg ? <Toast config={toastConfig} /> : null}
@@ -157,12 +131,13 @@ const BrowseProducts = (props) => {
                             <Text style={[styles.inputTitle, styles.color]}>All {props.route.params?.display_name}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={[styles.miniHeaderView2, styles.filterView]} onPress={redirectToFilter}>
-                        <Icon name="chevron-down" size={14} color="#212121" />
-                        <View style={styles.margin}>
-                            <Text style={styles.filterText}>Filter</Text>
-                        </View>
-                    </TouchableOpacity>
+                    {searchedProducts.length ?
+                        <TouchableOpacity style={[styles.miniHeaderView2, styles.filterView]} onPress={redirectToFilter}>
+                            <Icon name="chevron-down" size={14} color="#212121" />
+                            <View style={styles.margin}>
+                                <Text style={styles.filterText}>Filter</Text>
+                            </View>
+                        </TouchableOpacity> : null}
                 </View>
 
                 {err ? <View style={[globalStyle.errMainView, { marginBottom: 10 }]}>
@@ -172,7 +147,7 @@ const BrowseProducts = (props) => {
 
             </View>
             <Animated.FlatList
-             onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
                 showsVerticalScrollIndicator={false}
                 data={!searchArray.length ? searchedProducts : searchArray}
                 keyExtractor={item => item.id}
@@ -183,24 +158,20 @@ const BrowseProducts = (props) => {
                     <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
                 }
                 initialNumToRender={8}
-                    getItemLayout={(data, index) => (
-                        {length: 100, offset: 100 * index, index}
-                      )}
+                getItemLayout={(data, index) => (
+                    { length: 100, offset: 100 * index, index }
+                )}
             />
 
-              {/* <ModalView
+            <BottomSheet
                 bottomSheet={bottomSheet}
                 onPress={closeSheet}
-                // onSwipeComplete1={closeCart}
                 result={result}
-                wishlist={() => itemsAddedToWishlist(result.id)}
-                cartNewAmount = {cartNewAmount}
-                cartItem = {cartItem}
-                cartItemId = {cartItemId}
-            />  */}
+                isVisible={visible}
+            />
 
         </View>
     )
 };
 
-export default BrowseProducts;
+export default Products;

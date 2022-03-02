@@ -2,14 +2,11 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar, Animated, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
-import LinearGradient from 'react-native-linear-gradient';
 import { InputField } from "@Component/index";
 import { browseCategories } from "@Request/Category";
-import { searchProducts, searchProductsByItems } from "@Request/Product";
+import { searchProducts} from "@Request/Product";
 import styles from "./style";
-import ListItems from "@Screen/BrowseProducts/ListView";
-import ModalView from "@Screen/CartOverlay";
-import { listCart } from "@Request/cart";
+import ListItems from "@Screen/Product/ListView";
 
 
 const Search = (props) => {
@@ -32,7 +29,6 @@ const Search = (props) => {
     const { categories } = useSelector((state) => state.category);
     const { status, errors, searchedProducts, update, type_head } = useSelector((state) => state.product);
     const closeCart = () => setShowModal(!showModal);
-    const { items } = useSelector((state) => state.cart)
     console.log(searchedProducts)
 
     useEffect(() => {
@@ -53,16 +49,16 @@ const Search = (props) => {
         }
     }, [search.length, searchCategory]);
 
-    const checkCart = (id) => {
-        const cartItems = items.carts.filter((item) => {
-            if (item.product_id === id) {
-                setCartItem(item.product_id)
-                setCartNewAmount(item.quantity)
-                setCartItemId(item.id)
-            }
-        })
-        return cartItems
-    }
+    // const checkCart = (id) => {
+    //     const cartItems = items.carts.filter((item) => {
+    //         if (item.product_id === id) {
+    //             setCartItem(item.product_id)
+    //             setCartNewAmount(item.quantity)
+    //             setCartItemId(item.id)
+    //         }
+    //     })
+    //     return cartItems
+    // }
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -114,11 +110,9 @@ const Search = (props) => {
     const ListView = ({ item }) => {
 
         return <View style={[styles.listContainer, active === item.name ? styles.activeColor : null]}>
-            <View style={[styles.listContainerTextView]}>
                 <TouchableOpacity onPress={() => showMapCategory(item.name)}>
-                    <Text style={[styles.inputTitle, styles.color2]}>{item.display_name}</Text>
+                    <Text style={[styles.inputTitle, styles.color2]}>{item.display_name.trim()}</Text>
                 </TouchableOpacity>
-            </View>
         </View>
     };
 
@@ -151,26 +145,19 @@ const Search = (props) => {
     const getItem = (id) => {
         filterProduct(id);
         bottomSheet.current.show();
-        checkCart(id)
+        // checkCart(id)
     };
 
-    const cancelSearch = () => props.navigation.navigate("Home");
+    const cancelSearch = () => props.navigation.goBack();
 
     return (
         <View style={styles.body}>
-            <StatusBar barStyle="light-content" backgroundColor='#3858CF' hidden={false} />
-
-            <LinearGradient
-                colors={['#3858CF', '#7485FF']}
-                style={styles.container}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={props.mainBody}
-            >
+            <StatusBar barStyle="light-content" backgroundColor='#00319D' hidden={false} />
+            <View style={styles.mainBody}>
                 <SafeAreaView>
                     <View style={styles.column}>
                         <View style={styles.inputHolder}>
-                            <Icon name="search" style={styles.searchIcon} size={20} color="#a1a1a1" />
+                            <Icon name="search" style={styles.searchIcon} size={20} color="#616161" />
                           
                             {active === "" ?
                                 <View style={styles.inputText} >
@@ -203,13 +190,13 @@ const Search = (props) => {
                         </TouchableOpacity>
                     </View>
                 </SafeAreaView>
-            </LinearGradient>
+            </View>
 
             <View style={styles.categoryColumn}>
                 <TouchableOpacity style={[!active ? styles.activeColor : null, styles.innerContainer]} onPress={() => setActive("")}>
                     <Text style={[styles.inputTitle, styles.color1]}>All Categories</Text>
                 </TouchableOpacity>
-                <View>
+ 
                     <FlatList
                         horizontal
                         showsHorizontalScrollIndicator={false}
@@ -218,7 +205,6 @@ const Search = (props) => {
                         ListEmptyComponent={<View />}
                         renderItem={ListView}
                     />
-                </View>
             </View>
             {active === "" ?
                 <FlatList
@@ -246,7 +232,7 @@ const Search = (props) => {
                 }
             />
 
-            <ModalView
+            {/* <ModalView
                 bottomSheet={bottomSheet}
                 onPress={closeSheet}
                 onSwipeComplete1={closeCart}
@@ -255,7 +241,7 @@ const Search = (props) => {
                 cartNewAmount = {cartNewAmount}
                 cartItem = {cartItem}
                 cartItemId = {cartItemId}
-            />
+            /> */}
         </View>
     )
 };

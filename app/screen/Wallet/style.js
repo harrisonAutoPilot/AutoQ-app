@@ -40,7 +40,7 @@ export default styles = StyleSheet.create({
         borderTopRightRadius:30,
         borderTopLeftRadius:30,
         position:'absolute',
-        top:hp('22%'),
+        top:hp('24%'),
         left:wp('-5%'),
         padding:20,
         paddingTop:10,

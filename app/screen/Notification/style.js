@@ -13,7 +13,7 @@ export default styles = StyleSheet.create({
     body: {
         backgroundColor: "#00319D",
         marginBottom: 5,
-        paddingBottom: 10
+        paddingBottom: 5
     },
     headerText:{
         fontSize: 22,

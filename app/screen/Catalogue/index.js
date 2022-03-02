@@ -23,7 +23,8 @@ const Catalogue = (props) => {
     const { status, errors, categories } = useSelector((state) => state.category);
     const { searchedProducts } = useSelector((state) => state.product);
 
-    console.log(searchedProducts, "hooooo")
+    const openNotification = () => props.navigation.navigate("Notification");
+    const openCart = () => props.navigation.navigate("Cart");
     const openDrawer = () => props.navigation.openDrawer();
 
     useFocusEffect(
@@ -60,16 +61,15 @@ const Catalogue = (props) => {
     }
 
     const dismissKeyboard = () => Keyboard.dismiss();
-    const goToCat = () => props.navigation.navigate("Home");
 
     const ListView = ({ item }) => (
-        <TouchableOpacity style={[styles.listContainer, styles.elevation]} onPress={() => getAllProducts(item.name, item.display_name)}>
+        <TouchableOpacity style={[styles.listContainer, styles.elevation]} onPress={() => getAllProducts(item.name,  !searchCategoryArray.length ? item.display_name : item.category?.display_name)}>
             <View style={styles.listContainerImageView}>
                 <Image source={{ uri: `${URL}${item.image_url}` }} style={styles.image} resizeMode="cover" />
             </View>
             <View style={styles.listContainerTextView} >
                 <View style={styles.listContainerInnerTextView}>
-                    <Text style={[styles.title]}>{item.display_name}</Text>
+                    <Text style={[styles.title]}>{!searchCategoryArray.length  ? item.display_name: item.category?.display_name}</Text>
                 </View>
                 <View >
                     <Icon name="chevron-right" size={18} color="#757575" />
@@ -81,7 +81,7 @@ const Catalogue = (props) => {
 
     return (
         <View style={styles.main}>
-            <Header title="Product" style={styles.btnText} onPress={goToCat} drawer={openDrawer}>
+            <Header title="Product" style={styles.btnText} notify={openNotification} cart={openCart} drawer={openDrawer}>
 
             <TouchableWithoutFeedback onPress={dismissKeyboard}>
                 <View style={styles.blueColor}>

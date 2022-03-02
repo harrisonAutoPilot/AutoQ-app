@@ -28,7 +28,7 @@ const Header = (props) => {
                                         <FIcon name="bell" color="#fff" size={20} />
                                     </View>
                                 </TouchableOpacity >
-                                <TouchableOpacity onPress={props.notify}>
+                                <TouchableOpacity onPress={props.cart}>
                                     <View style={styles.headerSubLastIconView}>
                                         <Icon name="md-cart-outline" color="#fff" size={20} />
                                     </View>

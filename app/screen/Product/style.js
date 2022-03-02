@@ -176,9 +176,6 @@ export default styles = StyleSheet.create({
         flexDirection: "row",
         marginLeft: -20,
     },
-    headerSubIconMenuView: {
-        // paddingLeft: 16
-    },
     headerSubLastIconView: {
         paddingLeft: 15
     }, 

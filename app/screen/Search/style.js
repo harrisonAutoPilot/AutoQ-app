@@ -7,16 +7,15 @@ import {
 export default styles = StyleSheet.create({
     searchIcon: {
         marginLeft: 20,
-
     },
     cirleIcon: {
-
         marginLeft: -90,
-   
     },
     heartStyle: {
         opacity: 0.6,
-
+    },
+    mainBody:{
+        backgroundColor: "#00319D"
     },
 
     inputHolder: {
@@ -24,8 +23,7 @@ export default styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         flexDirection: "row",
-        width: wp('72%'),
-        marginLeft: wp('1.5%'),
+        width: wp('73%'),
         marginRight: wp('2%'),
         marginTop: 10,
         marginBottom: 10,
@@ -52,9 +50,7 @@ export default styles = StyleSheet.create({
         fontWeight: "400"
     },
     inputF: {
-        // position: 'absolute',
         paddingTop: 10,
-        // width: wp('90%'),
         fontSize: 14,
         fontFamily: "Urbanist-Regular",
         lineHeight: 20,
@@ -68,10 +64,10 @@ export default styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: "Urbanist-Regular",
         lineHeight: 20,
-        color: "#9E9E9E",
+        color: "#212121",
         letterSpacing: 0.25,
         fontWeight: "400",
-
+        // textTransform: "capitalize"
     },
     column: {
         flexDirection: "row",
@@ -82,7 +78,6 @@ export default styles = StyleSheet.create({
     },
     categoryColumn: {
         flexDirection: "row",
-        paddingHorizontal: 8,
         alignItems: "center",
         backgroundColor: "#fff",
         marginBottom: 20
@@ -95,12 +90,13 @@ export default styles = StyleSheet.create({
     },
     listContainer: {
         marginLeft: 20,
-        paddingVertical: 10,
-
+        paddingVertical: 15,
     },
     innerContainer: {
         height: "100%",
-        paddingVertical: 10,
+        paddingVertical: 15,
+        paddingLeft: 8,
+        // height: 50
     },
     activeColor: {
         borderBottomColor: "rgba(124, 207, 36, 1)",

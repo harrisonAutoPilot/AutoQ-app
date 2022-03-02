@@ -3,13 +3,12 @@ import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 
-import WalletCard from "@Component/WalletCard";
-import LoanApp from "@Screen/LoanOverlay";
-import WithDraw from "@Screen/WithdrawOverlay";
+import {WalletCard} from "@Component";
+// import WithDraw from "@Screen/WithdrawOverlay";
 import Modal from "./SortBy";
 import styles from "./style";
 // import TransactionCardPlaceholder from "./TransactionPlaceholder"
-import commafy from "@Helper/commafy";
+import commafy from "@Helper/Commafy";
 
 const MyWallet = (props) => {
     const flatListRef = React.useRef()
@@ -23,7 +22,7 @@ const MyWallet = (props) => {
     const bottomSheetW = useRef();
 
 
-    // const { wallet } = useSelector((state) => state.wallet);
+    const { wallet } = useSelector((state) => state.wallet);
     const swipeCart = () => setShowModal(false);
     const toTop = () => {
         // use current
@@ -151,17 +150,12 @@ const MyWallet = (props) => {
                 </View>
 
             </View>
-            <LoanApp
-                bottomSheetL={bottomSheetL}
-                bottomSheetClose={closeSheet}
-                bottomSheetW={bottomSheetW}
 
-            />
-            <WithDraw
+            {/* <WithDraw
                 bottomSheetW={bottomSheetW}
                 bottomSheetWClose={closeSheetWithDraw}
 
-            />
+            /> */}
 
             <Modal
                 bottomSheetS={bottomSheetS}

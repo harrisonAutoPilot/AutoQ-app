@@ -7,6 +7,10 @@ import agentReducer from "./Agent";
 import orderReducer from "./CustomerOrder";
 import categoryReducer from "./Category";
 import productReducer from "./Product";
+import cartReducer from "./Cart";
+import paymentReducer from "./PaymentMethod";
+import walletReducer from "./Wallet";
+import storeReducer from "./Stores";
 
 const persistConfig = {
     key: 'root',
@@ -24,5 +28,9 @@ export default combineReducers({
     agent: agentReducer,
     order: orderReducer,
     category: categoryReducer,
-    product: productReducer
+    product: productReducer,
+    cart: cartReducer,
+    payment: paymentReducer,
+    wallet: walletReducer,
+    store: storeReducer,
 });

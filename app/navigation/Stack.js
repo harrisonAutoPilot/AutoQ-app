@@ -13,14 +13,20 @@ import CustomerOrderDetails from "@Screen/CustomerOrderDetails";
 import DrawerNavigator from "./Drawer";
 import Deals from "@Screen/Deals";
 import Notification from "@Screen/Notification";
+import NotificationDetail from "@Screen/NotificationDetail";
 import TrackOrder from "@Screen/TrackOrder";
 import Product from "@Screen/Product";
+import Search from "@Screen/Search";
+import Cart from "@Screen/Cart";
+import CheckOut from "@Screen/CheckOut";
+import ConfirmCheckOut from "@Screen/ConfirmCheckOut";
+import Filter from "@Screen/Filter";
+import Wallet from "@Screen/Wallet";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createNativeStackNavigator();
 const LoginStack = createNativeStackNavigator();
 const SplashStack = createNativeStackNavigator();
-// const NetworkStack = createStackNavigator();
 
 const SplashStackNavigator = () => {
     return (
@@ -49,12 +55,24 @@ const RootStackNavigator = () => {
 
             <RootStack.Group>
                 <RootStack.Screen name="Notification" component={Notification} />
-                {/* <RootStack.Screen name="NotificationDetail" component={NotificationDetail} /> */}
+                <RootStack.Screen name="NotificationDetail" component={NotificationDetail} />
             </RootStack.Group>
 
             <RootStack.Group>
                 <RootStack.Screen name="Product" component={Product} />
-                {/* <RootStack.Screen name="NotificationDetail" component={NotificationDetail} /> */}
+                <RootStack.Screen name="Filter" component={Filter} />
+                <RootStack.Screen name="Search" component={Search} />
+            </RootStack.Group>
+
+            <RootStack.Group>
+                <RootStack.Screen name="Cart" component={Cart} />
+                <RootStack.Screen name="CheckOut" component={CheckOut} />
+                <RootStack.Screen name="ConfirmCheckOut" component={ConfirmCheckOut} />
+            </RootStack.Group>
+
+            <RootStack.Group>
+                {/* <RootStack.Screen name="CheckOut" component={CheckOut} />
+                <RootStack.Screen name="ConfirmCheckOut" component={ConfirmCheckOut} /> */}
             </RootStack.Group>
 
         </>
@@ -65,7 +83,6 @@ const LoginStackNavigator = () => {
     return (
         <LoginStack.Group>
             <LoginStack.Screen name="Login" component={Login} />
-            {/* <LoginStack.Screen name="ForgotPin" component={ForgotPin} /> */}
         </LoginStack.Group>
     )
 }

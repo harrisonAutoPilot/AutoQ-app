@@ -1,41 +1,38 @@
-import React, {useEffect, useState} from "react";
-import { View, Text, TouchableOpacity} from "react-native";
+import React, { useEffect } from "react";
+import { View } from "react-native";
 import { useDispatch } from "react-redux";
 
 import styles from "./style";
-import Header from "@Component/Header";
+import { Header } from "@Component";
 import MyWallet from "./MyWallet";
-import Loan from "./Loan"
-// import { cleanup } from "@Store/auth";
-// import { getWallet } from "@Request/Wallet";
+import { cleanup } from "@Store/Auth";
+import { getWallet } from "@Request/Wallet";
 
 const Wallet = (props) => {
 
     const dispatch = useDispatch();
-  
     const openDrawer = () => props.navigation.openDrawer();
 
     const detail = (item) => props.navigation.navigate("TransactionDetail", item)
     const openNotification = () => props.navigation.navigate("Notification");
+    const openCart = () => props.navigation.navigate("Cart");
 
 
-    // useEffect(() => {
-    //     dispatch(getWallet())
-    //     return () => dispatch(cleanup())
-    //  }, []);
+    useEffect(() => {
+        dispatch(getWallet())
+        return () => dispatch(cleanup())
+    }, []);
 
     return (
         <View style={styles.view}>
-       {/* <Header  drawer={openDrawer} favourite={openFavourite} notify={openNotification} /> */}
-       <Header  drawer={openDrawer}  />
-            <View style={styles.mainBody}>      
+            <Header drawer={openDrawer} notify={openNotification} cart={openCart} />
+            <View style={styles.mainBody}>
                 <View style={styles.subHeader}>
-                <MyWallet detail={detail} /> 
-                </View>     
-               
+                    <MyWallet detail={detail} />
+                </View>
+
             </View>
-          
-           
+
         </View>
     )
 };
