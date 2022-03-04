@@ -18,6 +18,11 @@ export default styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginBottom: 20
     },
+    body2: {
+        backgroundColor: "#fff",
+      paddingHorizontal: 32,
+      paddingTop: 24
+    },
     headerText: {
         fontSize: 22,
         fontFamily: "Urbanist-Regular",
@@ -29,9 +34,8 @@ export default styles = StyleSheet.create({
     },
     mainBody: {
         paddingTop:5,
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
         borderRadius:15,
-        // flex: 1,
     },
     downCover:{
         width:wp('100%'),
@@ -42,7 +46,7 @@ export default styles = StyleSheet.create({
         position:'absolute',
         top:hp('24%'),
         left:wp('-5%'),
-        padding:20,
+        padding:16,
         paddingTop:10,
      
     },
@@ -81,11 +85,10 @@ export default styles = StyleSheet.create({
     },
     sortText2: {
         fontSize: 12,
-        fontFamily: "Urbanist-Regular",
-        lineHeight: 18,
-        color: "#212121",
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 16,
+        color: "#424242",
         letterSpacing: 0.1,
-        fontWeight: "400",
         textAlign: "center"
     },
     inActiveSubHeaderText: {
@@ -110,7 +113,7 @@ export default styles = StyleSheet.create({
         borderRadius: 5,
     },
     inputMainHolder: {
-        marginTop: Dimensions.get("window").height / 50,
+        marginTop: Dimensions.get("window").height /70,
         height: "100%",
         flexGrow: 1,
        
@@ -209,14 +212,13 @@ export default styles = StyleSheet.create({
         paddingRight:12,
         borderRadius:20,
         borderWidth:1,
-        borderColor:'#212121'
+        borderColor:'#E0E0E0'
     },
      sortText:{
         color: '#212121',
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        fontWeight: "600",
         letterSpacing: 0.1,
         textAlign: "center"
     },
@@ -232,24 +234,23 @@ export default styles = StyleSheet.create({
     smCardCover:{
         flexDirection:'row',
         justifyContent:'space-between',
-        borderBottomWidth:1,
-        borderColor:'#f1f2f3',
         paddingBottom:15,
         paddingTop:15,
+        paddingHorizontal:10,
+        backgroundColor:'#FAFAFA',
+        marginBottom:8,
+        borderRadius:5,
 
     },
     bottomCover:{
         marginTop:5,
         padding:5,
-        marginRight:10,
-        height: hp('81%'),
-       
-       
+        height: hp('81%'),   
     },
      fundTitle:{
         color: '#424242',
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         fontWeight: "600",
         letterSpacing: 0.1,
@@ -268,7 +269,7 @@ export default styles = StyleSheet.create({
     fundAmount:{
         color: '#424242',
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         fontWeight: "600",
         letterSpacing: 0.1,
@@ -289,7 +290,7 @@ export default styles = StyleSheet.create({
         height:30,
         borderWidth:1,
         borderRadius:100,
-        borderColor:'#7CCF24',
+        borderColor:'rgba(124, 207, 36, 0.2)',
         padding:7,
         backgroundColor:'rgba(124, 207, 36, 0.05)',
         marginRight:10,
@@ -300,7 +301,7 @@ export default styles = StyleSheet.create({
         height:30,
         borderWidth:1,
         borderRadius:100,
-        borderColor:'rgba(211, 47, 47, 0.2)',
+        borderColor:'rgba(211, 47, 47, 0.2))',
         padding:7,
         backgroundColor:'rgba(211, 47, 47, 0.05)',
         marginRight:10,
@@ -309,6 +310,27 @@ export default styles = StyleSheet.create({
     modalPadding:{
         flexDirection:'row',
         justifyContent:'space-around'
+    },
+    modalPadding2:{
+        paddingBottom: 20
+    },
+    modalTitle:{
+        color: '#424242',
+        fontSize: 18,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 24,
+        letterSpacing: 0.1,
+    },
+    modaltitle:{
+        color: 'rgba(97, 97, 97, 1)',
+        fontSize: 16,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 24,
+        letterSpacing: 0.1,
+    },
+   active:{
+        color: 'rgba(70, 157, 0, 1)',
+        fontFamily: "Urbanist-SemiBold",
     },
     comingSoonCover:{
         width:wp('80%'),
@@ -332,5 +354,27 @@ export default styles = StyleSheet.create({
         width:290,
         height:380,
         resizeMode:'contain',
+    },
+    mainView:{
+        paddingBottom: 16,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    close:{
+        backgroundColor: "rgba(250, 250, 250, 1)",
+        height: "20%",
+        alignItems: "center",
+        borderTopWidth: 1,
+        borderTopColor: "rgba(238, 238, 238, 1)",
+        justifyContent: "center",
+        marginTop: 10
+    },
+    closeText: {
+        color: 'rgba(158, 158, 158, 1)',
+        fontSize: 14,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 20,
+        letterSpacing: 0.1,
     }
 })

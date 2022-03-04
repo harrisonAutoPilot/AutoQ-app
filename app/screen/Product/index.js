@@ -128,7 +128,7 @@ const Products = (props) => {
                     <View style={styles.miniHeaderView}>
                         <Icon name="grid" size={14} color="#616161" />
                         <View style={styles.margin}>
-                            <Text style={[styles.inputTitle, styles.color]}>All {props.route.params?.display_name}</Text>
+                            <Text style={[styles.inputTitle, styles.color]} numberOfLines={1}>All {props.route.params?.display_name}</Text>
                         </View>
                     </View>
                     {searchedProducts.length ?

@@ -3,8 +3,8 @@ import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 
-import {WalletCard} from "@Component";
-// import WithDraw from "@Screen/WithdrawOverlay";
+import { WalletCard } from "@Component";
+import WithDraw from "@Screen/WithdrawOverlay";
 import Modal from "./SortBy";
 import styles from "./style";
 // import TransactionCardPlaceholder from "./TransactionPlaceholder"
@@ -14,7 +14,7 @@ const MyWallet = (props) => {
     const flatListRef = React.useRef()
     const [showModal, setShowModal] = useState(false);
     const [showSort, setShowSort] = useState(false);
-    const [showModal2, setShowModal2] = useState(false);
+    const [sheetOpen, setSheetOpen] = useState(false);
     const [result, setResult] = useState([]);
     const bottomSheetFund = React.useRef();
     const bottomSheetL = useRef();
@@ -33,23 +33,23 @@ const MyWallet = (props) => {
         bottomSheetL.current.close();
     }
     const openSheet = () => {
-        bottomSheetL.current.show();
+        bottomSheetW.current.show();
     }
     const closeSheetWithDraw = () => {
-
         bottomSheetW.current.close();
     }
+
     const openSheetWithDraw = () => {
-        bottomSheetL.current.close();
-        console.log('Hello this is suppose to open')
         bottomSheetW.current.show();
 
     }
 
     const closeSheetSort = () => {
         bottomSheetS.current.close();
+        setSheetOpen(false)
     }
     const openSheetSort = () => {
+        setSheetOpen(true)
         bottomSheetS.current.show();
     }
 
@@ -58,37 +58,32 @@ const MyWallet = (props) => {
 
     }, []);
 
-    // const redirectToSort = () => {
-    //     setShowModal2(true)
-    // }
+    const sortOrder = (id) => {
+        // closeSheetSort()
+        let ordered = [...wallet.user.transactions]
 
-
-    // const sortOrder = (id) => {
-    //     setShowModal2(false);
-    //     let ordered = [...wallet.user.transactions]
-
-    //     if (id === 1) {
-    //         let searched = ordered.sort((a, b) => { return a.amount - b.amount })
-    //         toTop()
-    //         return setResult(searched);
-    //     } else if (id === 2) {
-    //         let searched = ordered.sort((a, b) => {
-    //             if (b.type.toLowerCase() < a.type.toLowerCase()) return -1;
-    //         });
-    //         toTop()
-    //         return setResult(searched)
-    //     } else if (id === 3) {
-    //         let searched = ordered.sort((a, b) => {
-    //             if (a.type.toLowerCase() < b.type.toLowerCase()) return -1;
-    //         });
-    //         toTop()
-    //         return setResult(searched)
-    //     } else if (id === 4) {
-    //         let searched = ordered.sort((a, b) => { return new Date(a.created_at) - new Date(b.created_at) })
-    //         toTop()
-    //         return setResult(searched)
-    //     }
-    // }
+        if (id === 1) {
+            let searched = ordered.sort((a, b) => { return a.amount - b.amount })
+            toTop()
+            return setResult(searched);
+        } else if (id === 2) {
+            let searched = ordered.sort((a, b) => {
+                if (b.type.toLowerCase() < a.type.toLowerCase()) return -1;
+            });
+            toTop()
+            return setResult(searched)
+        } else if (id === 3) {
+            let searched = ordered.sort((a, b) => {
+                if (a.type.toLowerCase() < b.type.toLowerCase()) return -1;
+            });
+            toTop()
+            return setResult(searched)
+        } else if (id === 4) {
+            let searched = ordered.sort((a, b) => { return new Date(a.created_at) - new Date(b.created_at) })
+            toTop()
+            return setResult(searched)
+        }
+    }
 
     const ListView = ({ item }) => (
         <TouchableOpacity style={styles.smCardCover} onPress={() => props.detail(item)}>
@@ -108,7 +103,7 @@ const MyWallet = (props) => {
                 </View>
             </View>
             <View style={styles.leftCover}>
-                <Text style={styles.fundAmount}> {item.type === "purchase" ? "-" : "+"} ₦{commafy(item.amount)}</Text>
+                <Text style={styles.fundAmount}> {item.type === "purchase" ? <Text style={{ color: "#D32F2F" }}>-</Text> : <Text style={{ color: "#469D00" }}>+</Text>} ₦{commafy(item.amount)}</Text>
             </View>
 
         </TouchableOpacity>
@@ -127,12 +122,14 @@ const MyWallet = (props) => {
             <View style={styles.downCover}>
                 <View style={styles.sortContainer}>
                     <Text style={styles.sortText}>Transaction History</Text>
-                    <TouchableOpacity style={styles.sortCover} onPress={openSheetSort}>
-                        <View style={styles.sortCon} >
-                            <Image source={require("@Assets/image/exchange.png")} style={styles.refreshImg} />
-                            <Text style={styles.sortText2}>Sort</Text>
-                        </View>
-                    </TouchableOpacity>
+                    {wallet?.user?.transactions ?
+                        <TouchableOpacity style={styles.sortCover} onPress={openSheetSort}>
+                            <View style={styles.sortCon} >
+                                <Image source={require("@Assets/image/exchange.png")} style={styles.refreshImg} />
+                                <Text style={styles.sortText2}>Sort</Text>
+                            </View>
+                        </TouchableOpacity>
+                        : null}
 
                 </View>
 
@@ -151,18 +148,18 @@ const MyWallet = (props) => {
 
             </View>
 
-            {/* <WithDraw
+            <WithDraw
                 bottomSheetW={bottomSheetW}
                 bottomSheetWClose={closeSheetWithDraw}
 
-            /> */}
+            />
 
             <Modal
                 bottomSheetS={bottomSheetS}
                 closeSort={closeSheetSort}
-                onSwipeComplete={() => setShowModal2(false)}
-                close={() => setShowModal2(!showModal2)}
-                onSwipeComplete1={() => setShowModal2(false)}
+                sort={sortOrder}
+                sheet={sheetOpen}
+
             />
 
         </View>

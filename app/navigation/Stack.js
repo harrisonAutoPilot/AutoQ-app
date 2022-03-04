@@ -21,7 +21,7 @@ import Cart from "@Screen/Cart";
 import CheckOut from "@Screen/CheckOut";
 import ConfirmCheckOut from "@Screen/ConfirmCheckOut";
 import Filter from "@Screen/Filter";
-import Wallet from "@Screen/Wallet";
+import TransactionDetail from "@Screen/TransactionDetail";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createNativeStackNavigator();
@@ -71,8 +71,8 @@ const RootStackNavigator = () => {
             </RootStack.Group>
 
             <RootStack.Group>
-                {/* <RootStack.Screen name="CheckOut" component={CheckOut} />
-                <RootStack.Screen name="ConfirmCheckOut" component={ConfirmCheckOut} /> */}
+                <RootStack.Screen name="TransactionDetail" component={TransactionDetail} />
+                {/* <RootStack.Screen name="ConfirmCheckOut" component={ConfirmCheckOut} /> */}
             </RootStack.Group>
 
         </>

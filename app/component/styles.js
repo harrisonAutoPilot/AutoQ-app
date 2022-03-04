@@ -14,11 +14,11 @@ export default styles = StyleSheet.create({
     },
 
     cardInnerCover: {
-        width: wp('80%'),
+        // width: wp('80%'),
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        padding: 20,
+        paddingVertical: 20,
     },
     cardTop: {
         width: wp('80%'),
@@ -38,33 +38,30 @@ export default styles = StyleSheet.create({
     },
     walletAmount: {
         fontSize: 22,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 28,
         color: "#212121",
         letterSpacing: 0.2,
-        fontWeight: "600",
-        textTransform: 'uppercase',
-        paddingTop: 15,
+        paddingTop: 5,
     },
     midBtn: {
         backgroundColor: '#000000',
         width: 150,
         padding: 10,
         position: 'absolute',
-        left: Platform.OS === 'ios' ? wp('20%') : wp('18%'),
         top: Platform.OS === 'ios' ? hp('12%') : hp('13%'),
         borderRadius: 40,
         flexDirection: 'row',
-        paddingLeft: 20,
+        alignItems: "center",
+        justifyContent: "center"
 
     },
     plusTitle: {
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         color: "#fff",
         letterSpacing: 0.1,
-        fontWeight: "600",
         paddingLeft: 5,
     },
     waveImg: {

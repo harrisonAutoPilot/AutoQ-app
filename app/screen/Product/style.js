@@ -44,7 +44,8 @@ export default styles = StyleSheet.create({
         color: "#9E9E9E",
         letterSpacing: 0.25,
         fontWeight: "400",
-        textTransform: "capitalize"
+        textTransform: "capitalize",
+        // width: "95%"
     },
     mainHeader: {
         shadowColor: '#000',
@@ -151,7 +152,8 @@ export default styles = StyleSheet.create({
         backgroundColor: "#FAFAFA"
     },
     margin: {
-        marginLeft: 4
+        marginLeft: 4,
+        width: '90%'
     },
     filterView: {
         borderRadius: 20,

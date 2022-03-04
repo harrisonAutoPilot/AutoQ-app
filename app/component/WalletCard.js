@@ -14,7 +14,7 @@ const WalletCard = (props) => {
                 start={{ x:0.3, y:-1}}
                 end={{ x: 0.3, y: 0.6}}
                >
-            <Image source={require("@Assets/image/afri.png")} style={styles.waveImg} /> 
+            <Image source={require("@Assets/image/wave.png")} style={styles.waveImg} /> 
                 <View style={styles.header}>
                   <View style={styles.cardInnerCover}>
                        <View style={styles.cardTop}>
