@@ -164,7 +164,7 @@ const Cart = (props) => {
     const goBack = () => props.navigation.goBack();
 
     const increaseCart = (id, item, quantity) => {
-        if (item < quantity) {
+        if (item < quantity ) {
             let filteredCart = cartAmount2.filter(quantity => {
                 if (quantity.cart_id === id) {
                     quantity.quantity = quantity.quantity + 1
@@ -180,7 +180,7 @@ const Cart = (props) => {
     };
 
     const decreaseCart = (id, item, quantity) => {
-        if (item < quantity) {
+        if (item < quantity || item === quantity) {
             let filteredCart = cartAmount2.filter(quantity => {
                 if (quantity.cart_id === id && quantity.quantity > 1) {
                     quantity.quantity = quantity.quantity - 1

@@ -236,6 +236,7 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         justifyContent: 'center',
+        width: "100%"
 
     },
     errInCover: {

@@ -25,3 +25,9 @@ export const trackOrder = createAsyncThunk("order/trackorder",
       const Axios = await AxiosBase();
       return apiRequest(Axios.get(`api/v1/trackorder/${id.id}`), thunkAPI)
    });
+
+export const verifyOrder = createAsyncThunk("order/verify",
+   async (details, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.post('api/v1/agent/orders/verification_code/send', details), thunkAPI)
+   });

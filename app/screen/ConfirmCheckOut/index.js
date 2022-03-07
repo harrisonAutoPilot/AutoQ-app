@@ -1,21 +1,23 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { View, Text, TouchableOpacity, ScrollView, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
-import { placeOrder } from "@Request/CustomerOrder";
+import { placeOrder, verifyOrder } from "@Request/CustomerOrder";
 import { AuthBtn as Btn, COHeader as Header } from "@Component";
 import { cleanup } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import commafy from "@Helper/Commafy";
+import BottomSheet from "./ConfirmOrder";
 
 const ConfirmCheckOut = (props) => {
     const dispatch = useDispatch();
 
     const [err, setErr] = useState("");
     const [loader, setLoader] = useState(false);
-    const { selected, active, amount, wallet } = props.route.params;
+    const { selected, active, amount, wallet, id } = props.route.params;
+    const bottomSheet = useRef();
 
     const backToCart = () => props.navigation.navigate("CheckOut");
 
@@ -49,7 +51,13 @@ const ConfirmCheckOut = (props) => {
         const details = { store_id: selected.id, payment_method_id: active };
         setLoader(true)
         dispatch(placeOrder(details));
-    }
+    };
+
+    const openSheet = () => {
+        const details = { orderGroup_id: id};
+        dispatch(verifyOrder(details));
+        bottomSheet.current.show();
+    };
 
 
     return (
@@ -131,7 +139,7 @@ const ConfirmCheckOut = (props) => {
                             </View>
 
                             <View style={[styles.addBtnCover]}>
-                                <Btn title="Confirm Check Out" style={styles.addressBtn2} onPress={submit} />
+                                <Btn title="Confirm Check Out" style={styles.addressBtn2} onPress={openSheet} />
                             </View>
 
 
@@ -142,6 +150,10 @@ const ConfirmCheckOut = (props) => {
                 </ScrollView>
             </View>
             <Loader isVisible={loader} />
+            <BottomSheet
+                bottomSheet={bottomSheet}
+                submit = {submit}
+            />
         </View>
     )
 };

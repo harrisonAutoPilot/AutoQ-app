@@ -12,8 +12,7 @@ import { SuccessMsgViewTwo, COHeader as Header } from "@Component/index";
 import BottomSheet from "@Screen/Overlay";
 import List from "./ListView";
 // import BrowseCardPlaceholder from "./browseCardPlaceholder";
-import { listCart } from "@Request/Cart";
-import { cleanup } from "@Store/Product"
+import { cleanup } from "@Store/Product";
 
 const Products = (props) => {
     const dispatch = useDispatch();
@@ -32,8 +31,6 @@ const Products = (props) => {
 
     useEffect(() => {
         dispatch(searchProducts(props.route.params?.category));
-        dispatch(listCart())
-
         return () => dispatch(cleanup())
     }, []);
 

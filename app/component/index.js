@@ -6,5 +6,6 @@ import COHeader from "./headers/COHeader";
 import EmptyPlaceHolder from "./placeholders/EmptyPlaceHolder";
 import WalletCard from "./WalletCard";
 import AddCartListEmptyBig from "./placeholders/AddCartListEmptyBig";
+import SuccessMsgViewTwo from "./toast/successMsgViewTwo";
 
-export { FormikValidator, InputField, AuthBtn, Header, COHeader, EmptyPlaceHolder, WalletCard, AddCartListEmptyBig};
+export { FormikValidator, InputField, AuthBtn, Header, COHeader, EmptyPlaceHolder, WalletCard, AddCartListEmptyBig, SuccessMsgViewTwo};

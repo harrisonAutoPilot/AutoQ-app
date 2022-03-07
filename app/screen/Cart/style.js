@@ -40,7 +40,7 @@ export default styles = StyleSheet.create({
   },
   midCard: {
     width: wp('100%'),
-    height: hp('17.5%'),
+    height: hp('18.5%'),
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#EEEEEE",

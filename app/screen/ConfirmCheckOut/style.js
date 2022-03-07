@@ -17,7 +17,7 @@ export default styles = StyleSheet.create({
     backgroundColor: "#00319D",
     marginBottom: 10,
     paddingBottom: 5
-},
+  },
   cover: {
     width: wp('95%'),
     flexDirection: 'row',
@@ -142,7 +142,7 @@ export default styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: wp('90%'),
     paddingTop: 15,
-    paddingRight:10,
+    paddingRight: 10,
 
   },
   subtotalCoverDot: {
@@ -154,7 +154,7 @@ export default styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderTopColor: '#BDBDBD',
     marginTop: 10,
-    paddingRight:10,
+    paddingRight: 10,
 
   },
   totalCover: {
@@ -167,6 +167,17 @@ export default styles = StyleSheet.create({
   addBtnCover: {
     color: '#454545',
     marginTop: 20,
+  },
+
+  addBtnCover2: {
+   position: "absolute",
+   bottom: 0,
+   paddingVertical: 20,
+   borderTopColor: "#EEEEEE",
+   borderTopWidth: 1,
+   backgroundColor: "#f5f5f5",
+   width: "100%",
+   paddingHorizontal: 30
   },
 
   addressBtn2: {
@@ -334,5 +345,105 @@ export default styles = StyleSheet.create({
     width: 280,
     paddingLeft: 7,
     paddingRight: 10,
+  },
+  modalPadding: {
+    paddingHorizontal: 29.75,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: wp('100%'),
+    alignItems: "center",
+    paddingTop: 20
+
+  },
+  backCover: {
+    position: 'absolute',
+    left: wp('8%'),
+    top: wp('5.5%'),
+  },
+  modalView: {
+    backgroundColor: "#fff",
+    width: "100%",
+    paddingHorizontal: 29.75,
+    paddingTop: 10.25,
+    alignSelf: "center",
+  },
+  topPrompt: {
+    flexDirection: 'row',
+    backgroundColor: '#FAFAFA',
+    justifyContent: 'space-around',
+    borderRadius: 8,
+    width: wp('90%'),
+    margin: 18,
+    padding: 15,
+    alignSelf: "center",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 24,
+    color: "#212121",
+    letterSpacing: 0.2,
+    textAlign: "center"
+  },
+  topPromptText: {
+    fontSize: 14,
+    fontFamily: "Urbanist-Medium",
+    lineHeight: 20,
+    color: "#616161",
+    letterSpacing: 0.3,
+    fontWeight: "500",
+
+  },
+  phone: {
+    fontFamily: "Urbanist-SemiBold",
+    color: "#3858CF"
+  },
+  label3: {
+    fontSize: 14,
+    fontFamily: "Urbanist-Medium",
+    lineHeight: 16,
+    color: "#424242",
+    letterSpacing: 0.2,
+  },
+  label4: {
+    fontSize: 14,
+    fontFamily: "Urbanist-Medium",
+    lineHeight: 16,
+    color: "#424242",
+    letterSpacing: 0.2,
+    textAlign: "center"
+  },
+  label5: {
+    fontFamily: "Urbanist-SemiBold",
+    color: "#469D00",
+  },
+  labelCover: {
+    marginTop: 50
+  },
+  labelCover2: {
+    marginTop: 20
+  },
+  pinView: {
+    borderWidth: 1,
+    borderColor: "#a1a1a1",
+    paddingLeft: 12,
+    // paddingRight:12,
+    paddingVertical: Platform.OS === "android" ? 8 : 8,
+    borderRadius: 3,
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
+    width: 58
+  },
+  pinHolder: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10
+  },
+  inputF: {
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
   }
 })

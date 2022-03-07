@@ -55,6 +55,9 @@ export default styles = StyleSheet.create({
     },
     modalPadding: {
         paddingHorizontal: 29.75,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: wp('100%'),
 
     },
     modalTitleView: {
@@ -104,13 +107,6 @@ export default styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between"
     },
-
-    modalPadding: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        width: wp('100%'),
-
-    },
     modalTitle: {
         fontSize: 15,
         fontFamily: "Urbanist-Regular",
@@ -123,8 +119,6 @@ export default styles = StyleSheet.create({
     backCover: {
         position: 'absolute',
         left: wp('8%'),
-
-
     },
     topPrompt: {
         flexDirection: 'row',

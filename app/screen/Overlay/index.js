@@ -3,16 +3,17 @@ import { View, Text, TouchableOpacity, Image, ScrollView, Platform, Dimensions }
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
+
 import styles from '@Screen/Home/style';
 import globalStyle from "@Helper/GlobalStyles";
-import { addToCart, listCart } from "@Request/Cart";
+import { addToCart} from "@Request/Cart";
 import commafy from "@Helper/Commafy";
 import FIcon from "react-native-vector-icons/FontAwesome5";
-import { SuccessMsgViewTwo } from "@Component/index";
+import { SuccessMsgViewTwo } from "@Component";
 import { cleanup } from "@Store/Cart";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import SmallCard from './SmallCard';
-
+import { searchProducts } from "@Request/Product";
 
 const Overlay = (props) => {
     const dispatch = useDispatch();
@@ -22,14 +23,14 @@ const Overlay = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
 
     const { addCart, errors } = useSelector((state) => state.cart);
-    console.log(result.quantity_available)
 
     useEffect(() => {
         if (addCart === "failed") {
-            refreshView(errors?.msg, "")
+            refreshView(errors?.msg ? errors?.msg :"An error occurred", "")
+            console.log("ko")
             setSuccessMsg("");
-            setCartAmount(1)
         } else if (addCart === "success") {
+            // dispatch(searchProducts(props.route?.params?.category));
             setErr("");
             refreshView("", "Added to Cart");
         } else {
@@ -52,7 +53,6 @@ const Overlay = (props) => {
             setSuccessMsg(suc);
             setErr(msg);
             if (suc) {
-                dispatch(listCart())
                 Toast.show({
                     type: 'tomatoToast',
                     visibilityTime: 5000,
@@ -72,7 +72,7 @@ const Overlay = (props) => {
             }
         })
 
-        wait(2000).then(() => { dispatch(cleanup()); })
+        wait(3000).then(() => { dispatch(cleanup()); })
     }, []);
 
     const increaseCart = () => {
@@ -82,7 +82,7 @@ const Overlay = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyle.errMainView, globalStyle.marginTop, { marginHorizontal: 20 }]}>
+            <View style={[globalStyle.errMainView, globalStyle.marginTop]}>
                 <FIcon name="exclamation-circle" color="#fff" style={globalStyle.exclaImg} size={20} />
                 <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
             </View>

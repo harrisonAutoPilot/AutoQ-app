@@ -31,7 +31,7 @@ const CheckOut = (props) => {
         if (active && selected.id) {
             if (active === 1 && wallet.balance < items.total_amount)
                 return setErr("Insufficient Balance")
-            props.navigation.navigate("ConfirmCheckOut", { selected, active, wallet: wallet.balance, amount: items.total_amount });
+            props.navigation.navigate("ConfirmCheckOut", { selected, active, wallet: wallet.balance, amount: items.total_amount, id: items.carts.map((cart) =>  cart.id )});
         } else {
             setErr("Payment Method and Store are Required")
         }

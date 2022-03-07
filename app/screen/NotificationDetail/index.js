@@ -6,7 +6,6 @@ import styles from "./style";
 import { COHeader as Header } from "@Component";
 
 
-
 const NotificationDetail = (props) => {
 
     const goBack = () => props.navigation.goBack();
@@ -30,7 +29,6 @@ const NotificationDetail = (props) => {
 
                 </Text>
             </View>
-
         </View>
     )
 };

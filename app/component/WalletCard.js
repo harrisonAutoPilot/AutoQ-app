@@ -25,9 +25,9 @@ const WalletCard = (props) => {
                        
                       <TouchableOpacity style={styles.midBtn} onPress={props.fundWallet}>
                        
-                       <View>
+                       {/* <View>
                        <Text style={styles.plusTitle}>Withdraw Funds</Text>
-                       </View>
+                       </View> */}
 
                       </TouchableOpacity>
                   </View> 

@@ -7,6 +7,7 @@ import styles from "./style";
 import { EmptyPlaceHolder, COHeader as Header } from "@Component";
 import List from "./ListView";
 import data from "./data";
+import {getNotification} from "@Request/Notification";
 
 const Notification = (props) => {
    
@@ -14,6 +15,13 @@ const Notification = (props) => {
     const scrollY = useRef(new Animated.Value(0)).current;
     const [err, setErr] = useState("");
     const ITEM_SIZE = 120
+
+    useEffect(() => {
+        dispatch(getNotification());
+    }, []);
+
+    const { notification, error, status } = useSelector((state) => state.notification);
+    console.log(notification)
 
     const goBack = () => props.navigation.navigate("Home");
 
