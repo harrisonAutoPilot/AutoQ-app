@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     headerIconView: {
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingTop: Platform.OS === "ios" ? 10 : 10,
+        paddingTop: Platform.OS === "ios" ? 10 : 15,
         borderTopWidth: 1,
         borderTopColor: "rgba(0,0,0,0.1)"
     },
@@ -65,6 +65,37 @@ const styles = StyleSheet.create({
         letterSpacing: 0.1,
         textAlign: "center",
         textTransform: "capitalize"
+    },
+    badge:{
+        backgroundColor: "#D32F2F",
+        borderRadius: 10,
+        position: "absolute",
+        top: -6,
+        left: 33,
+        width: 14,
+        height: 14,
+        justifyContent: "center",
+    },
+    badgeN:{
+        backgroundColor: "#43A047",
+        borderRadius: 10,
+        position: "absolute",
+        top: -5,
+        left: 12,
+        width: 14,
+        height: 14,
+        justifyContent: "center",
+    },
+    badgeText: {
+        color: '#fff',
+        fontSize: 11,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 16,
+        letterSpacing: 0.1,
+        textAlign: "center",
+        justifyContent: "center",
+        alignSelf: "center"
+
     },
 
 });

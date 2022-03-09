@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAgent } from "@Request/Agent";
+import { listCart } from "@Request/Cart";
 import styles from './style';
 import { Header } from "@Component";
 
@@ -17,6 +18,7 @@ const Home = (props) => {
 
     const openDrawer = () => props.navigation.openDrawer();
     const { agent} = useSelector((state) => state.agent);
+    const { items } = useSelector((state) => state.cart);
 
     const redirectToDeals = () => props.navigation.navigate("Deals");
     const redirectToCustomerOrder = () => props.navigation.navigate("CustomerOrder");
@@ -36,12 +38,13 @@ const Home = (props) => {
         }
 
         dispatch(getAgent());
+        dispatch(listCart());
     }, [])
 
     return (
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
-                <Header  drawer={openDrawer} notify={openNotification} cart={openCart}/>
+                <Header  drawer={openDrawer} notify={openNotification} cart={openCart} cartLength={items?.carts?.length}/>
                 <View style={styles.agentFaceCover}>
                     <Image style={styles.agentImg} source={require("@Assets/image/agentFace.png")} />
                 </View>

@@ -23,6 +23,7 @@ import ConfirmCheckOut from "@Screen/ConfirmCheckOut";
 import Filter from "@Screen/Filter";
 import TransactionDetail from "@Screen/TransactionDetail";
 
+
 const Stack = createNativeStackNavigator();
 const RootStack = createNativeStackNavigator();
 const LoginStack = createNativeStackNavigator();
@@ -72,6 +73,11 @@ const RootStackNavigator = () => {
 
             <RootStack.Group>
                 <RootStack.Screen name="TransactionDetail" component={TransactionDetail} />
+            </RootStack.Group>
+
+
+            <RootStack.Group>
+                {/* <RootStack.Screen name="CustomersDashboard" component={CustomersDashboard} /> */}
                 {/* <RootStack.Screen name="ConfirmCheckOut" component={ConfirmCheckOut} /> */}
             </RootStack.Group>
 

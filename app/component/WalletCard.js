@@ -1,5 +1,5 @@
 import React from "react";
-import {StatusBar, View, SafeAreaView, Text, Image, TouchableOpacity} from "react-native";
+import { View, Text, Image, TouchableOpacity} from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from "./styles";
@@ -23,13 +23,13 @@ const WalletCard = (props) => {
                       </View>
 
                        
-                      <TouchableOpacity style={styles.midBtn} onPress={props.fundWallet}>
+                      {/* <TouchableOpacity style={styles.midBtn} onPress={props.fundWallet}>
                        
-                       {/* <View>
+                       <View>
                        <Text style={styles.plusTitle}>Withdraw Funds</Text>
-                       </View> */}
+                       </View>
 
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                   </View> 
                     {props.children}
                 </View>

@@ -76,7 +76,7 @@ const Drawer = (props) => {
                         <View>
                             <Text style={styles.headerTitlee}>{user?.name}</Text>
                         </View>
-                        <TouchableOpacity style={styles.headerTitleInnerView} onPress={() => props.navigation.navigate("AccountSettings")}>
+                        <TouchableOpacity style={styles.headerTitleInnerView} onPress={() => props.navigation.navigate("Account")}>
                             <Text style={styles.headerTitleInnerTitle}>ACCOUNT SETTINGS</Text>
                             <View style={styles.chevronIcon}>
                                 <Icon name="chevron-right" size={18} color="#3858CF" />

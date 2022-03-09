@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
-import { placeOrder, verifyOrder } from "@Request/CustomerOrder";
-import { AuthBtn as Btn, COHeader as Header } from "@Component";
+import { placeOrder, verifyOrder, getOrder } from "@Request/CustomerOrder";
+import { AuthBtn as Btn, COHeader as Header, SuccessMsgViewTwo } from "@Component";
 import { cleanup } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import commafy from "@Helper/Commafy";
@@ -15,13 +15,14 @@ const ConfirmCheckOut = (props) => {
     const dispatch = useDispatch();
 
     const [err, setErr] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
     const { selected, active, amount, wallet, id } = props.route.params;
     const bottomSheet = useRef();
 
     const backToCart = () => props.navigation.navigate("CheckOut");
 
-    const { update, errors } = useSelector((state) => state.order);
+    const { update, errors, orderDetail } = useSelector((state) => state.order);
 
     useEffect(() => {
         return () => dispatch(cleanup())
@@ -29,21 +30,48 @@ const ConfirmCheckOut = (props) => {
 
     useEffect(() => {
         if (update === "failed" && props.navigation.isFocused()) {
-            setErr(errors?.msg)
-            waitTime()
+            waitTime("", errors?.msg)
         } else if (update === "success" && props.navigation.isFocused()) {
-            waitTime()
-            props.navigation.navigate("CartSuccess", amount)
+            waitTime("Order Placed Successfully")
         }
     }, [errors]);
+
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
-    const waitTime = useCallback(() => {
+    const waitTime = useCallback((suc, err) => {
+        wait(1000).then(() => { 
+            if(suc){
+                setSuccessMsg(suc)
+                console.log(orderDetail)
+                // dispatch(getOrder)
+            }else{
+
+                setLoader(false);
+                setErr(err)
+            }
+            // const details = { orderGroup_id: id};
+            // dispatch(verifyOrder(details));
+            // bottomSheet.current.show();
+            
+        });
+    }, []);
+
+    const sendToken = useCallback((suc, err) => {
         wait(1000).then(() => {
             setLoader(false);
+            if(suc){
+                setSuccessMsg(suc)
+            bottomSheet.current.show();
+            }else{
+                setErr(err)
+            }
+            // const details = { orderGroup_id: id};
+            // dispatch(verifyOrder(details));
+            // bottomSheet.current.show();
+            
         });
     }, []);
 
@@ -70,10 +98,11 @@ const ConfirmCheckOut = (props) => {
 
             <View style={styles.mainBody}>
 
-                {err ? <View style={[globalStyle.errMainView, { marginBottom: 10, marginHorizontal: 20 }]}>
+                {err ? <View style={[globalStyle.errMainView, { marginBottom: 10,  }]}>
                     <Text style={globalStyle.failedResponseText}>{err}</Text>
                 </View>
                     : null}
+                      {successMsg ?<SuccessMsgViewTwo  title={successMsg}/> : null}
             </View>
             <View style={styles.bottomCover} >
 
@@ -139,7 +168,7 @@ const ConfirmCheckOut = (props) => {
                             </View>
 
                             <View style={[styles.addBtnCover]}>
-                                <Btn title="Confirm Check Out" style={styles.addressBtn2} onPress={openSheet} />
+                                <Btn title="Confirm Check Out" style={styles.addressBtn2} onPress={submit} />
                             </View>
 
 

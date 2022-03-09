@@ -11,7 +11,7 @@ import styles from "./style";
 import { listCart, deleteCart, updateCart } from "@Request/Cart";
 import commafy from "@Helper/Commafy";
 import URL from "@Helper/Constant";
-import {AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig } from "@Component";
+import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup } from "@Store/Cart";
 import { cleanup as clean } from "@Store/Product";
@@ -29,7 +29,7 @@ const Cart = (props) => {
     const { items, removeCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
 
     const browse = () => props.navigation.navigate("Catalogue");
-    const openCart = () => props.navigation.navigate("Cart");
+    const openCart = () =>  dispatch(listCart());
     const redirectToSearch = () => props.navigation.navigate("Search");
 
     useFocusEffect(
@@ -164,7 +164,7 @@ const Cart = (props) => {
     const goBack = () => props.navigation.goBack();
 
     const increaseCart = (id, item, quantity) => {
-        if (item < quantity ) {
+        if (item < quantity) {
             let filteredCart = cartAmount2.filter(quantity => {
                 if (quantity.cart_id === id) {
                     quantity.quantity = quantity.quantity + 1
@@ -175,7 +175,7 @@ const Cart = (props) => {
             })
             setCopyCartAmount(filteredCart)
             var res = cartAmount2.map(obj => copyCartAmount.find(quantity => quantity.cart_id === obj.cart_id) || obj);
-            console.log(res)
+            return res
         }
     };
 
@@ -191,7 +191,8 @@ const Cart = (props) => {
             })
             setCopyCartAmount(filteredCart)
             var res = cartAmount2.map(obj => copyCartAmount.find(quantity => quantity.cart_id === obj.cart_id) || obj);
-            console.log(res)
+            return res
+
         }
     };
 
@@ -206,16 +207,16 @@ const Cart = (props) => {
     };
 
     const ListView = ({ item }) => (
-            <View style={styles.midCard}>
-                <View style={styles.cover}>
-                    <View style={styles.imgCover}>
-                        <Image source={{ uri: `${URL}${item.product.product_images[0].url}` }} style={styles.drugImg} />
+        <View style={styles.midCard}>
+            <View style={styles.cover}>
+                <View style={styles.imgCover}>
+                    <Image source={{ uri: `${URL}${item.product.product_images[0].url}` }} style={styles.drugImg} />
+                </View>
+                <View style={styles.descCover}>
+                    <View style={styles.descTextView}>
+                        <Text style={styles.descText} numberOfLines={2}>{item.product.name}</Text>
                     </View>
-                    <View style={styles.descCover}>
-                        <View  style={styles.descTextView}>
-                            <Text style={styles.descText} numberOfLines={2}>{item.product.name}</Text>
-                        </View>
-
+                    {/* 
                         <View style={styles.increaseCartMainAmountView}>
                             <View style={styles.cartAmountView}>
                                 <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, item.quantity, item.product.quantity_available); }}>
@@ -232,43 +233,72 @@ const Cart = (props) => {
                                 </TouchableOpacity>
                             </View>
 
-                        </View>
+                        </View> */}
 
-                    </View>
 
-                    <View>
                     {cartAmount2.map(quantity => (
-                            quantity.cart_id === item.id ?
-                                <View style={styles.priceCover} key={quantity.cart_id}>
-                                    <Text style={styles.priceText}>₦{quantity.total_amount !== "" ? commafy(quantity.total_amount) : 0}</Text>
-                                </View> : null
-                        ))}
+                        quantity.cart_id === item.id ?
+                            <View style={styles.increaseCartMainAmountView} key={quantity.cart_id}>
 
-                        <View style={styles.iconCover}>
-                            <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
-                               <Text style={styles.productTitle}>Remove</Text>
-                            </TouchableOpacity >
-                        </View>
+                                <View style={styles.cartAmountView}>
+                                    <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, quantity.quantity, item.product.quantity_available); }}>
+                                        <Icon name="minus" color="#757575" />
+                                    </TouchableOpacity>
+                                    <View style={styles.increaseText}>
+                                        <Text style={styles.productTitle} >{quantity.quantity}</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, item.quantity, item.product.quantity_available); }}>
+                                        <Icon name="plus" color="#757575" />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            : null
 
+
+                    ))}
+
+
+
+                </View>
+
+                <View>
+                    {cartAmount2.map(quantity => (
+                        quantity.cart_id === item.id ?
+                            <View style={styles.priceCover} key={quantity.cart_id}>
+                                <Text style={styles.priceText}>₦{quantity.total_amount !== "" ? commafy(quantity.total_amount) : 0}</Text>
+                            </View> : null
+                    ))}
+
+                    <View style={styles.iconCover}>
+                        <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
+                            <Text style={styles.productTitle}>Remove</Text>
+                        </TouchableOpacity >
                     </View>
 
                 </View>
+
             </View>
+        </View>
 
     )
 
     return (
         <View style={styles.view}>
-                <Header  onPress={goBack} title="Cart" styleView={styles.body2} >
-                    <View style={styles.headerSubIconView}>
-                        <TouchableOpacity onPress={redirectToSearch}>
-                            <IonIcon name="search" size={20} color="#fff" />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.headerSubLastIconView} onPress={openCart}>
-                            <IonIcon name="md-cart-outline" size={20} color="#fff" />
-                        </TouchableOpacity>
-                    </View>
-                </Header>
+            <Header onPress={goBack} title="Cart" styleView={styles.body2} >
+                <View style={styles.headerSubIconView}>
+                    <TouchableOpacity onPress={redirectToSearch}>
+                        <IonIcon name="search" size={20} color="#fff" />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.headerSubLastIconView} onPress={openCart}>
+                        <IonIcon name="md-cart-outline" size={20} color="#fff" />
+                        {items.carts?.length ?
+                            <View style={styles.badge}>
+                                <Text style={styles.badgeText}>{items.carts?.length}</Text>
+                            </View>
+                            : null}
+                    </TouchableOpacity>
+                </View>
+            </Header>
 
             <View style={styles.mainBody}>
                 {err ? <Toast config={toastConfig} /> : null}
@@ -278,7 +308,7 @@ const Cart = (props) => {
             <View style={styles.bottomCover}>
                 {items.carts && !items.carts.length && loaded === "success"
                     ?
-                    <AddCartListEmptyBig  browse={browse}/> 
+                    <AddCartListEmptyBig browse={browse} />
                     :
 
                     <FlatList
@@ -293,37 +323,37 @@ const Cart = (props) => {
 
 
                 {items.total_amount ?
-                        <View style={styles.bottomDownCover}>
+                    <View style={styles.bottomDownCover}>
 
-                            <View style={styles.orderCover}>
+                        <View style={styles.orderCover}>
 
-                                <Text style={styles.orderText}>ORDER SUMMARY</Text>
-                                {(items.carts.length > 3) ?
-                                    <View style={[styles.scrollTextCover, { display: scrollText ? 'none' : 'flex' }
-                                    ]} >
-                                        <Text
-                                            style={styles.textStyle}>
-                                            Scroll down to view more Items
-                                        </Text>
-                                    </View>
-                                    : null}
+                            <Text style={styles.orderText}>ORDER SUMMARY</Text>
+                            {(items.carts.length > 3) ?
+                                <View style={[styles.scrollTextCover, { display: scrollText ? 'none' : 'flex' }
+                                ]} >
+                                    <Text
+                                        style={styles.textStyle}>
+                                        Scroll down to view more Items
+                                    </Text>
+                                </View>
+                                : null}
 
 
-                            </View>
-                            <View style={styles.subtotalCover}>
-                                <Text style={styles.subText}>Subtotal</Text>
-                                <Text style={styles.subText}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
-                            </View>
-                            <View style={styles.totalCover}>
-                                <Text style={styles.totalText2}>Total</Text>
+                        </View>
+                        <View style={styles.subtotalCover}>
+                            <Text style={styles.subText}>Subtotal</Text>
+                            <Text style={styles.subText}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
+                        </View>
+                        <View style={styles.totalCover}>
+                            <Text style={styles.totalText2}>Total</Text>
 
-                                <Text style={styles.totalText2}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
+                            <Text style={styles.totalText2}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
 
-                            </View>
+                        </View>
 
-                            <View style={styles.addBtnCover}>
-                                <Btn title="Proceed to Check out" style={styles.addressBtn2} onPress={redirectToCheckOut} />
-                            </View>
+                        <View style={styles.addBtnCover}>
+                            <Btn title="Proceed to Check out" style={styles.addressBtn2} onPress={redirectToCheckOut} />
+                        </View>
                     </View> : null}
 
             </View>

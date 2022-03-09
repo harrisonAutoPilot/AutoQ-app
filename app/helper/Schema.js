@@ -10,6 +10,12 @@ const loginSchema = yup.object({
 
 });
 
+const changePinSchema = yup.object({
+    current_password: yup.number().required("Current Pin is required"),
+    new_password: yup.number().required("Pin is required").test('len', 'Pin should be exactly 4 digits', val => {if(val) return val.toString().length === 4}),
+    retype_password: yup.number().required("Pin is required").oneOf([yup.ref('new_password'), null], 'Pins must match'),
+});
 
 
-export {searchSchema, loginSchema}
+
+export {searchSchema, loginSchema, changePinSchema}

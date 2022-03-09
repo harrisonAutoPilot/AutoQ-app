@@ -296,4 +296,27 @@ export default styles = StyleSheet.create({
     backgroundColor: "#00319D",
     paddingBottom: 5
 },
+badge:{
+  backgroundColor: "#D32F2F",
+  borderRadius: 10,
+  position: "absolute",
+  top: -5,
+  left: 25,
+  width: 14,
+  height: 14,
+  justifyContent: "center",
+  alignItems: "center",
+  alignSelf: "center"
+},
+badgeText: {
+  color: '#fff',
+  fontSize: 11,
+  fontFamily: "Urbanist-Medium",
+  // lineHeight: 16,
+  letterSpacing: 0.1,
+  textAlign: "center",
+  justifyContent: "center",
+  alignSelf: "center"
+
+},
 })

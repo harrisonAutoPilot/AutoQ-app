@@ -8,6 +8,7 @@ import styles from "./style";
 import Home from "@Screen/Home";
 import Catalogue from "@Screen/Catalogue";
 import Wallet from "@Screen/Wallet";
+import CustomersDashboard from "@Screen/Customers/Dashboard";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +46,7 @@ export default TabHomeNavigator = () => {
             }}
                 listeners={tabBarListeners}
             />
-            <Tab.Screen name="Customers" component={Home} options={{
+            <Tab.Screen  name="CustomersDashboard" component={CustomersDashboard} options={{
                 tabBarLabel: 'Customers',
                 tabBarIcon: ({ color, focused }) => (
                     <View>
