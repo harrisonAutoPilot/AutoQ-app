@@ -1,25 +1,29 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./style";
-import { updateUserDetails, getUser } from "@Request/Auth";
-import { cleanup } from "@Store/Auth";
-
-import data from './data'
+import { getCustomers } from "@Request/Customer";
 
 const InActive = () => {
     const dispatch = useDispatch();
+    const [refreshing, setRefreshing] = useState(false);
 
-    useEffect(() => {
-        dispatch(cleanup())
-    }, []);
-
-    const { user, errors, update } = useSelector((state) => state.auth);
+    const { status, errors, customers } = useSelector((state) => state.customer);
 
     const redirectToSort = () => {
 
     };
+
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    };
+
+    const refreshView = useCallback(() => {
+        setRefreshing(true);
+        dispatch(getCustomers());
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
     const ListView = ({ item, index }) => {
 
@@ -30,7 +34,7 @@ const InActive = () => {
                     <View style={styles.penCover}><Text style={styles.penText}>Pending</Text></View>
                 </View>
                 <View style={styles.cardMid}>
-                    <View><Text style={styles.phoneText}>{item.phone}</Text></View>
+                    <View><Text style={styles.phoneText}>+{item.phone}</Text></View>
 
                 </View>
                 <View style={styles.cardDown}>
@@ -53,12 +57,16 @@ const InActive = () => {
             <View style={styles.bottomCover}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={data}
+                    data={customers?.pending?.users}
                     keyExtractor={item => item.id}
                     // ListEmptyComponent={ListEmptyComponent}
                     renderItem={ListView}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     columnWrapperStyle={styles.column}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+
+                    }
 
                 />
 

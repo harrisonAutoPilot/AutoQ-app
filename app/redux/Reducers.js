@@ -12,6 +12,7 @@ import paymentReducer from "./PaymentMethod";
 import walletReducer from "./Wallet";
 import storeReducer from "./Stores";
 import notificationReducer from "./Notification";
+import customerReducer from "./Customer";
 
 const persistConfig = {
     key: 'root',
@@ -34,5 +35,6 @@ export default combineReducers({
     payment: paymentReducer,
     wallet: walletReducer,
     store: storeReducer,
-    notification: notificationReducer
+    notification: notificationReducer,
+    customer: customerReducer
 });

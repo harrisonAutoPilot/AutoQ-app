@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
 import { useDispatch } from "react-redux";
 import { InputField, Header } from "@Component";
@@ -8,6 +8,7 @@ import styles from "./style";
 import InActive from "./Inactive";
 import Pending from "./Pending";
 import Active from "./Active";
+import { getCustomers} from "@Request/Customer";
 
 const CustomersDashboard = (props) => {
 
@@ -15,19 +16,23 @@ const CustomersDashboard = (props) => {
     const [activeId, setActiveId] = useState(1);
     const [search, setSearch] = useState("");
 
+    useEffect(() => {
+        dispatch(getCustomers())
+    }, []);
+
     const dismissKeyboard = () => Keyboard.dismiss();
     const openDrawer = () => props.navigation.openDrawer();
     const reg = () => props.navigation.navigate("Registration");
 
-    const detail =(item) => props.navigation.navigate("TransactionDetail", item)
     const openFavourite = () => props.navigation.navigate("SavedItem", { id: 1 })
     const openNotification = () => props.navigation.navigate("Notification");
+    const openCart = () => props.navigation.navigate("Cart");
 
     const showActive = (id) => setActiveId(id)
 
     return (
         <View style={styles.view}>
-           <Header  drawer={openDrawer} title="Customers" favourite={openFavourite} notify={openNotification} />
+           <Header  drawer={openDrawer} title="Customers" favourite={openFavourite} notify={openNotification} cart={openCart} />
            <View style={{backgroundColor:'#00319D'}}>
                 <TouchableWithoutFeedback style={styles.touchstyle} onPress={dismissKeyboard}>
                     <View style={styles.blueColor}>
