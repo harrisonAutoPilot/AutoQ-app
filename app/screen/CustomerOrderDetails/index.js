@@ -63,7 +63,7 @@ const CustomerOrderDetails = (props) => {
    }, [update]);
 
 
-   const goBack = () => props.navigation.navigate("CustomerOrder");
+   const goBack = () => props.navigation.goBack();
    const trackOrder = () => props.navigation.navigate("TrackOrder", {id:props.route.params.item.id});
 
    const reOrders = () => {

@@ -1,339 +1,174 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Image, FlatList } from "react-native";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import Icon from 'react-native-vector-icons/Feather';
+import FIcon from 'react-native-vector-icons/MaterialIcons';
+import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import Dropdown from './Dropdown';
 
-
-
-import styles from "./style";
+import commafy from "@Helper/Commafy";
+import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
+import { getCustomerOrders } from "@Request/CustomerOrder";
+import { cleanup } from "@Store/CustomerOrder";
+import styles from "@Screen/CustomerOrder/style";
 import globalStyles from "@Helper/GlobalStyles";
-import { Btn, FormikValidator, InputField, SuccessMsgViewTwo } from "@Component";
-import { profileSchema } from "@Helper/Schema";
-import { updateUserDetails, getUser } from "@Request/Auth";
-import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
-import data from './data'
+// import MyOrderPlaceholder from "./MyOrderPlaceholder";
 
-const CustomerInfo = (props) => {
+const Order = (props) => {
     const dispatch = useDispatch();
-    const [errMsg, setErrMsg] = useState("");
-    const [successMsg, setSuccessMsg] = useState("");
-    const dismissKeyboard = () => Keyboard.dismiss();
+    const [search, setSearch] = useState("");
+    const [result, setResult] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const [err, setErr] = useState("");
     const [loader, setLoader] = useState(false);
-    const [selected, setSelected] = useState({});
+    const flatListRef = useRef()
+
+    const { errors, orders, update, loaded } = useSelector((state) => state.order);
+    console.log(orders)
+
+    const toastConfig = {
+        error: () => (
+            <View style={[{ marginHorizontal: 20 }, globalStyles.errMainView2, globalStyles.marginTop]}>
+                <Text style={globalStyles.failedResponseText}>{err}</Text>
+            </View>
+        ),
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(getCustomerOrders());
+            return () => dispatch(cleanup());
+        }, [])
+    );
 
     useEffect(() => {
-        dispatch(cleanup())
-    }, []);
+        if (search.length > 0) {
+            filterOrder();
+        }
+    }, [search.length]);
 
-    const { user, errors, update } = useSelector((state) => state.auth);
+    useEffect(() => {
+        if (update === "failed" && props.navigation.isFocused()) {
+            waitTime(errors?.msg);
+        } else if (update === "success" && props.navigation.isFocused()) {
+            props.navigation.navigate("Home", {
+                screen: 'Cart',
+            })
+        } else {
+            setErr("")
+        }
+    }, [update]);
 
-    const profileState = {
-        firstname: user?.name ? user.name.substr(0, user.name.indexOf(' ')) : '',
-        surname: user?.name ? user.name.substr(user.name.indexOf(' ') + 1) : "",
-        phone: user?.phone ? user.phone.substr(user.phone.indexOf(' ') + 1) : "",
-        amount: user?.name ? user.name.substr(user.name.indexOf(' ') + 1) : "",
-    };
-    const submit = async (values) => {
-        const { firstname, surname, phone, amount } = values;
-        const newValue = { name: `${firstname} ${surname} ${phone} ${amount}`, id: user.id };
-        setLoader(true)
-        await dispatch(updateUserDetails(newValue))
-    };
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
-    const waitTime = useCallback((errmsg, sucmsg) => {
+    const waitTime = useCallback((msg) => {
         wait(1000).then(() => {
             setLoader(false);
-            setErrMsg(errmsg);
-            setSuccessMsg(sucmsg);
-            if (sucmsg) {
-                Toast.show({
-                    type: 'tomatoToast',
-                    visibilityTime: 5000,
-                    autoHide: true,
-                    position: 'top',
-                    topOffset: 0
-                })
-            } else {
-                Toast.show({
-                    type: 'error',
-                    visibilityTime: 5000,
-                    autoHide: true,
-                    position: 'top',
-                    topOffset: 0
-                })
-            }
-
+            setErr(msg)
+            Toast.show({
+                type: 'error',
+                visibilityTime: 5000,
+                autoHide: true,
+                position: 'top',
+                topOffset: 0
+            })
         });
-        wait(4000).then(() => { dispatch(cleanup()) })
+        wait(4000).then(() => {
+            dispatch(cleanup());
+        })
     }, []);
 
-    const toastConfig = {
-        error: () => (
-            <View style={[globalStyles.errMainView]}>
-                <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
-            </View>
-        ),
+    const refreshView = useCallback(() => {
+        setRefreshing(true);
+        dispatch(getOrders());
+        wait(3000).then(() => setRefreshing(false));
+    }, []);
 
-        tomatoToast: () => (
-            <SuccessMsgViewTwo title={successMsg} />
-        )
+    const reOrders = (id) => {
+        const details = { order_group_id: id };
+        setLoader(true)
+        // dispatch(reOrder(details));
     };
 
-    useEffect(() => {
-        if (update === "failed") {
-            setSuccessMsg("");
-            waitTime(errors?.msg);
-        } else if (update === "success") {
-            dispatch(getUser());
-            waitTime("", "User Updated");
-        } else {
-            setSuccessMsg("");
-            setErrMsg("");
-        }
-    }, [update]);
+    const dismissKeyboard = () => Keyboard.dismiss();
 
-    const data = [
-      
-        { label: 'CHEMIST', value: 'CHEMIST', storeAddress: '0123456080', value: '0123456080' },
-        { label: 'HOSPITAL', value: 'HOSPITAL', storeAddress: '0123456080', value: '0123456080' },
-        { label: 'PHARMACY', value: 'PHARMACY', storeAddress: '0123456080', value: '0123456080' },
-       
-    ];
+    const ListView = ({ item }) => (
+        <TouchableOpacity onPress={() => props.detailsScreen(item)}>
+            <View style={[styles.card, styles.elevation]}>
+                <View style={styles.cardUpCover}>
+                    <View style={styles.cardUpTop}>
+                        <Text style={styles.upTextOne}>Order No: {item.ref_no}</Text>
+                        <Text style={styles.upTextTwo}>₦{item.total_amount ? commafy(item.total_amount) : 0}</Text>
+                    </View>
+                    <View style={styles.cardUpDown}>
+                        <Text style={styles.downTextOne}>{item.created_at.substring(0, 10).split('-').reverse().join('-')}</Text>
+                    </View>
+                </View>
+                <View style={styles.cardMidCover}>
+                    <View style={styles.cardMidTop}>
+                        <Text style={styles.midTextOne}>{item.orders.length} {item.orders.length > 1 ? "Items" : "Item"}</Text>
+                    </View>
+                    <View style={styles.cardMidDown}>
+                        <Text style={styles.midTextTwo} numberOfLines={1}>{item.orders[0]?.product.name} .....</Text>
+                    </View>
+                </View>
+
+                <View style={styles.cardDownCover}>
+
+                    <View style={styles.StatusCover}>
+                        <Text style={styles.statusText}>delivered</Text>
+                    </View>
+
+                    {item.ref_no !== null ?
+                        <TouchableOpacity style={styles.reorderCover} onPress={() => reOrders(item.id)}>
+                            <Text style={styles.reOrderText}>RE-ORDER</Text>
+                            <Image source={require("@Assets/image/refresh.png")} style={styles.refreshImg} />
+                        </TouchableOpacity>
+                        : null}
+
+                </View>
+
+            </View>
+
+        </TouchableOpacity>
+
+    )
 
     return (
-        
-        <View style={styles.container}>
-            <ScrollView
-                showsVerticalScrollIndicator={true}
-                contentContainerStyle={styles.scrollStyle} 
-            >
-                <View style={styles.bottomCover}>
-                    <View style={styles.statusContainer}>
-                        <View style={styles.dateCover}>
-                            <Text style={styles.dateTitle}>Date Registered</Text>
-                            <Text style={styles.date}>24/10/22</Text>
-                        </View>
-                        <View style={styles.statusCover}>
-                            <Text style={styles.statusTitle}>Status</Text>
-                            <View style={styles.activeBtn}>
-                                <Text style={styles.activeBtnText}>Active</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.cardCover} >
-                        <View style={styles.bioTitleCover}>
-                            <Text style={styles.bioText}>BIO DATA</Text>
-                        </View>
-                        <View style={styles.inputMainHolder}>
+        <View style={styles.main}>
+            {err ? <Toast config={toastConfig} /> : null}
 
-                            <TouchableWithoutFeedback onPress={dismissKeyboard}>
-                                <View>
-
-
-                                    <FormikValidator
-                                        initialValues={profileState}
-                                        validationSchema={profileSchema}
-                                        onSubmit={(values) => {
-                                            submit(values)
-                                        }}>
-                                        {props => (
-                                            <View>
-                                                <View style={styles.inputOuterView}>
-                                                    <View>
-                                                        <View style={[styles.inputHolder, props.touched.firstname && props.errors.firstname ? styles.inputErrHolder : null]}>
-                                                            <View style={styles.labelView}>
-                                                                <Text style={styles.label}>FIRST NAME</Text>
-                                                            </View>
-
-                                                            <InputField
-                                                                style={styles.innerLabel}
-                                                                value={props.values.firstname}
-                                                                onBlur={props.handleBlur('firstname')}
-                                                                placeholder="Kingsley"
-                                                                placeholderTextColor="#757575"
-                                                                onChangeText={(val) => {
-                                                                    props.setFieldValue('firstname', val)
-                                                                    props.setFieldTouched('firstname', true, false);
-                                                                    setErrMsg("");
-                                                                    setSuccessMsg("")
-                                                                }}
-                                                            />
-                                                        </View>
-
-                                                    </View>
-                                                    <View>
-                                                        <View style={[styles.inputHolder, props.touched.surname && props.errors.surname ? styles.inputErrHolder : null]}>
-                                                            <View style={styles.labelView}>
-                                                                <Text style={styles.label}>LAST NAME</Text>
-                                                            </View>
-                                                            <InputField
-                                                                style={styles.innerLabel}
-                                                                value={props.values.surname}
-                                                                onBlur={props.handleBlur('surname')}
-                                                                placeholder="James"
-                                                                placeholderTextColor="#757575"
-                                                                onChangeText={(val) => {
-                                                                    props.setFieldValue('surname', val)
-                                                                    props.setFieldTouched('surname', true, false);
-                                                                    setErrMsg("");;
-                                                                    setSuccessMsg("")
-                                                                }}
-                                                            />
-                                                        </View>
-
-                                                    </View>
-                                                    <View>
-                                                        <View style={[styles.inputHolder, props.touched.surname && props.errors.surname ? styles.inputErrHolder : null]}>
-                                                            <View style={styles.labelView}>
-                                                                <Text style={styles.label}>PHONE</Text>
-                                                            </View>
-                                                            <InputField
-                                                                style={styles.innerLabelPhone}
-                                                                value={props.values.surname}
-                                                                onBlur={props.handleBlur('surname')}
-                                                                placeholder="James"
-                                                                placeholderTextColor="#757575"
-                                                                onChangeText={(val) => {
-                                                                    props.setFieldValue('surname', val)
-                                                                    props.setFieldTouched('surname', true, false);
-                                                                    setErrMsg("");;
-                                                                    setSuccessMsg("")
-                                                                }}
-                                                            />
-                                                            <View style={styles.flag}>
-                                                                <Image style={styles.nigImg} source={require("@Assets/image/nigeria.png")} />
-                                                            </View>
-                                                        </View>
-
-                                                    </View>
-                                                </View>
-                                               
-
-                                            </View>
-                                        )}
-
-                                    </FormikValidator>
-
-                                </View>
-
-                            </TouchableWithoutFeedback>
-
-                        </View>
-
-                    </View>
-
- <View style={styles.cardCover} >
-        <View style={styles.bioTitleCover}>
-            <Text style={styles.bioText}>STORE DETAILS</Text>
-        </View>
-            <View style={styles.inputMainHolder}>
-
-                    <View style={styles.inputHolderSelect}>
-                        <View style={styles.labelView}>
-                            <Text style={styles.label}>TYPE OF STORE</Text>
-                        </View>
-                        <Dropdown label="Select store type" storeAddress="" data={data} onSelect={setSelected} />
-
-                    </View>
-                    <View style={styles.viewStoreTitleCover}>
-                        <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
-                        <Image style={styles.rightImg} source={require("@Assets/image/blueRight.png")} />
-                    </View>
+            <View style={styles.bottomCover2}>
+                {orders.orders && !orders.orders.length && loaded === "success" ?
+                    <EmptyPlaceHolder />
+                    :
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        data={orders.orders}
+                        renderItem={ListView}
+                        // ListEmptyComponent={MyOrderPlaceholder}
+                        keyExtractor={item => item.id}
+                        ref={flatListRef}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+                        }
+                        initialNumToRender={3}
+                        getItemLayout={(data, index) => (
+                            { length: 100, offset: 100 * index, index }
+                        )}
+                    />
+                }
             </View>
-</View>
 
-<View style={styles.cardCover} >
-           <View style={styles.inputMainHolder}>
-                <View style={styles.docTitleCover}>
-                    <Text style={styles.bioText}>DOCUMENTATION</Text>
-                </View>
-                <View style={styles.smCardCover}>
-                <View style={styles.smCard}>
-                    <View>
-                        <Text style={styles.docTitle}>Pharmacy License</Text>
-                    </View>
+            <Loader isVisible={loader} />
 
-                    <View style={styles.docFeature}>
-                       <View>
-                           <TouchableOpacity>
-                               <Text style={styles.docViewText}>VIEW</Text>
-                           </TouchableOpacity>
-                       </View>
-                       <View>
-                           <TouchableOpacity>
-                               <Text style={styles.docChangeText}>CHANGE</Text>
-                           </TouchableOpacity>
-                       </View>
-                    </View>
-                </View>
-                </View>
-                <View style={styles.smCardCover}>
-                <View style={styles.smCard}>
-                    <View>
-                        <Text style={styles.docTitle}>Pharmacy License</Text>
-                    </View>
-
-                    <View style={styles.docFeature}>
-                       <View>
-                           <TouchableOpacity>
-                               <Text style={styles.docViewText}>VIEW</Text>
-                           </TouchableOpacity>
-                       </View>
-                       <View>
-                           <TouchableOpacity>
-                               <Text style={styles.docChangeText}>CHANGE</Text>
-                           </TouchableOpacity>
-                       </View>
-                    </View>
-                </View>
-                </View>
-                <View style={styles.smCardCover}>
-                <View style={styles.smCard}>
-                    <View>
-                        <Text style={styles.docTitle}>Pharmacy License</Text>
-                    </View>
-
-                    <View style={styles.docFeature}>
-                       <View>
-                           <TouchableOpacity>
-                               <Text style={styles.docViewText}>VIEW</Text>
-                           </TouchableOpacity>
-                       </View>
-                       <View>
-                           <TouchableOpacity>
-                               <Text style={styles.docChangeText}>CHANGE</Text>
-                           </TouchableOpacity>
-                       </View>
-                    </View>
-                </View>
-                </View>
-            </View>  
-
-        </View>
-
-
-
-
-
-
-
-                </View>
-
-                <Loader isVisible={loader} />
-                {errMsg ? <Toast config={toastConfig} /> : null}
-{successMsg ? <Toast config={toastConfig} /> : null}
-<View style={[styles.btnCover]}>
-    <Btn title="Update Information" onPress={props.handleSubmit} style={styles.submit} styles={styles.btnText} />
-</View>
-            </ScrollView>
         </View>
     )
 };
 
-export default CustomerInfo;
+export default Order;

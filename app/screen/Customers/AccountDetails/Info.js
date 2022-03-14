@@ -4,16 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import Dropdown from './Dropdown';
-// import StoreView from "@Screen/StoreOverlay"
+import StoreView from "@Screen/Customers/Stores"
 
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
-import { FormikValidator, InputField, SuccessMsgViewTwo } from "@Component";
+import { FormikValidator, InputField, SuccessMsgViewTwo, AuthBtn as Btn } from "@Component";
 import { profileSchema } from "@Helper/Schema";
-import { updateUserDetails, getUser } from "@Request/Auth";
+import { updateUserDetails,} from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
-import data from './data'
 
 const CustomerInfo = (props) => {
     const dispatch = useDispatch();
@@ -25,6 +24,7 @@ const CustomerInfo = (props) => {
     const bottomSheetStore = useRef();
     const bottomSheetStoreDetail = useRef();
     const details = props.details;
+
 
     useEffect(() => {
         dispatch(cleanup())
@@ -126,7 +126,7 @@ const CustomerInfo = (props) => {
                     <View style={styles.statusContainer}>
                         <View style={styles.dateCover}>
                             <Text style={styles.dateTitle}>Date Registered</Text>
-                            <Text style={styles.date}>24/10/22</Text>
+                            <Text style={styles.date}>{details.created_at.substring(0, 10).split('-').reverse().join('/')}</Text>
                         </View>
                         <View style={styles.statusCover}>
                             <Text style={styles.statusTitle}>Status</Text>
@@ -238,13 +238,13 @@ const CustomerInfo = (props) => {
                         </View>
                         <View style={styles.inputMainHolder}>
 
-                            <View style={styles.inputHolderSelect}>
+                            {/* <View style={styles.inputHolderSelect}>
                                 <View style={styles.labelView}>
                                     <Text style={styles.label}>TYPE OF STORE</Text>
                                 </View>
                                 <Dropdown label="Select store type" storeAddress="" data={data} onSelect={setSelected} />
 
-                            </View>
+                            </View> */}
                             <TouchableOpacity onPress={viewStore} style={styles.viewStoreTitleCover}>
                                     <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
                                     <Image style={styles.rightImg} source={require("@Assets/image/blueRight.png")} />
@@ -254,7 +254,7 @@ const CustomerInfo = (props) => {
                     </View>
 
                     <View style={styles.cardCover} >
-                        <View style={styles.inputMainHolder}>
+                    
                             <View style={styles.docTitleCover}>
                                 <Text style={styles.bioText}>DOCUMENTATION</Text>
                             </View>
@@ -281,7 +281,7 @@ const CustomerInfo = (props) => {
                             <View style={styles.smCardCover}>
                                 <View style={styles.smCard}>
                                     <View>
-                                        <Text style={styles.docTitle}>Pharmacy License</Text>
+                                        <Text style={styles.docTitle}>Store Photo </Text>
                                     </View>
 
                                     <View style={styles.docFeature}>
@@ -299,9 +299,9 @@ const CustomerInfo = (props) => {
                                 </View>
                             </View>
                             <View style={styles.smCardCover}>
-                                <View style={styles.smCard}>
+                                <View style={styles.smCard2}>
                                     <View>
-                                        <Text style={styles.docTitle}>Pharmacy License</Text>
+                                        <Text style={styles.docTitle}>Store Photo </Text>
                                     </View>
 
                                     <View style={styles.docFeature}>
@@ -320,12 +320,6 @@ const CustomerInfo = (props) => {
                             </View>
                         </View>
 
-                    </View>
-
-
-
-
-
 
 
                 </View>
@@ -334,18 +328,15 @@ const CustomerInfo = (props) => {
                 {errMsg ? <Toast config={toastConfig} /> : null}
                 {successMsg ? <Toast config={toastConfig} /> : null}
                 <View style={[styles.btnCover]}>
-                    {/* <Btn title="Update Information" onPress={props.handleSubmit} style={styles.submit} styles={styles.btnText} /> */}
+                    <Btn title="Update Information" onPress={props.handleSubmit} style={styles.submit} styles={styles.btnText} />
                 </View>
             </ScrollView>
 
-            {/* <StoreView
+            <StoreView
                 bottomSheetStore={bottomSheetStore}
                 bottomSheetClose = {closeSheet}
                
-            /> */}
-
-
-
+            />
         </View>
     )
 };

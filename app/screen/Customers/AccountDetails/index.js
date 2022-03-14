@@ -7,7 +7,7 @@ import styles from "./style";
 import {COHeader as Header} from "@Component";
 import InActive from "./Inactive";
 import CustomerInfo from "./Info";
-import Active from "./Active";
+import Orders from "./Orders";
 
 const CustomerDetails = (props) => {
 
@@ -16,6 +16,7 @@ const CustomerDetails = (props) => {
     const details = props.route?.params?.details
 
     const goBack = () => props.navigation.navigate("CustomersDashboard");
+    const detailsScreen = (item) => props.navigation.navigate("OrderDetails", { item });
     const showActive = (id) => setActiveId(id)
 
     return (
@@ -35,7 +36,7 @@ const CustomerDetails = (props) => {
               
                
             </View>
-            {activeId === 1 ? <CustomerInfo details={details}/> : <Active details={details}/> }  
+            {activeId === 1 ? <CustomerInfo details={details} /> : <Orders details={details} detailsScreen={detailsScreen}/> }  
 
         </View>
     )

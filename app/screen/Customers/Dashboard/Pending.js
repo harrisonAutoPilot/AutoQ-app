@@ -28,7 +28,7 @@ const InActive = (props) => {
     const ListView = ({ item, index }) => {
 
         return (
-            <TouchableOpacity style={styles.cardCover}  onPress={() => props.details(item)} key={item.id}>
+            <TouchableOpacity style={styles.cardCover}  onPress={() => props.account(item)} key={item.id}>
                 <View style={styles.cardTop}>
                     <View><Text style={styles.nameText}>{item.name}</Text></View>
                     <View style={styles.penCover}><Text style={styles.penText}>Pending</Text></View>

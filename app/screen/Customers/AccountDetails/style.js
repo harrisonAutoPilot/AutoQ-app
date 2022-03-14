@@ -37,7 +37,7 @@ export default styles = StyleSheet.create({
     },
     view: {
         flex: 1,
-         backgroundColor: "#fff"
+         backgroundColor: "#fff",
     },
     subHeader: {
         // borderTopLeftRadius: 20,
@@ -154,14 +154,10 @@ export default styles = StyleSheet.create({
         fontWeight: "400"
     },
     btnCover: {
-        position: "absolute",
-
-        // height: "100%",
         width: "100%",
         backgroundColor: '#FAFAFA',
         paddingVertical: 30,
         alignItems: "center",
-        top: hp("90%"),
         paddingHorizontal: 20
     },
     btnCover2: {
@@ -227,6 +223,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         width: wp('100%'),
         flex: 1,
+        height: "100%"
 
     },
     topCover: {
@@ -389,7 +386,8 @@ export default styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 15,
+        paddingHorizontal: 15,
+        paddingTop: 20,
         // marginBottom:10,
         marginTop: 4,
         shadowColor: '#ffffff',
@@ -508,22 +506,22 @@ export default styles = StyleSheet.create({
         paddingTop: 10,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: 16
     },
     viewStoreTitleText: {
         color: '#3858CF',
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         fontWeight: "400",
         letterSpacing: 0.2,
         fontStyle: 'normal',
     },
     docTitleCover: {
-        marginBottom: -5,
         justifyContent: 'flex-start',
         flexDirection: 'row',
         width: wp('88%'),
-        paddingLeft: 25,
+        // paddingLeft: 25,
     },
     smCardCover: {
         width: wp('100%'),
@@ -532,9 +530,18 @@ export default styles = StyleSheet.create({
     smCard: {
         flexDirection: 'row',
         width: wp('90%'),
-        padding: 10,
+        paddingVertical: 10,
+        paddingTop: 20,
         borderBottomWidth: 1,
         borderColor: '#EEEEEE',
+        justifyContent: 'space-between',
+        paddingHorizontal: 5
+    },
+    smCard2: {
+        flexDirection: 'row',
+        width: wp('90%'),
+        paddingHorizontal: 10,
+        paddingTop: 20,
         justifyContent: 'space-between'
     },
     docTitle: {
@@ -576,9 +583,9 @@ export default styles = StyleSheet.create({
         marginLeft: 10,
     },
     scrollStyle: {
-        position: 'relative',
-        paddingBottom: 5,
-        height: hp('100%'),
+        // position: 'relative',
+        paddingBottom: 65,
+        // height: hp('100%'),
         //   marginBottom:-100
         // top: hp('-3%'),
     },
