@@ -3,9 +3,9 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAgent } from "@Request/Agent";
-import { listCart } from "@Request/Cart";
 import styles from './style';
 import { Header } from "@Component";
+import { getCustomers} from "@Request/Customer";
 
 
 const Home = (props) => {
@@ -13,17 +13,18 @@ const Home = (props) => {
     const date = new Date();
 
     const { user } = useSelector((state) => state.auth);
+    const { customers } = useSelector((state) => state.customer);
     const [dayTime, setDayTime] = useState(null);
     const [dayTimeImage, setDayTimeImage] = useState(null);
 
     const openDrawer = () => props.navigation.openDrawer();
-    const { agent} = useSelector((state) => state.agent);
-    const { items } = useSelector((state) => state.cart);
+    const { agent } = useSelector((state) => state.agent);
 
     const redirectToDeals = () => props.navigation.navigate("Deals");
     const redirectToCustomerOrder = () => props.navigation.navigate("CustomerOrder");
     const openNotification = () => props.navigation.navigate("Notification");
     const openCart = () => props.navigation.navigate("Cart");
+    const redirectToInactiveCustomers = () => props.navigation.navigate("CustomersDashboard", {id: 1});
 
     useEffect(() => {
         if( (date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12){
@@ -38,13 +39,13 @@ const Home = (props) => {
         }
 
         dispatch(getAgent());
-        dispatch(listCart());
+        dispatch(getCustomers())
     }, [])
 
     return (
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
-                <Header  drawer={openDrawer} notify={openNotification} cart={openCart} cartLength={items?.carts?.length}/>
+                <Header  drawer={openDrawer} notify={openNotification} cart={openCart} />
                 <View style={styles.agentFaceCover}>
                     <Image style={styles.agentImg} source={require("@Assets/image/agentFace.png")} />
                 </View>
@@ -79,6 +80,7 @@ const Home = (props) => {
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
+                    {/* <Image style={styles.sunImg} source={require("@Assets/image/sunburst.png")} /> */}
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
                             <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
@@ -88,16 +90,16 @@ const Home = (props) => {
                         </View>
 
                     </TouchableOpacity>
-                    <View style={styles.cardFour}>
+                    <TouchableOpacity style={styles.cardFour} onPress={redirectToInactiveCustomers}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/UsersThree.png")} />
-                            <Text style={styles.cardBgText}>{agent.inactive_users_count}</Text>
+                            <Text style={styles.cardBgText}>{customers?.inactive?.count}</Text>
                         </View>
                         <View style={styles.cardDownInner}>
                             <Text style={styles.cardSmText}>Inactive Customers</Text>
                         </View>
 
-                    </View>
+                    </TouchableOpacity>
 
                 </View>
 

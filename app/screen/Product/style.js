@@ -220,6 +220,30 @@ export default styles = StyleSheet.create({
     },
     icon:{
         alignSelf: "center"
-    }
+    },
+    badge:{
+        backgroundColor: "#D32F2F",
+        borderRadius: 10,
+        position: "absolute",
+        top: -6,
+        left: 25,
+        width: 14,
+        height: 14,
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center"
+    },
+    badgeText: {
+        color: '#fff',
+        fontSize: 10,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 12,
+        letterSpacing: 0.1,
+        textAlign: "center",
+        justifyContent: "center",
+        alignSelf: "center"
+
+    },
+
 
 })

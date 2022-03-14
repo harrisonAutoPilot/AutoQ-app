@@ -11,7 +11,7 @@ export default styles = StyleSheet.create({
         width: "100%",
     },
     header: {
-        backgroundColor: "#3858CF",
+        backgroundColor: "#00319D",
         height: Platform.OS === "ios" ? null: 60,
         paddingLeft: 20,
         justifyContent: "center",
@@ -111,7 +111,7 @@ export default styles = StyleSheet.create({
         backgroundColor: "#E9EBF9",
     },
     activeText: {
-        color: "rgba(56, 88, 207, 1)"
+        color: "#00319D"
     },
     color2: {
         color: "rgba(97, 97, 97, 1)"

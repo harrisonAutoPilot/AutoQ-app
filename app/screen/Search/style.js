@@ -67,7 +67,7 @@ export default styles = StyleSheet.create({
         color: "#212121",
         letterSpacing: 0.25,
         fontWeight: "400",
-        // textTransform: "capitalize"
+        textTransform: "capitalize"
     },
     column: {
         flexDirection: "row",

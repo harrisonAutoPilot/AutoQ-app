@@ -234,12 +234,11 @@ export default styles = StyleSheet.create({
     smCardCover:{
         flexDirection:'row',
         justifyContent:'space-between',
-        paddingBottom:15,
-        paddingTop:15,
+        paddingVertical:19,
         paddingHorizontal:10,
         backgroundColor:'#FAFAFA',
         marginBottom:8,
-        borderRadius:5,
+        borderRadius:8,
 
     },
     bottomCover:{

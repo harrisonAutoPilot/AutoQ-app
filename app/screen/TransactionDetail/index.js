@@ -15,7 +15,7 @@ const TransactionDetail = (props) => {
                 onPress={goBack}
                 styleView={styles.body} />
 
-            <View>
+            <View style={{marginTop: 5}}>
                 <View style={styles.cardCover}>
                     <Text style={styles.titleText}>Date: </Text>
                     <Text style={styles.valueText}>{new Date(details.created_at).toDateString()}</Text>

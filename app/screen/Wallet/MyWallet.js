@@ -122,7 +122,7 @@ const MyWallet = (props) => {
             <View style={styles.downCover}>
                 <View style={styles.sortContainer}>
                     <Text style={styles.sortText}>Transaction History</Text>
-                    {wallet?.user?.transactions ?
+                    {wallet?.user?.transactions.length ?
                         <TouchableOpacity style={styles.sortCover} onPress={openSheetSort}>
                             <View style={styles.sortCon} >
                                 <Image source={require("@Assets/image/exchange.png")} style={styles.refreshImg} />

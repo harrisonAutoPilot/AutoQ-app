@@ -49,17 +49,6 @@ const Search = (props) => {
         }
     }, [search.length, searchCategory]);
 
-    // const checkCart = (id) => {
-    //     const cartItems = items.carts.filter((item) => {
-    //         if (item.product_id === id) {
-    //             setCartItem(item.product_id)
-    //             setCartNewAmount(item.quantity)
-    //             setCartItemId(item.id)
-    //         }
-    //     })
-    //     return cartItems
-    // }
-
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
@@ -145,7 +134,6 @@ const Search = (props) => {
     const getItem = (id) => {
         filterProduct(id);
         bottomSheet.current.show();
-        // checkCart(id)
     };
 
     const cancelSearch = () => props.navigation.goBack();

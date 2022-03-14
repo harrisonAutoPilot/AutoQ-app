@@ -254,10 +254,7 @@ const Cart = (props) => {
                             </View>
                             : null
 
-
                     ))}
-
-
 
                 </View>
 

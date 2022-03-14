@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
         width: 14,
         height: 14,
         justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center"
     },
     badgeN:{
         backgroundColor: "#43A047",
@@ -88,9 +90,9 @@ const styles = StyleSheet.create({
     },
     badgeText: {
         color: '#fff',
-        fontSize: 11,
+        fontSize: 10,
         fontFamily: "Urbanist-Medium",
-        lineHeight: 16,
+        lineHeight: 12,
         letterSpacing: 0.1,
         textAlign: "center",
         justifyContent: "center",

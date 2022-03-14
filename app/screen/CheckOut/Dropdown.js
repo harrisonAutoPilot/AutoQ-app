@@ -87,15 +87,18 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
           style={styles.overlay}
           onPress={() => setVisible(false)}
         >
+         
 
           <View style={[styles.dropdown, { top: dropdownTop }]}>
             <View style={styles.dropLabelCover}><Text style={styles.dropLabel}>Select Store to deliver products</Text></View>
+           
             <FlatList
               data={verifiedStores}
               renderItem={renderItem}
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
+          
         </TouchableOpacity>
       </Modal>
     );

@@ -17,6 +17,7 @@ import { login } from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import { loginSchema } from "@Helper/Schema";
 import Loader from "@Screen/Loader";
+import RetrievePin from "@Screen/RetrievePin"
 
 const Login = (props) => {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Login = (props) => {
     const [pinVisibility, setPinVisibility] = useState(true);
     const [loader, setLoader] = useState(false);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    const [showRetrieve, setShowRetrieve] = useState(false);
 
     const { status, errors } = useSelector((state) => state.auth);
 
@@ -97,7 +99,7 @@ const Login = (props) => {
         await dispatch(login(data));
     };
 
-    const redirectToForgotPin = () => props.navigation.navigate("ForgotPin");
+    const redirectToForgotPin = () => setShowRetrieve(true);
 
     return (
         <View style={styles.mainBody}>
@@ -236,6 +238,11 @@ const Login = (props) => {
             </View>
 
             <Loader isVisible={loader} />
+
+            <RetrievePin
+                visibleRetrieve={showRetrieve}
+                returnBack={() => setShowRetrieve(false)}
+            />
         </View>
     )
 };

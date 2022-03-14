@@ -29,7 +29,7 @@ const Filter = (props) => {
         <TouchableOpacity style={[styles.listView, item.id === priceId || item.id === typeId || item.id === packId ? styles.activeView : null]} onPress={() => { setItem(item.id, item.value, item?.filter); }} >
             {item.id === priceId || item.id === typeId || item.id === packId ?
                 <View style={styles.iconView}>
-                    <Icon name="check" size={18} color="#3858CF" />
+                    <Icon name="check" size={18} color="#00319D" />
                 </View> : null}
             <Text style={[styles.resetText, styles.color2, item.id === priceId || item.id === typeId || item.id === packId ? styles.activeText : null]}>{item.type}</Text>
         </TouchableOpacity>
@@ -96,7 +96,7 @@ const Filter = (props) => {
 
     return (
         <View>
-            <StatusBar barStyle="light-content" backgroundColor='#3858CF' hidden={false} />
+            <StatusBar barStyle="light-content" backgroundColor='#00319D' hidden={false} />
             <View style={styles.body}>
                 <View style={styles.header}>
                     <SafeAreaView>

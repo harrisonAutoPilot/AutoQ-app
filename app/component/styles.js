@@ -40,9 +40,9 @@ export default styles = StyleSheet.create({
         fontSize: 22,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 28,
-        color: "#212121",
+        color: "rgba(33, 33, 33, 1)",
         letterSpacing: 0.2,
-        paddingTop: 5,
+        paddingTop: 3,
     },
     midBtn: {
         backgroundColor: '#000000',
@@ -71,5 +71,8 @@ export default styles = StyleSheet.create({
         height: 150,
         marginLeft: 3,
 
+    },
+    smNaira: {
+        fontSize: 16,
     },
 })

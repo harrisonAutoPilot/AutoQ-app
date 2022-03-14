@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./style";
 import { getCustomers} from "@Request/Customer";
-// import { NavigationContainer } from "@react-navigation/native";
 
 
 const Active = (props) => {
@@ -17,7 +16,6 @@ const Active = (props) => {
 
     const { status, errors, customers } = useSelector((state) => state.customer);
 
-    const custom_details = () => props.navigation.navigate("CustomerDetails");
 
     const redirectToSort = () => {
 
@@ -35,8 +33,7 @@ const Active = (props) => {
 
     const ListView = ({ item }) => {
         return (
-            <TouchableOpacity onPress={custom_details}>
-                <View style={styles.cardCover}>
+            <TouchableOpacity onPress={() => props.details(item)} style={styles.cardCover}>
                     <View style={styles.cardTop}>
                         <View><Text style={styles.nameTextActive}>{item?.name}</Text></View>
                         <View style={styles.actCover}><Text style={styles.actText}>Active</Text></View>
@@ -49,7 +46,6 @@ const Active = (props) => {
                         <View style={styles.cardDownInner}><Text style={styles.phoneText}>{item?.address}</Text></View>
 
                     </View>
-                </View>
             </TouchableOpacity>
         )
     };

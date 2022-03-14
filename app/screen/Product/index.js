@@ -11,6 +11,7 @@ import { searchProducts } from "@Request/Product";
 import { SuccessMsgViewTwo, COHeader as Header } from "@Component/index";
 import BottomSheet from "@Screen/Overlay";
 import List from "./ListView";
+import { listCart } from "@Request/Cart";
 // import BrowseCardPlaceholder from "./browseCardPlaceholder";
 import { cleanup } from "@Store/Product";
 
@@ -28,9 +29,11 @@ const Products = (props) => {
     const bottomSheet = useRef();
 
     const { status, errors, searchedProducts } = useSelector((state) => state.product);
+    const { items } = useSelector((state) => state.cart);
 
     useEffect(() => {
         dispatch(searchProducts(props.route.params?.category));
+        dispatch(listCart());
         return () => dispatch(cleanup())
     }, []);
 
@@ -102,7 +105,9 @@ const Products = (props) => {
             getItem={() => getItem(item.id)}
             scale={scale}
         />
-    }
+    };
+
+    const openCart = () => props.navigation.navigate("Cart");
 
     return (
         <View style={styles.body}>
@@ -111,8 +116,13 @@ const Products = (props) => {
                     <TouchableOpacity onPress={redirectToSearch}>
                         <IonIcon name="search" size={20} color="#fff" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.headerSubLastIconView}>
+                    <TouchableOpacity style={styles.headerSubLastIconView} onPress={openCart}>
                         <IonIcon name="md-cart-outline" size={20} color="#fff" />
+                        {items?.carts?.length ?
+                            <View style={styles.badge}>
+                                <Text style={styles.badgeText}>{items?.carts?.length}</Text>
+                            </View>
+                            : null}
                     </TouchableOpacity>
                 </View>
             </Header>

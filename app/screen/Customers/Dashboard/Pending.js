@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./style";
 import { getCustomers } from "@Request/Customer";
 
-const InActive = () => {
+const InActive = (props) => {
     const dispatch = useDispatch();
     const [refreshing, setRefreshing] = useState(false);
 
@@ -28,7 +28,7 @@ const InActive = () => {
     const ListView = ({ item, index }) => {
 
         return (
-            <View style={styles.cardCover} key={item.id}>
+            <TouchableOpacity style={styles.cardCover}  onPress={() => props.details(item)} key={item.id}>
                 <View style={styles.cardTop}>
                     <View><Text style={styles.nameText}>{item.name}</Text></View>
                     <View style={styles.penCover}><Text style={styles.penText}>Pending</Text></View>
@@ -41,7 +41,7 @@ const InActive = () => {
                     <View style={styles.cardDownInner}><Text style={styles.phoneText}>{item.address}</Text></View>
 
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     };
 

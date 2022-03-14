@@ -6,7 +6,7 @@ import Toast from 'react-native-toast-message';
 import styles from "./style";
 import { getCustomers} from "@Request/Customer";
 
-const InActive = () => {
+const InActive = (props) => {
     const dispatch = useDispatch();
     const [refreshing, setRefreshing] = useState(false);
 
@@ -34,7 +34,7 @@ const InActive = () => {
     const ListView = ({ item }) => {
 
         return (
-            <View style={styles.cardCover}>
+            <TouchableOpacity style={styles.cardCover}  onPress={() => props.details(item)}>
                 <View style={styles.cardTop}>
                     <View><Text style={styles.nameTextInAc}>{item.name}</Text></View>
                     <View style={styles.inactCover}><Text style={styles.inactText}>Inactive</Text></View>
@@ -47,7 +47,7 @@ const InActive = () => {
                     <View style={styles.cardDownInner}><Text style={styles.phoneText}>{item.address}</Text></View>
 
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     };
 

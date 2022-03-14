@@ -41,7 +41,7 @@ export default styles = StyleSheet.create({
         backgroundColor:'#ffffff',
         padding:20,
         borderRadius:1,
-        marginTop:5,
+        // marginTop:5,
 
     },
       oddCover:{
@@ -56,9 +56,9 @@ export default styles = StyleSheet.create({
 
     },
      titleText:{
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: "Urbanist-SemiBold",
-        lineHeight: 28,
+        lineHeight: 20,
         color: "#424242",
         letterSpacing: 0.2,
         fontWeight: "400",

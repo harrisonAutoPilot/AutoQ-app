@@ -9,7 +9,7 @@ const NavHeader = (props) => {
 			<StatusBar barStyle="light-content" backgroundColor={props.statusBar === undefined ?'#00319D': props.statusBar} hidden={false} />
 			<SafeAreaView >
 			<View style={props.mainView === undefined ? styles.mainHeader: props.mainView}>
-				<TouchableOpacity onPress={props.onPress} >
+				<TouchableOpacity onPress={props.onPress}  >
 					<Image source={require("@Assets/image/leading-icon.png")} style={globalStyle.backImg} />
 				</TouchableOpacity>
 				<View style={[styles.titleCover, props.titleCover]}>

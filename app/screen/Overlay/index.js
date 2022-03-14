@@ -21,6 +21,7 @@ const Overlay = (props) => {
     const [cartAmount, setCartAmount] = useState(1);
     const [errMsg, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+    const [adding, setAdding]  = useState(false);
 
     const { addCart, errors } = useSelector((state) => state.cart);
 
@@ -52,6 +53,7 @@ const Overlay = (props) => {
         wait(300).then(() => {
             setSuccessMsg(suc);
             setErr(msg);
+            setAdding(false)
             if (suc) {
                 Toast.show({
                     type: 'tomatoToast',
@@ -99,6 +101,7 @@ const Overlay = (props) => {
     };
 
     const addItemsToCart = () => {
+        setAdding(true)
         const cartDetails = { quantity: cartAmount, product_id: result.id }
             dispatch(addToCart(cartDetails));
     };
@@ -175,13 +178,23 @@ const Overlay = (props) => {
 
                                     {result.quantity_available > 0
                                         ?
+                                        !adding ? 
                                         <TouchableOpacity style={styles.modalBtnView} onPress={addItemsToCart}>
                                             <Icon name="shopping-cart" size={16} color="#fff" />
                                             <View style={styles.modalBtnOverlay} >
                                                 <Text style={styles.modalBtnText}>Add to Cart</Text>
                                             </View>
 
-                                        </TouchableOpacity> : null}
+                                        </TouchableOpacity> 
+                                        :
+                                        <View style={styles.modalBtnView} >
+                                        <Icon name="shopping-cart" size={16} color="#fff" />
+                                        <View style={styles.modalBtnOverlay} >
+                                            <Text style={styles.modalBtnText}>Loading</Text>
+                                        </View>
+
+                                    </View> 
+                                        : null}
                                 </View>
                             </View>
 

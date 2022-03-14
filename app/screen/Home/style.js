@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 35,
         alignItems: 'center',
         backgroundColor: '#fff',
-        top: hp('-12%'),
+        top: hp('-11%'),
     },
     cardCover: {
         padding: 10,
