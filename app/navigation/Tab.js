@@ -1,7 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Ionicons';
+import FIcon from 'react-native-vector-icons/FontAwesome5';
+import SIcon from 'react-native-vector-icons/Foundation';
 import { Platform, View } from "react-native"
 
 import styles from "./style";
@@ -40,7 +42,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="home" color={color} size={16} style={styles.iconStyle} />
+                        <SIcon name="home" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -51,7 +53,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="search" color={color} size={16} style={styles.iconStyle} />
+                        <FIcon name="users" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -62,7 +64,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="wallet" color={color} size={16} style={styles.iconStyle} />
+                        <Icon name="md-wallet-outline" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -74,7 +76,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="shopping-cart" color={color} size={16} style={styles.iconStyle} />
+                        <Icon name="md-download-outline" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}

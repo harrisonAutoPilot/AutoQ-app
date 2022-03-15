@@ -33,6 +33,13 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
     },
+    burnImg:{
+        width: wp('40%'),
+        height: 150,
+        resizeMode:'contain',
+        zIndex:-20,
+        position:'absolute'
+    },
     welcomeText: {
         fontSize: 22,
         fontFamily: "Urbanist-SemiBold",
