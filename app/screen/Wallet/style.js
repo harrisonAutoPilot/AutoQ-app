@@ -205,6 +205,7 @@ export default styles = StyleSheet.create({
         marginTop:20,
         paddingLeft:5,
         paddingRight:20,
+        marginBottom:15,
     },
     sortCover:{
         padding:2,
@@ -239,11 +240,13 @@ export default styles = StyleSheet.create({
         backgroundColor:'#FAFAFA',
         marginBottom:8,
         borderRadius:8,
+     
 
     },
     bottomCover:{
         marginTop:5,
         padding:5,
+        
         height: hp('81%'),   
     },
      fundTitle:{

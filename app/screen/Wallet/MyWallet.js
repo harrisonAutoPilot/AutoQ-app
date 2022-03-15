@@ -133,7 +133,7 @@ const MyWallet = (props) => {
 
                 </View>
 
-                <View style={styles.bottomCover}>
+                <View style={{flex:1}}>
 
                     <FlatList data={!result.length ? wallet?.user?.transactions : result}
                         showsVerticalScrollIndicator={false}

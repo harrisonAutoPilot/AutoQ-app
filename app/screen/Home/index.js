@@ -6,6 +6,7 @@ import { getAgent } from "@Request/Agent";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers} from "@Request/Customer";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const Home = (props) => {
@@ -58,7 +59,8 @@ const Home = (props) => {
                 <View style={styles.sectorCover}>
                     <Text style={styles.titleCover}>Agent Dashboard</Text>
                 </View>
-                <View style={styles.cardCover}>
+              <ScrollView  showsVerticalScrollIndicator={true}>
+              <View style={styles.cardCover}>
                     <View style={styles.cardOne}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/ArrowsClockwise.png")} />
@@ -102,6 +104,7 @@ const Home = (props) => {
                     </TouchableOpacity>
 
                 </View>
+              </ScrollView>
 
             </View>
         </View>
