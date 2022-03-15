@@ -239,6 +239,20 @@ export default styles = StyleSheet.create({
         width: "100%"
 
     },
+    errMainVie6: {
+        borderWidth: 0,
+        borderColor: "red",
+        // marginTop: 20,
+        backgroundColor: "#FF0038",
+        borderRadius: 8,
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: "90%",
+       alignItems:"center"
+
+    },
     errInCover: {
         position: 'absolute',
         top: hp('-5%'),
@@ -258,6 +272,16 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         right: wp('15%'),
         width: wp('70%'),
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    errInCoverNew2: {
+        position: 'absolute',
+        top: hp('10%'),
+        zIndex: 9000,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: wp('100%'),
         paddingLeft: 20,
         paddingRight: 20,
     },

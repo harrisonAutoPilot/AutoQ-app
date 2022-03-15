@@ -26,7 +26,7 @@ const CustomersDashboard = (props) => {
 
     const dismissKeyboard = () => Keyboard.dismiss();
     const openDrawer = () => props.navigation.openDrawer();
-    const reg = () => props.navigation.navigate("Registration");
+    const reg = (items) => props.navigation.navigate("CustomerRegistration", {items});
 
     const openFavourite = () => props.navigation.navigate("SavedItem", { id: 1 })
     const openNotification = () => props.navigation.navigate("Notification");
@@ -46,7 +46,7 @@ const CustomersDashboard = (props) => {
                             <InputField
                                 style={styles.inputField}
                                 value={search}
-                                placeholder="Search Store names, ID"
+                                placeholder="Search by customer's name"
                                 placeholderTextColor="#fff"
                                 onChangeText={(text) => setSearch(text)}
                             />
@@ -59,7 +59,10 @@ const CustomersDashboard = (props) => {
             <View style={styles.mainBody}>
                 <View style={styles.subHeader}>
                     <TouchableOpacity style={[activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(1)}>
-                        <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PENDING</Text>
+                        <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PENDING </Text>
+                        <View>
+                            <Text>10</Text>
+                        </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={[activeId === 2 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(2)}>
                         <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>ACTIVE</Text>
@@ -71,9 +74,9 @@ const CustomersDashboard = (props) => {
 
 
             </View>
-            {activeId === 1 ? <Pending details={custom_details} /> : activeId === 2 ? <Active details={custom_details} /> : <InActive details={custom_details} />}
+            {activeId === 1 ? <Pending details={reg} /> : activeId === 2 ? <Active details={custom_details} /> : <InActive details={custom_details} />}
 
-            <TouchableOpacity style={styles.chat} onPress={reg}>
+            <TouchableOpacity style={styles.chat} onPress={() => reg}>
                 <Image source={require("@Assets/image/pencil.png")} style={styles.penImg} />
             </TouchableOpacity>
 

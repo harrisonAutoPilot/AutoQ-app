@@ -35,11 +35,10 @@ export default styles = StyleSheet.create({
         flex: 1,
         textAlign: 'left',
         paddingLeft: 20,
-        fontFamily: "Urbanist-Regular",
-        fontSize: 12,
+        fontFamily: "Urbanist-Medium",
+        fontSize: 14,
         lineHeight: 20,
         letterSpacing: 0.3,
-        fontWeight: "500",
         color: "#616161",
       },
       icon: {

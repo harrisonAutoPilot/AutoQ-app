@@ -31,3 +31,9 @@ export const verifyOrder = createAsyncThunk("order/verify",
       const Axios = await AxiosBase();
       return apiRequest(Axios.post('api/v1/agent/orders/verification_code/send', details), thunkAPI)
    });
+
+export const verifyCode = createAsyncThunk("order/verify_code",
+   async (code, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.post('api/v1/agent/orders/verify', code), thunkAPI)
+   });

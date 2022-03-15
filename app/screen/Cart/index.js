@@ -247,7 +247,7 @@ const Cart = (props) => {
                                     <View style={styles.increaseText}>
                                         <Text style={styles.productTitle} >{quantity.quantity}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, item.quantity, item.product.quantity_available); }}>
+                                    <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, quantity.quantity, item.product.quantity_available); }}>
                                         <Icon name="plus" color="#757575" />
                                     </TouchableOpacity>
                                 </View>

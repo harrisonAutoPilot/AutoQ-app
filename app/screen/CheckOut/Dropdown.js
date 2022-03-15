@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-native-modal";
 import FIcon from "react-native-vector-icons/MaterialIcons";
-import { getVerifiedStore } from "@Request/Store";
+import {getStore} from "@Request/Store";
 import styles from "./styleDropdown";
 
 const Dropdown = ({ label, onSelect, storeAddress }) => {
@@ -21,10 +21,10 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
 
   const dispatch = useDispatch();
 
-  const { verifiedStores } = useSelector((state) => state.store);
+  const { stores } = useSelector((state) => state.store);
 
   useEffect(() => {
-    dispatch(getVerifiedStore())
+    dispatch(getStore())
   }, [])
 
   const toggleDropdown = () => {
@@ -40,6 +40,7 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
   };
 
   const onItemPress = (item) => {
+    console.log(item)
     setSelected(item);
     onSelect(item);
     setVisible(false);
@@ -61,7 +62,7 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
               <FIcon name="lens" size={12} color="#fff" style={styles.icon} />
             </View>}
           <View style={styles.item}>
-            <Text style={styles.buttonText2}>{item.name}</Text>
+            <Text style={styles.buttonText}>{item.name}</Text>
             <Text style={styles.buttonText2}>{item.address}</Text>
           </View>
         </View>
@@ -93,7 +94,7 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
             <View style={styles.dropLabelCover}><Text style={styles.dropLabel}>Select Store to deliver products</Text></View>
            
             <FlatList
-              data={verifiedStores}
+              data={stores.stores}
               renderItem={renderItem}
               keyExtractor={(item, index) => index.toString()}
             />
