@@ -493,8 +493,9 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.2,
     },
     flag: {
-        marginTop: -22,
-        paddingLeft: 5,
+        marginTop: 21,
+        paddingLeft: 15,
+        position:'absolute'
     },
     nigImg: {
         width: 20,
