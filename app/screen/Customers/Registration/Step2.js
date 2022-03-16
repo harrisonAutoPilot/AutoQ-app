@@ -249,7 +249,7 @@ const Step2 = (props) => {
                                                         </View>) : null}
                                                 </View>
                                                 <View>
-                                                    <View style={[styles.inputHolder, styles.registerInputPinHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
+                                                    <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
                                                         <View style={styles.labelView}>
                                                             <Text style={styles.label}>STATE</Text>
                                                         </View>
@@ -264,7 +264,7 @@ const Step2 = (props) => {
                                                 </View>
 
                                                 <View>
-                                                    <View style={[styles.inputHolder, styles.registerInputPinHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
+                                                    <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
                                                         <View style={styles.labelView}>
                                                             <Text style={styles.label}>LGA</Text>
                                                         </View>

@@ -44,7 +44,7 @@ export default TabHomeNavigator = () => {
                    
                    return <View style={focused ?  styles.innerTabView : null}>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <SIcon name="home" color={color} size={20} style={styles.iconStyle} />
+                        <Icon name="home" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 },
             }}
@@ -55,7 +55,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <FIcon name="users" color={color} size={20} style={styles.iconStyle} />
+                        <Icon name="users" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -66,7 +66,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="md-wallet-outline" color={color} size={20} style={styles.iconStyle} />
+                        <IonIcon name="md-wallet-outline" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -78,7 +78,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="md-download-outline" color={color} size={20} style={styles.iconStyle} />
+                        <IonIcon name="md-download-outline" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}

@@ -138,6 +138,14 @@ export default styles = StyleSheet.create({
         marginTop: Dimensions.get("window").height / 30,
         borderRadius: 5
     },
+    inputHolder2: {
+        borderWidth: 1,
+        borderColor: "#BDBDBD",
+        paddingVertical: Platform.OS === "ios" ? 20 : 18,
+        paddingHorizontal: 10,
+        marginTop: Dimensions.get("window").height / 30,
+        borderRadius: 5
+    },
     inputMainHolder: {
 
         backgroundColor: '#ffffff',
@@ -192,7 +200,7 @@ export default styles = StyleSheet.create({
         position: "absolute",
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        height: "15%",
+        height: "37%",
         width: "100%",
         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
@@ -879,8 +887,9 @@ export default styles = StyleSheet.create({
         paddingLeft: 40,
     },
     flag: {
-        marginTop: -22,
-        paddingLeft: 5,
+        marginTop: 21,
+        paddingLeft: 18,
+        position:'absolute',
     },
     nigImg: {
         width: 20,
