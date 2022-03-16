@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         backgroundColor: "#00319D",
     },
-    headerTitle:{
-        color: "#fff", 
+    headerTitle: {
+        color: "#fff",
         textAlign: "center",
         fontFamily: "Urbanist-SemiBold",
         fontSize: 18,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         textTransform: "capitalize"
     },
-    badge:{
+    badge: {
         backgroundColor: "#D32F2F",
         borderRadius: 10,
         position: "absolute",
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignContent: "center"
     },
-    badgeN:{
+    badgeN: {
         backgroundColor: "#43A047",
         borderRadius: 10,
         position: "absolute",
@@ -99,6 +99,22 @@ const styles = StyleSheet.create({
         alignSelf: "center"
 
     },
+    navCoverWhite: {
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: '#f5f5f5',
+
+    },
+    btnTextWhite: {
+        color: '#212121',
+        fontSize: 18,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 24,
+        letterSpacing: 0.1,
+        textAlign: "center"
+      },
 
 });
 

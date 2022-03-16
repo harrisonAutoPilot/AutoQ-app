@@ -13,6 +13,7 @@ import { SuccessMsgViewTwo } from "@Component";
 import { cleanup } from "@Store/Cart";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import SmallCard from './SmallCard';
+import { listCart } from "@Request/Cart";
 import { searchProducts } from "@Request/Product";
 
 const Overlay = (props) => {
@@ -28,7 +29,6 @@ const Overlay = (props) => {
     useEffect(() => {
         if (addCart === "failed") {
             refreshView(errors?.msg ? errors?.msg :"An error occurred", "")
-            console.log("ko")
             setSuccessMsg("");
         } else if (addCart === "success") {
             // dispatch(searchProducts(props.route?.params?.category));
@@ -55,6 +55,7 @@ const Overlay = (props) => {
             setErr(msg);
             setAdding(false)
             if (suc) {
+                dispatch(listCart())
                 Toast.show({
                     type: 'tomatoToast',
                     visibilityTime: 5000,

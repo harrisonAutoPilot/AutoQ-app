@@ -1,8 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
-import { useDispatch } from "react-redux";
 import { InputField, Header } from "@Component";
-import Icon from 'react-native-vector-icons/Feather';
+import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./style";
 import InActive from "./Inactive";
@@ -26,12 +25,14 @@ const CustomersDashboard = (props) => {
 
     const dismissKeyboard = () => Keyboard.dismiss();
     const openDrawer = () => props.navigation.openDrawer();
-    const reg = () => props.navigation.navigate("Registration");
+    const reg = () => props.navigation.navigate("CustomerRegistration");
+    const reg_details = (items) => props.navigation.navigate("CustomerRegistration", {items});
 
     const openFavourite = () => props.navigation.navigate("SavedItem", { id: 1 })
     const openNotification = () => props.navigation.navigate("Notification");
     const openCart = () => props.navigation.navigate("Cart");
     const custom_details = (details) => props.navigation.navigate("CustomerDetails", {details});
+    const {customers } = useSelector((state) => state.customer);
 
     const showActive = (id) => setActiveId(id)
 
@@ -46,7 +47,7 @@ const CustomersDashboard = (props) => {
                             <InputField
                                 style={styles.inputField}
                                 value={search}
-                                placeholder="Search Store names, ID"
+                                placeholder="Search by customer's name"
                                 placeholderTextColor="#fff"
                                 onChangeText={(text) => setSearch(text)}
                             />
@@ -58,8 +59,13 @@ const CustomersDashboard = (props) => {
 
             <View style={styles.mainBody}>
                 <View style={styles.subHeader}>
-                    <TouchableOpacity style={[activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(1)}>
-                        <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PENDING</Text>
+                    <TouchableOpacity style={[ styles.firstHeader,activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(1)}>
+                        <View>
+                        <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PENDING </Text>
+                        </View>
+                        <View style={styles.firstInnerHeader}>
+                            <Text style={styles.firstInnerTitle}>{customers?.pending?.count}</Text>
+                        </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={[activeId === 2 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(2)}>
                         <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>ACTIVE</Text>
@@ -71,7 +77,7 @@ const CustomersDashboard = (props) => {
 
 
             </View>
-            {activeId === 1 ? <Pending details={custom_details} /> : activeId === 2 ? <Active details={custom_details} /> : <InActive details={custom_details} />}
+            {activeId === 1 ? <Pending details={reg_details} /> : activeId === 2 ? <Active details={custom_details} /> : <InActive details={custom_details} />}
 
             <TouchableOpacity style={styles.chat} onPress={reg}>
                 <Image source={require("@Assets/image/pencil.png")} style={styles.penImg} />

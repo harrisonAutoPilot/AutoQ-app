@@ -5,7 +5,7 @@ import { apiRequest } from "@Request/Request";
 export const getStore = createAsyncThunk("store/all",
    async (_, thunkAPI) => {
       const Axios = await AxiosBase();
-      return apiRequest(Axios.get('api/v1/stores'), thunkAPI)
+      return apiRequest(Axios.get('api/v1/agent/stores'), thunkAPI)
    });
 
 export const getVerifiedStore = createAsyncThunk("store/verified",

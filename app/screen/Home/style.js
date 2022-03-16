@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 10,
         marginBottom: 20,
-        padding: 20,
+        paddingVertical: 20,
+        paddingHorizontal: 16
     },
     cardTwo: {
         width: wp('40%'),
@@ -83,7 +84,8 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 10,
         marginBottom: 20,
-        padding: 20,
+        paddingVertical: 20,
+        paddingHorizontal: 16
     },
     cardThree: {
         width: wp('40%'),
@@ -93,7 +95,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 10,
         marginBottom: 20,
-        padding: 20,
     },
     cardFour: {
         width: wp('40%'),
@@ -103,7 +104,8 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 10,
         marginBottom: 20,
-        padding: 20,
+        paddingVertical: 20,
+        paddingHorizontal: 16
     },
     cardTopInner: {
         flexDirection: 'row',
@@ -664,6 +666,14 @@ const styles = StyleSheet.create({
     bookcardFlex: {
         flexDirection: "row",
         justifyContent: "space-between",
+    },
+    sunImg2:{
+        width:"100%",
+        height:"100%",
+    },
+    suninner:{
+        paddingVertical: 20,
+        paddingHorizontal: 16
     }
 });
 

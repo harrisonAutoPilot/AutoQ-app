@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getCustomerOrders, placeOrder, reOrder, trackOrder, verifyOrder} from "@Request/CustomerOrder";
+import {getCustomerOrders, placeOrder, reOrder, trackOrder, verifyOrder, verifyCode} from "@Request/CustomerOrder";
 
 export const orderSlice = createSlice({
     name: "order",
@@ -8,16 +8,22 @@ export const orderSlice = createSlice({
         status: "idle",
         errors: {},
         update: "idle",
-        orderDetail : [],
+        orderDetail : {},
         loaded: "idle",
-        verify: []
+        verify: "idle",
+        verificationStatus:"idle",
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
             state.status = "idle",
             state.update = "idle",
-            state.orderDetail = []
+            state.orderDetail = {},
+            state.verify = "idle",
+            state.verificationStatus = "idle"
+        },
+        cleanErr: (state) => {
+            state.errors = {}
         }
     },
     extraReducers: builder => {
@@ -45,10 +51,9 @@ export const orderSlice = createSlice({
             .addCase(placeOrder.pending, state => {
                 state.update = "pending";
                 state.errors = {};
-                state.orderDetail = []
+                state.orderDetail = {}
             })
             .addCase(placeOrder.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.update = "success";
                 state.errors = {}; 
                 state.orderDetail = action.payload
@@ -57,26 +62,38 @@ export const orderSlice = createSlice({
             .addCase(placeOrder.rejected, (state, { payload }) => {
                 state.update = "failed";
                 state.errors = payload;
-                state.orderDetail = []
+                state.orderDetail = {}
             })
 
             builder
             .addCase(verifyOrder.pending, state => {
-                state.update = "pending";
                 state.errors = {};
-                state.verify = []
+                state.verificationStatus = "pending"
             })
             .addCase(verifyOrder.fulfilled, (state, action) => {
-                console.log(action.payload)
-                state.update = "success";
+                state.verificationStatus = "success"
                 state.errors = {}; 
-                state.verify = action.payload
 
             })
             .addCase(verifyOrder.rejected, (state, { payload }) => {
-                state.update = "failed";
+                state.verificationStatus = "failed"
                 state.errors = payload;
-                state.verify = []
+            })
+
+            builder
+            .addCase(verifyCode.pending, state => {
+                state.orderDetail = {};
+                state.errors = {};
+                state.verify = "pending";
+            })
+            .addCase(verifyCode.fulfilled, (state, action) => {
+                state.errors = {}; 
+                state.verify =  "success";
+
+            })
+            .addCase(verifyCode.rejected, (state, { payload }) => {
+                state.errors = payload;
+                state.verify =  "failed";
             })
 
             builder
@@ -118,6 +135,6 @@ export const orderSlice = createSlice({
 
 });
 
-export const { cleanup } = orderSlice.actions
+export const { cleanup, cleanErr } = orderSlice.actions
 
 export default orderSlice.reducer;
