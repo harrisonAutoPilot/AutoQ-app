@@ -1,7 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import FIcon from "react-native-vector-icons/Foundation"
 import IonIcon from "react-native-vector-icons/Ionicons"
 import { Platform, View } from "react-native"
@@ -44,7 +43,7 @@ export default TabHomeNavigator = () => {
                    
                    return <View style={focused ?  styles.innerTabView : null}>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="home" color={color} size={20} style={styles.iconStyle} />
+                        <FIcon name="home" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 },
             }}
@@ -55,7 +54,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="users" color={color} size={20} style={styles.iconStyle} />
+                        <FIcon name="torsos-all" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -66,7 +65,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <IonIcon name="md-wallet-outline" color={color} size={20} style={styles.iconStyle} />
+                        <IonIcon name="wallet" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -78,7 +77,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <IonIcon name="md-download-outline" color={color} size={20} style={styles.iconStyle} />
+                        <IonIcon name="archive" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 ),
             }}

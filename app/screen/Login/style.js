@@ -91,11 +91,6 @@ const styles = StyleSheet.create({
         color: "#424242",
         letterSpacing: 0.2,
     },
-
-
-    btnCover: {
-        zIndex: 9,
-    },
     submit: {
         marginTop: 20,
         paddingVertical: 16,

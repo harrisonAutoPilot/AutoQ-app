@@ -2,7 +2,6 @@ import React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import DrawerContent from "@Component/drawer";
-import Home from "@Screen/Home";
 import CustomerOrder from "@Screen/CustomerOrder";
 // import MyStore from "@Screen/MyStore";
 // import Notification from "@Screen/Notification";

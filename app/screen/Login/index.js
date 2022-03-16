@@ -206,15 +206,9 @@ const Login = (props) => {
                                                         <View style={styles.errView}>
                                                             <Text style={styles.errText}>{props.errors.password}</Text>
                                                         </View>) : null}
-                                                </View>
-
-                                                <View style={styles.signedView}>
-
-                                                </View>
-
-                                                <View style={styles.btnCover}>
+                                                </View>                    
+                                                
                                                     <Btn title="Proceed" onPress={props.handleSubmit} style={styles.submit} />
-                                                </View>
                                             </View>
                                         )}
 

@@ -9,6 +9,7 @@ import URL from "@Helper/Constant";
 
 const List = (props) => {
     const item = props.item.product ? props.item.product : props.item;
+    console.log(item)
 
     return (
         <Animated.View style={[styles.listContainer, { transform: [{ scale: props.scale }] }]}>

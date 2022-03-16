@@ -4,15 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import { useFocusEffect } from '@react-navigation/native';
 import { searchProducts } from "@Request/Product";
-import LinearGradient from 'react-native-linear-gradient';
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
  import CatelogueCardPlaceholder from "./CatelogueCardPlaceholder";
-import { InputField, Header, EmptyPlaceHolder } from "@Component";
+import { InputField, Header } from "@Component";
 import { browseCategories } from "@Request/Category";
 import styles from "./style";
 import globalStyle from "@Helper/GlobalStyles";
-
-
+import {cleanup} from"@Store/Category"
 
 
 const Catalogue = (props) => {
@@ -25,7 +22,7 @@ const Catalogue = (props) => {
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
-    const { status, errors, categories } = useSelector((state) => state.category);
+    const { categories } = useSelector((state) => state.category);
     const { searchedProducts } = useSelector((state) => state.product);
 
     const openNotification = () => props.navigation.navigate("Notification");
@@ -38,6 +35,7 @@ const Catalogue = (props) => {
         }, [])
     );
 
+
     useEffect(() => {
         if (searchCategory.length) {
             searchCategoryItem();
@@ -49,6 +47,7 @@ const Catalogue = (props) => {
     const searchCategoryItem = () => {
         dispatch(searchProducts(searchCategory.toLowerCase()))
         setSearchCategoryArray(searchedProducts)
+        toTop()
     };
 
     const wait = (timeout) => {
@@ -124,6 +123,11 @@ const Catalogue = (props) => {
                         <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
 
                     }
+                    showsVerticalScrollIndicator={false}
+                    getItemLayout={(data, index) => (
+                        { length: 100, offset: 100 * index, index }
+                    )}
+                    ref={flatListRef}
                 />
             </View>
         </View>

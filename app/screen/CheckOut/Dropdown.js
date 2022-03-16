@@ -40,7 +40,6 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
   };
 
   const onItemPress = (item) => {
-    console.log(item)
     setSelected(item);
     onSelect(item);
     setVisible(false);

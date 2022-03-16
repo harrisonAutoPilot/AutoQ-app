@@ -99,7 +99,7 @@ const Overlay = (props) => {
                     showsVerticalScrollIndicator={false}
                     data={data}
                     keyExtractor={item => item.id}
-                    ListEmptyComponent={ListEmptyComponent}
+                    // ListEmptyComponent={ListEmptyComponent}
                     renderItem={ListView}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     columnWrapperStyle={styles.column}

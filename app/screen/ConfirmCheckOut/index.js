@@ -43,7 +43,7 @@ const ConfirmCheckOut = (props) => {
 
         if (verificationStatus === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
-        } else if (verifyStatus === "success" && props.navigation.isFocused()) {
+        } else if (verificationStatus === "success" && props.navigation.isFocused()) {
             setSuccessMsg("Verification code sent")
         }
 

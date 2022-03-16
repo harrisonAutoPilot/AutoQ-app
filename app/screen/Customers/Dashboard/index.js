@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
 import { InputField, Header } from "@Component";
 import { useSelector, useDispatch } from "react-redux";
+import { useFocusEffect } from '@react-navigation/native';
 
 import styles from "./style";
 import InActive from "./Inactive";
@@ -15,13 +16,24 @@ const CustomersDashboard = (props) => {
     const [activeId, setActiveId] = useState(1);
     const [search, setSearch] = useState("");
 
-    useEffect(() => {
-        dispatch(getCustomers());
-
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(getCustomers());
         if (props.route.params?.id === 1) {
+            console.log(props.route.params?.id)
             setActiveId(3)
         }
-    }, []);
+        }, [])
+    );
+
+
+    // useEffect(() => {
+    //     dispatch(getCustomers());
+    //     if (props.route.params?.id === 1) {
+    //         console.log(props.route.params?.id)
+    //         setActiveId(3)
+    //     }
+    // }, []);
 
     const dismissKeyboard = () => Keyboard.dismiss();
     const openDrawer = () => props.navigation.openDrawer();

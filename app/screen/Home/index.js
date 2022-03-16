@@ -83,12 +83,14 @@ const Home = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
                     <Image style={styles.burnImg} source={require("@Assets/image/cardFrame.png")} />
+                    <View style={styles.suninner}>
                         <View style={styles.cardTopInner}>
                             <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
                             <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
                         </View>
                         <View style={styles.cardDownInner}>
                             <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>
+                        </View>
                         </View>
 
                     </TouchableOpacity>

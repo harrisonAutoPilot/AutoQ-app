@@ -1,10 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styles from './style';
-import {
-    responsiveHeight,
-    responsiveWidth,
-} from 'react-native-responsive-dimensions';
 
 const ProductPlaceholderCard = () => (
 
@@ -15,17 +11,12 @@ const ProductPlaceholderCard = () => (
             </View>
 
             <View style={styles.listTitleViewP}>
-                <View style={styles.listTitleViewPP}>
-
-                </View>
+                <View style={styles.listTitleViewPP} />
 
                 <View style={styles.priceOverviewP}>
-                    <View style={styles.priceViewP}>
+                    <View style={styles.priceViewP} />
+                    <View style={styles.priceView2P} />
 
-                    </View>
-                    <View style={styles.priceView2P} >
-
-                    </View>
                 </View>
             </View>
 
@@ -37,20 +28,14 @@ const ProductPlaceholderCard = () => (
             </View>
 
             <View style={styles.listTitleViewP}>
-                <View style={styles.listTitleViewPP}>
-
-                </View>
+                <View style={styles.listTitleViewPP} />
 
                 <View style={styles.priceOverviewP}>
-                    <View style={styles.priceViewP}>
+                    <View style={styles.priceViewP} />
+                    <View style={styles.priceView2P} />
 
-                    </View>
-                    <View style={styles.priceView2P} >
-
-                    </View>
                 </View>
             </View>
-
 
         </View>
 
@@ -60,20 +45,14 @@ const ProductPlaceholderCard = () => (
             </View>
 
             <View style={styles.listTitleViewP}>
-                <View style={styles.listTitleViewPP}>
-
-                </View>
+                <View style={styles.listTitleViewPP} />
 
                 <View style={styles.priceOverviewP}>
-                    <View style={styles.priceViewP}>
+                    <View style={styles.priceViewP} />
+                    <View style={styles.priceView2P} />
 
-                    </View>
-                    <View style={styles.priceView2P} >
-
-                    </View>
                 </View>
             </View>
-
 
         </View>
 
@@ -83,20 +62,14 @@ const ProductPlaceholderCard = () => (
             </View>
 
             <View style={styles.listTitleViewP}>
-                <View style={styles.listTitleViewPP}>
-
-                </View>
+                <View style={styles.listTitleViewPP} />
 
                 <View style={styles.priceOverviewP}>
-                    <View style={styles.priceViewP}>
+                    <View style={styles.priceViewP} />
+                    <View style={styles.priceView2P} />
 
-                    </View>
-                    <View style={styles.priceView2P} >
-
-                    </View>
                 </View>
             </View>
-
 
         </View>
 
