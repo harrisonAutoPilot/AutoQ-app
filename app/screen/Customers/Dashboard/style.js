@@ -564,5 +564,25 @@ export default styles = StyleSheet.create({
         borderRadius:20,
         backgroundColor:'#ebebeb',
         marginTop:30,    
-    }
+    },
+    firstInnerHeader: {
+        marginLeft: 5, 
+        backgroundColor: "rgba(207, 106, 135, 1)",
+        height:18,
+        width: 18,
+        borderRadius: 9,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    firstInnerTitle: {
+        color: 'rgba(255, 255, 255, 1)',
+        fontSize: 11,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 16,
+        letterSpacing: 0.2,
+    },
+    firstHeader: {
+        flexDirection: "row",
+        justifyContent:"center"
+    },
 })

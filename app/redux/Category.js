@@ -8,6 +8,13 @@ export const categorySlice = createSlice({
         status: "idle",
         errors: {}
     },
+    reducers:{
+        cleanup: (state) => {
+            state.errors = {}
+            state.status = "idle",
+            state.categories = []
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(browseCategories.pending, state => {
@@ -27,5 +34,7 @@ export const categorySlice = createSlice({
             })
     }
 });
+
+export const { cleanup } = categorySlice.actions
 
 export default categorySlice.reducer;

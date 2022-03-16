@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TouchableOpacity, FlatList, Image, RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import Toast from 'react-native-toast-message';
 import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
 import { getCustomers} from "@Request/Customer";
