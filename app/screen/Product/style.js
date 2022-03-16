@@ -82,10 +82,40 @@ export default styles = StyleSheet.create({
         borderWidth: 1
         // height: 120
     },
+    listContainerP: {
+        backgroundColor: "#bfbfbf",
+        marginBottom: 12,
+        paddingHorizontal: 10,
+        paddingVertical: 12,
+        alignItems: "center",
+        flexDirection: "row",
+        // flexGrow: 1
+        width: wp('92%'),
+        borderRadius: 8,
+        marginHorizontal: 16,
+        shadowColor: "rgba(235, 238, 255, 1)",
+        shadowOffset:{
+            width: 0,
+            height: 10
+        },
+        shadowOpacity: .3,
+        shadowRadius: 20,
+        elevation: 1,
+        borderColor: "#EEEEEE",
+        borderWidth: 1
+        // height: 120
+    },
     image: {
         width: 54,
         height: 88,
         resizeMode: 'contain',
+    },
+    imageP: {
+        width: 70,
+        height: 88,
+        resizeMode: 'contain',
+        backgroundColor:'#ebebeb',
+        borderRadius:10,
     },
     listTitle: {
         fontSize: 14,
@@ -100,6 +130,33 @@ export default styles = StyleSheet.create({
         flexWrap: "wrap",
         width: "78%",
         // marginRight: 20
+    },
+    listTitleView: {
+        marginLeft: 10,
+        flexWrap: "wrap",
+        width: "78%",
+       
+        // marginRight: 20
+    },
+    listTitleViewP: {
+       
+        flexWrap: "wrap",
+        width: "58%",
+        backgroundColor:'#ebebeb',
+        borderRadius:10,
+        height:10,
+        marginTop:-30,
+        marginLeft: 20
+    },
+    listTitleViewPP: {
+       
+        flexWrap: "wrap",
+        width: "50%",
+        backgroundColor:'#ebebeb',
+        borderRadius:10,
+        height:10,
+        marginTop:30,
+        marginRight: 20
     },
     listTitleView2: {
         flexWrap: "wrap",
@@ -116,6 +173,14 @@ export default styles = StyleSheet.create({
     },
     priceView: {
         marginTop: 10
+    },
+    priceViewP: {
+        marginTop: 10,
+        width:50,
+        height:10,
+        backgroundColor:'#ebebeb',
+        borderRadius:10,
+        marginRight:20,
     },
     priceText: {
         fontSize: 16,
@@ -197,6 +262,12 @@ export default styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center"
     },
+    priceOverviewP: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop:30,
+    },
     priceView2: {
         borderWidth: 1,
         borderColor: "#3858CF",
@@ -206,6 +277,21 @@ export default styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         // marginLeft: 20
+    },
+    
+    priceView2P: {
+        borderWidth: 0,
+        borderColor: "#3858CF",
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 50,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width:50,
+        height:10,
+        backgroundColor:'#ebebeb',
+        marginLeft:10,
+        marginRight:10,
     },
     priceText2: {
         fontSize: 11,

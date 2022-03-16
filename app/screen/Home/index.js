@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAgent } from "@Request/Agent";
 import styles from './style';
 import { Header } from "@Component";
-import { getCustomers } from "@Request/Customer";
+import { getCustomers} from "@Request/Customer";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const Home = (props) => {
@@ -81,17 +82,14 @@ const Home = (props) => {
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
-                        <ImageBackground style={styles.sunImg2} source={require("@Assets/image/sunburst.png")}  imageStyle={{ borderRadius: 15}}>
-                            <View style={styles.suninner}>
-                                <View style={styles.cardTopInner}>
-                                    <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
-                                    <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
-                                </View>
-                                <View style={styles.cardDownInner}>
-                                    <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
+                    <Image style={styles.burnImg} source={require("@Assets/image/cardFrame.png")} />
+                        <View style={styles.cardTopInner}>
+                            <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
+                            <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
+                        </View>
+                        <View style={styles.cardDownInner}>
+                            <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>
+                        </View>
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.cardFour} onPress={redirectToInactiveCustomers}>
@@ -106,6 +104,7 @@ const Home = (props) => {
                     </TouchableOpacity>
 
                 </View>
+             
 
             </View>
         </View>

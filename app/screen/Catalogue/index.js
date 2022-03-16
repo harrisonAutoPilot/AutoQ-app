@@ -4,11 +4,16 @@ import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import { useFocusEffect } from '@react-navigation/native';
 import { searchProducts } from "@Request/Product";
-
+import LinearGradient from 'react-native-linear-gradient';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+ import CatelogueCardPlaceholder from "./CatelogueCardPlaceholder";
 import { InputField, Header, EmptyPlaceHolder } from "@Component";
 import { browseCategories } from "@Request/Category";
 import styles from "./style";
 import globalStyle from "@Helper/GlobalStyles";
+
+
+
 
 const Catalogue = (props) => {
     const dispatch = useDispatch();
@@ -110,7 +115,7 @@ const Catalogue = (props) => {
                 <FlatList
                     data={ searchCategoryArray.length ? searchCategoryArray : categories}
                     keyExtractor={item => item.id}
-                    // ListEmptyComponent={CategoryCardPlaceholder}
+                    ListEmptyComponent={CatelogueCardPlaceholder}
                     renderItem={ListView}
                     ListFooterComponent={<View style={{ height: 10 }} />}
                     numColumns={2}

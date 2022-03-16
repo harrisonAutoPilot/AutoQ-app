@@ -205,6 +205,7 @@ export default styles = StyleSheet.create({
         marginTop:20,
         paddingLeft:5,
         paddingRight:20,
+        marginBottom:15,
     },
     sortCover:{
         padding:2,
@@ -239,7 +240,16 @@ export default styles = StyleSheet.create({
         backgroundColor:'#FAFAFA',
         marginBottom:8,
         borderRadius:8,
-
+    },
+    smCardCoverP:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        paddingVertical:19,
+        paddingHorizontal:10,
+        // backgroundColor:'#FAFAFA',
+        marginBottom:8,
+        borderRadius:8,
+        backgroundColor:'#bfbfbf'
     },
     bottomCover:{
         marginTop:5,
@@ -279,6 +289,17 @@ export default styles = StyleSheet.create({
         justifyContent:'space-between',
         paddingRight:10,
     },
+    leftCoverP:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        paddingRight:10,
+        height:10,
+        width:40,
+        backgroundColor:'#ebebeb',
+        borderRadius:20,
+        marginTop:15,
+
+    },
       rightCover:{
         flexDirection:'row',
         justifyContent:'space-between',
@@ -305,6 +326,25 @@ export default styles = StyleSheet.create({
         backgroundColor:'rgba(211, 47, 47, 0.05)',
         marginRight:10,
         marginTop:5,
+    },
+    iconCoverDebitP:{
+        width:30,
+        height:30,
+        borderWidth:0,
+        borderRadius:100,
+        borderColor:'rgba(211, 47, 47, 0.2))',
+        padding:7,
+        // backgroundColor:'rgba(211, 47, 47, 0.05)',
+        marginRight:10,
+        marginTop:5,
+        backgroundColor:'#ebebeb'
+    },
+    side:{
+        marginTop:10,
+        width:wp('50%'),
+        height:20,
+        backgroundColor:'#ebebeb',
+        borderRadius:20,
     },
     modalPadding:{
         flexDirection:'row',

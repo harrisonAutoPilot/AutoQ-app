@@ -17,11 +17,24 @@ export default styles = StyleSheet.create({
         height: "100%",
         flexGrow: 1
     },
+    placeholderCover:{
+        flexDirection:'row',
+        lexWrap: 'wrap',
+        justifyContent:'space-around'
+        
+    },
     listContainer: {
         width: wp('45%'),
         marginTop: 15,
         borderRadius: 16,
         backgroundColor: '#F5F5F5',
+        marginBottom: 20
+    },
+    listContainerP: {
+        width: wp('45%'),
+        marginTop: 15,
+        borderRadius: 16,
+        backgroundColor: '#bfbfbf',
         marginBottom: 20
     },
     column: {
@@ -35,6 +48,15 @@ export default styles = StyleSheet.create({
         justifyContent: "center",
 
     },
+    listContainerImageViewP: {
+        height: 115,
+        marginBottom: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor:'#bfbfbf',
+        borderRadius:20,
+
+    },
     listContainerTextView: {
         height: 50,
         marginBottom: 1,
@@ -45,16 +67,45 @@ export default styles = StyleSheet.create({
         alignItems: "center",
         borderTopWidth: 1,
         borderTopColor: "#EEEEEE"
+      
+    },
+    listContainerTextViewP: {
+        height: 50,
+        marginBottom: 1,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderTopWidth: 1,
+        borderTopColor: "#EEEEEE",
+        backgroundColor:'#bfbfbf',
+        borderBottomRightRadius:20,
+        borderBottomLeftRadius:20,
     },
     listContainerInnerTextView: {
       width: "85%",
       marginRight: 10
     },
+    listContainerInnerTextViewP: {
+        width: "95%",
+        marginRight: 10,
+        backgroundColor:'#ebebeb',
+        height:15,
+        borderRadius:10,
+      },
     image: {
         width: 100,
         height: 100,
         borderRadius: 100,
         resizeMode: 'contain',
+    },
+    imageP: {
+        width: 100,
+        height: 100,
+        borderRadius: 100,
+        resizeMode: 'contain',
+        backgroundColor:'#ebebeb'
     },
     title: {
         fontSize: 14,
