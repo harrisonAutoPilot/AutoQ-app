@@ -11,6 +11,7 @@ import { searchProducts } from "@Request/Product";
 import { SuccessMsgViewTwo, COHeader as Header } from "@Component/index";
 import BottomSheet from "@Screen/Overlay";
 import List from "./ListView";
+import ProductPlaceholderCard from "./ProductPlaceholderCard";
 import { listCart } from "@Request/Cart";
 // import BrowseCardPlaceholder from "./browseCardPlaceholder";
 import { cleanup } from "@Store/Product";
@@ -159,6 +160,7 @@ const Products = (props) => {
                 data={!searchArray.length ? searchedProducts : searchArray}
                 keyExtractor={item => item.id}
                 renderItem={ListView}
+                ListEmptyComponent={ProductPlaceholderCard}
                 ListFooterComponent={<View style={{ height: 40 }} />}
                 columnWrapperStyle={styles.column}
                 refreshControl={

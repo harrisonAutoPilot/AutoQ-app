@@ -516,6 +516,16 @@ export default styles = StyleSheet.create({
         paddingRight: 10,
 
     },
+    actCoverP: {
+        backgroundColor: '#ebebeb',
+        borderRadius: 20,
+        padding: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        height:15,
+        width:40,
+
+    },
     inactCover: {
         backgroundColor: 'rgba(211, 47, 47, 0.1)',
         borderRadius: 20,
@@ -536,4 +546,23 @@ export default styles = StyleSheet.create({
         width: 16,
         height: 16
     },
+    itemNameP:{
+        width:120,
+        height:10,
+        borderRadius:20,
+        backgroundColor:'#ebebeb'
+    },
+    itemPhoneP:{
+        width:80,
+        height:10,
+        borderRadius:20,
+        backgroundColor:'#ebebeb'   
+    },
+    cardDownInnerP:{
+        width:180,
+        height:10,
+        borderRadius:20,
+        backgroundColor:'#ebebeb',
+        marginTop:30,    
+    }
 })

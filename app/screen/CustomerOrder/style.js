@@ -159,6 +159,31 @@ const styles = StyleSheet.create({
         marginBottom: 20,
 
     },
+    cardP: {
+        width: wp('97%'),
+        // height: hp('28%'),
+        margin: 4,
+        borderRadius: 1,
+        borderBottomWidth: 1,
+        borderStyle: 'solid',
+        borderBottomColor: '#e6e6e6',
+        backgroundColor: '#bfbfbf',
+        alignItems: 'center',
+        textAlign: 'center',
+        padding: 13,
+        paddingTop: 3,
+        paddingBottom: 20,
+        marginTop: 0,
+        marginBottom: 20,
+        
+
+    },
+    cardMidCoverP:{
+        width: wp('85%'),
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        marginRight: 30,
+    },
     cardsDown: {
 
         resizeMode: 'contain',
@@ -178,12 +203,29 @@ const styles = StyleSheet.create({
     cardUpDown:{
         marginTop: 4
     },
+    cardUpDownP:{
+        marginTop: 4,
+        width:150,
+        height:10,
+        backgroundColor:'#ebebeb',
+        borderRadius:20,
+         marginLeft: 15,
+    },
 
     cardUpTop: {
         width: wp('85%'),
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginRight: 30,
+    },
+    cardUpTopP: {
+        width: wp('85%'),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginRight: 30,
+        marginLeft: 30,
+        height:10,
+        borderRadius:20
     },
     upTextOne: {
         color: '#424242',
@@ -215,6 +257,17 @@ const styles = StyleSheet.create({
         marginRight: 30,
         marginTop: 12
     },
+    cardMidTopP: {
+        width: wp('35%'),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginRight: 30,
+       
+        marginTop: 12,
+        height:10,
+        backgroundColor:'#ebebeb',
+        borderRadius:20,
+    },
     midTextOne: {
         color: '#424242',
         fontSize: 16,
@@ -223,11 +276,21 @@ const styles = StyleSheet.create({
         letterSpacing: 0.1,
     },
     cardMidDown: {
-        width: wp('75%'),
+        width: wp('55%'),
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginRight: 30,
         marginTop: 10,
+    },
+    cardMidDownP: {
+        width: wp('55%'),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginRight: 30,
+        marginTop: 10,
+        height:10,
+        backgroundColor:'#ebebeb',
+        borderRadius:20,
     },
     midTextTwo: {
         color: '#9E9E9E',
@@ -247,6 +310,15 @@ const styles = StyleSheet.create({
         alignItems: "center"
 
     },
+    cardDownCoverP: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: wp('85%'),
+        marginRight: 30,
+        marginTop: 10,
+        alignItems: "center"
+
+    },
     StatusCover: {
         backgroundColor: '#E3F6CF',
         paddingTop: 6,
@@ -254,6 +326,17 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
         paddingRight: 16,
         borderRadius: 20,
+        // height: 30,
+    },
+    StatusCoverP: {
+        backgroundColor: '#bfbfbf',
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 16,
+        paddingRight: 16,
+        borderRadius: 20,
+        height:10,
+        borderRadius:20,
         // height: 30,
     },
     statusText: {
@@ -276,6 +359,14 @@ const styles = StyleSheet.create({
     },
     reorderCover: {
         flexDirection: 'row',
+
+    },
+    reorderCoverP: {
+        flexDirection: 'row',
+        backgroundColor:'#bfbfbf',
+        height:10,
+        borderRadius:20,
+        width:50,
 
     },
     reOrderText: {

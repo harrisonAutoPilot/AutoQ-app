@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TouchableOpacity, FlatList, Image, RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-
+import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
 import { getCustomers} from "@Request/Customer";
 
@@ -39,7 +39,7 @@ const Active = (props) => {
                         <View style={styles.actCover}><Text style={styles.actText}>Active</Text></View>
                     </View>
                     <View style={styles.cardMid}>
-                        <View><Text style={styles.phoneText}>+{item?.phone}</Text></View>
+                        <View><Text style={styles.phoneText}>+{item?.phone}zzz</Text></View>
 
                     </View>
                     <View style={styles.cardDown}>
@@ -65,7 +65,7 @@ const Active = (props) => {
                     showsVerticalScrollIndicator={false}
                     data={customers?.active?.users}
                     keyExtractor={item => item.id}
-                    // ListEmptyComponent={ListEmptyComponent}
+                    ListEmptyComponent={PlaceholderCard}
                     renderItem={ListView}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     columnWrapperStyle={styles.column}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-
+import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
 import { getCustomers } from "@Request/Customer";
 
@@ -59,7 +59,7 @@ const InActive = (props) => {
                     showsVerticalScrollIndicator={false}
                     data={customers?.pending?.users}
                     keyExtractor={item => item.id}
-                    // ListEmptyComponent={ListEmptyComponent}
+                    ListEmptyComponent={PlaceholderCard}
                     renderItem={ListView}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     columnWrapperStyle={styles.column}

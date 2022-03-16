@@ -7,7 +7,7 @@ import { WalletCard } from "@Component";
 import WithDraw from "@Screen/WithdrawOverlay";
 import Modal from "./SortBy";
 import styles from "./style";
-// import TransactionCardPlaceholder from "./TransactionPlaceholder"
+import WalletPlaceholderCard from "./WalletPlaceholderCard"
 import commafy from "@Helper/Commafy";
 
 const MyWallet = (props) => {
@@ -86,7 +86,8 @@ const MyWallet = (props) => {
     }
 
     const ListView = ({ item }) => (
-        <TouchableOpacity style={styles.smCardCover} onPress={() => props.detail(item)}>
+        <TouchableOpacity  onPress={() => props.detail(item)}>
+            <View style={styles.smCardCover}>
             <View style={styles.leftCover}>
                 {item.type === "purchase" ?
                     <View style={styles.iconCoverDebit}>
@@ -105,7 +106,7 @@ const MyWallet = (props) => {
             <View style={styles.leftCover}>
                 <Text style={styles.fundAmount}> {item.type === "purchase" ? <Text style={{ color: "#D32F2F" }}>-</Text> : <Text style={{ color: "#469D00" }}>+</Text>} ₦{commafy(item.amount)}</Text>
             </View>
-
+            </View>
         </TouchableOpacity>
     )
 
@@ -133,13 +134,14 @@ const MyWallet = (props) => {
 
                 </View>
 
-                <View style={{flex:1}}>
+                <View style={styles.bottomCover}>
 
                     <FlatList data={!result.length ? wallet?.user?.transactions : result}
                         showsVerticalScrollIndicator={false}
                         keyExtractor={item => item.id}
                         renderItem={ListView}
-                        // ListEmptyComponent={TransactionCardPlaceholder}
+                        columnWrapperStyle={styles.column}
+                        ListEmptyComponent={WalletPlaceholderCard}
                         ref={flatListRef}
                         ListFooterComponent={<View style={{ height: 50 }} />}
                     />
