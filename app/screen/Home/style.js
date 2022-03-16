@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 10,
         marginBottom: 20,
-        paddingVertical: 20,
-        paddingHorizontal: 16
+        // paddingVertical: 20,
+        // paddingHorizontal: 16
     },
     cardFour: {
         width: wp('40%'),
