@@ -58,6 +58,15 @@ export default styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  imgCoverP: {
+    justifyContent: "center",
+    alignItems: "center",
+    width:80,
+    height:80,
+    backgroundColor:'#ebebeb',
+    borderRadius:8,
+
+  },
   drugImg: {
     width: 54,
     height: 64,
@@ -76,6 +85,13 @@ export default styles = StyleSheet.create({
   },
   descTextView:{
     height: "38%",
+    paddingTop: 5
+  },
+  descTextViewP:{
+    height:15,
+    width:200,
+    backgroundColor:'#ebebeb',
+    borderRadius:20,
     paddingTop: 5
   },
   priceCover: {
@@ -115,6 +131,18 @@ export default styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingLeft: 10,
     paddingRight: 10,
+  },
+  iconCoverP: {
+    flexDirection: 'row',
+    justifyContent: "flex-start",
+    paddingLeft: 10,
+    paddingRight: 10,
+    width:70,
+    height:18,
+    backgroundColor:'#ebebeb',
+    borderRadius:20,
+    marginTop:50,
+    marginRight:40,
   },
   increaseCartMainAmountView: {
     marginTop: 18,
@@ -267,6 +295,29 @@ export default styles = StyleSheet.create({
     alignSelf: "flex-end",
     justifyContent: "flex-end",
     marginTop: 20
+  },
+  thrashP: {
+    marginLeft: 20,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    borderRadius: 30,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    alignSelf: "flex-end",
+    justifyContent: "flex-end",
+    marginTop: 50,
+    width:60,
+    height:18,
+    marginRight:50,
+    backgroundColor:'#ebebeb',
+
+  },
+  amountP:{
+width:60,
+height:18,
+backgroundColor:'#ebebeb',
+borderRadius:20,
+marginTop:35,
   },
   textStyle: {
     fontSize: 10,
