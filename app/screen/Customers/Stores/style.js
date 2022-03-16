@@ -119,11 +119,10 @@ export default styles = StyleSheet.create({
         },
     storeName: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "#212121",
         letterSpacing: 0.1,
-        fontWeight: "600",
         textAlign: "center"
     },
     storeView: {
@@ -139,11 +138,10 @@ export default styles = StyleSheet.create({
     },
     storeAddress: {
         fontSize: 12,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 16,
         color: "#212121",
         letterSpacing: 0.2,
-        fontWeight: "600",
         textAlign: "left"
     },
     card:{

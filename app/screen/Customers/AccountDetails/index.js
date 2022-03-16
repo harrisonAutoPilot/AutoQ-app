@@ -13,7 +13,7 @@ const CustomerDetails = (props) => {
 
     const dispatch = useDispatch();
     const [activeId, setActiveId] = useState(1);
-    const details = props.route?.params?.details
+    const details = props.route?.params?.details;
 
     const goBack = () => props.navigation.navigate("CustomersDashboard");
     const detailsScreen = (item) => props.navigation.navigate("OrderDetails", { item });

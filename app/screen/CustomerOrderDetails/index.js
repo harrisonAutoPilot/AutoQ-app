@@ -19,7 +19,7 @@ const CustomerOrderDetails = (props) => {
    let no = 0;
    const orders = props.route.params.item;
    const { errors, update } = useSelector((state) => state.order);
-   console.log(props.route.params);
+   console.log(orders);
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -108,7 +108,7 @@ const CustomerOrderDetails = (props) => {
                               <Text style={styles.downTextTwo}>{orders.ref_no}</Text>
                            </View>
                            <View style={styles.StatusCover}>
-                              <Text style={styles.statusText}>delivered</Text>
+                              <Text style={styles.statusText}>{orders.status_text}</Text>
                            </View>
                         </View>
                   </View>

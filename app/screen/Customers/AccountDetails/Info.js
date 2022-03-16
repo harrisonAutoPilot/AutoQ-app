@@ -20,17 +20,13 @@ const CustomerInfo = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
     const dismissKeyboard = () => Keyboard.dismiss();
     const [loader, setLoader] = useState(false);
-    const [selected, setSelected] = useState({});
-    const bottomSheetStore = useRef();
-    const bottomSheetStoreDetail = useRef();
-    const details = props.details;
 
+    const bottomSheetStore = useRef();
+    const details = props.details;
 
     useEffect(() => {
         dispatch(cleanup())
     }, []);
-
-    const { } = useSelector((state) => state.agent);
 
     const closeSheet = () => {
         bottomSheetStore.current.close();
@@ -335,6 +331,7 @@ const CustomerInfo = (props) => {
             <StoreView
                 bottomSheetStore={bottomSheetStore}
                 bottomSheetClose = {closeSheet}
+                data={details.stores}
                
             />
         </View>

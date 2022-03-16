@@ -15,8 +15,6 @@ const Active = (props) => {
     }, []);
 
     const { status, errors, customers } = useSelector((state) => state.customer);
-    console.log(customers.active)
-
 
     const redirectToSort = () => {
 

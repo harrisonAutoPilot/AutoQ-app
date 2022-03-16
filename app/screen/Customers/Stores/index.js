@@ -1,28 +1,39 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, FlatList } from "react-native";
 import BottomSheet from "react-native-gesture-bottom-sheet";
-import data from './data'
 import styles from './style';
 import globalStyle from "@Helper/GlobalStyles";
-// import AddStore from "./addStore"
+import AddStore from "./addStore"
 // import StoreDetail from "@Screen/StoreDetailOverlay"
 
 
 const Overlay = (props) => {
-    const [copiedText, setCopiedText] = useState('Copy Account No');
+
     const [successMsg, setSuccessMsg] = useState("");
     const [showMsg, setShowMsg] = useState(false);
     const bottomSheet = useRef();
     const bottomSheetAddStore = useRef();
     const bottomSheetStore = useRef();
     const bottomSheetStoreDetail = useRef();
+    const [active, setActive] = useState(false)
+
+    useEffect(() => {
+        if(active){
+            console.log("hop")
+            bottomSheetAddStore.current.show();
+        }
+
+    }, [active])
 
     const closeSheet2 = () => {
         bottomSheetAddStore.current.close();
     };
 
     const addStore = () => {
-        bottomSheetAddStore.current.show();
+        props.bottomSheetClose()
+        // bottomSheetAddStore.current.show();
+        setActive(true)
+       
     };
     const storeDetail = () => {
         bottomSheetStoreDetail.current.show();
@@ -51,26 +62,24 @@ const Overlay = (props) => {
         )
     };
 
-    const RenderItem = ({ item, index }) => {
+    const RenderItem = ({ item }) => {
         return (
             <View>
-                {data.map((item) => (
-                    <TouchableOpacity onPress={storeDetail} >
-                        <View style={styles.card} key={item.id}>
-                            <View style={styles.cardImgCover}>
-                                <Image source={require("@Assets/image/storeN.png")} style={globalStyle.backImg} />
-                            </View>
-                            <View style={styles.cardDesCover}>
-                                <Text style={styles.storeName}>Pharma Store Ikeja</Text>
-                                <Text style={styles.storeAddress}>{item.address}</Text>
-                            </View>
-                            <View style={styles.cardArrowCover}>
-                                <Text style={styles.storeView}>view</Text>
-                                <Image source={require("@Assets/image/greater.png")} style={styles.greaterImg} />
-                            </View>
+                <TouchableOpacity onPress={storeDetail} >
+                    <View style={styles.card} key={item.id}>
+                        <View style={styles.cardImgCover}>
+                            <Image source={require("@Assets/image/storeN.png")} style={globalStyle.backImg} />
                         </View>
-                    </TouchableOpacity>
-                ))}
+                        <View style={styles.cardDesCover}>
+                            <Text style={styles.storeName}>{item.name}</Text>
+                            <Text style={styles.storeAddress}>{item.address} </Text>
+                        </View>
+                        <View style={styles.cardArrowCover}>
+                            <Text style={styles.storeView}>view</Text>
+                            <Image source={require("@Assets/image/greater.png")} style={styles.greaterImg} />
+                        </View>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     };
@@ -92,26 +101,26 @@ const Overlay = (props) => {
                         <Text style={styles.topPromptText2}>Add New Store</Text>
                     </View>
                 </TouchableOpacity>
-                <ScrollView
-                    indicatorStyle="white"
-                    contentContainerStyle={[
-                        styles.scrollContentContainer,
-                        { paddingBottom: 10 },
-                    ]}>
-                    <View style={styles.bottomCover}>
-                        <RenderItem />
-                    </View>
-                </ScrollView>
+
+                <View style={styles.bottomCover}>
+
+                    <FlatList
+                        data={props.data}
+                        renderItem={RenderItem}
+                        keyExtractor={item => item.id}
+
+                    />
+                </View>
 
             </View>
 
 
-            {/* <AddStore
+            <AddStore
                 bottomSheetAddStore={bottomSheetAddStore}
                 closeSheet2={closeSheet2}
-            /> */}
-           
-           {/* <StoreDetail
+            />
+
+            {/* <StoreDetail
                 bottomSheetStoreDetail={bottomSheetStoreDetail}
                 bottomSheetCloseDetail={bottomSheetCloseDetail}
             /> */}

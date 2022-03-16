@@ -173,9 +173,8 @@ export default styles = StyleSheet.create({
     btnText: {
         color: '#fff',
         fontSize: 14,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        fontWeight: "600",
         letterSpacing: 0.1,
         textAlign: "center"
     },

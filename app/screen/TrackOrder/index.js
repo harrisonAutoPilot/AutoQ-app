@@ -50,16 +50,16 @@ const TrackOrder = (props) => {
             <View style={[styles.midCard, styles.elevation]}>
 
                <FlatList
-                  data={[]}
-                  renderItem={trackOrderList.tracks}
+                  data={trackOrderList?.tracks}
+                  renderItem={ListView}
                   keyExtractor={item => item.id}
                />
-               {trackOrderList.status ?
+               {trackOrderList?.status ?
                   <View style={styles.lastCover}>
                      <View style={styles.tickCover}>
                         <Icon name="check" size={14} color="#212121"/>
                      </View>
-                     <Text style={styles.tickText}>{trackOrderList.status}.</Text>
+                     <Text style={styles.tickText}>{trackOrderList.message}.</Text>
 
                   </View> : null}
 
