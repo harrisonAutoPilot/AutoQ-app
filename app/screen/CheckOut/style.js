@@ -353,5 +353,30 @@ export default styles = StyleSheet.create({
   },
   mainBody: {
     marginHorizontal: 20
-  }
+  },
+  imgCoverP:{
+    width:50,
+    height:60,
+    borderRadius:8,
+    backgroundColor:'#ebebeb',
+
+  },
+  detailCoverP: {
+    width: "44%",
+    paddingLeft: 7,
+    paddingRight: 10,
+    marginRight: 8,
+    backgroundColor:'#ebebeb',
+    borderRadius:20,
+    height:15,
+    marginLeft:10,
+  },
+  quanCoverP: {
+    backgroundColor:'#ebebeb',
+    borderRadius:20,
+    height:15,
+    width:30,
+   
+    marginLeft:40,
+  },
 })

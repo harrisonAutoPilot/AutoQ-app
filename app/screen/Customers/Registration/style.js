@@ -200,7 +200,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        height: "15%",
+        height: "37%",
         width: "100%",
         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
@@ -886,8 +886,9 @@ export default styles = StyleSheet.create({
         paddingLeft: 40,
     },
     flag: {
-        marginTop: -22,
-        paddingLeft: 5,
+        marginTop: 21,
+        paddingLeft: 18,
+        position:'absolute',
     },
     nigImg: {
         width: 20,

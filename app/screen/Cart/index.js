@@ -5,7 +5,7 @@ import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-// import AddCartPlaceholder from './addCartPlaceholder';
+import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
 import { listCart, deleteCart, updateCart } from "@Request/Cart";
@@ -312,7 +312,7 @@ const Cart = (props) => {
                         showsVerticalScrollIndicator={false}
                         data={copyCart}
                         keyExtractor={item => item.id}
-                        // ListEmptyComponent={AddCartPlaceholder}
+                        ListEmptyComponent={CartPlaceholderComponent}
                         renderItem={ListView}
                         ListFooterComponent={<View style={{ height: 50 }} />}
                         columnWrapperStyle={styles.column}

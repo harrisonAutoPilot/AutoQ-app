@@ -12,7 +12,7 @@ import URL from "@Helper/Constant";
 import Dropdown from './Dropdown';
 import commafy from "@Helper/Commafy";
 import { getWallet } from "@Request/Wallet";
-// import PlaceholderComponent from "./placeholderComponent";
+import PlaceholderComponent from "./placeholderComponent";
 
 const CheckOut = (props) => {
 
@@ -153,7 +153,7 @@ const CheckOut = (props) => {
                                         data={items.carts}
                                         renderItem={renderItem2}
                                         keyExtractor={item => item.id}
-                                        // ListEmptyComponent={PlaceholderComponent}
+                                         ListEmptyComponent={PlaceholderComponent}
                                         horizontal={false}
                                     />
                                 </View>
