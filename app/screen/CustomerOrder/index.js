@@ -14,7 +14,7 @@ import { cleanup } from "@Store/CustomerOrder";
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
-// import MyOrderPlaceholder from "./MyOrderPlaceholder";
+import CustomerPlaceholderCard from "./CustomerPlaceholderCard";
 
 const CustomerOrder = (props) => {
     const dispatch = useDispatch();
@@ -220,7 +220,7 @@ const CustomerOrder = (props) => {
                         showsVerticalScrollIndicator={false}
                         data={orders.orders}
                         renderItem={ListView}
-                        // ListEmptyComponent={MyOrderPlaceholder}
+                        ListEmptyComponent={CustomerPlaceholderCard}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
                         refreshControl={
