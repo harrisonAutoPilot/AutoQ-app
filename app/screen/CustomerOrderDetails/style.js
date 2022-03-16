@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "#00319D",
     marginBottom: 5,
-    paddingBottom: 10
+    paddingBottom: 5
 },
   headerTitle: {
     position: 'absolute',
@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     paddingHorizontal: 13,
-    paddingTop: 13,
     paddingBottom: 24
   },
   midCard: {
@@ -114,7 +113,6 @@ const styles = StyleSheet.create({
   },
 
   cardsDown: {
-
     resizeMode: 'contain',
     height: hp('30%'),
     flexWrap: 'wrap',
@@ -137,9 +135,10 @@ const styles = StyleSheet.create({
     marginTop: 8
   },
   cardUpTop2: {
-    width: wp('92%'),
+    width: wp('90%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 8
     // marginRight: 30,
   },
   upTextOneCover:{
@@ -204,7 +203,7 @@ const styles = StyleSheet.create({
 
   },
   cardMidTop: {
-    width: wp('85%'),
+    width: wp('80%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginRight: 30,
@@ -347,9 +346,8 @@ const styles = StyleSheet.create({
   snTextTwo: {
     color: '#469D00',
     fontSize: 14,
-    fontFamily: "Urbanist-Regular",
+    fontFamily: "Urbanist-Medium",
     lineHeight: 20,
-    fontWeight: "400",
     letterSpacing: 0.1,
     marginRight: 10,
   },

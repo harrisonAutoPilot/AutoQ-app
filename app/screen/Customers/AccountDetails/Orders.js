@@ -17,9 +17,6 @@ import Loader from "@Screen/Loader";
 
 const Order = (props) => {
     const dispatch = useDispatch();
-    const [search, setSearch] = useState("");
-    const [result, setResult] = useState([]);
-    const [refreshing, setRefreshing] = useState(false);
 
     const [err, setErr] = useState("");
     const [loader, setLoader] = useState(false);
@@ -28,74 +25,13 @@ const Order = (props) => {
     const { errors, orders, update, loaded } = useSelector((state) => state.order);
     console.log(orders)
 
-    const toastConfig = {
-        error: () => (
-            <View style={[{ marginHorizontal: 20 }, globalStyles.errMainView2, globalStyles.marginTop]}>
-                <Text style={globalStyles.failedResponseText}>{err}</Text>
-            </View>
-        ),
-    };
-
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(getCustomerOrders());
-            return () => dispatch(cleanup());
-        }, [])
-    );
-
-    useEffect(() => {
-        if (search.length > 0) {
-            filterOrder();
-        }
-    }, [search.length]);
-
-    useEffect(() => {
-        if (update === "failed" && props.navigation.isFocused()) {
-            waitTime(errors?.msg);
-        } else if (update === "success" && props.navigation.isFocused()) {
-            props.navigation.navigate("Home", {
-                screen: 'Cart',
-            })
-        } else {
-            setErr("")
-        }
-    }, [update]);
-
-
-    const wait = (timeout) => {
-        return new Promise(resolve => setTimeout(resolve, timeout));
-    };
-
-    const waitTime = useCallback((msg) => {
-        wait(1000).then(() => {
-            setLoader(false);
-            setErr(msg)
-            Toast.show({
-                type: 'error',
-                visibilityTime: 5000,
-                autoHide: true,
-                position: 'top',
-                topOffset: 0
-            })
-        });
-        wait(4000).then(() => {
-            dispatch(cleanup());
-        })
-    }, []);
-
-    const refreshView = useCallback(() => {
-        setRefreshing(true);
-        dispatch(getOrders());
-        wait(3000).then(() => setRefreshing(false));
-    }, []);
 
     const reOrders = (id) => {
         const details = { order_group_id: id };
-        setLoader(true)
+        // setLoader(true)
         // dispatch(reOrder(details));
     };
 
-    const dismissKeyboard = () => Keyboard.dismiss();
 
     const ListView = ({ item }) => (
         <TouchableOpacity onPress={() => props.detailsScreen(item)}>
@@ -121,7 +57,7 @@ const Order = (props) => {
                 <View style={styles.cardDownCover}>
 
                     <View style={styles.StatusCover}>
-                        <Text style={styles.statusText}>delivered</Text>
+                        <Text style={styles.statusText}>{item.status_text}</Text>
                     </View>
 
                     {item.ref_no !== null ?
@@ -149,14 +85,11 @@ const Order = (props) => {
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={orders.orders}
+                        data={props.details.order_groups}
                         renderItem={ListView}
                         // ListEmptyComponent={MyOrderPlaceholder}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
-                        }
                         initialNumToRender={3}
                         getItemLayout={(data, index) => (
                             { length: 100, offset: 100 * index, index }

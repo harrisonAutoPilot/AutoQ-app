@@ -29,7 +29,6 @@ const CustomerOrder = (props) => {
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
     const { errors, orders, update, loaded } = useSelector((state) => state.order);
-    console.log(orders)
 
     const toastConfig = {
         error: () => (
@@ -79,7 +78,7 @@ const CustomerOrder = (props) => {
 
     const sortOrder = (id) => {
         setShowModal(false);
-        let order = [...orders];
+        let order = [...orders.orders];
         let searched;
 
         switch (id) {
@@ -125,7 +124,7 @@ const CustomerOrder = (props) => {
 
     const refreshView = useCallback(() => {
         setRefreshing(true);
-        dispatch(getOrders());
+        dispatch(getCustomerOrders());
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
@@ -163,7 +162,7 @@ const CustomerOrder = (props) => {
                 <View style={styles.cardDownCover}>
 
                     <View style={styles.StatusCover}>
-                        <Text style={styles.statusText}>delivered</Text>
+                        <Text style={styles.statusText}>{item.status_text}</Text>
                     </View>
 
                     {item.ref_no !== null ?
@@ -200,10 +199,11 @@ const CustomerOrder = (props) => {
 
                         <View style={styles.exchangeCover}>
                             <Text style={styles.allOrderText}> All Orders</Text>
-                            <TouchableOpacity style={styles.exchangeClickk} onPress={orders.length ? redirectToSort :  null}>
+                            {orders.orders ?
+                            <TouchableOpacity style={styles.exchangeClickk} onPress={ redirectToSort }>
                             <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
                                 <Text style={styles.exchangeText}>Sort by</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity>: null}
                         </View>
                     </View>
 
@@ -218,7 +218,7 @@ const CustomerOrder = (props) => {
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={orders.orders}
+                        data={!result.length ? orders.orders : result}
                         renderItem={ListView}
                         ListEmptyComponent={CustomerPlaceholderCard}
                         keyExtractor={item => item.id}
@@ -233,7 +233,8 @@ const CustomerOrder = (props) => {
                     />
                 }
             </View>
-            <Modal isVisible={showModal}
+            <Modal 
+            isVisible={showModal}
                 sort={sortOrder}
                 onSwipeComplete={() => setShowModal(false)}
                 close={() => setShowModal(!showModal)}
