@@ -23,6 +23,19 @@ const styles = StyleSheet.create({
         letterSpacing: 0.1,
         textAlign: "center"
     },
+    btnLg:{
+        // marginTop: Dimensions.get("window").height / 21,
+        width:wp('85%'),
+        flexDirection:'row',
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+        backgroundColor: "red",
+        borderRadius: 100,
+        alignItems:'center',
+        textAlign:'center',
+        marginLeft:wp('5%'),
+        outline:'none',
+      },
     
 
 

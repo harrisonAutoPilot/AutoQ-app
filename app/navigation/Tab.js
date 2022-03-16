@@ -2,6 +2,8 @@ import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import FIcon from "react-native-vector-icons/Foundation"
+import IonIcon from "react-native-vector-icons/Ionicons"
 import { Platform, View } from "react-native"
 
 import styles from "./style";
@@ -31,18 +33,20 @@ export default TabHomeNavigator = () => {
             tabBarLabelStyle: Platform.OS === "android" ? styles.tabLable : null,
             tabBarActiveTintColor: "#3858CF",
             tabBarInactiveTintColor: "#9E9E9E",
-            tabBarStyle: { height: Platform.OS === "android" ? 70 : 80 },
-
+            tabBarActiveBackgroundColor: "rgba(233, 235, 249, 0.5)",
+            tabBarInactiveBackgroundColor: "#fff",
+            tabBarStyle: { height: Platform.OS === "android" ? 70 : 80, }
 
         }}>
             <Tab.Screen name="HomeScreen" component={Home} options={{
                 tabBarLabel: 'Home',
-                tabBarIcon: ({ color, focused }) => (
-                    <View>
+                tabBarIcon: ({ color, focused }) => {
+                   
+                   return <View style={focused ?  styles.innerTabView : null}>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="home" color={color} size={16} style={styles.iconStyle} />
+                        <FIcon name="home" color={color} size={16} style={styles.iconStyle} />
                     </View>
-                ),
+                },
             }}
                 listeners={tabBarListeners}
             />
@@ -51,7 +55,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="search" color={color} size={16} style={styles.iconStyle} />
+                        <FIcon name="torsos-all" color={color} size={16} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -62,7 +66,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="wallet" color={color} size={16} style={styles.iconStyle} />
+                        <IonIcon name="wallet" color={color} size={16} style={styles.iconStyle} />
                     </View>
                 ),
             }}
@@ -74,7 +78,7 @@ export default TabHomeNavigator = () => {
                 tabBarIcon: ({ color, focused }) => (
                     <View>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
-                        <Icon name="shopping-cart" color={color} size={16} style={styles.iconStyle} />
+                        <IonIcon name="archive" color={color} size={16} style={styles.iconStyle} />
                     </View>
                 ),
             }}

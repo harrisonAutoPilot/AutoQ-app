@@ -23,7 +23,7 @@ import ConfirmCheckOut from "@Screen/ConfirmCheckOut";
 import Filter from "@Screen/Filter";
 import TransactionDetail from "@Screen/TransactionDetail";
 import CustomerDetails from "@Screen/Customers/AccountDetails";
-import CustomerRegistration from "@Screen/Customers/Onboarding";
+import CustomerRegistration from "@Screen/Customers/Registration";
 import CheckoutSuccess from "@Screen/CheckoutSuccess";
 
 

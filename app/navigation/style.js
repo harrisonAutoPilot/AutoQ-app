@@ -17,13 +17,14 @@ export default styles = StyleSheet.create({
     },
     tabLableTop:{
         position: "absolute",
-        top: Platform.OS === "android" ? -6 : -9,
+        top: Platform.OS === "android" ? -8 : -9,
         borderTopColor: "#3858CF",
         borderTopWidth: 4,
         width: 60,
-        left: -20,
+        left: -22,
         alignItems: "center"
     },
+ 
 
 
 })
