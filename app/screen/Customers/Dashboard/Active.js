@@ -39,7 +39,7 @@ const Active = (props) => {
                         <View style={styles.actCover}><Text style={styles.actText}>Active</Text></View>
                     </View>
                     <View style={styles.cardMid}>
-                        <View><Text style={styles.phoneText}>+{item?.phone}zzz</Text></View>
+                        <View><Text style={styles.phoneText}>+{item?.phone}</Text></View>
 
                     </View>
                     <View style={styles.cardDown}>
