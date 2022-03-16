@@ -105,7 +105,7 @@ export default styles = StyleSheet.create({
     inputMainHolder: {
         backgroundColor: '#ffffff',
         width: wp('100%'),
-
+        paddingBottom: 20
     },
     labelView: {
         position: "absolute",

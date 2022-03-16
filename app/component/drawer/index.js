@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView, ScrollView} from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
@@ -10,35 +10,38 @@ import links from "./data";
 import styles from "./style";
 import { logout } from "@Store/Auth";
 import globalStyles from "@Helper/GlobalStyles";
+import { getCustomers } from "@Request/Customer";
 
 const Drawer = (props) => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
 
+    useEffect(() => {
+        dispatch(getCustomers());
+
+    }, []);
+
     const logUserOut = () => {
         props.navigation.closeDrawer();
         dispatch(logout());
-        // props.navigation.navigate("Login")
+        
     }
 
+    const {customers } = useSelector((state) => state.customer);
+
     const redirectToScreen = (route) => {
-        if (route === "SavedItem") {
-            props.navigation.navigate(route, { id: 1 });
-        } else if (route === "Notification") {
-            return null
-        }
-        else {
+     
             props.navigation.dispatch(
                 CommonActions.reset({
                   index: 0,
                   routes: [{ name: route }]
                 })
               );
+              props.navigation.closeDrawer();
             // props.navigation.navigate(route);
-        }
+      
     }
 
-    const myAgent = () => props.navigation.navigate("MyRemedialAgent");
 
     const List = ({ item }) => (
         <TouchableOpacity onPress={() => redirectToScreen(item.route)} style={styles.routeInnerView}>
@@ -47,6 +50,9 @@ const Drawer = (props) => {
                     <FIcon name={item.icon} size={17} color="#00319D" />
                 </View>
                 <Text style={styles.routeText}>{item.name}</Text>
+                <View style={styles.firstInnerHeader}>
+                    <Text style={styles.firstInnerTitle}>{customers?.pending?.count}</Text>
+                </View>
             </View>
             <View>
                 <Icon name="chevron-right" size={18} color="#9E9E9E" />

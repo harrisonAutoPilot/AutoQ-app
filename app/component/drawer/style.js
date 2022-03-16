@@ -9,6 +9,23 @@ export default styles = StyleSheet.create({
         paddingBottom: 20,
 
     },
+    firstInnerHeader: {
+        marginLeft: 10, 
+        backgroundColor: "rgba(207, 106, 135, 1)",
+        height:21,
+        width: 26,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4
+    },
+    firstInnerTitle: {
+        color: 'rgba(255, 255, 255, 1)',
+        fontSize: 11,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 16,
+        letterSpacing: 0.2,
+        textAlign: "center"
+    },
     linearView: {
         paddingVertical: 10,
         height: "100%",

@@ -38,7 +38,8 @@ export default styles = StyleSheet.create({
     view: {
         flex: 1,
         backgroundColor: "#fff",
-        flexGrow: 1
+        flexGrow: 1,
+        justifyContent: 'space-between', flexDirection: 'column'
     },
     subHeader: {
 
@@ -138,6 +139,14 @@ export default styles = StyleSheet.create({
         marginTop: Dimensions.get("window").height / 30,
         borderRadius: 5
     },
+    inputHolder2: {
+        borderWidth: 1,
+        borderColor: "#BDBDBD",
+        paddingVertical: Platform.OS === "ios" ? 20 : 18,
+        paddingHorizontal: 10,
+        marginTop: Dimensions.get("window").height / 30,
+        borderRadius: 5
+    },
     inputMainHolder: {
 
         backgroundColor: '#ffffff',
@@ -189,7 +198,6 @@ export default styles = StyleSheet.create({
 
     btnStep2Cover: {
         flexDirection: 'row',
-        position: "absolute",
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
         height: "15%",
@@ -198,8 +206,9 @@ export default styles = StyleSheet.create({
         paddingVertical: 20,
         justifyContent: 'space-around',
         alignItems: "center",
-        top: hp("67%"),
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+       flex: 1,
+       marginTop: 95,
     },
     btnCover2: {
         top: hp("54%")
@@ -223,7 +232,6 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: -35,
     },
     submitStep3: {
         paddingVertical: 16,
@@ -233,7 +241,6 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: -35,
     },
     angleImg: {
         width: 15,
@@ -1051,12 +1058,7 @@ export default styles = StyleSheet.create({
         textTransform: "capitalize",
 
     },
-    inputCoverr: {
-        marginTop: -27
-    },
-    inputCover2: {
-        marginTop: -15
-    },
+  
     calenderImg: {
         width: 20,
         height: 20,

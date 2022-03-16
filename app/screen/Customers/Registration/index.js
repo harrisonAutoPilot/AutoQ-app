@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, Image, TouchableOpacity} from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -15,6 +15,9 @@ const Registration = (props) => {
 
     const dispatch = useDispatch();
     const [activeId, setActiveId] = useState(1);
+    const details = props.route.params?.items
+
+    console.log(details)
 
     const goBack = () => props.navigation.goBack();
 
@@ -26,8 +29,19 @@ const Registration = (props) => {
         }, [])
     );
 
-    const showActive = (id) => setActiveId(id)
+    const showActive = (id) => setActiveId(id);
 
+    const changeId = () => {
+        setActiveId(2)
+    }
+
+    const registerState = {
+        phone: details?.phone ? details.phone : "",
+        firstname:  details?.name ? details?.name?.substr(0, details.name.indexOf(' ')): "",
+        surname: details?.name ?  details?.name.substr(details?.name.indexOf(' ') + 1): "",
+        email: details?.email ? details.email : "",
+
+    }
 
     return (
         <View style={styles.view}>
@@ -111,7 +125,7 @@ const Registration = (props) => {
 
 
             </View>
-            {activeId === 1 ? <Step1 /> : activeId === 2 ? <Step2 /> : <Step3 />}
+            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} id={changeId}/> : activeId === 2 ? <Step2 /> : <Step3 />}
         </View>
     )
 };

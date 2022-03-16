@@ -2,7 +2,7 @@ const links = [{
     id: "1",
     name: "Pending Registration",
     icon: "folder-open",
-    route: "MyOrder"
+    route: "CustomersDashboard"
 },
 // {
 //     id: "2",

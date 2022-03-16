@@ -16,6 +16,14 @@ const changePinSchema = yup.object({
     retype_password: yup.number().required("Pin is required").oneOf([yup.ref('new_password'), null], 'Pins must match'),
 });
 
+const registerSchema = yup.object({
+    phone: yup.number().required("Phone Number is required").test('len', 'Phone Number should be exactly 13 digits', val => {if(val) return val.toString().length === 13}),
+    firstname: yup.string().required("First Name is required"),
+    surname: yup.string().required("Surname is required"),
+    email: yup.string().required("Email Address is required"),
+
+});
 
 
-export {searchSchema, loginSchema, changePinSchema}
+
+export {searchSchema, loginSchema, changePinSchema, registerSchema}

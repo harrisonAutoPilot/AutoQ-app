@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+
 import FIcon from "react-native-vector-icons/Foundation"
 import IonIcon from "react-native-vector-icons/Ionicons"
 import { Platform, View } from "react-native"
