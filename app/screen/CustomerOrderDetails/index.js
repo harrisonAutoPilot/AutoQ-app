@@ -19,7 +19,6 @@ const CustomerOrderDetails = (props) => {
    let no = 0;
    const orders = props.route.params.item;
    const { errors, update } = useSelector((state) => state.order);
-   console.log(orders);
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));

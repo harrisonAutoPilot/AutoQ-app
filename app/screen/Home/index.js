@@ -100,7 +100,7 @@ const Home = (props) => {
                             <Text style={styles.cardBgText}>{customers?.inactive?.count}</Text>
                         </View>
                         <View style={styles.cardDownInner}>
-                            <Text style={styles.cardSmText}>Inactive Customers</Text>
+                            <Text style={styles.cardSmText}>Inactive {"\n"}Customers</Text>
                         </View>
 
                     </TouchableOpacity>
