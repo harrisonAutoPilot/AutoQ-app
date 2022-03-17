@@ -13,6 +13,7 @@ import { profileSchema } from "@Helper/Schema";
 import { updateUserDetails,} from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
+import { NavigationContainer } from "@react-navigation/native";
 
 const CustomerInfo = (props) => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const CustomerInfo = (props) => {
 
     const bottomSheetStore = useRef();
     const details = props.details;
-
+  
     useEffect(() => {
         dispatch(cleanup())
     }, []);
@@ -32,9 +33,7 @@ const CustomerInfo = (props) => {
         bottomSheetStore.current.close();
     };
 
-    const viewStore = () => {
-        bottomSheetStore.current.show();
-    };
+    const viewStore = () => this.props.navigation.navigate("MyStore");
 
     const profileState = {
         firstname: details?.name?.substr(0, details.name.indexOf(' ')) ,
@@ -241,7 +240,7 @@ const CustomerInfo = (props) => {
                                 <Dropdown label="Select store type" storeAddress="" data={data} onSelect={setSelected} />
 
                             </View> */}
-                            <TouchableOpacity onPress={viewStore} style={styles.viewStoreTitleCover}>
+                            <TouchableOpacity style={styles.viewStoreTitleCover}>
                                     <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
                                     <Image style={styles.rightImg} source={require("@Assets/image/blueRight.png")} />
                            

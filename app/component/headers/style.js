@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#fff',
         borderStyle: 'solid',
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: '#f5f5f5',
 
     },

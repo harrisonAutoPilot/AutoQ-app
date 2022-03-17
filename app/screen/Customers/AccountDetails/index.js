@@ -18,7 +18,7 @@ const CustomerDetails = (props) => {
     const goBack = () => props.navigation.navigate("CustomersDashboard");
     const detailsScreen = (item) => props.navigation.navigate("OrderDetails", { item });
     const showActive = (id) => setActiveId(id)
-
+    const viewStore = () => this.props.navigation.navigate("MyStore");
     return (
         <View style={styles.view}>
            <Header title="Account Details" onPress={goBack} styleView={styles.body}/>

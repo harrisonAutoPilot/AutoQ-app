@@ -223,7 +223,7 @@ export default styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 20,
        flex: 1,
-     top:hp('31%'),
+     top:hp('31ss%'),
     //   position:'absolute'
     },
     btnCover2: {
