@@ -3,8 +3,6 @@ import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Scrol
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
-import Dropdown from './Dropdown';
-
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
 import { FormikValidator, InputField, SuccessMsgViewTwo, AuthBtn as Btn } from "@Component";
@@ -12,7 +10,7 @@ import { profileSchema } from "@Helper/Schema";
 import { updateUserDetails,} from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
-import { NavigationContainer } from "@react-navigation/native";
+
 
 const CustomerInfo = (props) => {
     const dispatch = useDispatch();
@@ -20,6 +18,8 @@ const CustomerInfo = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
     const dismissKeyboard = () => Keyboard.dismiss();
     const [loader, setLoader] = useState(false);
+
+    const { errors, update } = useSelector((state) => state.auth);
 
     const bottomSheetStore = useRef();
     const details = props.details;
@@ -39,8 +39,8 @@ const CustomerInfo = (props) => {
     };
 
     const submit = async (values) => {
-        const { firstname, surname, phone, amount } = values;
-        const newValue = { name: `${firstname} ${surname} ${phone} ${amount}` };
+        const { firstname, surname } = values;
+        const newValue = { name: `${firstname} ${surname}` };
         setLoader(true)
         await dispatch(updateUserDetails(newValue))
     };
@@ -88,18 +88,18 @@ const CustomerInfo = (props) => {
         )
     };
 
-    // useEffect(() => {
-    //     if (update === "failed") {
-    //         setSuccessMsg("");
-    //         waitTime(errors?.msg);
-    //     } else if (update === "success") {
-    //         dispatch(getUser());
-    //         waitTime("", "User Updated");
-    //     } else {
-    //         setSuccessMsg("");
-    //         setErrMsg("");
-    //     }
-    // }, [update]);
+    useEffect(() => {
+        if (update === "failed") {
+            setSuccessMsg("");
+            waitTime(errors?.msg);
+        } else if (update === "success") {
+            dispatch(getUser());
+            waitTime("", "User Updated");
+        } else {
+            setSuccessMsg("");
+            setErrMsg("");
+        }
+    }, [update]);
 
     const data = [
 
@@ -204,6 +204,7 @@ const CustomerInfo = (props) => {
                                                                     setErrMsg("");;
                                                                     setSuccessMsg("")
                                                                 }}
+                                                                editable={false}
                                                             />
                                                             <View style={styles.flag}>
                                                                 <Image style={styles.nigImg} source={require("@Assets/image/nigeria.png")} />

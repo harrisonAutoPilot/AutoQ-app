@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     },
     inputField: {
         width: wp('92%'),
-        color: '#424242',
+        color: '#fff',
         fontSize: 14,
         fontFamily: "Urbanist-Regular",
         lineHeight: 20,

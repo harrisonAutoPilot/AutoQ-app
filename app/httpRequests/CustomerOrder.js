@@ -8,6 +8,12 @@ export const getCustomerOrders = createAsyncThunk("order/all",
       return apiRequest(Axios.get('api/v1/agent/orders'), thunkAPI)
    });
 
+export const getCustomerPendingOrders = createAsyncThunk("order/pending",
+   async (_, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.get('api/v1/users/pending_orders'), thunkAPI)
+   });
+
 export const placeOrder = createAsyncThunk("order/place",
    async (details, thunkAPI) => {
       const Axios = await AxiosBase();

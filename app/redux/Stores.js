@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getStore, deleteStore, createStore, getVerifiedStore } from "@Request/Store";
+import { getStore, deleteStore, createStore, getUserStore } from "@Request/Store";
 
 export const storeSlice = createSlice({
     name: "store",
     initialState: {
         stores: [],
-        verifiedStores: [],
+        usersStore: [],
         status: "idle",
         update: "idle",
         errors: {},
@@ -36,20 +36,20 @@ export const storeSlice = createSlice({
             })
 
             builder
-            .addCase(getVerifiedStore.pending, state => {
+            .addCase(getUserStore.pending, state => {
                 state.status = "pending";
                 state.errors = {};
-                state.verifiedStores = [];
+                state.usersStore = [];
             })
-            .addCase(getVerifiedStore.fulfilled, (state, action) => {
-                state.verifiedStores = action.payload;
+            .addCase(getUserStore.fulfilled, (state, action) => {
+                state.usersStore = action.payload;
                 state.status = "success";
                 state.errors = {};
             })
-            .addCase(getVerifiedStore.rejected, (state, { payload }) => {
+            .addCase(getUserStore.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
-                state.verifiedStores = [];
+                state.usersStore = [];
             })
 
 

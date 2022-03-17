@@ -6,17 +6,17 @@ import FIcon from 'react-native-vector-icons/MaterialIcons';
 import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
-import Modal from "./SortBy";
+import Modal from "@Screen/CustomerOrder/SortBy";
 import commafy from "@Helper/Commafy";
 import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
-import { getCustomerOrders, reOrder } from "@Request/CustomerOrder";
+import { getCustomerPendingOrders, reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
-import styles from "./style";
+import styles from "@Screen/CustomerOrder/style";
 import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
-import CustomerPlaceholderCard from "./CustomerPlaceholderCard";
+import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
 
-const CustomerOrder = (props) => {
+const PendingOrder = (props) => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
@@ -28,7 +28,7 @@ const CustomerOrder = (props) => {
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
-    const { errors, orders, update, loaded } = useSelector((state) => state.order);
+    const { errors, pendingOrders, update, loaded } = useSelector((state) => state.order);
 
     const toastConfig = {
         error: () => (
@@ -44,7 +44,7 @@ const CustomerOrder = (props) => {
 
     useFocusEffect(
         useCallback(() => {
-            dispatch(getCustomerOrders());
+            dispatch(getCustomerPendingOrders());
             return () => dispatch(cleanup());
         }, [])
     );
@@ -66,7 +66,7 @@ const CustomerOrder = (props) => {
     }, [update]);
 
     const filterOrder = () => {
-        let searched = orders.orders.filter(val => {
+        let searched = pendingOrders.orders.filter(val => {
             if (val.ref_no !== null && val.ref_no.toLowerCase().includes(search.toLowerCase())) {
                 return val
             }
@@ -76,7 +76,7 @@ const CustomerOrder = (props) => {
 
     const sortOrder = (id) => {
         setShowModal(false);
-        let order = [...orders.orders];
+        let order = [...pendingOrders.orders];
         let searched;
 
         switch (id) {
@@ -122,7 +122,7 @@ const CustomerOrder = (props) => {
 
     const refreshView = useCallback(() => {
         setRefreshing(true);
-        dispatch(getCustomerOrders());
+        dispatch(getCustomerPendingOrders());
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
@@ -165,7 +165,7 @@ const CustomerOrder = (props) => {
 
                     {item.ref_no !== null ?
                         <TouchableOpacity style={styles.reorderCover} onPress={() => reOrders(item.id)}>
-                            <Text style={styles.reOrderText}>RE-ORDER</Text>
+                            <Text style={styles.reOrderText}>Re-Send Code</Text>
                             <Image source={require("@Assets/image/refresh.png")} style={styles.refreshImg} />
                         </TouchableOpacity>
                         : null}
@@ -180,7 +180,7 @@ const CustomerOrder = (props) => {
 
     return (
         <View style={styles.main}>
-            <Header title="Customer Orders" style={styles.btnText} onPress={goToCat} />
+            <Header title="Pending Orders" style={styles.btnText} onPress={goToCat} />
 
                 <TouchableWithoutFeedback  onPress={dismissKeyboard}>
                     <View style={styles.blueColor}>
@@ -196,8 +196,8 @@ const CustomerOrder = (props) => {
                         </View>
 
                         <View style={styles.exchangeCover}>
-                            <Text style={styles.allOrderText}> All Orders</Text>
-                            {orders.orders?.length ?
+                            <Text style={styles.allOrderText}> Pending Orders</Text>
+                            {pendingOrders.orders?.length ?
                             <TouchableOpacity style={styles.exchangeClickk} onPress={ redirectToSort }>
                             <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
                                 <Text style={styles.exchangeText}>Sort by</Text>
@@ -211,12 +211,12 @@ const CustomerOrder = (props) => {
             {err ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.bottomCover}>
-                {orders.orders && !orders.orders.length && loaded === "success" ?
+                {pendingOrders.orders && !pendingOrders.orders.length && loaded === "success" ?
                     <EmptyPlaceHolder />
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={!result.length ? orders.orders : result}
+                        data={!result.length ? pendingOrders.orders : result}
                         renderItem={ListView}
                         ListEmptyComponent={CustomerPlaceholderCard}
                         keyExtractor={item => item.id}
@@ -245,4 +245,4 @@ const CustomerOrder = (props) => {
     )
 };
 
-export default CustomerOrder;
+export default PendingOrder;

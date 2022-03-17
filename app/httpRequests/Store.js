@@ -8,10 +8,10 @@ export const getStore = createAsyncThunk("store/all",
       return apiRequest(Axios.get('api/v1/agent/stores'), thunkAPI)
    });
 
-export const getVerifiedStore = createAsyncThunk("store/verified",
-   async (_, thunkAPI) => {
+export const getUserStore = createAsyncThunk("store/user",
+   async (id, thunkAPI) => {
       const Axios = await AxiosBase();
-      return apiRequest(Axios.get('api/v1/verified_stores'), thunkAPI)
+      return apiRequest(Axios.get(`api/v1/stores/users/${id}`), thunkAPI)
    });
 
 export const deleteStore = createAsyncThunk("store/update",

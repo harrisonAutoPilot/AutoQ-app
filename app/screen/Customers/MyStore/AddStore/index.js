@@ -168,7 +168,7 @@ const MyStore = (props) => {
 
     return (
         <View style={styles.main}>
-             <Header title="Add Store" onPress={goBack} styleView={styles.body}/>
+             <Header title="Add New Store" onPress={goBack} styleView={styles.body}/>
            
             <ScrollView style={styles.modalView}>
                <View >

@@ -455,11 +455,10 @@ selectText: {
   },
   label: {
     fontSize: 12,
-    fontFamily: "Urbanist-Regular",
+    fontFamily: "Urbanist-SemiBold",
     lineHeight: 16,
     color: "rgba(97, 97, 97, 1)",
     letterSpacing: 0.2,
-    fontWeight: "600"
   },
   label2: {
     fontSize: 12,

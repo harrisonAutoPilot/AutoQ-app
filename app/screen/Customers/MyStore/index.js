@@ -2,20 +2,17 @@ import React, { useState, useEffect, useRef, } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView, FlatList, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-toast-message';
-import {COHeader as Header} from "@Component";
-import Modal from "react-native-modal";
+
+import { COHeader as Header } from "@Component";
 import { SuccessMsgViewTwo } from "@Component/index";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import styles from './style';
-import data from "./data";
 import { useSelector, useDispatch } from "react-redux";
 import globalStyle from "@Helper/GlobalStyles";
 import { NavHeader as HeaderWhite } from "@Component";
-// import AddStore from "./addStore"
-
+import { getUserStore } from "@Request/Store";
 
 const MyStore = (props) => {
-    const bottomSheet = useRef();
     const bottomSheetDetails = useRef();
 
     const dispatch = useDispatch();
@@ -23,26 +20,18 @@ const MyStore = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
-    const [images, setImages] = useState([]);
-    const [images2, setImages2] = useState([]);
-    const [storePhotoOne, setStorePhotoOne] = useState("");
-    const [storePhotoTwo, setStorePhotoTwo] = useState("");
     const [id, setId] = useState();
     const [loader, setLoader] = useState(false);
     const [outerLoader, setOuterLoader] = useState(false);
-    const { status, errors, stores, update } = useSelector((state) => state.store);
 
-   
-   
+    const { status, errors, usersStore } = useSelector((state) => state.store);
+
+    useEffect(() => {
+        dispatch(getUserStore(props.route.params?.id))
+    }, []);
+
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
-    };
-
-    const closeSuccess = () => {
-        bottomSheetStoreSuccess.current.close();
-    };
-    const storeSuccess = () => {
-        bottomSheetStoreSuccess.current.show();
     };
 
     const goBack = () => props.navigation.navigate("Home");
@@ -59,18 +48,16 @@ const MyStore = (props) => {
         bottomSheetDetails.current.show();
     };
 
-    
-
     const deleteStoreDetails = (id) => {
         dispatch(deleteStore(id));
         bottomSheetDetails.current.close();
         setOuterLoader(true)
-    }    
+    }
 
     const getRandomColor = (id) => {
         let ids = parseInt(id)
         let shade;
-    
+
         if (ids % 2 === 0) {
             shade = require("@Assets/image/storeN.png");
         } else {
@@ -82,25 +69,25 @@ const MyStore = (props) => {
 
     const RenderItem = ({ item }) => {
         return (
-                <TouchableOpacity onPress={() => showModalDetails(item.name, item.address, item.id)} style={styles.card}>
-                        <View style={styles.cardImgCover}>
-                            <Image source={getRandomColor(item.id)} style={styles.storeImg} />
-                        </View>
-                        <View style={styles.cardDesCover}>
-                            <Text style={styles.storeName}>{item.name}</Text>
-                            <Text style={styles.storeAddress} numberOfLines={1}>{item.address}</Text>
-                        </View>
-                        <View style={styles.cardArrowCover}>
-                            <Text style={styles.storeView}>view</Text>
-                            <Image source={require("@Assets/image/greater.png")} style={styles.greaterImg} />
-                        </View>
-                </TouchableOpacity>
+            <TouchableOpacity onPress={() => showModalDetails(item.name, item.address, item.id)} style={styles.card}>
+                <View style={styles.cardImgCover}>
+                    <Image source={getRandomColor(item.id)} style={styles.storeImg} />
+                </View>
+                <View style={styles.cardDesCover}>
+                    <Text style={styles.storeName}>{item.name}</Text>
+                    <Text style={styles.storeAddress} numberOfLines={1}>{item.address}</Text>
+                </View>
+                <View style={styles.cardArrowCover}>
+                    <Text style={styles.storeView}>view</Text>
+                    <Image source={require("@Assets/image/greater.png")} style={styles.greaterImg} />
+                </View>
+            </TouchableOpacity>
         )
     };
 
     return (
         <View style={styles.main}>
-             <Header title="Stores" onPress={goBack} styleView={styles.body}/>
+            <Header title="Stores" onPress={goBack} styleView={styles.body} />
             <View style={styles.addContainer}>
 
                 <TouchableOpacity style={styles.storeBtn} onPress={addStore}>
@@ -112,16 +99,16 @@ const MyStore = (props) => {
 
             </View>
 
-                    <FlatList
-                        data={data}
-                        renderItem={RenderItem}
-                        keyExtractor={item => item.id}
-                        ListFooterComponent={<View style={{ height: 50 }} />}
-                        showsVerticalScrollIndicator={false}
+            <FlatList
+                data={usersStore}
+                renderItem={RenderItem}
+                keyExtractor={item => item.id}
+                ListFooterComponent={<View style={{ height: 50 }} />}
+                showsVerticalScrollIndicator={false}
 
-                    />
-                
-                <BottomSheet hasDraggableIcon ref={bottomSheetDetails} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.3} radius={50} styles={styles.addStoreBottomSheet}>
+            />
+
+            <BottomSheet hasDraggableIcon ref={bottomSheetDetails} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.3} radius={50} styles={styles.addStoreBottomSheet}>
                 <View style={styles.store}>
                     <HeaderWhite title="Store Details" onPress={closeSheetDetails} />
 
@@ -130,7 +117,7 @@ const MyStore = (props) => {
                     </View>
                         : null}
 
-                    <ScrollView >
+                    <ScrollView  contentContainerStyle={{marginTop: 10}}>
                         <View style={styles.detailCard}>
                             <View style={styles.detailCardView}>
                                 <Text style={styles.storeTitle}>NAME OF STORE:</Text>
@@ -159,7 +146,7 @@ const MyStore = (props) => {
                     </TouchableOpacity>
                 </View>
             </BottomSheet >
-          
+
         </View >
     )
 };

@@ -149,17 +149,15 @@ const styles = StyleSheet.create({
   detailEdit: {
     color: 'rgba(211, 47, 47, 1)',
     fontSize: 14,
-    fontFamily: "Urbanist-Regular",
+    fontFamily: "Urbanist-SemiBold",
     lineHeight: 20,
-    fontWeight: "600",
     letterSpacing: 0.2,
   },
   storeTitle: {
     color: '#757575',
     fontSize: 14,
-    fontFamily: "Urbanist-Regular",
+    fontFamily: "Urbanist-SemiBold",
     lineHeight: 20,
-    fontWeight: "600",
     letterSpacing: 0.1,
 
   },
@@ -546,7 +544,7 @@ const styles = StyleSheet.create({
   },
   deleteView: {
     position: "absolute",
-    bottom: hp("-48%"),
+    bottom: hp("-63%"),
     backgroundColor: "rgba(238, 238, 238, 1)",
     width: "100%",
     height: "100%",

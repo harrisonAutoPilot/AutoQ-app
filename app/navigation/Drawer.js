@@ -3,11 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import DrawerContent from "@Component/drawer";
 import CustomerOrder from "@Screen/CustomerOrder";
-import MyStore from "@Screen/Customers/MyStore";
-// import MyStore from "@Screen/MyStore";
-// import Notification from "@Screen/Notification";
-// import MyRemedialAgent from "@Screen/MyRemedialAgent";
-// import FAQ from "@Screen/FAQ";
+import PendingOrder from "@Screen/PendingOrders";
 import Account from "@Screen/Account";
 import TabHomeNavigator from "./Tab";
 
@@ -19,13 +15,7 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="Home" component={TabHomeNavigator} />
             <Drawer.Screen name="CustomerOrder" component={CustomerOrder} />
             <Drawer.Screen name="Account" component={Account} /> 
-            <Drawer.Screen name="MyStore" component={MyStore} /> 
-            {/*
-            <Drawer.Screen name="MyStore" component={MyStore} />
-            <Drawer.Screen name="MyRemedialAgent" component={MyRemedialAgent} />
-            <Drawer.Screen name="Notification" component={Notification} />
-            <Drawer.Screen name="FAQ" component={FAQ} />
-           */}
+            <Drawer.Screen name="PendingOrder" component={PendingOrder} /> 
         </Drawer.Navigator>
     )
 }
