@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 import Modal from "./SortBy";
 import commafy from "@Helper/Commafy";
 import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
-import { getCustomerOrders } from "@Request/CustomerOrder";
+import { getCustomerOrders, reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
@@ -59,9 +59,7 @@ const CustomerOrder = (props) => {
         if (update === "failed" && props.navigation.isFocused()) {
             waitTime(errors?.msg);
         } else if (update === "success" && props.navigation.isFocused()) {
-            props.navigation.navigate("Home", {
-                screen: 'Cart',
-            })
+            props.navigation.navigate("Cart")
         } else {
             setErr("")
         }
@@ -131,7 +129,7 @@ const CustomerOrder = (props) => {
     const reOrders = (id) => {
         const details = { order_group_id: id };
         setLoader(true)
-        // dispatch(reOrder(details));
+        dispatch(reOrder(details));
     };
 
     const dismissKeyboard = () => Keyboard.dismiss();

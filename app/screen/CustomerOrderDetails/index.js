@@ -53,9 +53,7 @@ const CustomerOrderDetails = (props) => {
       if (update === "failed" && props.navigation.isFocused()) {
          waitTime(errors?.msg);
       } else if (update === "success" && props.navigation.isFocused()) {
-         props.navigation.navigate("Home", {
-            screen: 'Cart',
-        })
+         props.navigation.navigate("Cart")
       } else {
          setErr("")
       }

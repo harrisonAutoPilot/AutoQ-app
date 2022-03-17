@@ -5,6 +5,7 @@ import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
@@ -216,25 +217,6 @@ const Cart = (props) => {
                     <View style={styles.descTextView}>
                         <Text style={styles.descText} numberOfLines={2}>{item.product.name}</Text>
                     </View>
-                    {/* 
-                        <View style={styles.increaseCartMainAmountView}>
-                            <View style={styles.cartAmountView}>
-                                <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, item.quantity, item.product.quantity_available); }}>
-                                    <Icon name="minus" color="#757575" />
-                                </TouchableOpacity>
-                                <View style={styles.increaseText}>
-                                    {cartAmount2.map(quantity => (
-                                        quantity.cart_id === item.id ?
-                                            <Text style={styles.productTitle} key={quantity.cart_id}>{quantity.quantity}</Text> : null
-                                    ))}
-                                </View>
-                                <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, item.quantity, item.product.quantity_available); }}>
-                                    <Icon name="plus" color="#757575" />
-                                </TouchableOpacity>
-                            </View>
-
-                        </View> */}
-
 
                     {cartAmount2.map(quantity => (
                         quantity.cart_id === item.id ?
@@ -303,7 +285,7 @@ const Cart = (props) => {
             </View>
 
             <View style={styles.bottomCover}>
-                {items.carts && !items.carts.length && loaded === "success"
+                {(items.carts && !items.carts.length && loaded === "success") && !copyCart.length
                     ?
                     <AddCartListEmptyBig browse={browse} />
                     :

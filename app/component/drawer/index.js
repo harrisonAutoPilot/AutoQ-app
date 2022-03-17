@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView, ScrollView} from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView, ScrollView, Linking} from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector, useDispatch } from "react-redux";
@@ -40,7 +40,29 @@ const Drawer = (props) => {
               props.navigation.closeDrawer();
             // props.navigation.navigate(route);
       
-    }
+    };
+
+    const redirectToTP = () => {
+        const URL = "https://remedialhealth.com/terms-of-service";
+        Linking.openURL(URL)
+          .then(() => {
+            console.log('Link Opened');
+          })
+          .catch(() => {
+            Alert.alert('An error occurred');
+          });
+        }
+    
+        const redirectToFAQ = () => {
+            const URL = "https://docs.google.com/document/d/1DsXEgk8hqFltod96--XhCD5oTs5Zl7DrZ4toJHKem9I/edit";
+            Linking.openURL(URL)
+              .then(() => {
+                console.log('Link Opened');
+              })
+              .catch(() => {
+                Alert.alert('An error occurred');
+              });
+            }
 
 
     const List = ({ item }) => (
@@ -153,8 +175,8 @@ const Drawer = (props) => {
                                 <Icon name="chevron-right" size={18} color="#9E9E9E" />
                             </View>
                         </View>
-                        {/* <TouchableOpacity style={styles.routeInnerView} onPress={() => props.navigation.navigate("FAQ")}> */}
-                        <TouchableOpacity style={styles.routeInnerView} >
+                   
+                        <TouchableOpacity style={styles.routeInnerView}  onPress={redirectToFAQ}>
 
                             <View style={styles.routeTextView}>
                                 <View style={styles.routeTextIconView}>
@@ -172,7 +194,7 @@ const Drawer = (props) => {
                         <View style={styles.routeInnerView}>
                             <Text style={styles.headerTitle}>Legal</Text>
                         </View>
-                        <View style={styles.routeInnerView}>
+                        <TouchableOpacity style={styles.routeInnerView} onPress={redirectToTP}>
 
                             <View style={styles.routeTextView}>
                                 <View style={styles.routeTextIconView}>
@@ -183,7 +205,7 @@ const Drawer = (props) => {
                             <View>
                                 <Icon name="chevron-right" size={18} color="#9E9E9E" />
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     </View>
                     </ScrollView>
