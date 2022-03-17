@@ -207,8 +207,24 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: "center",
         paddingHorizontal: 20,
+    //    flex: 1,
+    top:hp('63%'),
+      position:'absolute'
+    },
+    btnStep2Cover: {
+        flexDirection: 'row',
+        borderTopColor: "#F5F5F5",
+        borderTopWidth: 1,
+        height: "37%",
+        width: "100%",
+        backgroundColor: '#f5f5f5',
+        paddingVertical: 20,
+        justifyContent: 'space-around',
+        alignItems: "center",
+        paddingHorizontal: 20,
        flex: 1,
-       marginTop: 95,
+     top:hp('31%'),
+    //   position:'absolute'
     },
     btnCover2: {
         top: hp("54%")
@@ -1040,14 +1056,19 @@ export default styles = StyleSheet.create({
         marginLeft: 10,
     },
     selectCover: {
-        position: 'absolute',
+        // position: 'absolute',
         right: 7,
         borderWidth: 1,
         borderColor: '#7485FF',
         backgroundColor: '#E9EBF9',
         padding: 5,
         borderRadius: 50,
-        marginTop: -23
+        marginTop: -40,
+        justifyContent:'center',
+        width:90,
+       left:wp('60%'),
+       alignContent:'center',
+       paddingLeft:9
     },
     selectText: {
         fontFamily: "Urbanist-Regular",
