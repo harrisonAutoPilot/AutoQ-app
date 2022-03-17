@@ -19,7 +19,6 @@ const CustomerOrderDetails = (props) => {
    let no = 0;
    const orders = props.route.params.item;
    const { errors, update } = useSelector((state) => state.order);
-   console.log(orders);
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -54,9 +53,7 @@ const CustomerOrderDetails = (props) => {
       if (update === "failed" && props.navigation.isFocused()) {
          waitTime(errors?.msg);
       } else if (update === "success" && props.navigation.isFocused()) {
-         props.navigation.navigate("Home", {
-            screen: 'Cart',
-        })
+         props.navigation.navigate("Cart")
       } else {
          setErr("")
       }

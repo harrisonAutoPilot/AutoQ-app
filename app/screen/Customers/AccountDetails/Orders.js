@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, Keyboard, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import Icon from 'react-native-vector-icons/Feather';
-import FIcon from 'react-native-vector-icons/MaterialIcons';
-import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 import commafy from "@Helper/Commafy";
-import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
-import { getCustomerOrders } from "@Request/CustomerOrder";
+import { COHeader as Header, EmptyPlaceHolder } from "@Component";
+import { reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
-import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
 // import MyOrderPlaceholder from "./MyOrderPlaceholder";
 
@@ -23,14 +19,43 @@ const Order = (props) => {
     const flatListRef = useRef()
 
     const { errors, orders, update, loaded } = useSelector((state) => state.order);
-    console.log(orders)
-
 
     const reOrders = (id) => {
         const details = { order_group_id: id };
-        // setLoader(true)
-        // dispatch(reOrder(details));
+        setLoader(true)
+        dispatch(reOrder(details));
     };
+
+    useEffect(() => {
+        if (update === "failed" ) {
+            waitTime(errors?.msg);
+        } else if (update === "success" ) {
+            props.cart()
+        } else {
+            setErr("")
+        }
+    }, [update]);
+
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    };
+
+    const waitTime = useCallback((msg) => {
+        wait(1000).then(() => {
+            setLoader(false);
+            setErr(msg)
+            Toast.show({
+                type: 'error',
+                visibilityTime: 5000,
+                autoHide: true,
+                position: 'top',
+                topOffset: 0
+            })
+        });
+        wait(4000).then(() => {
+            dispatch(cleanup());
+        })
+    }, []);
 
 
     const ListView = ({ item }) => (

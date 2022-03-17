@@ -1,10 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import styles from './style';
-import {
-  responsiveHeight,
-  responsiveWidth,
-} from 'react-native-responsive-dimensions';
+
 
 const PlaceholderCard = () => (
 
