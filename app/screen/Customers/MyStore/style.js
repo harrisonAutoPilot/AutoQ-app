@@ -7,17 +7,17 @@ import {
 
 const styles = StyleSheet.create({
   main: {
-     backgroundColor:'#f3f4f5',
-    flex: 1,
-    // flexGrow: 1,
-    // height: "100%",
+    backgroundColor: '#fff',
+    // flex: 1,
+    flexGrow: 1,
+    height: "100%",
   },
   head: {
     backgroundColor: '#ffffff',
 
   },
-  header:{
-    marginTop:15,
+  header: {
+    marginTop: 15,
     paddingHorizontal: 5,
     marginBottom: 5
   },
@@ -29,15 +29,15 @@ const styles = StyleSheet.create({
   addContainer: {
     marginTop: 24,
     width: wp('98%'),
-    marginLeft: wp('1%'),
     alignItems: 'center',
+    alignSelf: "center",
+    marginBottom: 20
   },
   bottomCover: {
     // position: 'absolute',
     // top: hp('22%'),
-    padding: 1,
     width: wp('100%'),
-     height: hp('80%'),
+    // height: hp('80%'),
     borderRadius: 3,
     borderWidth: 0,
     borderStyle: 'solid',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    padding:10,
+    padding: 10,
   },
   mainContainer: {
     flex: 1,
@@ -55,34 +55,41 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   card: {
+    alignSelf: 'center',
     width: wp('92%'),
-    // height: hp('25%'),
     margin: 4,
-    borderRadius: 10,
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    borderBottomColor: '#e6e6e6',
+    borderRadius: 16,
     backgroundColor: '#ffffff',
     alignItems: 'center',
     textAlign: 'center',
-    padding: 25,
-    flexDirection:'row',
-    justifyContent:'space-around'
+    paddingVertical: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    elevation: 10,
+    shadowColor: "rgba(0, 49, 157, 1)",
+    shadowRadius: 16,
+    paddingHorizontal: 19
   },
-cardDesCover:{
- marginLeft:10,
- width:220,
-},
-cardArrowCover:{
-flexDirection:'row',
-marginRight:0,
-justifyContent:'center',
-alignItems:'center',
-},
-storeView:{
-marginRight:7,
-marginTop:-3
-},
+  cardDesCover: {
+    marginLeft: 20,
+    width: "67%",
+  },
+  cardArrowCover: {
+    flexDirection: 'row',
+    marginRight: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  storeView: {
+    marginRight: 7,
+    alignItems: "center",
+    color: '#212121',
+    fontSize: 11,
+    fontFamily: "Urbanist-Medium",
+    lineHeight: 16,
+    textTransform: "uppercase"
+    // marginTop: -3
+  },
   midCard: {
     width: wp('97%'),
     margin: 4,
@@ -92,7 +99,7 @@ marginTop:-3
     borderBottomColor: '#e6e6e6',
     alignItems: 'center',
     padding: 13,
-    paddingTop:0,
+    paddingTop: 0,
   },
   detailCover: {
     // position: 'absolute',
@@ -127,19 +134,19 @@ marginTop:-3
     alignSelf: "center"
   },
 
-  detailCardView:{
+  detailCardView: {
     width: wp('50%'),
     // flexGrow: 1
   },
-  detailCardIconView:{
+  detailCardIconView: {
     flexDirection: "row",
     alignContent: 'center',
   },
-  detailCardIconInnerView:{
+  detailCardIconInnerView: {
     marginRight: 4,
     alignItems: 'center',
   },
-  detailEdit:{
+  detailEdit: {
     color: 'rgba(211, 47, 47, 1)',
     fontSize: 14,
     fontFamily: "Urbanist-Regular",
@@ -159,8 +166,17 @@ marginTop:-3
   storeName: {
     color: '#212121',
     fontSize: 16,
-    fontFamily: "Urbanist-Regular",
+    fontFamily: "Urbanist-SemiBold",
     lineHeight: 20,
+    fontWeight: "600",
+    letterSpacing: 0.1,
+    marginTop: 5,
+  },
+  storeAddress: {
+    color: '#212121',
+    fontSize: 12,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 16,
     fontWeight: "600",
     letterSpacing: 0.1,
     marginTop: 5,
@@ -171,7 +187,7 @@ marginTop:-3
     marginBottom: 8,
     alignItems: "center",
     width: "100%"
-   
+
   },
   cardAddressCover: {
     marginTop: 3,
@@ -194,16 +210,13 @@ marginTop:-3
   },
   storeBtn: {
     width: wp('92%'),
-    height: 52,
+    height: 72,
     borderWidth: 1,
     borderColor: '#469D00',
     borderStyle: 'dashed',
     alignItems: 'center',
     justifyContent: 'center',
-    // marginLeft:wp('1%'),
     borderRadius: 10,
-    marginBottom: 8
-    // backgroundColor: '#ffffff',
   },
   storeCard: {
     width: wp('93%'),
@@ -286,10 +299,10 @@ marginTop:-3
     flexShrink: 1,
   },
   viewCover: {
-    position:'absolute',
+    position: 'absolute',
     marginRight: 20,
     flexDirection: 'row',
-    right:wp('2%'),
+    right: wp('2%'),
   },
   viewText: {
     color: '#212120',
@@ -317,11 +330,11 @@ marginTop:-3
   addStoreBottomSheet: {
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
-    
+
   },
-  addtitleCover:{
+  addtitleCover: {
     // backgroundColor:'pink',
-    width:200,
+    width: 200,
     // height:65,
     flexShrink: 1
   },
@@ -330,7 +343,7 @@ marginTop:-3
     // marginLeft: wp('7%'),
     borderWidth: 1,
     borderColor: "#BDBDBD",
-    paddingVertical:  Platform.OS === "ios" ? 20: 5,
+    paddingVertical: Platform.OS === "ios" ? 20 : 5,
     paddingHorizontal: 5,
     marginTop: 5,
     borderRadius: 5,
@@ -345,7 +358,7 @@ marginTop:-3
     marginTop: Dimensions.get("window").height / 30,
     borderRadius: 5,
     alignSelf: "center"
-},
+  },
   registerInputHolder: {
     width: wp('87%'),
     marginLeft: wp('7%'),
@@ -358,12 +371,12 @@ marginTop:-3
     marginTop: Dimensions.get("window").height / 20,
     borderRadius: 5,
   },
-  scrollStyle:{
-    position:'relative',
-  paddingBottom: 5, 
-  height:hp('60%'),
-  marginBottom:-100
-  // top: hp('-3%'),
+  scrollStyle: {
+    position: 'relative',
+    paddingBottom: 5,
+    height: hp('60%'),
+    marginBottom: -100
+    // top: hp('-3%'),
   },
   selectCover: {
     // position: 'absolute',
@@ -374,13 +387,13 @@ marginTop:-3
     padding: 5,
     borderRadius: 50,
     marginTop: -35,
-    justifyContent:'center',
-    width:90,
-   left:wp('60%'),
-   alignContent:'center',
-   paddingLeft:9
-},
-selectText: {
+    justifyContent: 'center',
+    width: 90,
+    left: wp('60%'),
+    alignContent: 'center',
+    paddingLeft: 9
+  },
+  selectText: {
     fontFamily: "Urbanist-Regular",
     fontSize: 11,
     lineHeight: 16,
@@ -389,7 +402,7 @@ selectText: {
     color: "#3858CF",
     textTransform: "capitalize",
 
-},
+  },
   registerInputPinHolder: {
     width: wp('87%'),
     marginLeft: wp('7%'),
@@ -420,7 +433,7 @@ selectText: {
     marginTop: 5,
     // alignItems: 'center',
     // justifyContent: 'center',
-   marginLeft: 30
+    marginLeft: 30
 
   },
   errText: {
@@ -474,79 +487,79 @@ selectText: {
     color: "#212121",
     letterSpacing: 0.2,
     fontWeight: "400",
-},
-label3: {
-  fontSize: 12,
-  fontFamily: "Urbanist-Regular",
-  lineHeight: 16,
-  color: "#212121",
-  fontWeight: "400",
-},
-btnCover: {
-  borderTopColor: "#F5F5F5",
-  borderTopWidth: 1,
-  height: "20%",
-  width: wp('100%'),
-  backgroundColor: '#f5f5f5',
-  paddingVertical: 20,
-  alignItems: "center",
-  // paddingHorizontal: 20
-},
-submit: {
-  paddingVertical: 16,
-  paddingHorizontal: 24,
-  backgroundColor: "#3858CF",
-  borderRadius: 100,
-  width: "88%",
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center'
-},
+  },
+  label3: {
+    fontSize: 12,
+    fontFamily: "Urbanist-Regular",
+    lineHeight: 16,
+    color: "#212121",
+    fontWeight: "400",
+  },
+  btnCover: {
+    borderTopColor: "#F5F5F5",
+    borderTopWidth: 1,
+    height: "20%",
+    width: wp('100%'),
+    backgroundColor: '#f5f5f5',
+    paddingVertical: 20,
+    alignItems: "center",
+    // paddingHorizontal: 20
+  },
+  submit: {
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    backgroundColor: "#3858CF",
+    borderRadius: 100,
+    width: "88%",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   addBtnCover: {
     marginTop: 20,
     paddingLeft: 10,
   },
-  removeCover:{
-    flexDirection:'row',
-    width:wp('100%'),
-    alignItems:'center',
-    justifyContent:'center',
-    marginTop:70,
+  removeCover: {
+    flexDirection: 'row',
+    width: wp('100%'),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 70,
   },
-  removeText:{
-   fontSize: 16,
+  removeText: {
+    fontSize: 16,
     fontFamily: "Urbanist-Regular",
     lineHeight: 16,
     color: "#D32F2F",
     letterSpacing: 0.2,
     fontWeight: "600",
-    marginLeft:20,
+    marginLeft: 20,
   },
-  store:{
+  store: {
     marginTop: 10,
     // paddingHorizontal: 10
   },
   errMainView: {
-  width: "87%",
-  alignSelf: "center",
-  marginBottom: 20
-},
-deleteView: {
-  position: "absolute",
-  bottom: hp("-48%"),
-  backgroundColor: "rgba(238, 238, 238, 1)",
-  width: "100%",
-  height: "100%",
-  paddingTop: 25,
-  left: 0,
-},
-deleteInnerView:{
-  flexDirection: "row",
-  justifyContent: "center"
-},
-successView:{
-  marginHorizontal: 16
-}
+    width: "87%",
+    alignSelf: "center",
+    marginBottom: 20
+  },
+  deleteView: {
+    position: "absolute",
+    bottom: hp("-48%"),
+    backgroundColor: "rgba(238, 238, 238, 1)",
+    width: "100%",
+    height: "100%",
+    paddingTop: 25,
+    left: 0,
+  },
+  deleteInnerView: {
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  successView: {
+    marginHorizontal: 16
+  }
 });
 
 export default styles

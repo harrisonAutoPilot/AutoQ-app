@@ -160,20 +160,7 @@ const Drawer = (props) => {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={viewStore} style={styles.agentVieww} >
-                        <View style={styles.routeInnerView}>
-
-                        <View style={styles.routeTextView}>
-                            <View style={styles.routeTextIconView}>
-                                <Icon name="refresh-cw" size={17} color="#00319D" />
-                            </View>
-                            <Text style={styles.routeText}>MyStore</Text>
-                        </View>
-                        <View>
-                            <Icon name="chevron-right" size={18} color="#9E9E9E" />
-                        </View>
-                        </View>
-                    </TouchableOpacity>
+                  
                     <View style={styles.agentView}>
                         <View style={styles.agentInnerView}>
                             <Text style={styles.headerTitle}>Help</Text>

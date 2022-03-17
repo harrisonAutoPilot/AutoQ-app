@@ -19,7 +19,7 @@ const CustomerDetails = (props) => {
     const goBack = () => props.navigation.navigate("CustomersDashboard");
     const detailsScreen = (item) => props.navigation.navigate("OrderDetails", { item });
     const showActive = (id) => setActiveId(id)
-    const viewStore = () => this.props.navigation.navigate("MyStore");
+    const viewStore = () => props.navigation.navigate("MyStore");
     return (
         <View style={styles.view}>
             <Header title="Account Details" onPress={goBack} styleView={styles.body} />
@@ -35,9 +35,8 @@ const CustomerDetails = (props) => {
 
                 </View>
 
-
             </View>
-            {activeId === 1 ? <CustomerInfo details={details} /> : <Orders details={details} detailsScreen={detailsScreen} cart={cart} />}
+            {activeId === 1 ? <CustomerInfo details={details}  store={viewStore}/> : <Orders details={details} detailsScreen={detailsScreen} cart={cart} />}
 
         </View>
     )

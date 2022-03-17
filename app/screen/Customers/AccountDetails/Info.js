@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import Dropdown from './Dropdown';
-import StoreView from "@Screen/Customers/Stores"
 
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
@@ -32,8 +31,6 @@ const CustomerInfo = (props) => {
     const closeSheet = () => {
         bottomSheetStore.current.close();
     };
-
-    const viewStore = () => this.props.navigation.navigate("MyStore");
 
     const profileState = {
         firstname: details?.name?.substr(0, details.name.indexOf(' ')) ,
@@ -240,7 +237,7 @@ const CustomerInfo = (props) => {
                                 <Dropdown label="Select store type" storeAddress="" data={data} onSelect={setSelected} />
 
                             </View> */}
-                            <TouchableOpacity style={styles.viewStoreTitleCover}>
+                            <TouchableOpacity style={styles.viewStoreTitleCover} onPress={props.store}>
                                     <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
                                     <Image style={styles.rightImg} source={require("@Assets/image/blueRight.png")} />
                            
@@ -327,12 +324,7 @@ const CustomerInfo = (props) => {
                 </View>
             </ScrollView>
 
-            <StoreView
-                bottomSheetStore={bottomSheetStore}
-                bottomSheetClose = {closeSheet}
-                data={details.stores}
-               
-            />
+        
         </View>
     )
 };

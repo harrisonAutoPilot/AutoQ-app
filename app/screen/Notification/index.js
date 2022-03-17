@@ -21,7 +21,6 @@ const Notification = (props) => {
     }, []);
 
     const { notification, error, status } = useSelector((state) => state.notification);
-    console.log(notification)
 
     const goBack = () => props.navigation.navigate("Home");
 
