@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
-
+import EmptyFinance from "@Component/Empty/emptyFinance"
 import { WalletCard } from "@Component";
 import WithDraw from "@Screen/WithdrawOverlay";
 import Modal from "./SortBy";
@@ -141,7 +141,7 @@ const MyWallet = (props) => {
                         keyExtractor={item => item.id}
                         renderItem={ListView}
                         columnWrapperStyle={styles.column}
-                        ListEmptyComponent={WalletPlaceholderCard}
+                        ListEmptyComponent={EmptyOrder}
                         ref={flatListRef}
                         ListFooterComponent={<View style={{ height: 50 }} />}
                     />

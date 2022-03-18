@@ -9,6 +9,7 @@ import { reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
 import Loader from "@Screen/Loader";
+import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard"
 // import MyOrderPlaceholder from "./MyOrderPlaceholder";
 
 const Order = (props) => {
@@ -112,7 +113,7 @@ const Order = (props) => {
                         showsVerticalScrollIndicator={false}
                         data={props.details.order_groups}
                         renderItem={ListView}
-                        // ListEmptyComponent={MyOrderPlaceholder}
+                         ListEmptyComponent={CustomerPlaceholderCard}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
                         initialNumToRender={3}

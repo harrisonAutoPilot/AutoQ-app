@@ -130,15 +130,14 @@ export default styles = StyleSheet.create({
         fontWeight: "400",
         marginTop: 5,
         width: "70%",
-        paddingLeft: 10,
-        textTransform: "capitalize"
+        paddingLeft: 5,
 
     },
     innerLabelPhone: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         // lineHeight: 24,
-        color: "#fafafa",
+        color: "#adadad",
         letterSpacing: 0.3,
         fontWeight: "400",
         marginTop: 3,
@@ -148,15 +147,16 @@ export default styles = StyleSheet.create({
     },
     innerLabelPhone2: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         // lineHeight: 24,
-        color: "#fafafa",
+        color: "#adadad",
         letterSpacing: 0.3,
         fontWeight: "400",
         marginTop: 3,
         marginBottom: 5,
         width: "70%",
-        paddingLeft: 40,
+        paddingLeft: 5,
+        textTransform: "capitalize"
     },
     errText: {
         color: "red",
@@ -514,20 +514,40 @@ export default styles = StyleSheet.create({
         height: 20,
     },
     viewStoreTitleCover: {
-        width: wp('100%'),
+         width: wp('100%'),
         flexDirection: 'row',
         paddingTop: 16,
+    
         alignItems: 'center',
         justifyContent: 'center',
-        // paddingBottom: 16
+        // paddingTop:12,
+        // paddingLeft:16,
+        // paddingRight:16,
+        // paddingBottom: 12,
+        // borderRadius:50,
+        borderWidth:0,
+        borderColor:'#212121'
     },
+    viewStoreTitleInner: {
+        width: wp('50%'),
+       flexDirection: 'row',
+       alignItems: 'center',
+       justifyContent: 'center',
+       paddingTop:12,
+       paddingLeft:16,
+       paddingRight:16,
+       paddingBottom: 12,
+       borderRadius:50,
+       borderWidth:1,
+       borderColor:'#212121'
+   },
     viewStoreTitleText: {
-        color: '#3858CF',
+        color: '#212121',
         fontSize: 14,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        fontWeight: "400",
-        letterSpacing: 0.2,
+        fontWeight: "600",
+        letterSpacing: 0.1,
         fontStyle: 'normal',
     },
     docTitleCover: {

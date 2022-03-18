@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-toast-message';
 import FIcon from "react-native-vector-icons/FontAwesome5";
 
+import EmptyStore from "@Component/Empty/emptyStore"
 import { COHeader as Header } from "@Component";
 import { SuccessMsgViewTwo } from "@Component/index";
 import BottomSheet from "react-native-gesture-bottom-sheet";
@@ -13,6 +14,7 @@ import globalStyle from "@Helper/GlobalStyles";
 import { NavHeader as HeaderWhite } from "@Component";
 import { getUserStore,  deleteStore  } from "@Request/Store";
 import { cleanup } from "@Store/Stores";
+import StorePlaceholder from "./StorePlaceholder"
 
 const MyStore = (props) => {
     const bottomSheetDetails = useRef();
@@ -158,7 +160,8 @@ const MyStore = (props) => {
 
             <FlatList
                 data={usersStore}
-                renderItem={RenderItem}
+                renderItem={EmptyStore}
+                ListEmptyComponent= {EmptyStore}
                 keyExtractor={item => item.id}
                 ListFooterComponent={<View style={{ height: 50 }} />}
                 showsVerticalScrollIndicator={false}

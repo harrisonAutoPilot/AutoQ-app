@@ -26,15 +26,6 @@ const CustomersDashboard = (props) => {
         }, [])
     );
 
-
-    // useEffect(() => {
-    //     dispatch(getCustomers());
-    //     if (props.route.params?.id === 1) {
-    //         console.log(props.route.params?.id)
-    //         setActiveId(3)
-    //     }
-    // }, []);
-
     const dismissKeyboard = () => Keyboard.dismiss();
     const openDrawer = () => props.navigation.openDrawer();
     const reg = () => props.navigation.navigate("CustomerRegistration");

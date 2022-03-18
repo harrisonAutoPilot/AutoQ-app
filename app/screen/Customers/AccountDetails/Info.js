@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Image, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
@@ -232,9 +232,11 @@ const CustomerInfo = (props) => {
                             </View>
 
                             <TouchableOpacity style={styles.viewStoreTitleCover} onPress={props.store}>
-                                <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
-                                <Image style={styles.rightImg} source={require("@Assets/image/blueRight.png")} />
-
+                                  <View style={styles.viewStoreTitleInner} >
+                                  <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
+                                    <Image style={styles.rightImg} source={require("@Assets/image/rightArrow.png")} />
+                                  </View>
+                           
                             </TouchableOpacity>
                         </View>
                     </View>

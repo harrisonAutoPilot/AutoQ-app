@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
 import { getCustomers } from "@Request/Customer";
+import EmptyCustomer from "@Component/Empty/emptyCustomer"
 
 const InActive = (props) => {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const InActive = (props) => {
         dispatch(getCustomers());
         wait(2000).then(() => setRefreshing(false));
     }, []);
+
 
     const ListView = ({ item, index }) => {
 
@@ -55,11 +57,13 @@ const InActive = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.bottomCover}>
+                {status === "pending" ? <PlaceholderCard />
+                :
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     data={customers?.pending?.users}
                     keyExtractor={item => item.id}
-                    ListEmptyComponent={PlaceholderCard}
+                    ListEmptyComponent={EmptyCustomer}
                     renderItem={ListView}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     columnWrapperStyle={styles.column}
@@ -69,6 +73,7 @@ const InActive = (props) => {
                     }
 
                 />
+}
 
             </View>
 
