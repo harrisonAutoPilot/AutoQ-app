@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView, FlatList, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-toast-message';
-
+import EmptyStore from "@Component/Empty/emptyStore"
 import { COHeader as Header } from "@Component";
 import { SuccessMsgViewTwo } from "@Component/index";
 import BottomSheet from "react-native-gesture-bottom-sheet";
@@ -102,8 +102,8 @@ const MyStore = (props) => {
 
             <FlatList
                 data={usersStore}
-                renderItem={RenderItem}
-                ListEmptyComponent= {StorePlaceholder}
+                renderItem={EmptyStore}
+                ListEmptyComponent= {EmptyStore}
                 keyExtractor={item => item.id}
                 ListFooterComponent={<View style={{ height: 50 }} />}
                 showsVerticalScrollIndicator={false}

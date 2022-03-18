@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
 import { getCustomers} from "@Request/Customer";
+import EmptyOrder from "@Component/Empty/emptyOrder"
 
 
 const Active = (props) => {
@@ -64,7 +65,7 @@ const Active = (props) => {
                     showsVerticalScrollIndicator={false}
                     data={customers?.active?.users}
                     keyExtractor={item => item.id}
-                    ListEmptyComponent={PlaceholderCard}
+                    ListEmptyComponent={EmptyOrder}
                     renderItem={ListView}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     columnWrapperStyle={styles.column}

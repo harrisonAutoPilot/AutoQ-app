@@ -15,6 +15,7 @@ import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "./CustomerPlaceholderCard";
+import EmptyOrder from "@Component/Empty/emptyOrder"
 
 const CustomerOrder = (props) => {
     const dispatch = useDispatch();
