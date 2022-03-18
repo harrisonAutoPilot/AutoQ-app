@@ -31,14 +31,14 @@ const Drawer = (props) => {
     const { customers } = useSelector((state) => state.customer);
 
     const redirectToScreen = (route) => {
-
+        props.navigation.closeDrawer();
         props.navigation.dispatch(
             CommonActions.reset({
                 index: 0,
                 routes: [{ name: route }]
             })
         );
-        props.navigation.closeDrawer();
+       
         // props.navigation.navigate(route);
 
     };
@@ -126,7 +126,7 @@ const Drawer = (props) => {
                         </View>
 
                         {/* <TouchableOpacity style={styles.agentView} onPress={myAgent}> */}
-                        <TouchableOpacity style={styles.agentView} onPress={() => props.navigation.navigate("CustomerOrder")} >
+                        <TouchableOpacity style={styles.agentView} onPress={() => {props.navigation.navigate("CustomerOrder");}} >
                             <View style={styles.agentInnerView}>
                                 <Text style={styles.headerTitle}>Product</Text>
                             </View>

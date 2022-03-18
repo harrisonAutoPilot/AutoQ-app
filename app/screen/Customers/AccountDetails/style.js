@@ -131,13 +131,26 @@ export default styles = StyleSheet.create({
         marginTop: 5,
         width: "70%",
         paddingLeft: 10,
+        textTransform: "capitalize"
 
     },
     innerLabelPhone: {
         fontSize: 16,
         fontFamily: "Urbanist-Regular",
         // lineHeight: 24,
-        color: "rgba(33, 33, 33, 1)",
+        color: "#fafafa",
+        letterSpacing: 0.3,
+        fontWeight: "400",
+        marginTop: 3,
+        marginBottom: 5,
+        width: "70%",
+        paddingLeft: 40,
+    },
+    innerLabelPhone2: {
+        fontSize: 16,
+        fontFamily: "Urbanist-Regular",
+        // lineHeight: 24,
+        color: "#fafafa",
         letterSpacing: 0.3,
         fontWeight: "400",
         marginTop: 3,
@@ -503,10 +516,10 @@ export default styles = StyleSheet.create({
     viewStoreTitleCover: {
         width: wp('100%'),
         flexDirection: 'row',
-        paddingTop: 10,
+        paddingTop: 16,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: 16
+        // paddingBottom: 16
     },
     viewStoreTitleText: {
         color: '#3858CF',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Image, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Image, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
@@ -7,7 +7,7 @@ import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
 import { FormikValidator, InputField, SuccessMsgViewTwo, AuthBtn as Btn } from "@Component";
 import { profileSchema } from "@Helper/Schema";
-import { updateUserDetails,} from "@Request/Auth";
+import { updateUserDetails, } from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
 
@@ -20,22 +20,16 @@ const CustomerInfo = (props) => {
     const [loader, setLoader] = useState(false);
 
     const { errors, update } = useSelector((state) => state.auth);
-
-    const bottomSheetStore = useRef();
     const details = props.details;
-  
+
     useEffect(() => {
         dispatch(cleanup())
     }, []);
 
-    const closeSheet = () => {
-        bottomSheetStore.current.close();
-    };
-
     const profileState = {
-        firstname: details?.name?.substr(0, details.name.indexOf(' ')) ,
-        surname:  details?.name.substr(details?.name.indexOf(' ') + 1),
-        phone:  details?.phone,
+        firstname: details?.name?.substr(0, details.name.indexOf(' ')),
+        surname: details?.name.substr(details?.name.indexOf(' ') + 1),
+        phone: details?.phone,
     };
 
     const submit = async (values) => {
@@ -100,13 +94,6 @@ const CustomerInfo = (props) => {
             setErrMsg("");
         }
     }, [update]);
-
-    const data = [
-
-        { label: 'CHEMIST', value: 'CHEMIST', },
-        { label: 'HOSPITAL', value: 'HOSPITAL', },
-        { label: 'PHARMACY', value: 'PHARMACY', },
-    ];
 
     return (
         <View style={styles.container}>
@@ -188,19 +175,19 @@ const CustomerInfo = (props) => {
 
                                                     </View>
                                                     <View>
-                                                        <View style={[styles.inputHolder, props.touched.surname && props.errors.surname ? styles.inputErrHolder : null]}>
+                                                        <View style={[styles.inputHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
                                                             <View style={styles.labelView}>
                                                                 <Text style={styles.label}>PHONE</Text>
                                                             </View>
                                                             <InputField
                                                                 style={styles.innerLabelPhone}
                                                                 value={props.values.phone}
-                                                                onBlur={props.handleBlur('surname')}
+                                                                onBlur={props.handleBlur('phone')}
                                                                 placeholder="James"
                                                                 placeholderTextColor="#757575"
                                                                 onChangeText={(val) => {
-                                                                    props.setFieldValue('surname', val)
-                                                                    props.setFieldTouched('surname', true, false);
+                                                                    props.setFieldValue('phone', val)
+                                                                    props.setFieldTouched('phone', true, false);
                                                                     setErrMsg("");;
                                                                     setSuccessMsg("")
                                                                 }}
@@ -229,91 +216,97 @@ const CustomerInfo = (props) => {
                         <View style={styles.bioTitleCover}>
                             <Text style={styles.bioText}>STORE DETAILS</Text>
                         </View>
-                        <View style={styles.inputMainHolder}>
-
-                            {/* <View style={styles.inputHolderSelect}>
-                                <View style={styles.labelView}>
-                                    <Text style={styles.label}>TYPE OF STORE</Text>
+                        <View>
+                            <View style={{ marginHorizontal: 20 }}>
+                                <View style={[styles.inputHolder]}>
+                                    <View style={styles.labelView}>
+                                        <Text style={styles.label}>USER TYPE</Text>
+                                    </View>
+                                    <InputField
+                                        style={styles.innerLabelPhone2}
+                                        value={details?.user_type}
+                                        editable={false}
+                                    />
                                 </View>
-                                <Dropdown label="Select store type" storeAddress="" data={data} onSelect={setSelected} />
 
-                            </View> */}
+                            </View>
+
                             <TouchableOpacity style={styles.viewStoreTitleCover} onPress={props.store}>
-                                    <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
-                                    <Image style={styles.rightImg} source={require("@Assets/image/blueRight.png")} />
-                           
+                                <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
+                                <Image style={styles.rightImg} source={require("@Assets/image/blueRight.png")} />
+
                             </TouchableOpacity>
                         </View>
                     </View>
 
-                    <View style={styles.cardCover} >
-                    
-                            <View style={styles.docTitleCover}>
-                                <Text style={styles.bioText}>DOCUMENTATION</Text>
-                            </View>
-                            <View style={styles.smCardCover}>
-                                <View style={styles.smCard}>
-                                    <View>
-                                        <Text style={styles.docTitle}>Pharmacy License</Text>
-                                    </View>
+                    {/* <View style={styles.cardCover} >
 
-                                    <View style={styles.docFeature}>
-                                        <View>
-                                            <TouchableOpacity>
-                                                <Text style={styles.docViewText}>VIEW</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        <View>
-                                            <TouchableOpacity>
-                                                <Text style={styles.docChangeText}>CHANGE</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
+                        <View style={styles.docTitleCover}>
+                            <Text style={styles.bioText}>DOCUMENTATION</Text>
+                        </View>
+                        <View style={styles.smCardCover}>
+                            <View style={styles.smCard}>
+                                <View>
+                                    <Text style={styles.docTitle}>Pharmacy License</Text>
                                 </View>
-                            </View>
-                            <View style={styles.smCardCover}>
-                                <View style={styles.smCard}>
-                                    <View>
-                                        <Text style={styles.docTitle}>Store Photo </Text>
-                                    </View>
 
-                                    <View style={styles.docFeature}>
-                                        <View>
-                                            <TouchableOpacity>
-                                                <Text style={styles.docViewText}>VIEW</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        <View>
-                                            <TouchableOpacity>
-                                                <Text style={styles.docChangeText}>CHANGE</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                            <View style={styles.smCardCover}>
-                                <View style={styles.smCard2}>
+                                <View style={styles.docFeature}>
                                     <View>
-                                        <Text style={styles.docTitle}>Store Photo </Text>
+                                        <TouchableOpacity>
+                                            <Text style={styles.docViewText}>VIEW</Text>
+                                        </TouchableOpacity>
                                     </View>
-
-                                    <View style={styles.docFeature}>
-                                        <View>
-                                            <TouchableOpacity>
-                                                <Text style={styles.docViewText}>VIEW</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        <View>
-                                            <TouchableOpacity>
-                                                <Text style={styles.docChangeText}>CHANGE</Text>
-                                            </TouchableOpacity>
-                                        </View>
+                                    <View>
+                                        <TouchableOpacity>
+                                            <Text style={styles.docChangeText}>CHANGE</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
                         </View>
+                        <View style={styles.smCardCover}>
+                            <View style={styles.smCard}>
+                                <View>
+                                    <Text style={styles.docTitle}>Store Photo </Text>
+                                </View>
 
+                                <View style={styles.docFeature}>
+                                    <View>
+                                        <TouchableOpacity>
+                                            <Text style={styles.docViewText}>VIEW</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View>
+                                        <TouchableOpacity>
+                                            <Text style={styles.docChangeText}>CHANGE</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.smCardCover}>
+                            <View style={styles.smCard2}>
+                                <View>
+                                    <Text style={styles.docTitle}>Store Photo </Text>
+                                </View>
 
+                                <View style={styles.docFeature}>
+                                    <View>
+                                        <TouchableOpacity>
+                                            <Text style={styles.docViewText}>VIEW</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View>
+                                        <TouchableOpacity>
+                                            <Text style={styles.docChangeText}>CHANGE</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+
+ */}
 
                 </View>
 
@@ -325,7 +318,7 @@ const CustomerInfo = (props) => {
                 </View>
             </ScrollView>
 
-        
+
         </View>
     )
 };
