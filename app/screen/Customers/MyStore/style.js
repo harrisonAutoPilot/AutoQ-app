@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
   },
+  greaterImg:{
+width:14,
+height:14,
+resizeMode:'contain',
+  },
   mainContainer: {
     flex: 1,
     flexWrap: 'wrap',
@@ -70,9 +75,34 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
     paddingHorizontal: 19
   },
+  cardP: {
+    alignSelf: 'center',
+    width: wp('92%'),
+    margin: 4,
+    borderRadius: 16,
+    // backgroundColor: '#ffffff',
+    alignItems: 'center',
+    textAlign: 'center',
+    paddingVertical: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    // elevation: 10,
+    // shadowColor: "rgba(0, 49, 157, 1)",
+    // shadowRadius: 16,
+    borderWidth:1,
+    borderColor:'#ebebeb',
+    paddingHorizontal: 19
+  },
   cardDesCover: {
     marginLeft: 20,
     width: "67%",
+  },
+  cardDesCoverP: {
+    marginLeft: 10,
+    width: 150,
+    height:15,
+    borderRadius:20,
+    backgroundColor:"#ebebeb"
   },
   cardArrowCover: {
     flexDirection: 'row',
@@ -80,14 +110,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  cardArrowCoverP: {
+    flexDirection: 'row',
+    marginRight: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height:10,
+    width:20,
+    backgroundColor:'#ebebeb',
+    borderRadius:20,
+  },
   storeView: {
     marginRight: 7,
     alignItems: "center",
     color: '#212121',
-    fontSize: 11,
+    fontSize: 13,
     fontFamily: "Urbanist-Medium",
     lineHeight: 16,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
+    fontWeight:"500",
     // marginTop: -3
   },
   midCard: {
@@ -100,6 +141,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 13,
     paddingTop: 0,
+  },
+  cardImgCoverP:{
+width:40,
+height:40,
+backgroundColor:'#ebebeb',
+resizeMode:'contain',
+borderRadius:10,
   },
   detailCover: {
     // position: 'absolute',

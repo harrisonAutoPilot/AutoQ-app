@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import globalStyle from "@Helper/GlobalStyles";
 import { NavHeader as HeaderWhite } from "@Component";
 import { getUserStore } from "@Request/Store";
+import StorePlaceholder from "./StorePlaceholder"
 
 const MyStore = (props) => {
     const bottomSheetDetails = useRef();
@@ -102,6 +103,7 @@ const MyStore = (props) => {
             <FlatList
                 data={usersStore}
                 renderItem={RenderItem}
+                ListEmptyComponent= {StorePlaceholder}
                 keyExtractor={item => item.id}
                 ListFooterComponent={<View style={{ height: 50 }} />}
                 showsVerticalScrollIndicator={false}
