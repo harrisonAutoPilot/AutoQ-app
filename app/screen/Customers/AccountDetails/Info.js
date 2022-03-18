@@ -239,8 +239,10 @@ const CustomerInfo = (props) => {
 
                             </View> */}
                             <TouchableOpacity style={styles.viewStoreTitleCover} onPress={props.store}>
-                                    <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
-                                    <Image style={styles.rightImg} source={require("@Assets/image/blueRight.png")} />
+                                  <View style={styles.viewStoreTitleInner} >
+                                  <Text style={styles.viewStoreTitleText}>VIEW STORE(S)</Text>
+                                    <Image style={styles.rightImg} source={require("@Assets/image/rightArrow.png")} />
+                                  </View>
                            
                             </TouchableOpacity>
                         </View>
