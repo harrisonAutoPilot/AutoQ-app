@@ -17,7 +17,6 @@ const Registration = (props) => {
     const [activeId, setActiveId] = useState(1);
     const details = props.route.params?.items
 
-    console.log(details)
 
     const goBack = () => props.navigation.goBack();
 
@@ -39,7 +38,6 @@ const Registration = (props) => {
         phone: details?.phone ? details.phone : "",
         firstname:  details?.name ? details?.name?.substr(0, details.name.indexOf(' ')): "",
         surname: details?.name ?  details?.name.substr(details?.name.indexOf(' ') + 1): "",
-        email: details?.email ? details.email : "",
 
     }
 
@@ -125,7 +123,7 @@ const Registration = (props) => {
 
 
             </View>
-            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} id={changeId}/> : activeId === 2 ? <Step2 /> : <Step3 />}
+            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} id={changeId} user_details={props.route.params?.items ? props.route.params?.items : undefined }/> : activeId === 2 ? <Step2 /> : <Step3 />}
         </View>
     )
 };

@@ -6,7 +6,7 @@ import globalStyles from "@Helper/GlobalStyles";
 
 const SuccessMsg = (props) => {
     return (
-        <View style={[globalStyles.phoneNoVerifySuccessView2]}>
+        <View style={[globalStyles.phoneNoVerifySuccessView2, props.styles]}>
             <View style={globalStyles.phoneNoVerifySuccessIconView}>
                 <Icon name="check" color="rgba(67, 160, 71, 1)" size={14} />
             </View>

@@ -40,7 +40,7 @@ const InActive = (props) => {
 
                 </View>
                 <View style={styles.cardDown}>
-                    <View style={styles.cardDownInner}><Text style={styles.phoneText}>{item.address}</Text></View>
+                <View style={styles.cardDownInner}><Text style={styles.phoneText} >{item?.stores[0].address}</Text></View>
 
                 </View>
             </TouchableOpacity>

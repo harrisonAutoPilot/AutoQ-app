@@ -11,9 +11,6 @@ const Active = (props) => {
     const dispatch = useDispatch();
     const [refreshing, setRefreshing] = useState(false);
 
-    useEffect(() => {
-        // dispatch(cleanup())
-    }, []);
 
     const { status, errors, customers } = useSelector((state) => state.customer);
 
@@ -33,17 +30,16 @@ const Active = (props) => {
 
     const ListView = ({ item }) => {
         return (
-            <TouchableOpacity onPress={() => props.details(item)} style={styles.cardCover}>
+            <TouchableOpacity onPress={() => props.details(item, "Active")} style={styles.cardCover}>
                     <View style={styles.cardTop}>
                         <View><Text style={styles.nameTextActive}>{item?.name}</Text></View>
                         <View style={styles.actCover}><Text style={styles.actText}>Active</Text></View>
                     </View>
                     <View style={styles.cardMid}>
-                        <View><Text style={styles.phoneText}>+{item?.phone}</Text></View>
-
+                        <Text style={styles.phoneText}>+{item?.phone}</Text>
                     </View>
                     <View style={styles.cardDown}>
-                        <View style={styles.cardDownInner}><Text style={styles.phoneText}>{item?.address}</Text></View>
+                        <View style={styles.cardDownInner}><Text style={styles.phoneText} numberOfLines={2}>{item?.stores[0].address}</Text></View>
 
                     </View>
             </TouchableOpacity>

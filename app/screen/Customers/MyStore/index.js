@@ -12,7 +12,7 @@ import styles from './style';
 import { useSelector, useDispatch } from "react-redux";
 import globalStyle from "@Helper/GlobalStyles";
 import { NavHeader as HeaderWhite } from "@Component";
-import { getUserStore,  deleteStore  } from "@Request/Store";
+import { getUserStore, deleteStore } from "@Request/Store";
 import { cleanup } from "@Store/Stores";
 import StorePlaceholder from "./StorePlaceholder"
 
@@ -34,18 +34,17 @@ const MyStore = (props) => {
         dispatch(getUserStore(props.route.params?.id))
     }, []);
 
-    useEffect(() => {
-        if (update === "success") {
-            closeSheet();
-            refreshView("", "Update Successful");
-        } else if (update === "failed") {
-            refreshView(errors?.msg, "")
-        }
-        else {
-            setSuccessMsg("");
-            setErrMsg("");
-        }
-    }, [update]);
+    // useEffect(() => {
+    //     if (update === "success") {
+    //         refreshView("", "Update Successful");
+    //     } else if (update === "failed") {
+    //         refreshView(errors?.msg, "")
+    //     }
+    //     else {
+    //         setSuccessMsg("");
+    //         setErrMsg("");
+    //     }
+    // }, [update]);
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -83,7 +82,7 @@ const MyStore = (props) => {
     const toastConfig = {
         error: () => (
             <View style={[globalStyle.errMainView2, globalStyle.marginTop]}>
-            <FIcon name="exclamation-circle" color="#fff" style={globalStyle.exclaImg} size={20}/>
+                <FIcon name="exclamation-circle" color="#fff" style={globalStyle.exclaImg} size={20} />
                 <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
             </View>
         ),
@@ -95,7 +94,7 @@ const MyStore = (props) => {
 
     const goBack = () => props.navigation.navigate("Home");
 
-    const addStore = () => props.navigation.navigate("AddStore");
+    const addStore = () => props.navigation.navigate("AddStore", {id: props.route.params?.id});
 
     const closeSheetDetails = () => bottomSheetDetails.current.close();
 
@@ -157,16 +156,18 @@ const MyStore = (props) => {
                 </TouchableOpacity>
 
             </View>
+            {status === "pending" ? <StorePlaceholder />
+                :
+                <FlatList
+                    data={usersStore}
+                    renderItem={RenderItem}
+                    ListEmptyComponent={EmptyStore}
+                    keyExtractor={item => item.id}
+                    ListFooterComponent={<View style={{ height: 50 }} />}
+                    showsVerticalScrollIndicator={false}
 
-            <FlatList
-                data={usersStore}
-                renderItem={EmptyStore}
-                ListEmptyComponent= {EmptyStore}
-                keyExtractor={item => item.id}
-                ListFooterComponent={<View style={{ height: 50 }} />}
-                showsVerticalScrollIndicator={false}
-
-            />
+                />
+            }
 
             <BottomSheet hasDraggableIcon ref={bottomSheetDetails} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.3} radius={50} styles={styles.addStoreBottomSheet}>
                 <View style={styles.store}>
@@ -175,7 +176,7 @@ const MyStore = (props) => {
                     {errMsg ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
 
-                    <ScrollView  contentContainerStyle={{marginTop: 10}}>
+                    <ScrollView contentContainerStyle={{ marginTop: 10 }}>
                         <View style={styles.detailCard}>
                             <View style={styles.detailCardView}>
                                 <Text style={styles.storeTitle}>NAME OF STORE:</Text>

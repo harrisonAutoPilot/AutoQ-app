@@ -30,7 +30,7 @@ const InActive = (props) => {
     const ListView = ({ item }) => {
 
         return (
-            <TouchableOpacity style={styles.cardCover} onPress={() => props.details(item)}>
+            <TouchableOpacity style={styles.cardCover} onPress={() => props.details(item, "Inactive")}>
                 <View style={styles.cardTop}>
                     <View><Text style={styles.nameTextInAc}>{item.name}</Text></View>
                     <View style={styles.inactCover}><Text style={styles.inactText}>Inactive</Text></View>
@@ -40,7 +40,7 @@ const InActive = (props) => {
 
                 </View>
                 <View style={styles.cardDown}>
-                    <View style={styles.cardDownInner}><Text style={styles.phoneText}>{item.address}</Text></View>
+                <View style={styles.cardDownInner}><Text style={styles.phoneText} numberOfLines={2}>{item?.stores[0].address}</Text></View>
 
                 </View>
             </TouchableOpacity>

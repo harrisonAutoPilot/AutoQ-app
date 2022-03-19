@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { InputField, Header } from "@Component";
 import { useSelector, useDispatch } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import InActive from "./Inactive";
 import Pending from "./Pending";
 import Active from "./Active";
 import { getCustomers } from "@Request/Customer";
+import { cleanup } from "@Store/Customer";
 
 const CustomersDashboard = (props) => {
 
@@ -19,12 +20,15 @@ const CustomersDashboard = (props) => {
     useFocusEffect(
         useCallback(() => {
             dispatch(getCustomers());
-        if (props.route.params?.id === 1) {
-            console.log(props.route.params?.id)
-            setActiveId(3)
-        }
+        // return () => dispatch(cleanup())
         }, [])
     );
+
+    useEffect(() => {
+        if (props.route.params?.id === 1 ) {
+            setActiveId(3)
+        }
+    },[props.route.params])
 
     const dismissKeyboard = () => Keyboard.dismiss();
     const openDrawer = () => props.navigation.openDrawer();
@@ -34,10 +38,9 @@ const CustomersDashboard = (props) => {
     const openFavourite = () => props.navigation.navigate("SavedItem", { id: 1 })
     const openNotification = () => props.navigation.navigate("Notification");
     const openCart = () => props.navigation.navigate("Cart");
-    const custom_details = (details) => props.navigation.navigate("CustomerDetails", {details});
-    const {customers } = useSelector((state) => state.customer);
-
-    const showActive = (id) => setActiveId(id)
+    const custom_details = (details, name) => props.navigation.navigate("CustomerDetails", {details, name});
+    const { customers } = useSelector((state) => state.customer);
+    const showActive = (id) => setActiveId(id);
 
     return (
         <View style={styles.view}>
@@ -78,8 +81,8 @@ const CustomersDashboard = (props) => {
                     </TouchableOpacity>
                 </View>
 
-
             </View>
+
             {activeId === 1 ? <Pending details={reg_details} /> : activeId === 2 ? <Active details={custom_details} /> : <InActive details={custom_details} />}
 
             <TouchableOpacity style={styles.chat} onPress={reg}>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import commafy from "@Helper/Commafy";
-import { COHeader as Header, EmptyPlaceHolder } from "@Component";
+import { EmptyPlaceHolder } from "@Component";
 import { reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
@@ -19,7 +19,7 @@ const Order = (props) => {
     const [loader, setLoader] = useState(false);
     const flatListRef = useRef()
 
-    const { errors, orders, update, loaded } = useSelector((state) => state.order);
+    const { errors, update } = useSelector((state) => state.order);
 
     const reOrders = (id) => {
         const details = { order_group_id: id };
@@ -106,14 +106,11 @@ const Order = (props) => {
             {err ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.bottomCover2}>
-                {orders.orders && !orders.orders.length && loaded === "success" ?
-                    <EmptyPlaceHolder />
-                    :
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={props.details.order_groups}
                         renderItem={ListView}
-                         ListEmptyComponent={CustomerPlaceholderCard}
+                         ListEmptyComponent={EmptyPlaceHolder}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
                         initialNumToRender={3}
@@ -121,7 +118,7 @@ const Order = (props) => {
                             { length: 100, offset: 100 * index, index }
                         )}
                     />
-                }
+                
             </View>
 
             <Loader isVisible={loader} />

@@ -444,7 +444,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         width: wp('50%'),
-        paddingTop: 10,
+        paddingTop: 5,
     },
     nameText: {
         color: '#3858CF',

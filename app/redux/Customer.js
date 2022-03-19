@@ -8,6 +8,14 @@ export const customerSlice = createSlice({
         status: "idle",
         errors: {}
     },
+    reducers:{
+        cleanup: (state) => {
+            state.errors = {}
+            state.status = "idle",
+            state.customers = []
+        },
+   
+    },
     extraReducers: builder => {
         builder
             .addCase(getCustomers.pending, state => {
@@ -27,5 +35,7 @@ export const customerSlice = createSlice({
             })
     }
 });
+
+export const { cleanup } = customerSlice.actions
 
 export default customerSlice.reducer;

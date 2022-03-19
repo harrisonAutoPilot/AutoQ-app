@@ -5,7 +5,7 @@ import { apiRequest } from "@Request/Request";
 export const login = createAsyncThunk("auth/login",
     async (user, thunkAPI) => {
         const Axios = await AxiosBase();
-        return apiRequest(Axios.post('api/v1/login', user),
+        return apiRequest(Axios.post('api/v1/agent/login', user),
             thunkAPI, "auth")
     });
 
@@ -53,6 +53,7 @@ export const updateUserDetails = createAsyncThunk("auth/user/update",
         return apiRequest(Axios.patch(`api/v1/users/${user.id}`, user),
             thunkAPI)
     });
+
 
 export const updateUserPassword = createAsyncThunk("auth/password/update",
     async (user, thunkAPI) => {
