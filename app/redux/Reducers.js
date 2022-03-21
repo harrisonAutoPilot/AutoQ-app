@@ -13,6 +13,8 @@ import walletReducer from "./Wallet";
 import storeReducer from "./Stores";
 import notificationReducer from "./Notification";
 import customerReducer from "./Customer";
+import stateReducer from "./State";
+import lgaReducer from "./Lga";
 
 const persistConfig = {
     key: 'root',
@@ -36,5 +38,7 @@ export default combineReducers({
     wallet: walletReducer,
     store: storeReducer,
     notification: notificationReducer,
-    customer: customerReducer
+    customer: customerReducer,
+    state: stateReducer,
+    lga: lgaReducer
 });

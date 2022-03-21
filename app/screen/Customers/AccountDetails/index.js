@@ -15,6 +15,7 @@ const CustomerDetails = (props) => {
     const cart = () => props.navigation.navigate("Cart")
     const [activeId, setActiveId] = useState(1);
     const details = props.route?.params?.details;
+    const name = props.route?.params?.name;
 
     const goBack = () => props.navigation.navigate("CustomersDashboard");
     const detailsScreen = (item) => props.navigation.navigate("OrderDetails", { item });
@@ -36,7 +37,7 @@ const CustomerDetails = (props) => {
                 </View>
 
             </View>
-            {activeId === 1 ? <CustomerInfo details={details}  store={viewStore}/> : <Orders details={details} detailsScreen={detailsScreen} cart={cart} />}
+            {activeId === 1 ? <CustomerInfo details={details}  store={viewStore} name={name}/> : <Orders details={details} detailsScreen={detailsScreen} cart={cart} />}
 
         </View>
     )

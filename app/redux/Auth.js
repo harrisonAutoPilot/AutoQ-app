@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, getUser, register, updateUserPassword} from "@Request/Auth";
+import { login, getUser, register, updateUserPassword, updateUserDetails} from "@Request/Auth";
 
 export const authSlice = createSlice({
     name: "auth",
@@ -112,6 +112,22 @@ export const authSlice = createSlice({
                 state.errors = payload;
             })
 
+            builder
+            .addCase(updateUserDetails.pending, state => {
+                state.update = "pending";
+                state.errors = {};
+                state.signedIn = false
+            })
+            .addCase(updateUserDetails.fulfilled, (state, {payload}) => {
+                console.log(payload)
+                state.update = "success";
+                state.errors = {};
+            })
+            .addCase(updateUserDetails.rejected, (state, { payload }) => {
+                console.log("hi")
+                state.update = "failed";
+                state.errors = payload;
+            })
             
     }
 });

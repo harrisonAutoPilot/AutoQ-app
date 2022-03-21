@@ -13,14 +13,14 @@ const Step1 = (props) => {
     const dispatch = useDispatch();
     const dismissKeyboard = () => Keyboard.dismiss();
     const [category, setCategory] = useState("");
-    const [active, setActive] = useState("0");
+    const [active, setActive] = useState("");
     const registerState = props.details;
     const editable = props.active;
     const id = props.id
-
+    const type = props.user_details?.user_type
 
     const selectUserType = id => {
-        setActive(id);
+       setActive(id)
     };
 
 
@@ -33,32 +33,30 @@ const Step1 = (props) => {
         return (
             <View style={[styles.optionView, active === item.id ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
                 <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
-                    <TouchableOpacity onPress={() => { selectUserType(item.id); setCategory(item.title); }}>
-                        {active === item.id ?
-                            <TouchableOpacity style={styles.iconCircle} onPress={() => { selectUserType(item.id); setCategory(item.title); }}>
+                        { type?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
+                            <TouchableOpacity style={styles.iconCircle} onPress={  type ? null : () => { selectUserType(item.id); setCategory(item.title); }}>
                                 <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
                             </TouchableOpacity >
                             :
-                            <TouchableOpacity style={styles.iconCircle2} onPress={() => { selectUserType(item.id); setCategory(item.title) }}>
+                            <TouchableOpacity style={styles.iconCircle2} onPress={ type ? null : () => { selectUserType(item.id); setCategory(item.title); }}>
 
                             </TouchableOpacity>
                         }
-                    </TouchableOpacity>
                 </View>
-                {active === item.id ?
-                    <TouchableOpacity style={styles.optionTextViewNew} onPress={() => { selectUserType(item.id); setCategory(item.title); }}>
+                {active === item.id || type?.toLowerCase() === item.title.toLowerCase()  ?
+                    <View style={styles.optionTextViewNew}>
                         <Text style={styles.optionText}>{item.title}</Text>
                         <View style={styles.optionMiniTextView}>
                             <Text style={styles.onboardSubTitle1}>{item.desc}</Text>
                         </View>
-                    </TouchableOpacity>
+                    </View>
                     :
-                    <TouchableOpacity style={styles.optionTextView} onPress={() => { selectUserType(item.id); setCategory(item.title) }}>
+                    <View style={styles.optionTextView} >
                         <Text style={styles.optionText}>{item.title}</Text>
                         <View style={styles.optionMiniTextView}>
                             <Text style={styles.onboardSubTitle1}>{item.desc}</Text>
                         </View>
-                    </TouchableOpacity>}
+                    </View>}
             </View>
         )
     };
@@ -173,31 +171,6 @@ const Step1 = (props) => {
                                                         </View>) : null}
                                                 </View>
 
-                                                <View>
-                                                    <View style={[styles.inputHolder, styles.registerInputPinHolder, props.touched.email && props.errors.email ? styles.inputErrHolder : null]}>
-                                                        <View style={styles.labelView}>
-                                                            <Text style={styles.label}>EMAIL</Text>
-                                                        </View>
-
-                                                        <InputField
-                                                            style={styles.label3}
-                                                            value={props.values.email}
-                                                            onBlur={props.handleBlur('email')}
-                                                            placeholder="jameskingsley@email.com"
-                                                            placeholderTextColor="#757575"
-                                                            keyboardType="number-pad"
-                                                            onChangeText={(val) => {
-                                                                props.setFieldValue('email', val)
-                                                                props.setFieldTouched('email', true, false);
-                                                            }}
-                                                        />
-                                                    </View>
-                                                    {props.touched.email && props.errors.email ? (
-                                                        <View style={styles.errView}>
-                                                            <Text style={styles.errText}>{props.errors.email}</Text>
-                                                        </View>) : null}
-                                                </View>
-
                                             </View>
                                         )}
 
@@ -218,7 +191,6 @@ const Step1 = (props) => {
                                 data={data2}
                                 renderItem={RenderItem}
                                 keyExtractor={item => item.id}
-
                             />
 
                         </View>

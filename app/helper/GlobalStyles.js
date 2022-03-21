@@ -236,8 +236,8 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         justifyContent: 'center',
-        width: "100%"
-
+        width: "90%",
+        alignSelf: "center",
     },
     errMainVie6: {
         borderWidth: 0,
@@ -360,7 +360,7 @@ export default styles = StyleSheet.create({
         elevation: 5,
         marginLeft: 20,
         position: "absolute",
-        top: -70
+        top: -70,
 
     },
     phoneNoVerifySuccessVieww: {

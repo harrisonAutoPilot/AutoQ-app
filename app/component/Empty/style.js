@@ -585,13 +585,12 @@ const styles = StyleSheet.create({
     },
 
     emptyTextBig: {
-        fontFamily: "Urbanist-Regular",
-        fontSize: 22,
-        lineHeight: 20,
+        fontFamily: "Urbanist-SemiBold",
+        fontSize: 20,
+        lineHeight: 28,
         color: "#757575",
         letterSpacing: 0.1,
-        fontWeight: "600",
-        paddingBottom: 10,
+        // paddingBottom: 10,
     },
     topModalView: {
         // height: "27%",

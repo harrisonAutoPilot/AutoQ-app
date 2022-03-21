@@ -130,20 +130,33 @@ export default styles = StyleSheet.create({
         fontWeight: "400",
         marginTop: 5,
         width: "70%",
-        paddingLeft: 10,
+        paddingLeft: 5,
 
     },
     innerLabelPhone: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         // lineHeight: 24,
-        color: "rgba(33, 33, 33, 1)",
+        color: "#adadad",
         letterSpacing: 0.3,
         fontWeight: "400",
         marginTop: 3,
         marginBottom: 5,
         width: "70%",
         paddingLeft: 40,
+    },
+    innerLabelPhone2: {
+        fontSize: 16,
+        fontFamily: "Urbanist-Medium",
+        // lineHeight: 24,
+        color: "#adadad",
+        letterSpacing: 0.3,
+        fontWeight: "400",
+        marginTop: 3,
+        marginBottom: 5,
+        width: "70%",
+        paddingLeft: 5,
+        textTransform: "capitalize"
     },
     errText: {
         color: "red",
@@ -158,10 +171,17 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FAFAFA',
         paddingVertical: 30,
         alignItems: "center",
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        marginTop: 20
     },
     btnCover2: {
         top: hp("54%")
+    },
+    inputErrHolder: {
+        borderColor: "red"
+    },
+    inputNotErrHolder: {
+        borderColor: "rgba(56, 88, 207, 1)"
     },
     submit: {
         paddingVertical: 16,
@@ -254,7 +274,7 @@ export default styles = StyleSheet.create({
 
     bottomCover: {
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fff',
         // height:hp('30%'),
         paddingTop: 10,
         marginBottom: 30,
@@ -379,21 +399,21 @@ export default styles = StyleSheet.create({
         marginLeft: 2,
     },
     cardCover: {
+        borderTopWidth: 2,
+        borderColor: "rgba(238, 238, 238, 1)",
         width: wp('100%'),
         elevation: 2,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 15,
         paddingTop: 20,
-        // marginBottom:10,
         marginTop: 4,
         shadowColor: '#ffffff',
         shadowRadius: 4,
         shadowOffset: { height: 4, width: 0 },
         shadowOpacity: 0.5,
-
     },
 
     cardCoverOrder: {
@@ -425,6 +445,8 @@ export default styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 10,
         marginBottom: 5,
+        elevation: 10,
+        shadowColor: "rgba(0, 49, 157, 1)",
 
     },
     dateTitle: {
@@ -471,6 +493,14 @@ export default styles = StyleSheet.create({
         backgroundColor: '#469D00',
         marginTop: 5,
     },
+    activeBtn2: {
+        padding: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 50,
+        backgroundColor: 'rgba(211, 47, 47, 1)',
+        marginTop: 5,
+    },
     activeBtnText: {
         color: '#fff',
         fontSize: 12,
@@ -503,6 +533,8 @@ export default styles = StyleSheet.create({
     viewStoreTitleCover: {
          width: wp('100%'),
         flexDirection: 'row',
+        paddingTop: 16,
+    
         alignItems: 'center',
         justifyContent: 'center',
         // paddingTop:12,
@@ -710,5 +742,8 @@ export default styles = StyleSheet.create({
         height: 12,
         resizeMode: 'contain',
 
+    },
+    inbtwStore:{
+        marginTop: 20
     }
 })

@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef, } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView, FlatList, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-toast-message';
+import FIcon from "react-native-vector-icons/FontAwesome5";
+
 import EmptyStore from "@Component/Empty/emptyStore"
 import { COHeader as Header } from "@Component";
 import { SuccessMsgViewTwo } from "@Component/index";
@@ -10,7 +12,8 @@ import styles from './style';
 import { useSelector, useDispatch } from "react-redux";
 import globalStyle from "@Helper/GlobalStyles";
 import { NavHeader as HeaderWhite } from "@Component";
-import { getUserStore } from "@Request/Store";
+import { getUserStore, deleteStore } from "@Request/Store";
+import { cleanup } from "@Store/Stores";
 import StorePlaceholder from "./StorePlaceholder"
 
 const MyStore = (props) => {
@@ -25,19 +28,73 @@ const MyStore = (props) => {
     const [loader, setLoader] = useState(false);
     const [outerLoader, setOuterLoader] = useState(false);
 
-    const { status, errors, usersStore } = useSelector((state) => state.store);
+    const { status, errors, usersStore, update } = useSelector((state) => state.store);
 
     useEffect(() => {
         dispatch(getUserStore(props.route.params?.id))
     }, []);
 
+    // useEffect(() => {
+    //     if (update === "success") {
+    //         refreshView("", "Update Successful");
+    //     } else if (update === "failed") {
+    //         refreshView(errors?.msg, "")
+    //     }
+    //     else {
+    //         setSuccessMsg("");
+    //         setErrMsg("");
+    //     }
+    // }, [update]);
+
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
+    const refreshView = useCallback((errmsg, sucmsg) => {
+        wait(1000).then(() => {
+            setLoader(false);
+            setOuterLoader(false);
+            setErrMsg(errmsg);
+            setSuccessMsg(sucmsg);
+            if (sucmsg) {
+                Toast.show({
+                    type: 'tomatoToast',
+                    visibilityTime: 50000,
+                    autoHide: true,
+                    position: 'top',
+                    topOffset: 120
+                })
+                dispatch(getUserStore());
+            } else {
+                Toast.show({
+                    type: 'error',
+                    visibilityTime: 5000,
+                    autoHide: true,
+                    position: 'top',
+                    topOffset: 0
+                })
+            }
+        });
+
+        wait(3000).then(() => { dispatch(cleanup()); })
+    }, []);
+
+    const toastConfig = {
+        error: () => (
+            <View style={[globalStyle.errMainView2, globalStyle.marginTop]}>
+                <FIcon name="exclamation-circle" color="#fff" style={globalStyle.exclaImg} size={20} />
+                <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
+            </View>
+        ),
+
+        tomatoToast: () => (
+            <SuccessMsgViewTwo title={successMsg} />
+        )
+    };
+
     const goBack = () => props.navigation.navigate("Home");
 
-    const addStore = () => props.navigation.navigate("AddStore");
+    const addStore = () => props.navigation.navigate("AddStore", {id: props.route.params?.id});
 
     const closeSheetDetails = () => bottomSheetDetails.current.close();
 
@@ -99,27 +156,27 @@ const MyStore = (props) => {
                 </TouchableOpacity>
 
             </View>
+            {status === "pending" ? <StorePlaceholder />
+                :
+                <FlatList
+                    data={usersStore}
+                    renderItem={RenderItem}
+                    ListEmptyComponent={EmptyStore}
+                    keyExtractor={item => item.id}
+                    ListFooterComponent={<View style={{ height: 50 }} />}
+                    showsVerticalScrollIndicator={false}
 
-            <FlatList
-                data={usersStore}
-                renderItem={EmptyStore}
-                ListEmptyComponent= {EmptyStore}
-                keyExtractor={item => item.id}
-                ListFooterComponent={<View style={{ height: 50 }} />}
-                showsVerticalScrollIndicator={false}
-
-            />
+                />
+            }
 
             <BottomSheet hasDraggableIcon ref={bottomSheetDetails} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.3} radius={50} styles={styles.addStoreBottomSheet}>
                 <View style={styles.store}>
                     <HeaderWhite title="Store Details" onPress={closeSheetDetails} />
 
-                    {errMsg ? <View style={[globalStyle.errMainView, styles.errMainView]}>
-                        <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
-                    </View>
-                        : null}
+                    {errMsg ? <Toast config={toastConfig} /> : null}
+                    {successMsg ? <Toast config={toastConfig} /> : null}
 
-                    <ScrollView  contentContainerStyle={{marginTop: 10}}>
+                    <ScrollView contentContainerStyle={{ marginTop: 10 }}>
                         <View style={styles.detailCard}>
                             <View style={styles.detailCardView}>
                                 <Text style={styles.storeTitle}>NAME OF STORE:</Text>

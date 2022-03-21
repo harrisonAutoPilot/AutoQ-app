@@ -1,44 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SelectCountry } from 'react-native-element-dropdown';
+import { useSelector } from "react-redux";
 
-const state_data = [
-  {
-    value: '1',
-    lable: 'Abia',
-   
-  },
-  {
-    value: '2',
-    lable: 'Adamawa',
-    
-  },
-  {
-    value: '3',
-    lable: 'Akwa-Ibom',
-    
-  },
-  {
-    value: '4',
-    lable: 'Bauchi',
-    
-  },
-  {
-    value: '5',
-    lable: 'Benue',
-   
-  },
-  {
-    value: '5',
-    lable: 'Borno',
-   
-  },
-];
+const SelectState = ({onSelect}) => {
+  const [state, setState] = useState(0);
+  console.log(state);
 
-export interface Props {}
-
-const SelectState: React.FC<Props> = _props => {
-  const [state, setState] = useState('0');
+  const { states } = useSelector((state) => state.state);
 
   return (
     <SelectCountry
@@ -49,14 +18,19 @@ const SelectState: React.FC<Props> = _props => {
       value={state}
       search
       maxHeight={260}
-      data={state_data}
-      valueField="value"
-      labelField="lable"
+      data={states}
+      valueField="name"
+      labelField="name"
       placeholder="Select State"
       searchPlaceholder="Search..."
       onChange={e => {
-        setState(e.value);
+        setState(e.name);
+        onSelect(e)
+
       }}
+      dropdownPosition="top"
+      inputSearchStyle={styles.placeholderStyle}
+      activeColor="green"
     />
   );
 };

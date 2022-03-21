@@ -3,16 +3,12 @@ import { View, Text, TouchableOpacity, FlatList, Image, RefreshControl } from "r
 import { useSelector, useDispatch } from "react-redux";
 import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
-import { getCustomers} from "@Request/Customer";
+import { getCustomers } from "@Request/Customer";
 import EmptyCustomer from "@Component/Empty/emptyCustomer"
 
 const InActive = (props) => {
     const dispatch = useDispatch();
     const [refreshing, setRefreshing] = useState(false);
-
-    useEffect(() => {
-        // dispatch(cleanup())
-    }, []);
 
     const { status, errors, customers } = useSelector((state) => state.customer);
 
@@ -34,7 +30,7 @@ const InActive = (props) => {
     const ListView = ({ item }) => {
 
         return (
-            <TouchableOpacity style={styles.cardCover}  onPress={() => props.details(item)}>
+            <TouchableOpacity style={styles.cardCover} onPress={() => props.details(item, "Inactive")}>
                 <View style={styles.cardTop}>
                     <View><Text style={styles.nameTextInAc}>{item.name}</Text></View>
                     <View style={styles.inactCover}><Text style={styles.inactText}>Inactive</Text></View>
@@ -44,7 +40,7 @@ const InActive = (props) => {
 
                 </View>
                 <View style={styles.cardDown}>
-                    <View style={styles.cardDownInner}><Text style={styles.phoneText}>{item.address}</Text></View>
+                <View style={styles.cardDownInner}><Text style={styles.phoneText} numberOfLines={2}>{item?.stores[0].address}</Text></View>
 
                 </View>
             </TouchableOpacity>
@@ -62,19 +58,22 @@ const InActive = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.bottomCover}>
+                {status === "pending" ? <PlaceholderCard />
+                    :
 
-                <FlatList
-                    showsVerticalScrollIndicator={false}
-                    data={customers?.inactive?.users}
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={EmptyCustomer}
-                    renderItem={EmptyCustomer}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
-                    columnWrapperStyle={styles.column}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
-                    }
-                />
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        data={customers?.inactive?.users}
+                        keyExtractor={item => item.id}
+                        ListEmptyComponent={EmptyCustomer}
+                        renderItem={ListView}
+                        ListFooterComponent={<View style={{ height: 50 }} />}
+                        columnWrapperStyle={styles.column}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+                        }
+                    />
+                }
 
             </View>
         </View>

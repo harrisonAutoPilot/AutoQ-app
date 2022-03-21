@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback, SafeAreaView, Keyboard, ScrollView, Image, FlatList, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
 import { BtnLg, BtnPre, FormikValidator, InputField, SuccessMsgViewTwo } from "@Component/index";
 import {registerSchema } from "@Helper/Schema";
 import { updateUserDetails} from "@Request/Auth";
 import Loader from "@Screen/Loader";
-
 import RegConfirm from "./RegConfirmOverlay"
 
 const Step3 = (props) => {

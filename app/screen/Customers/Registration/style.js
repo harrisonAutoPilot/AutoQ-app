@@ -803,6 +803,19 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.2,
         width: "70%"
     },
+    innerLabelPhone2: {
+        fontSize: 16,
+        fontFamily: "Urbanist-Medium",
+        // lineHeight: 24,
+        color: "#adadad",
+        letterSpacing: 0.3,
+        fontWeight: "400",
+        marginTop: 3,
+        marginBottom: 5,
+        width: "70%",
+        paddingLeft: 5,
+        textTransform: "capitalize"
+    },
     errText: {
         color: "red",
         fontSize: 12,
@@ -893,7 +906,7 @@ export default styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Urbanist-Regular",
         // lineHeight: 24,
-        color: "rgba(33, 33, 33, 1)",
+        color: "#adadad",
         letterSpacing: 0.3,
         fontWeight: "400",
         marginTop: 3,

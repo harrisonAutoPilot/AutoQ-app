@@ -24,6 +24,15 @@ const registerSchema = yup.object({
 
 });
 
+const profileSchema = yup.object({
+    firstname: yup.string().required("First Name is required"),
+    surname: yup.string().required("Surname is required")
+});
+
+const addStoreSchema = yup.object({
+    name:yup.string().required("Store name is required"),
+    address: yup.string().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
+});
 
 
-export {searchSchema, loginSchema, changePinSchema, registerSchema}
+export {searchSchema, loginSchema, changePinSchema, registerSchema, profileSchema, addStoreSchema}
