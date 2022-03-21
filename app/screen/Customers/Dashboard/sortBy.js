@@ -32,7 +32,7 @@ const Sort = (props) => {
                     null}
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.mainView} onPress={() => {props.sort(2); setActiveColor(2)}}>
-                    <Text style={[styles.modaltitle, active == 2 ? styles.active : null]}>Phone Number</Text>
+                    <Text style={[styles.modaltitle, active == 2 ? styles.active : null]}>Oldest - Newest</Text>
                     {active == 2 ?
                     <Icon name="check" color="rgba(70, 157, 0, 1)" size={20}/>:
                     null}
@@ -44,7 +44,7 @@ const Sort = (props) => {
                     null}
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.mainView} onPress={() => {props.sort(4);  setActiveColor(4)}}>
-                    <Text style={[styles.modaltitle,  active == 4 ? styles.active : null]}>Date</Text>
+                    <Text style={[styles.modaltitle,  active == 4 ? styles.active : null]}>Recent Customers</Text>
                     {active == 4 ?
                     <Icon name="check" color="rgba(70, 157, 0, 1)" size={20}/>:
                     null}

@@ -139,6 +139,17 @@ export default styles = StyleSheet.create({
         marginTop: Dimensions.get("window").height / 30,
         borderRadius: 5
     },
+    inputHolderTetArea: {
+        borderWidth: 1,
+        borderColor: "#BDBDBD",
+        paddingVertical: Platform.OS === "ios" ? 20 : 4,
+        paddingHorizontal: 10,
+        marginTop: Dimensions.get("window").height / 30,
+        borderRadius: 5,
+        minHeight: 80,
+        maxHeight: 120
+  
+    },
     inputHolder2: {
         borderWidth: 1,
         borderColor: "#BDBDBD",
@@ -189,11 +200,12 @@ export default styles = StyleSheet.create({
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
         height: "20%",
-        width: "100%",
+        width: "120%",
         backgroundColor: '#f5f5f5',
-        paddingVertical: 20,
+        paddingTop: 20,
         alignItems: "center",
-        paddingHorizontal: 20
+        paddingHorizontal: 40,
+        alignSelf: "center"
     },
 
     btnStep2Cover: {
@@ -803,6 +815,14 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.2,
         width: "70%"
     },
+    label4: {
+        fontSize: 16,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 24,
+        color: "#212121",
+        letterSpacing: 0.2,
+        width: "100%"
+    },
     innerLabelPhone2: {
         fontSize: 16,
         fontFamily: "Urbanist-Medium",
@@ -931,8 +951,8 @@ export default styles = StyleSheet.create({
         borderColor: '#f2f3f4',
     },
     card1: {
-        width: wp('100%'),
-        paddingHorizontal: 20,
+        // width: wp('100%'),
+        // paddingHorizontal: 20,
         borderTopWidth: 1,
         borderColor: '#f2f3f4',
         paddingTop: 16

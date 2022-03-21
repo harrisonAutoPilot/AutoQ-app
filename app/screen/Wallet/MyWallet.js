@@ -13,7 +13,6 @@ import commafy from "@Helper/Commafy";
 const MyWallet = (props) => {
     const flatListRef = React.useRef()
     const [showModal, setShowModal] = useState(false);
-    const [showSort, setShowSort] = useState(false);
     const [sheetOpen, setSheetOpen] = useState(false);
     const [result, setResult] = useState([]);
     const bottomSheetFund = React.useRef();

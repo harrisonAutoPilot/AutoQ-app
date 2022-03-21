@@ -25,7 +25,8 @@ const SelectLga = props => {
       searchPlaceholder="Search..."
       onChange={e => {
         setState(e.name);
-        props.onSelect(e.id)
+        props.props.setFieldValue('lga_id', e.id)
+        props.props.setFieldTouched('lga_id', true, false);
       }}
       dropdownPosition="top"
     />

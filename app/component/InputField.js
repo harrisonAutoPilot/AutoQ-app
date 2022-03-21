@@ -14,6 +14,8 @@ const InputField = props => {
             placeholder={props.placeholder}
             placeholderTextColor={props.placeholderTextColor}
             editable={props.editable}
+            multiline={props.multiline}
+            numberOfLines={props.numberOfLines}
             />
 
     )

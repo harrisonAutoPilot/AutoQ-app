@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
-import { useFocusEffect } from '@react-navigation/native';
+
 import { searchProducts } from "@Request/Product";
  import CatelogueCardPlaceholder from "./CatelogueCardPlaceholder";
 import { InputField, Header } from "@Component";
@@ -29,11 +29,9 @@ const Catalogue = (props) => {
     const openCart = () => props.navigation.navigate("Cart");
     const openDrawer = () => props.navigation.openDrawer();
 
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(()=> {
             dispatch(browseCategories())
-        }, [])
-    );
+    }, []);
 
 
     useEffect(() => {

@@ -16,9 +16,9 @@ const Registration = (props) => {
     const dispatch = useDispatch();
     const [activeId, setActiveId] = useState(1);
     const details = props.route.params?.items
-
-
+    const data = [];
     const goBack = () => props.navigation.goBack();
+    console.log(details)
 
     useFocusEffect(
         useCallback(() => {
@@ -30,16 +30,27 @@ const Registration = (props) => {
 
     const showActive = (id) => setActiveId(id);
 
-    const changeId = () => {
-        setActiveId(2)
-    }
-
     const registerState = {
         phone: details?.phone ? details.phone : "",
         firstname:  details?.name ? details?.name?.substr(0, details.name.indexOf(' ')): "",
         surname: details?.name ?  details?.name.substr(details?.name.indexOf(' ') + 1): "",
+    };
 
-    }
+    const registerState2 = {
+        name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
+        address: details?.stores[0]?.address ? details?.stores[0]?.address: "",
+        state_id: details[0]?.state_id ? details[0]?.state_id :"",
+        lga_id: details[0]?.lga_id ? details[0]?.lga_id :"",
+
+    };
+
+   
+    const changeId = (val) => {
+        data.push(val);
+        setActiveId(2)
+        
+    };
+   
 
     return (
         <View style={styles.view}>
@@ -123,7 +134,7 @@ const Registration = (props) => {
 
 
             </View>
-            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} id={changeId} user_details={props.route.params?.items ? props.route.params?.items : undefined }/> : activeId === 2 ? <Step2 /> : <Step3 />}
+            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={changeId} user_details={props.route.params?.items ? props.route.params?.items : undefined }/> : activeId === 2 ? <Step2 user_details={props.route.params?.items ? props.route.params?.items : undefined}  details={registerState2}/> : <Step3 />}
         </View>
     )
 };

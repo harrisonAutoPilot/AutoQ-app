@@ -131,13 +131,7 @@ export default styles = StyleSheet.create({
         width: "78%",
         // marginRight: 20
     },
-    listTitleView: {
-        marginLeft: 10,
-        flexWrap: "wrap",
-        width: "78%",
-       
-        // marginRight: 20
-    },
+  
     listTitleViewP: {
        
         flexWrap: "wrap",
@@ -159,7 +153,7 @@ export default styles = StyleSheet.create({
         marginRight: 20
     },
     listTitleView2: {
-        flexWrap: "wrap",
+        // flexWrap: "wrap",
         width: "58%",
     },
     mainBody: {

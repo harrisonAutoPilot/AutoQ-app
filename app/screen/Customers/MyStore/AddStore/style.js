@@ -458,6 +458,11 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
 
   },
+  innerLabelNoHeight: {
+   height:0,
+   padding: 0
+
+  },
   labelView: {
     position: "absolute",
     top: -10,
