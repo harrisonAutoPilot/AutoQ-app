@@ -9,10 +9,12 @@ const SelectState = ({onSelect, props, values}) => {
   const { states } = useSelector((state) => state.state);
 
   useEffect(() => {
-      let id = states.filter(id => id.id === 2);
+    if(props.values.state_id){
+      let id = states.filter(id => id.id === props.values.state_id);
       setState(id[0]?.name)
       onSelect(id[0])
-  }, [!props.values.state_id?.length])
+    }
+  }, [props.values.state_id?.length])
 
 
   return (

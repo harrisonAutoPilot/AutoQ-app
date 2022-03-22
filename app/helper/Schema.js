@@ -33,7 +33,21 @@ const addStoreSchema = yup.object({
     address: yup.string().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
     state_id: yup.string().required("State is required"),
     lga_id: yup.string().required("LGA is required"),
+    images: yup.array().required("License Image is required").min(1, "License Image is required"),
+    images2: yup.array().min(1, "Store Image is required").required("Store Image is required")
+});
+
+const addStoreSchema2 = yup.object({
+    name:yup.string().required("Store name is required"),
+    address: yup.string().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
+    state_id: yup.string().required("State is required"),
+    lga_id: yup.string().required("LGA is required")
+});
+
+const addStoreSchemaImg = yup.object({
+    images: yup.array().required("License Image is required").min(1, "License Image is required"),
+    images2: yup.array().min(1, "Store Image is required").required("Store Image is required")
 });
 
 
-export {searchSchema, loginSchema, changePinSchema, registerSchema, profileSchema, addStoreSchema}
+export {searchSchema, loginSchema, changePinSchema, registerSchema, profileSchema, addStoreSchema, addStoreSchema2, addStoreSchemaImg}

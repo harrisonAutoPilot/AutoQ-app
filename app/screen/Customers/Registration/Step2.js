@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import styles from "./style";
-import { BtnLg, BtnPre, FormikValidator, InputField, SuccessMsgViewTwo } from "@Component";
-import { addStoreSchema } from "@Helper/Schema";
-import { updateUserDetails } from "@Request/Auth";
-import { cleanup } from "@Store/Auth";
+import { BtnLg, BtnPre, FormikValidator, InputField} from "@Component";
+import { addStoreSchema2 } from "@Helper/Schema";
 import SelectState from "./SelectState"
 import SelectLga from "./SelectLga"
 
 const Step2 = (props) => {
-    const dispatch = useDispatch();
     const dismissKeyboard = () => Keyboard.dismiss();
     const registerState2 = props.details;
     const [state_id, setState_id] = useState({});
+    const {submit, redirect} = props;
 
-
-    const { user, errors, update } = useSelector((state) => state.auth);
     const { states } = useSelector((state) => state.state);
-
-    const submit = async (values) => {
-        const { firstname, surname } = values;
-        const newValue = { name: `${firstname} ${surname}`, id: user.id };
-        await dispatch(updateUserDetails(newValue))
-    };
 
     return (
         <ScrollView
@@ -32,7 +22,6 @@ const Step2 = (props) => {
             contentContainerStyle={[
                 styles.scrollContentContainer
             ]}
-            horizontal={true}
         >
 
             <View style={styles.bottomCover}>
@@ -40,19 +29,18 @@ const Step2 = (props) => {
                     <View style={styles.bioTitleCover}>
                         <Text style={styles.bioTitleText}>STORE</Text>
                     </View>
-                    <View style={styles.formCover}>
                         <TouchableWithoutFeedback onPress={dismissKeyboard}>
                             <View>
 
                                 <FormikValidator
                                     initialValues={registerState2}
-                                    validationSchema={addStoreSchema}
+                                    validationSchema={addStoreSchema2}
                                     onSubmit={(values, actions) => {
                                         submit(values)
                                     }}
                                 >
                                     {props => (
-                                        <View>
+                                        <View style={styles.bottomNextView}>
                                             <View>
                                                 <View style={[styles.registerInputHolder, props.touched.name && props.errors.name ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
@@ -69,7 +57,7 @@ const Step2 = (props) => {
                                                         onChangeText={(val) => {
                                                             props.setFieldValue('name', val)
                                                             props.setFieldTouched('name', true, false);
-                                                            setErrMsg("")
+                                                        
                                                         }}
                                                     />
                                                 </View>
@@ -142,7 +130,7 @@ const Step2 = (props) => {
                                             </View>
 
                                             <View style={styles.btnStep2Cover}>
-                                                <BtnPre title="Previous" onPress={props.handleSubmit} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
+                                                <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
                                                 <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
                                             </View>
 
@@ -153,7 +141,6 @@ const Step2 = (props) => {
                             </View>
 
                         </TouchableWithoutFeedback>
-                    </View>
 
                 </View>
 

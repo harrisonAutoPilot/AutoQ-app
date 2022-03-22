@@ -7,10 +7,11 @@ const SelectLga = props => {
   const [state, setState] = useState('');
 
   useEffect(() => {
-    console.log(props.data)
-    let id = props.data.filter(id => id.id === 17);
+    if(props.data){
+    let id = props.data?.filter(id => id.id === props.props.values.lga_id);
     setState(id[0]?.name)
-}, [!props.props.values.lga_id?.length])
+    }
+}, [props.props.values.lga_id?.length])
 
 
   return (

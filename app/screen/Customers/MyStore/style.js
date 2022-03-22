@@ -131,6 +131,16 @@ resizeMode:'contain',
     fontWeight:"500",
     // marginTop: -3
   },
+  storeViewDelete: {
+    marginRight: 7,
+    alignItems: "center",
+    color: 'red',
+    fontSize: 13,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 16,
+    textTransform: "uppercase",
+    marginTop: 5
+  },
   midCard: {
     width: wp('97%'),
     margin: 4,

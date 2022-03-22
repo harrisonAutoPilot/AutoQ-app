@@ -43,7 +43,9 @@ const MyStore = (props) => {
         name: "",
         address: "",
         state_id: "",
-        lga_id: ""
+        lga_id: "",
+        images: [],
+        images2: []
     };
 
     useEffect(() => {
@@ -129,7 +131,7 @@ const MyStore = (props) => {
         }
     };
 
-    const licenseImg = (id) => {
+    const licenseImg = (id, props) => {
 
         ImagePicker.openPicker({
             multiple: true,
@@ -138,17 +140,19 @@ const MyStore = (props) => {
         }).then(images => {
             setErrMsg("");
             if (id === 1) {
+              
                 setStorePhotoOne("License Image Received")
                     const img = images.map(img => {
                         return `data:image/jpg;base64,${img.data}`
                     })
+                    props.setFieldValue('images', img)
                     setImages(img)
             } else {
                 setStorePhotoTwo("Image Received")
-               
                     const img = images.map(img => {
                         return `data:image/jpg;base64,${img.data}`
                     })
+                    props.setFieldValue('images2', img)
                     setImages2(img)
             }
         }).catch(err => {
@@ -222,7 +226,6 @@ const MyStore = (props) => {
                                                     placeholderTextColor="#757575"
                                                     keyboardType="default"
                                                     onChangeText={(val) => {
-                                            
                                                         props.setFieldValue('address', val)
                                                         props.setFieldTouched('address', true, false);
                                                         setErrMsg("")
@@ -267,7 +270,7 @@ const MyStore = (props) => {
                                         </View>
 
                                         <View style={styles.inputCover2}>
-                                            <View style={[styles.registerInputHolder, !storePhotoOne.length ? styles.inputErrHolder : null]}>
+                                            <View style={[styles.registerInputHolder, props.touched.images && props.errors.images ? styles.inputErrHolder : null]}>
                                                 <View style={styles.labelView}>
                                                     <Text style={styles.label}>License(s)/Organization Certificate(s)</Text>
                                                 </View>
@@ -277,18 +280,28 @@ const MyStore = (props) => {
                                                     placeholder="img.jpg"
                                                     placeholderTextColor="#757575"
                                                     value={storePhotoOne}
-                                                    editable={false}
+                                                    onPressIn={() => {
+                                                        licenseImg(1, props)
+                                                        props.setFieldTouched('images', true, false);
+                                                        setErrMsg("")
+                                                    }}
+                                        
                                                 />
-                                                <TouchableOpacity onPress={() => licenseImg(1)}>
+                                                <TouchableOpacity onPress={() => licenseImg(1, props)}>
                                                     <View style={styles.selectCover}>
                                                         <Text style={styles.selectText}>Select Image</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                             </View>
 
+                                            {props.touched.images && props.errors.images ? (
+                                                <View style={styles.errView}>
+                                                    <Text style={styles.errText}>{props.errors.images}</Text>
+                                                </View>) : null}
+
                                         </View>
                                         <View style={styles.inputCover2}>
-                                            <View style={[styles.registerInputHolder, !storePhotoTwo.length ? styles.inputErrHolder : null]}>
+                                            <View style={[styles.registerInputHolder, props.touched.images2 && props.errors.images2  ? styles.inputErrHolder : null]}>
                                                 <View style={styles.labelView}>
                                                     <Text style={styles.label}>Store Photo</Text>
                                                 </View>
@@ -298,14 +311,22 @@ const MyStore = (props) => {
                                                     value={storePhotoTwo}
                                                     placeholder="img.jpg"
                                                     placeholderTextColor="#757575"
-                                                    editable={false}
+                                                    onPressIn={() => {
+                                                        licenseImg(2, props)
+                                                        props.setFieldTouched('images2', true, false);
+                                                        setErrMsg("")
+                                                    }}
                                                 />
-                                                <TouchableOpacity onPress={() => licenseImg(2)}>
+                                                <TouchableOpacity onPress={() => licenseImg(2, props)}>
                                                     <View style={styles.selectCover}>
                                                         <Text style={styles.selectText}>Select Image</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                             </View>
+                                            {props.touched.images2 && props.errors.images2 ? (
+                                                <View style={styles.errView}>
+                                                    <Text style={styles.errText}>{props.errors.images2}</Text>
+                                                </View>) : null}
 
                                         </View>
                                         <View style={styles.btnCover}>

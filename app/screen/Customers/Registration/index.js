@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import { NavHeader as Header } from "@Component";
 import styles from "./style";
@@ -16,8 +17,13 @@ const Registration = (props) => {
 
     const dispatch = useDispatch();
     const [activeId, setActiveId] = useState(1);
+    const [storePhotoOne, setStorePhotoOne] = useState("");
+    const [storePhotoTwo, setStorePhotoTwo] = useState("");
+    const bottomSheetRegConfirm = useRef();
     const details = props.route.params?.items
-    const data = [];
+    let [data, setData] = useState({})
+    let [dataOne, setDataOne] = useState({})
+
     const goBack = () => props.navigation.goBack();
 
     useFocusEffect(
@@ -29,29 +35,83 @@ const Registration = (props) => {
         }, [])
     );
 
-    const showActive = (id) => setActiveId(id);
-
     const registerState = {
         phone: details?.phone ? details.phone : "",
-        firstname:  details?.name ? details?.name?.substr(0, details.name.indexOf(' ')): "",
-        surname: details?.name ?  details?.name.substr(details?.name.indexOf(' ') + 1): "",
+        firstname: details?.name ? details?.name?.substr(0, details.name.indexOf(' ')) : "",
+        surname: details?.name ? details?.name.substr(details?.name.indexOf(' ') + 1) : "",
     };
 
     const registerState2 = {
         name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
-        address: details?.stores[0]?.address ? details?.stores[0]?.address: "",
-        state_id: details?.stores[0]?.state_id ? details?.stores[0]?.state_id :"",
-        lga_id: details?.stores[0]?.lga_id ? details?.stores[0]?.lga_id :"",
+        address: details?.stores[0]?.address ? details?.stores[0]?.address : "",
+        state_id: details?.stores[0]?.state_id ? details?.stores[0]?.state_id : "",
+        lga_id: details?.stores[0]?.lga_id ? details?.stores[0]?.lga_id : "",
 
     };
 
-   
-    const changeId = (val) => {
-        data.push(val);
+    const registerState3 = {
+        images: [],
+        images2: [],
+    };
+
+
+    const redirectToStepTwo = (val) => {
+        const {firstname, surname, phone} = val
+        const newData = {name: `${firstname} ${surname}`, phone}
+        setDataOne(newData);
         setActiveId(2)
-        
+
     };
-   
+
+    const redirectToStepThree = (val) => {
+       let newData = Object.assign(dataOne, val);
+       setData(newData);
+        setActiveId(3)
+    }
+
+    const redirectToStepOne = () => {
+        setActiveId(1)
+    };
+
+    const redirectToStepTwoAgain = () => {
+        setActiveId(2)
+    };
+
+    const submit = (val) => {
+        let newData = Object.assign(data, val)
+        setData(newData)
+        bottomSheetRegConfirm.current.show();
+    };
+
+    const licenseImg = (id, props) => {
+
+        ImagePicker.openPicker({
+            multiple: true,
+            includeBase64: true,
+            mediaType: 'photo'
+        }).then(images => {
+            if (id === 1) {
+
+                setStorePhotoOne("License Image Received")
+                const img = images.map(img => {
+                    return `data:image/jpg;base64,${img.data}`
+                })
+                props.setFieldValue('images', img)
+                setImages(img)
+            } else {
+                setStorePhotoTwo("Image Received")
+                const img = images.map(img => {
+                    return `data:image/jpg;base64,${img.data}`
+                })
+                props.setFieldValue('images2', img)
+                setImages2(img)
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+
+    }
+
 
     return (
         <View style={styles.view}>
@@ -59,7 +119,7 @@ const Registration = (props) => {
 
             <View style={styles.mainBody}>
                 <View style={styles.subHeader}>
-                    <TouchableOpacity style={[activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(1)}>
+                    <View style={[activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
                         <View style={{ flexDirection: 'row', zIndex: 90, justifyContent: 'center' }}>
                             <Text style={{ color: '#fff', zIndex: 90, marginRight: 50, marginTop: 5 }}>STEP 1</Text>
                             {activeId != 1 ?
@@ -80,8 +140,8 @@ const Registration = (props) => {
                             />
                         </View>
 
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[activeId === 2 ? styles.activeSubHeader2 : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(2)}>
+                    </View>
+                    <View style={[activeId === 2 ? styles.activeSubHeader2 : styles.inActiveSubHeader, styles.miniSubHeader]} >
                         <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>STEP 2</Text>
                         <View style={[activeId === 3 ? styles.innerCover2a : styles.innerCover2, styles.miniSubHeader]}>
 
@@ -114,8 +174,8 @@ const Registration = (props) => {
                         </View>
 
 
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[activeId === 3 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(3)}>
+                    </View>
+                    <View style={[activeId === 3 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
                         <Text style={[activeId === 3 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>STEP 3</Text>
                         <View style={styles.innerCover}>
 
@@ -130,12 +190,14 @@ const Registration = (props) => {
 
                         </View>
 
-                    </TouchableOpacity>
+                    </View>
                 </View>
 
 
             </View>
-            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={changeId} user_details={props.route.params?.items ? props.route.params?.items : undefined }/> : activeId === 2 ? <Step2 user_details={props.route.params?.items ? props.route.params?.items : undefined}  details={registerState2}/> : <Step3 />}
+            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={redirectToStepTwo} user_details={props.route.params?.items ? props.route.params?.items : undefined} /> : activeId === 2 ?
+                <Step2 user_details={props.route.params?.items ? props.route.params?.items : undefined} details={registerState2} submit={redirectToStepThree} redirect={redirectToStepOne} /> :
+                <Step3 details={registerState3} storePhotoOne={storePhotoOne} storePhotoTwo={storePhotoTwo} licenseImg={licenseImg} submit={submit} redirect={redirectToStepTwoAgain} bottomSheetRegConfirm={bottomSheetRegConfirm} />}
         </View>
     )
 };

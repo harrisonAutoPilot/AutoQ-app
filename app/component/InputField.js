@@ -16,6 +16,7 @@ const InputField = props => {
             editable={props.editable}
             multiline={props.multiline}
             numberOfLines={props.numberOfLines}
+            onPressIn={props.onPressIn}
             />
 
     )
