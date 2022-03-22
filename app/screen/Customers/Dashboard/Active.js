@@ -6,7 +6,7 @@ import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
 import { getCustomers} from "@Request/Customer";
 import EmptyCustomer from "@Component/Empty/emptyCustomer"
-import Modal from "./SortBy";
+import Modal from "./sortBy";
 
 const Active = (props) => {
     const dispatch = useDispatch();
@@ -106,9 +106,9 @@ const Active = (props) => {
 
             <Modal
                 bottomSheetS={bottomSheetS}
-                closeSort={closeSheetSort}
+                // closeSort={closeSheetSort}
                 sort={sortOrder}
-                sheet={sheetOpen}
+                // sheet={sheetOpen}
 
             />
 

@@ -15,8 +15,10 @@ import { NavHeader as HeaderWhite } from "@Component";
 import { getUserStore, deleteStore } from "@Request/Store";
 import { cleanup } from "@Store/Stores";
 import StorePlaceholder from "./StorePlaceholder"
+import ViewDocument from "@Screen/ViewDocument"
+import data from "./data"
 
-const MyStore = (props) => {
+const StoreDetails = (props) => {
     const bottomSheetDetails = useRef();
 
     const dispatch = useDispatch();
@@ -27,14 +29,13 @@ const MyStore = (props) => {
     const [id, setId] = useState();
     const [loader, setLoader] = useState(false);
     const [outerLoader, setOuterLoader] = useState(false);
+    const [showDocument, setShowDocument] = useState(false);
 
     const { status, errors, usersStore, update } = useSelector((state) => state.store);
 
     useEffect(() => {
         dispatch(getUserStore(props.route.params?.id))
     }, []);
-
-    // const detail = (item) => props.navigation.navigate("StoreDetails",item.name)
 
     // useEffect(() => {
     //     if (update === "success") {
@@ -47,8 +48,6 @@ const MyStore = (props) => {
     //         setErrMsg("");
     //     }
     // }, [update]);
-
-    // item.name, item.address, item.id
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -102,12 +101,12 @@ const MyStore = (props) => {
 
     const closeSheetDetails = () => bottomSheetDetails.current.close();
 
-    const details = (item, name, address, id) => {
+    const showModalDetails = (item, name, address, id) => {
         setAddress(address);
         setName(name);
         setId(id)
         setSuccessMsg("");
-        props.navigation.navigate("StoreDetails", item.name)
+        bottomSheetDetails.current.show();
     };
 
     const deleteStoreDetails = (id) => {
@@ -128,90 +127,90 @@ const MyStore = (props) => {
         return shade
     }
 
+    const viewDoc = () => setShowDocument(true);
 
     const RenderItem = ({ item }) => {
         return (
-            <TouchableOpacity onPress={(item) => props.navigation.navigate("StoreDetails",  item.name, item.address, item.id)} style={styles.card}>
-                <View style={styles.cardImgCover}>
-                    <Image source={getRandomColor(item.id)} style={styles.storeImg} />
-                </View>
-                <View style={styles.cardDesCover}>
-                    <Text style={styles.storeName}>{item.name}</Text>
-                    <Text style={styles.storeAddress} numberOfLines={1}>{item.address}</Text>
-                </View>
-                <View style={styles.cardArrowCover}>
-                    <Text style={styles.storeView}>view</Text>
-                    <Image source={require("@Assets/image/greater.png")} style={styles.greaterImg} />
-                </View>
-            </TouchableOpacity>
+            data.map((item) => (
+    <TouchableOpacity onPress={viewDoc} >
+            <View style={styles.fileCover} key ={item.id}>
+            <Image source={require("@Assets/image/cert.png")} style={styles.certImg} />
+            </View>
+        </TouchableOpacity>
+            ))
         )
     };
 
     return (
         <View style={styles.main}>
-            <Header title="Stores" onPress={goBack} styleView={styles.body} />
-            <View style={styles.addContainer}>
-
-                <TouchableOpacity style={styles.storeBtn} onPress={addStore}>
-                    <View style={styles.addTextCover}>
-                        <Text style={styles.addStoreTextPlus}>+</Text>
-                        <Text style={styles.addStoreText}>Add new store</Text>
-                    </View>
-                </TouchableOpacity>
-
-            </View>
-            {status === "pending" ? <StorePlaceholder />
-                :
-                <FlatList
-                    data={usersStore}
-                    renderItem={RenderItem}
-                    ListEmptyComponent={EmptyStore}
-                    keyExtractor={item => item.id}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
-                    showsVerticalScrollIndicator={false}
-
-                />
-            }
-
-            <BottomSheet hasDraggableIcon ref={bottomSheetDetails} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.3} radius={50} styles={styles.addStoreBottomSheet}>
-                <View style={styles.store}>
-                    <HeaderWhite title="Store Details" onPress={closeSheetDetails} />
+            <Header title="Store Details" onPress={goBack} styleView={styles.body} />
+         
+         
+                   
 
                     {errMsg ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
 
-                    <ScrollView contentContainerStyle={{ marginTop: 10 }}>
+                    <ScrollView contentContainerStyle={{ marginTop: 10, paddingBottom:50 }}>
                         <View style={styles.detailCard}>
                             <View style={styles.detailCardView}>
                                 <Text style={styles.storeTitle}>NAME OF STORE:</Text>
-                                <Text style={styles.storeName}>{name}</Text>
+                                <Text style={styles.storeName}>Sam's Store</Text>
+                                <Text style={styles.storeName}>12 Eleruwa Street, Ikeja, Nigeria </Text>
                             </View>
 
                         </View>
 
-                        <View style={styles.detailCard}>
-                            <View style={styles.detailCardView}>
-                                <Text style={styles.storeTitle}>ADDRESS:</Text>
-                                <Text style={styles.storeName}>{address}</Text>
+                        <View style={styles.docCard}>
+                          
+                        <View style={styles.docTop}>
+                            <View>
+                               <Text style={styles.docTitleText}>LICENCE IMAGE(S):</Text>
                             </View>
-
+                               <View style={styles.plusCover}>
+                                <Image source={require("@Assets/image/PlusCircle.png")} style={styles.plusImg} />
+                                <Text style={styles.addText}>ADD NEW</Text> 
+                               </View>
+                              </View>
+                              <ScrollView horizontal={false}>
+                              <View style={styles.docFileCover}>
+                              
+                              <RenderItem />
+                              </View>
+                              </ScrollView>
+                 
                         </View>
+                        <View style={styles.docCard}>
+                          
+                          <View style={styles.docTop}>
+                              <View>
+                                 <Text style={styles.docTitleText}>STORE IMAGE(S):</Text>
+                              </View>
+                                 <View style={styles.plusCover}>
+                                  <Image source={require("@Assets/image/PlusCircle.png")} style={styles.plusImg} />
+                                  <Text style={styles.addText}>ADD NEW</Text> 
+                                 </View>
+                                </View>
+                              
+                                <View style={styles.docFileCover}>
+                                   
+                               
+                                <RenderItem />
+                             
+                                </View>
+                               
+                     
+                          </View>
+                       
 
                     </ScrollView>
-                    <TouchableOpacity style={styles.deleteView} onPress={() => deleteStoreDetails(id)}>
-                        <View style={styles.deleteInnerView}>
-                            <View style={styles.detailCardIconInnerView}>
-                                <Icon name="trash-2" size={18} color="#D32F2F" />
-                            </View>
-                            <Text style={styles.detailEdit}>Remove this Store</Text>
-                        </View>
-
-                    </TouchableOpacity>
+                    <ViewDocument
+                visibleDocument={showDocument}
+                returnBack={() => setShowDocument(false)}
+            />
                 </View>
-            </BottomSheet >
-
-        </View >
+       
     )
 };
 
-export default MyStore;
+export default StoreDetails;
