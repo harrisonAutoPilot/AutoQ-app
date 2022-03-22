@@ -106,7 +106,7 @@ const InActive = (props) => {
                 </TouchableOpacity>: null}
             </View>
             <View style={styles.bottomCover}>
-                {status === "pending" ? <PlaceholderCard />
+            {status === "pending" || status === "idle" ? <PlaceholderCard />
                     :
 
                     <FlatList

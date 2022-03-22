@@ -40,8 +40,8 @@ const Registration = (props) => {
     const registerState2 = {
         name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
         address: details?.stores[0]?.address ? details?.stores[0]?.address: "",
-        state_id: details?.stores[0]?.state_id ? details[0]?.state_id :"",
-        lga_id: details?.stores[0]?.lga_id ? details[0]?.lga_id :"",
+        state_id: details?.stores[0]?.state_id ? details?.stores[0]?.state_id :"",
+        lga_id: details?.stores[0]?.lga_id ? details?.stores[0]?.lga_id :"",
 
     };
 

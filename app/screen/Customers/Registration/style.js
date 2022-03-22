@@ -212,32 +212,15 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        height: "37%",
         width: "100%",
         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
         justifyContent: 'space-around',
         alignItems: "center",
         paddingHorizontal: 20,
-    //    flex: 1,
-    top:hp('63%'),
-      position:'absolute'
+
     },
-    btnStep2Cover: {
-        flexDirection: 'row',
-        borderTopColor: "#F5F5F5",
-        borderTopWidth: 1,
-        height: "37%",
-        width: "100%",
-        backgroundColor: '#f5f5f5',
-        paddingVertical: 20,
-        justifyContent: 'space-around',
-        alignItems: "center",
-        paddingHorizontal: 20,
-       flex: 1,
-     top:hp('31ss%'),
-    //   position:'absolute'
-    },
+
     btnCover2: {
         top: hp("54%")
     },
@@ -820,6 +803,14 @@ export default styles = StyleSheet.create({
         fontFamily: "Urbanist-Medium",
         lineHeight: 24,
         color: "#212121",
+        letterSpacing: 0.2,
+        width: "100%"
+    },
+    loadingLabel: {
+        fontSize: 16,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 24,
+        color: "#BDBDBD",
         letterSpacing: 0.2,
         width: "100%"
     },
