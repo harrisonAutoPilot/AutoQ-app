@@ -8,13 +8,16 @@ export const storeSlice = createSlice({
         usersStore: [],
         status: "idle",
         update: "idle",
+        deletes: "idle",
         errors: {},
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
             state.status = "idle",
-            state.update = "idle"
+            state.update = "idle",
+            state.deletes = "idle"
+            // state.usersStore = []
         },
     },
     extraReducers: builder => {
@@ -55,15 +58,15 @@ export const storeSlice = createSlice({
 
         builder
             .addCase(deleteStore.pending, state => {
-                state.update = "pending";
+                state.deletes = "pending";
                 state.errors = {};
             })
             .addCase(deleteStore.fulfilled, (state, action) => {
-                state.update = "success";
+                state.deletes = "success";
                 state.errors = {};
             })
             .addCase(deleteStore.rejected, (state, { payload }) => {
-                state.update = "failed";
+                state.deletes = "failed";
                 state.errors = payload;
             })
 

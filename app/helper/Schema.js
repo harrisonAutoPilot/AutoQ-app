@@ -17,10 +17,9 @@ const changePinSchema = yup.object({
 });
 
 const registerSchema = yup.object({
-    phone: yup.number().required("Phone Number is required").test('len', 'Phone Number should be exactly 13 digits', val => {if(val) return val.toString().length === 13}),
+    phone: yup.number().required("Phone Number is required"),
     firstname: yup.string().required("First Name is required"),
-    surname: yup.string().required("Surname is required"),
-    email: yup.string().required("Email Address is required"),
+    surname: yup.string().required("Surname is required")
 
 });
 
@@ -32,6 +31,8 @@ const profileSchema = yup.object({
 const addStoreSchema = yup.object({
     name:yup.string().required("Store name is required"),
     address: yup.string().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
+    state_id: yup.string().required("State is required"),
+    lga_id: yup.string().required("LGA is required"),
 });
 
 

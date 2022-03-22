@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { SelectCountry } from 'react-native-element-dropdown';
 import { useSelector } from "react-redux";
 
-const SelectState = ({onSelect}) => {
+const SelectState = ({onSelect, props, values}) => {
   const [state, setState] = useState(0);
-  console.log(state);
 
   const { states } = useSelector((state) => state.state);
+
+  useEffect(() => {
+      let id = states.filter(id => id === 2);
+      setState(id.name)
+  }, [props.values.state_id.length])
+
 
   return (
     <SelectCountry
@@ -24,6 +29,8 @@ const SelectState = ({onSelect}) => {
       placeholder="Select State"
       searchPlaceholder="Search..."
       onChange={e => {
+        props.setFieldValue('state_id', props.values.state_id.length ? props.values.state_id : e.id)
+        props.setFieldTouched('state_id', true, false);
         setState(e.name);
         onSelect(e)
 

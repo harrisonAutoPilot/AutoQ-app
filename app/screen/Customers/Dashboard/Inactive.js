@@ -1,20 +1,67 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { View, Text, TouchableOpacity, FlatList, Image, RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+
 import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
 import { getCustomers } from "@Request/Customer";
 import EmptyCustomer from "@Component/Empty/emptyCustomer"
+import Modal from "./sortBy";
 
 const InActive = (props) => {
     const dispatch = useDispatch();
     const [refreshing, setRefreshing] = useState(false);
+    const [sheetOpen, setSheetOpen] = useState(false);
+    const [result, setResult] = useState([]);
+    const bottomSheetS = useRef();
+    const flatListRef = React.useRef();
+
+    useEffect(()=> {
+        setResult(props.result)
+    },[props.result.length])
+
 
     const { status, errors, customers } = useSelector((state) => state.customer);
 
-    const redirectToSort = () => {
+    const toTop = () => {
+        flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
+    }
 
-    };
+    const closeSheetSort = () => {
+        bottomSheetS.current.close();
+        setSheetOpen(false)
+    }
+
+    const sortOrder = (id) => {
+        
+        let customer = [...customers?.inactive?.users];
+
+        if (id === 1) {
+            let searched = customer.sort((a, b) => { return  a.name.localeCompare(b.name) })
+            toTop()
+            return setResult(searched);
+        } else if (id === 2) {
+            let searched = customer.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) })
+            toTop()
+            return setResult(searched)
+        } else if (id === 3) {
+            let searched = customer.sort((a, b) => {
+                if (a.stores[0].address.toLowerCase() < b.stores[0].address.toLowerCase()) return -1;
+            });
+            toTop()
+            return setResult(searched)
+        } else if (id === 4) {
+            let searched = customer.sort((a, b) => { return new Date(a.created_at) - new Date(b.created_at) })
+            toTop()
+            return setResult(searched)
+        }
+    }
+
+    const openSheetSort = () => {
+        setSheetOpen(true)
+        bottomSheetS.current.show();
+    }
+
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -52,10 +99,11 @@ const InActive = (props) => {
         <View style={styles.container}>
             <View style={styles.exchangeCover}>
                 <Text style={styles.allOrderText}> Most Recent</Text>
-                <TouchableOpacity style={styles.exchangeClickk} onPress={redirectToSort}>
+                { customers?.inactive?.users ?
+                <TouchableOpacity style={styles.exchangeClickk}  onPress={openSheetSort}>
                     <Image source={require("@Assets/image/icon.png")} style={styles.exchangeImg} />
                     <Text style={styles.exchangeText}>Sort by</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>: null}
             </View>
             <View style={styles.bottomCover}>
                 {status === "pending" ? <PlaceholderCard />
@@ -63,12 +111,13 @@ const InActive = (props) => {
 
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={customers?.inactive?.users}
+                        data={!result.length ? customers?.inactive?.users : result }
                         keyExtractor={item => item.id}
                         ListEmptyComponent={EmptyCustomer}
                         renderItem={ListView}
                         ListFooterComponent={<View style={{ height: 50 }} />}
                         columnWrapperStyle={styles.column}
+                        ref={flatListRef}
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
                         }
@@ -76,6 +125,14 @@ const InActive = (props) => {
                 }
 
             </View>
+
+            <Modal
+                bottomSheetS={bottomSheetS}
+                closeSort={closeSheetSort}
+                sort={sortOrder}
+                sheet={sheetOpen}
+
+            />
         </View>
     )
 };

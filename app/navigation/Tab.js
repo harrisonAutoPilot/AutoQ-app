@@ -28,13 +28,14 @@ export default TabHomeNavigator = () => {
     
     return (
         <Tab.Navigator screenOptions={{
+            tabBarHideOnKeyboard: true,  
             headerShown: false,
             tabBarLabelStyle: Platform.OS === "android" ? styles.tabLable : null,
             tabBarActiveTintColor: "#3858CF",
             tabBarInactiveTintColor: "#9E9E9E",
             tabBarActiveBackgroundColor: "rgba(233, 235, 249, 0.5)",
             tabBarInactiveBackgroundColor: "#fff",
-            tabBarStyle: { height: Platform.OS === "android" ? 70 : 80, }
+            tabBarStyle: [{ height: Platform.OS === "android" ? 70 : 80, display: "flex" }, null]
 
         }}>
             <Tab.Screen name="HomeScreen" component={Home} options={{
@@ -47,7 +48,7 @@ export default TabHomeNavigator = () => {
                     </View>
                 },
             }}
-                listeners={tabBarListeners}
+                // listeners={tabBarListeners}
             />
             <Tab.Screen  name="CustomersDashboard" component={CustomersDashboard} options={{
                 tabBarLabel: 'Customers',
@@ -58,7 +59,7 @@ export default TabHomeNavigator = () => {
                     </View>
                 ),
             }}
-                listeners={tabBarListeners}
+                // listeners={tabBarListeners}
             />
             <Tab.Screen name="Wallet" component={Wallet} options={{
                 tabBarLabel: 'Wallet',
@@ -69,7 +70,7 @@ export default TabHomeNavigator = () => {
                     </View>
                 ),
             }}
-                listeners={tabBarListeners}
+                // listeners={tabBarListeners}
             />
             <Tab.Screen name="Catalogue" component={Catalogue} options={{
                 tabBarLabel: 'Catalogue',
@@ -81,7 +82,7 @@ export default TabHomeNavigator = () => {
                     </View>
                 ),
             }}
-                listeners={tabBarListeners}
+                // listeners={tabBarListeners}
             />
         </Tab.Navigator>
     )

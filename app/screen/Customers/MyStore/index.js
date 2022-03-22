@@ -3,18 +3,20 @@ import { View, Text, Image, TouchableOpacity, ScrollView, FlatList, Dimensions }
 import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-toast-message';
 import FIcon from "react-native-vector-icons/FontAwesome5";
+import { useFocusEffect } from '@react-navigation/native';
+import { useSelector, useDispatch } from "react-redux";
 
 import EmptyStore from "@Component/Empty/emptyStore"
 import { COHeader as Header } from "@Component";
 import { SuccessMsgViewTwo } from "@Component/index";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import styles from './style';
-import { useSelector, useDispatch } from "react-redux";
 import globalStyle from "@Helper/GlobalStyles";
 import { NavHeader as HeaderWhite } from "@Component";
 import { getUserStore, deleteStore } from "@Request/Store";
 import { cleanup } from "@Store/Stores";
-import StorePlaceholder from "./StorePlaceholder"
+import StorePlaceholder from "./StorePlaceholder";
+import Loader from "@Screen/Loader";
 
 const MyStore = (props) => {
     const bottomSheetDetails = useRef();
@@ -26,27 +28,28 @@ const MyStore = (props) => {
     const [address, setAddress] = useState("");
     const [id, setId] = useState();
     const [loader, setLoader] = useState(false);
-    const [outerLoader, setOuterLoader] = useState(false);
 
-    const { status, errors, usersStore, update } = useSelector((state) => state.store);
+    const { status, errors, usersStore, deletes } = useSelector((state) => state.store);
+
+
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(getUserStore(props.route.params?.id))
+            return () => dispatch(cleanup());
+        }, [])
+    );
 
     useEffect(() => {
-        dispatch(getUserStore(props.route.params?.id))
-    }, []);
-
-    // const detail = (item) => props.navigation.navigate("StoreDetails",item.name)
-
-    // useEffect(() => {
-    //     if (update === "success") {
-    //         refreshView("", "Update Successful");
-    //     } else if (update === "failed") {
-    //         refreshView(errors?.msg, "")
-    //     }
-    //     else {
-    //         setSuccessMsg("");
-    //         setErrMsg("");
-    //     }
-    // }, [update]);
+        if (deletes === "success") {
+            refreshView("", "Update Successful");
+        } else if (deletes === "failed") {
+            refreshView(errors?.msg, "")
+        }
+        else {
+            setSuccessMsg("");
+            setErrMsg("");
+        }
+    }, [deletes]);
 
     // item.name, item.address, item.id
 
@@ -57,19 +60,20 @@ const MyStore = (props) => {
     const refreshView = useCallback((errmsg, sucmsg) => {
         wait(1000).then(() => {
             setLoader(false);
-            setOuterLoader(false);
-            setErrMsg(errmsg);
-            setSuccessMsg(sucmsg);
+           
             if (sucmsg) {
+                setSuccessMsg(sucmsg);
+                bottomSheetDetails.current.close();
                 Toast.show({
                     type: 'tomatoToast',
                     visibilityTime: 50000,
                     autoHide: true,
                     position: 'top',
-                    topOffset: 120
+                    topOffset: 0
                 })
-                dispatch(getUserStore());
+                dispatch(getUserStore(props.route.params?.id))
             } else {
+                setErrMsg(errmsg);
                 Toast.show({
                     type: 'error',
                     visibilityTime: 5000,
@@ -96,7 +100,7 @@ const MyStore = (props) => {
         )
     };
 
-    const goBack = () => props.navigation.navigate("Home");
+    const goBack = () => props.navigation.goBack();
 
     const addStore = () => props.navigation.navigate("AddStore", {id: props.route.params?.id});
 
@@ -112,9 +116,8 @@ const MyStore = (props) => {
 
     const deleteStoreDetails = (id) => {
         dispatch(deleteStore(id));
-        bottomSheetDetails.current.close();
-        setOuterLoader(true)
-    }
+        setLoader(true)
+    };
 
     const getRandomColor = (id) => {
         let ids = parseInt(id)
@@ -150,7 +153,9 @@ const MyStore = (props) => {
     return (
         <View style={styles.main}>
             <Header title="Stores" onPress={goBack} styleView={styles.body} />
+          
             <View style={styles.addContainer}>
+            {successMsg ? <Toast config={toastConfig} /> : null}
 
                 <TouchableOpacity style={styles.storeBtn} onPress={addStore}>
                     <View style={styles.addTextCover}>
@@ -178,7 +183,6 @@ const MyStore = (props) => {
                     <HeaderWhite title="Store Details" onPress={closeSheetDetails} />
 
                     {errMsg ? <Toast config={toastConfig} /> : null}
-                    {successMsg ? <Toast config={toastConfig} /> : null}
 
                     <ScrollView contentContainerStyle={{ marginTop: 10 }}>
                         <View style={styles.detailCard}>
@@ -209,6 +213,8 @@ const MyStore = (props) => {
                     </TouchableOpacity>
                 </View>
             </BottomSheet >
+
+            <Loader isVisible={loader} />
 
         </View >
     )

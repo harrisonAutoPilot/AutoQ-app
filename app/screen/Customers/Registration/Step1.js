@@ -6,44 +6,38 @@ import FIcon from "react-native-vector-icons/MaterialIcons";
 
 import styles from "./style";
 import { BtnLg, FormikValidator, InputField, SuccessMsgViewTwo } from "@Component";
-import {  registerSchema } from "@Helper/Schema";
+import { registerSchema } from "@Helper/Schema";
 import data2 from "./data2";
 
 const Step1 = (props) => {
-    const dispatch = useDispatch();
     const dismissKeyboard = () => Keyboard.dismiss();
     const [category, setCategory] = useState("");
     const [active, setActive] = useState("");
     const registerState = props.details;
     const editable = props.active;
-    const id = props.id
-    const type = props.user_details?.user_type
+    const submit = props.submit
+    const type = props.user_details?.user_type;
 
     const selectUserType = id => {
-       setActive(id)
+        setActive(id)
     };
 
-
-    const submit = async (values) => {
-        const { firstname, surname } = values;
-    };
- 
 
     const RenderItem = ({ item }) => {
         return (
             <View style={[styles.optionView, active === item.id ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
                 <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
-                        { type?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
-                            <TouchableOpacity style={styles.iconCircle} onPress={  type ? null : () => { selectUserType(item.id); setCategory(item.title); }}>
-                                <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
-                            </TouchableOpacity >
-                            :
-                            <TouchableOpacity style={styles.iconCircle2} onPress={ type ? null : () => { selectUserType(item.id); setCategory(item.title); }}>
+                    {type?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
+                        <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id); setCategory(item.title); }}>
+                            <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
+                        </TouchableOpacity >
+                        :
+                        <TouchableOpacity style={styles.iconCircle2} onPress={ () => { selectUserType(item.id); setCategory(item.title); }}>
 
-                            </TouchableOpacity>
-                        }
+                        </TouchableOpacity>
+                    }
                 </View>
-                {active === item.id || type?.toLowerCase() === item.title.toLowerCase()  ?
+                {active === item.id || type?.toLowerCase() === item.title.toLowerCase() ?
                     <View style={styles.optionTextViewNew}>
                         <Text style={styles.optionText}>{item.title}</Text>
                         <View style={styles.optionMiniTextView}>
@@ -62,16 +56,16 @@ const Step1 = (props) => {
     };
 
     return (
+        <ScrollView
+            indicatorStyle="white"
+            contentContainerStyle={[
+                styles.scrollContentContainer
+            ]}
+            horizontal={false} showsVerticalScrollIndicator={false}
+        >
             <ScrollView
-                indicatorStyle="white"
-                contentContainerStyle={[
-                    styles.scrollContentContainer
-                ]}
-                horizontal={false} showsVerticalScrollIndicator={false} 
-                >
-                       <ScrollView
-                        horizontal={true}
-              >
+                horizontal={true}
+            >
 
                 <View style={styles.bottomCover}>
                     <View style={styles.card}>
@@ -98,7 +92,7 @@ const Step1 = (props) => {
                                                         </View>
 
                                                         <InputField
-                                                            style={styles.label3}
+                                                            style={styles.label4}
                                                             value={props.values.firstname}
                                                             onBlur={props.handleBlur('firstname')}
                                                             placeholder="Kingsley"
@@ -108,7 +102,6 @@ const Step1 = (props) => {
                                                                 props.setFieldValue('firstname', val)
                                                                 props.setFieldTouched('firstname', true, false);
                                                             }}
-                                                            editable={editable}
                                                         />
                                                     </View>
                                                     {props.touched.firstname && props.errors.firstname ? (
@@ -124,7 +117,7 @@ const Step1 = (props) => {
                                                         </View>
 
                                                         <InputField
-                                                            style={styles.label3}
+                                                            style={styles.label4}
                                                             value={props.values.surname}
                                                             onBlur={props.handleBlur('surname')}
                                                             placeholder="James"
@@ -170,6 +163,24 @@ const Step1 = (props) => {
                                                             <Text style={styles.errText}>{props.errors.phone}</Text>
                                                         </View>) : null}
                                                 </View>
+                                                <View style={styles.card1}>
+                                                    <View style={styles.bioTitleCover}>
+                                                        <Text style={styles.bioTitleText}>USER TYPE</Text>
+                                                    </View>
+                                                    <View style={styles.flatCover}>
+
+                                                        <FlatList
+                                                            data={data2}
+                                                            renderItem={RenderItem}
+                                                            keyExtractor={item => item.id}
+                                                        />
+
+                                                    </View>
+
+                                                </View>
+                                                <View style={styles.btnCover}>
+                                                    <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submit} stylea={styles.angleImg} />
+                                                </View>
 
                                             </View>
                                         )}
@@ -181,28 +192,11 @@ const Step1 = (props) => {
                         </View>
 
                     </View>
-                    <View style={styles.card1}>
-                        <View style={styles.bioTitleCover}>
-                            <Text style={styles.bioTitleText}>TYPE OF STORE</Text>
-                        </View>
-                        <View style={styles.flatCover}>
 
-                            <FlatList
-                                data={data2}
-                                renderItem={RenderItem}
-                                keyExtractor={item => item.id}
-                            />
-
-                        </View>
-
-                    </View>
-                    <View style={styles.btnCover}>
-                        <BtnLg title="Next" onPress={id} style={styles.submit} stylea={styles.angleImg} />
-                    </View>
                 </View>
 
-                </ScrollView>
             </ScrollView>
+        </ScrollView>
     )
 };
 

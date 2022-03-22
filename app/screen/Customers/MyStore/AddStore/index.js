@@ -25,7 +25,6 @@ const MyStore = (props) => {
     const [images2, setImages2] = useState([]);
     const [loader, setLoader] = useState(false);
     const [state_id, setState_id] = useState({});
-    const [lga_id, setLga_id] = useState();
     const [storePhotoOne, setStorePhotoOne] = useState("");
     const [storePhotoTwo, setStorePhotoTwo] = useState("");
 
@@ -43,6 +42,8 @@ const MyStore = (props) => {
     const addStoreState = {
         name: "",
         address: "",
+        state_id: "",
+        lga_id: ""
     };
 
     useEffect(() => {
@@ -112,16 +113,17 @@ const MyStore = (props) => {
 
 
     const dismissKeyboard = () => Keyboard.dismiss();
-    const goBack = () => props.navigation.navigate("MyStore");
+    const goBack = () => props.navigation.goBack();
+
 
     const submit = async (values) => {
-        if (!images.length || !images2.length || !state_id || !lga_id) {
+        if (!images.length || !images2.length ) {
             refreshView2("All Fields are required")
 
         } else {
             setLoader(true);
-            const { name, address } = values;
-            const newValues = { name, address, images2, images, state_id: state_id.id, lga_id, user_id: props.route.params?.id };
+            const { name, address, state_id, lga_id } = values;
+            const newValues = { name, address, images2, images, state_id, lga_id, user_id: props.route.params?.id };
             console.log(props.route.params?.id)
             await dispatch(createStore(newValues));
         }
@@ -220,6 +222,7 @@ const MyStore = (props) => {
                                                     placeholderTextColor="#757575"
                                                     keyboardType="default"
                                                     onChangeText={(val) => {
+                                            
                                                         props.setFieldValue('address', val)
                                                         props.setFieldTouched('address', true, false);
                                                         setErrMsg("")
@@ -237,9 +240,13 @@ const MyStore = (props) => {
                                                     <Text style={styles.label}>State</Text>
                                                 </View>
 
-                                                <SelectState onSelect={setState_id} />
+                                                <SelectState onSelect={setState_id}  props={props}/>
 
                                             </View>
+                                            {props.touched.state_id && props.errors.state_id ? (
+                                                <View style={styles.errView}>
+                                                    <Text style={styles.errText}>{props.errors.state_id}</Text>
+                                                </View>) : null}
 
                                         </View>
 
@@ -249,9 +256,13 @@ const MyStore = (props) => {
                                                     <Text style={styles.label}>LGA</Text>
                                                 </View>
 
-                                                <SelectLga data={state_id?.lgas} onSelect={setLga_id} />
+                                                <SelectLga data={state_id?.lgas} props={props} />
 
                                             </View>
+                                            {props.touched.lga_id && props.errors.lga_id ? (
+                                                <View style={styles.errView}>
+                                                    <Text style={styles.errText}>{props.errors.lga_id}</Text>
+                                                </View>) : null}
 
                                         </View>
 

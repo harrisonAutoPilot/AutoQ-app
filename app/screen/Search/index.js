@@ -29,7 +29,6 @@ const Search = (props) => {
     const { categories } = useSelector((state) => state.category);
     const { status, errors, searchedProducts, update, type_head } = useSelector((state) => state.product);
     const closeCart = () => setShowModal(!showModal);
-    console.log(searchedProducts)
 
     useEffect(() => {
         dispatch(browseCategories())
@@ -73,6 +72,7 @@ const Search = (props) => {
 
         setSearchArray(searched)
     };
+    
     const searchCategoryItem = () => {
         dispatch(searchProducts(searchCategory.toLowerCase()))
         setSearchCategoryArray(searchedProducts)
