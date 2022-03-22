@@ -51,6 +51,8 @@ const MyStore = (props) => {
         }
     }, [deletes]);
 
+    // item.name, item.address, item.id
+
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
@@ -104,12 +106,12 @@ const MyStore = (props) => {
 
     const closeSheetDetails = () => bottomSheetDetails.current.close();
 
-    const showModalDetails = (name, address, id) => {
+    const details = (item, name, address, id) => {
         setAddress(address);
         setName(name);
         setId(id)
         setSuccessMsg("");
-        bottomSheetDetails.current.show();
+        props.navigation.navigate("StoreDetails", item.name)
     };
 
     const deleteStoreDetails = (id) => {
@@ -132,7 +134,7 @@ const MyStore = (props) => {
 
     const RenderItem = ({ item }) => {
         return (
-            <TouchableOpacity onPress={() => showModalDetails(item.name, item.address, item.id)} style={styles.card}>
+            <TouchableOpacity onPress={(item) => props.navigation.navigate("StoreDetails",  item.name, item.address, item.id)} style={styles.card}>
                 <View style={styles.cardImgCover}>
                     <Image source={getRandomColor(item.id)} style={styles.storeImg} />
                 </View>

@@ -124,9 +124,9 @@ const Active = (props) => {
 
             <Modal
                 bottomSheetS={bottomSheetS}
-                closeSort={closeSheetSort}
+                // closeSort={closeSheetSort}
                 sort={sortOrder}
-                sheet={sheetOpen}
+                // sheet={sheetOpen}
 
             />
 

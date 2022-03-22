@@ -27,6 +27,7 @@ import CustomerRegistration from "@Screen/Customers/Registration";
 import CheckoutSuccess from "@Screen/CheckoutSuccess";
 import MyStore from "@Screen/Customers/MyStore";
 import AddStore from "@Screen/Customers/MyStore/AddStore";
+import StoreDetails from "@Screen/Customers/MyStore/StoreDetails";
 
 
 const Stack = createNativeStackNavigator();
@@ -87,6 +88,7 @@ const RootStackNavigator = () => {
                 <RootStack.Screen name="CustomerRegistration" component={CustomerRegistration} />
                 <RootStack.Screen name="MyStore" component={MyStore} />
                 <RootStack.Screen name="AddStore" component={AddStore} />
+                <RootStack.Screen name="StoreDetails" component={StoreDetails} />
             </RootStack.Group>
 
         </>
