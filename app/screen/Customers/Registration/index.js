@@ -10,6 +10,7 @@ import Step2 from "./Step2";
 import Step3 from "./Step3";
 import { cleanup } from "@Store/Auth";
 import Triangle from "@react-native-toolkit/triangle";
+import { getState } from "@Request/State";
 
 const Registration = (props) => {
 
@@ -18,10 +19,10 @@ const Registration = (props) => {
     const details = props.route.params?.items
     const data = [];
     const goBack = () => props.navigation.goBack();
-    console.log(details)
 
     useFocusEffect(
         useCallback(() => {
+            dispatch(getState())
             dispatch(cleanup())
 
             return () => dispatch(cleanup());
@@ -39,8 +40,8 @@ const Registration = (props) => {
     const registerState2 = {
         name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
         address: details?.stores[0]?.address ? details?.stores[0]?.address: "",
-        state_id: details[0]?.state_id ? details[0]?.state_id :"",
-        lga_id: details[0]?.lga_id ? details[0]?.lga_id :"",
+        state_id: details?.stores[0]?.state_id ? details[0]?.state_id :"",
+        lga_id: details?.stores[0]?.lga_id ? details[0]?.lga_id :"",
 
     };
 

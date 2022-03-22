@@ -81,7 +81,7 @@ const Home = (props) => {
                         </View>
 
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
+                    <TouchableOpacity style={styles.cardThree} >
                     <Image style={styles.burnImg} source={require("@Assets/image/cardFrame.png")} />
                     <View style={styles.suninner}>
                         <View style={styles.cardTopInner}>

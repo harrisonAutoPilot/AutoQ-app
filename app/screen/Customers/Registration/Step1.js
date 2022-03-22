@@ -10,7 +10,6 @@ import { registerSchema } from "@Helper/Schema";
 import data2 from "./data2";
 
 const Step1 = (props) => {
-    const dispatch = useDispatch();
     const dismissKeyboard = () => Keyboard.dismiss();
     const [category, setCategory] = useState("");
     const [active, setActive] = useState("");
@@ -29,11 +28,11 @@ const Step1 = (props) => {
             <View style={[styles.optionView, active === item.id ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
                 <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
                     {type?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
-                        <TouchableOpacity style={styles.iconCircle} onPress={type ? null : () => { selectUserType(item.id); setCategory(item.title); }}>
+                        <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id); setCategory(item.title); }}>
                             <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
                         </TouchableOpacity >
                         :
-                        <TouchableOpacity style={styles.iconCircle2} onPress={type ? null : () => { selectUserType(item.id); setCategory(item.title); }}>
+                        <TouchableOpacity style={styles.iconCircle2} onPress={ () => { selectUserType(item.id); setCategory(item.title); }}>
 
                         </TouchableOpacity>
                     }

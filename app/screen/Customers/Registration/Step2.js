@@ -17,10 +17,7 @@ const Step2 = (props) => {
 
     const [category, setCategory] = useState("");
     const [active, setActive] = useState("0");
-
-    const selectUserType = id => {
-        setActive(id);
-    };
+    const [state_id, setState_id] = useState({});
 
 
     const { user, errors, update } = useSelector((state) => state.auth);
@@ -37,7 +34,9 @@ const Step2 = (props) => {
             indicatorStyle="white"
             contentContainerStyle={[
                 styles.scrollContentContainer
-            ]}>
+            ]}
+            horizontal={true}
+            >
 
             <View style={styles.bottomCover}>
                 <View style={styles.card}>
@@ -110,34 +109,36 @@ const Step2 = (props) => {
                                                     </View>) : null}
                                             </View>
                                             <View>
-                                                <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
-                                                    <View style={styles.labelView}>
-                                                        <Text style={styles.label}>STATE</Text>
-                                                    </View>
-
-                                                    <SelectState />
-
+                                            <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.state_id && props.errors.state_id ? styles.inputErrHolder : null]}>
+                                                <View style={styles.labelView}>
+                                                    <Text style={styles.label}>State</Text>
                                                 </View>
-                                                {props.touched.phone && props.errors.phone ? (
-                                                    <View style={styles.errView}>
-                                                        <Text style={styles.errText}>{props.errors.phone}</Text>
-                                                    </View>) : null}
+
+                                                <SelectState onSelect={setState_id}  props={props}/>
+
                                             </View>
+                                            {props.touched.state_id && props.errors.state_id ? (
+                                                <View style={styles.errView}>
+                                                    <Text style={styles.errText}>{props.errors.state_id}</Text>
+                                                </View>) : null}
 
-                                            <View>
-                                                <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
-                                                    <View style={styles.labelView}>
-                                                        <Text style={styles.label}>LGA</Text>
-                                                    </View>
+                                        </View>
 
-                                                    <SelectLga />
-
+                                        <View >
+                                            <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.lga_id && props.errors.lga_id ? styles.inputErrHolder : null]}>
+                                                <View style={styles.labelView}>
+                                                    <Text style={styles.label}>LGA</Text>
                                                 </View>
-                                                {props.touched.phone && props.errors.phone ? (
-                                                    <View style={styles.errView}>
-                                                        <Text style={styles.errText}>{props.errors.phone}</Text>
-                                                    </View>) : null}
+
+                                                <SelectLga data={state_id?.lgas} props={props} />
+
                                             </View>
+                                            {props.touched.lga_id && props.errors.lga_id ? (
+                                                <View style={styles.errView}>
+                                                    <Text style={styles.errText}>{props.errors.lga_id}</Text>
+                                                </View>) : null}
+
+                                        </View>
 
                                         </View>
                                     )}

@@ -67,9 +67,9 @@ const MyStore = (props) => {
                     visibilityTime: 50000,
                     autoHide: true,
                     position: 'top',
-                    topOffset: 120
+                    topOffset: 0
                 })
-                dispatch(getUserStore());
+                dispatch(getUserStore(props.route.params?.id))
             } else {
                 setErrMsg(errmsg);
                 Toast.show({
@@ -151,7 +151,9 @@ const MyStore = (props) => {
     return (
         <View style={styles.main}>
             <Header title="Stores" onPress={goBack} styleView={styles.body} />
+          
             <View style={styles.addContainer}>
+            {successMsg ? <Toast config={toastConfig} /> : null}
 
                 <TouchableOpacity style={styles.storeBtn} onPress={addStore}>
                     <View style={styles.addTextCover}>
@@ -179,7 +181,6 @@ const MyStore = (props) => {
                     <HeaderWhite title="Store Details" onPress={closeSheetDetails} />
 
                     {errMsg ? <Toast config={toastConfig} /> : null}
-                    {successMsg ? <Toast config={toastConfig} /> : null}
 
                     <ScrollView contentContainerStyle={{ marginTop: 10 }}>
                         <View style={styles.detailCard}>
