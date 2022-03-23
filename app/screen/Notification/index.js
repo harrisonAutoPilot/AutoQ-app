@@ -32,7 +32,7 @@ const Notification = (props) => {
             item={item}
             getItem={() => getItem(item.id)}
             scale={scale}
-            navigation={() => props.navigation.navigate("NotificationDetail")}
+            navigation={(item) => props.navigation.navigate("NotificationDetail", {item})}
         />
     };
 
@@ -60,7 +60,7 @@ const Notification = (props) => {
                 <Animated.FlatList
                     onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
                     showsVerticalScrollIndicator={false}
-                    data={data}
+                    data={notification.notifications}
                     keyExtractor={item => item.id}
                     ListEmptyComponent={EmptyPlaceHolder}
                     renderItem={ListView}

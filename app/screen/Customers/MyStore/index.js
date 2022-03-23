@@ -14,6 +14,7 @@ import StorePlaceholder from "./StorePlaceholder";
 const MyStore = (props) => {
     const dispatch = useDispatch();
     const { status, usersStore } = useSelector((state) => state.store);
+    console.log(usersStore)
 
     useFocusEffect(
         useCallback(() => {

@@ -94,7 +94,7 @@ export default styles = StyleSheet.create({
     listTextView:{
         marginLeft: 16,
         // flexWrap: "wrap",
-        width: "67%"
+        width: "57%"
     },
     listTitle: {
         fontSize: 14,
@@ -104,7 +104,7 @@ export default styles = StyleSheet.create({
         fontWeight: "600",
     },
     desc:{
-        fontSize: 11,
+        fontSize: 12,
         fontFamily: "Urbanist-Medium",
         lineHeight: 16,
         color: "#424242",
