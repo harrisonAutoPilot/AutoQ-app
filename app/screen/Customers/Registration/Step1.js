@@ -22,7 +22,7 @@ const Step1 = (props) => {
         setActive(id)
     };
 
-
+    const confirm = () => this.props.navigation.navigate("RegConfirm");
     const RenderItem = ({ item }) => {
         return (
             <View style={[styles.optionView, active === item.id ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
