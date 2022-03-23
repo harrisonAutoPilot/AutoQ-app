@@ -151,7 +151,7 @@ const StoreDetails = (props) => {
                     {errMsg ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
 
-                    <ScrollView contentContainerStyle={{ marginTop: 10, paddingBottom:50 }}>
+                    <ScrollView contentContainerStyle={{ marginTop: 10, paddingBottom:20 }}>
                         <View style={styles.detailCard}>
                             <View style={styles.detailCardView}>
                                 <Text style={styles.storeTitle}>NAME OF STORE:</Text>
