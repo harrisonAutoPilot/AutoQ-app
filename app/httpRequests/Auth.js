@@ -61,3 +61,11 @@ export const updateUserPassword = createAsyncThunk("auth/password/update",
         return apiRequest(Axios.patch(`api/v1/users/password/${user.id}`, user),
             thunkAPI)
     });
+
+    export const updateUserImage = createAsyncThunk("auth/image/update",
+    async (user, thunkAPI) => {
+        console.log(user)
+        const Axios = await AxiosBase();
+        return apiRequest(Axios.post(`api/v1/users/upload-image/${user.id}`, user),
+            thunkAPI)
+    });

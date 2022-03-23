@@ -179,6 +179,7 @@ export default styles = StyleSheet.create({
     },
     inputOuterView: {
         marginHorizontal: 20,
+        marginTop:"-7%"
 
     },
     sucToastCover: {

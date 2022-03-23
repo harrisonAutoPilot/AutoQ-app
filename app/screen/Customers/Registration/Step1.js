@@ -80,7 +80,7 @@ const Step1 = (props) => {
                                         initialValues={registerState}
                                         validationSchema={registerSchema}
                                         onSubmit={(values, actions) => {
-                                            submit(values)
+                                            submit(values, active)
                                         }}
                                     >
                                         {props => (
@@ -179,7 +179,7 @@ const Step1 = (props) => {
 
                                                 </View>
                                                 <View style={styles.btnCover}>
-                                                    <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submit} stylea={styles.angleImg} />
+                                                    <BtnLg title="Next" onPress={active ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
                                                 </View>
 
                                             </View>

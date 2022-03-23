@@ -42,7 +42,7 @@ const Registration = (props) => {
     };
 
     const registerState2 = {
-        name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
+        store_name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
         address: details?.stores[0]?.address ? details?.stores[0]?.address : "",
         state_id: details?.stores[0]?.state_id ? details?.stores[0]?.state_id : "",
         lga_id: details?.stores[0]?.lga_id ? details?.stores[0]?.lga_id : "",
@@ -55,9 +55,9 @@ const Registration = (props) => {
     };
 
 
-    const redirectToStepTwo = (val) => {
+    const redirectToStepTwo = (val, type) => {
         const {firstname, surname, phone} = val
-        const newData = {name: `${firstname} ${surname}`, phone}
+        const newData = {name: `${firstname} ${surname}`, phone, user_type: type}
         setDataOne(newData);
         setActiveId(2)
 
