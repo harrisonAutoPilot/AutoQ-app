@@ -8,6 +8,7 @@ import { EmptyPlaceHolder, COHeader as Header } from "@Component";
 import List from "./ListView";
 import data from "./data";
 import {getNotification} from "@Request/Notification";
+import NotificationPlaceholder from "./NotificationPlaceholder";
 
 const Notification = (props) => {
    
@@ -62,7 +63,7 @@ const Notification = (props) => {
                     showsVerticalScrollIndicator={false}
                     data={data}
                     keyExtractor={item => item.id}
-                    ListEmptyComponent={EmptyPlaceHolder}
+                    ListEmptyComponent={NotificationPlaceholder}
                     renderItem={ListView}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     columnWrapperStyle={styles.column}

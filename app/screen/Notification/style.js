@@ -82,10 +82,31 @@ export default styles = StyleSheet.create({
         alignItems: "center"
        
     },
+    listContainerP:{
+        borderWidth: 1,
+        borderColor:'#f5f5f5',
+        paddingVertical: 24,
+        // backgroundColor: "#fff",
+        paddingHorizontal: 16,
+        marginTop: 12,
+        borderRadius: 12,
+        flexDirection: "row",
+        alignItems: "center"
+       
+    },
     listIcon:{
         alignItems:'center',
         backgroundColor: "#F0F7FD",
         borderRadius: 20,
+        height: 40,
+        width: 40,
+        alignSelf: "center",
+        justifyContent: "center"
+    },
+    listIconP:{
+        alignItems:'center',
+        backgroundColor: "#ebebeb",
+        borderRadius: 100,
         height: 40,
         width: 40,
         alignSelf: "center",
@@ -113,16 +134,41 @@ export default styles = StyleSheet.create({
     descView:{
         marginTop: 8,
     },
+    descViewP:{
+        marginTop: 8,
+        width:70,
+        height:15,
+        borderRadius:50,
+        backgroundColor:'#ebebeb'
+    },
     listTextInnerView: {
         flexDirection: "row",
         justifyContent: "space-between",
         width: "95%",
         alignItems: "center"
     },
+    listTextInnerViewP: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "70%",
+        alignItems: "center",
+        height:15,
+        borderRadius:20,
+        backgroundColor:'#ebebeb'
+    },
     thrashIcon:{
         marginLeft: 10,
         alignSelf: "flex-start",
         marginTop: 3
+    },
+    thrashIconP:{
+        marginLeft: 10,
+        alignSelf: "flex-start",
+        marginTop: 3,
+        width:30,
+        height:10,
+        borderRadius:50,
+        backgroundColor:'#ebebeb',
     },
     color: {
         color: "#9E9E9E"

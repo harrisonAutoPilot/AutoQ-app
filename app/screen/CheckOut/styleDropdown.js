@@ -40,7 +40,7 @@ export default styles = StyleSheet.create({
         lineHeight: 20,
         letterSpacing: 0.3,
         color: "#616161",
-        width:265,
+        width:235,
       },
       icon: {
         alignItems:'center',
