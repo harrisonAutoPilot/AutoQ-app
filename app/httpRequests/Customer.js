@@ -13,3 +13,10 @@ export const updatePendingCustomers = createAsyncThunk("customer/pending/update"
       const Axios = await AxiosBase();
       return apiRequest(Axios.post(`api/v1/users/${user.id}/pending`, user), thunkAPI)
    });
+
+export const registerCustomer = createAsyncThunk("customer/register",
+   async (user, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.post('api/v1/register', user),
+         thunkAPI, "auth")
+   });

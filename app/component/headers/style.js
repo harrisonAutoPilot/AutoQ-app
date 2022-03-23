@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#fff',
         borderStyle: 'solid',
-        borderWidth: 0,
-        borderColor: '#f5f5f5',
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#f5f5f5',
 
     },
     btnTextWhite: {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { StatusBar, View, SafeAreaView, Text, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import FIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,13 +6,16 @@ import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./style";
 import { listCart } from "@Request/Cart";
+import { getNotification } from "@Request/Notification";
 
 const Header = (props) => {
     const dispatch = useDispatch();
     const { items } = useSelector((state) => state.cart);
+    const { notification } = useSelector((state) => state.notification);
 
     useEffect(() => {
         dispatch(listCart());
+        dispatch(getNotification())
     }, []);
 
     
@@ -36,9 +39,9 @@ const Header = (props) => {
                                     <View>
                                         <FIcon name="bell" color="#fff" size={24} />
                                     </View>
-                                    {props.notLength ?
+                                    {notification?.notifications?.length ?
                                     <View style={styles.badgeN}>
-                                        <Text style={styles.badgeText}>{props.notLength}</Text>
+                                        <Text style={styles.badgeText}>{notification?.notifications?.length}</Text>
                                     </View>
                                     : null}
                                 </TouchableOpacity >

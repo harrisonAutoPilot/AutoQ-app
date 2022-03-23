@@ -1,20 +1,15 @@
-import React, { useRef } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
 
 import styles from "./style";
 import { BtnLg, BtnPre, FormikValidator, InputField } from "@Component/index";
 import { addStoreSchemaImg } from "@Helper/Schema";
-import RegConfirm from "./RegConfirmOverlay"
 
 const Step3 = (props) => {
     const dismissKeyboard = () => Keyboard.dismiss();
 
     const registerState = props.details;
     const { storePhotoOne, storePhotoTwo, licenseImg, submit, redirect, bottomSheetRegConfirm } = props
-
-    const closeSheet = () => {
-        bottomSheetRegConfirm.current.close();
-    };
 
 
     return (
@@ -123,11 +118,6 @@ const Step3 = (props) => {
                 </View>
 
             </ScrollView>
-
-            <RegConfirm
-                bottomSheetRegConfirm={bottomSheetRegConfirm}
-                closeSheet={closeSheet}
-            />
         </View>
     )
 };

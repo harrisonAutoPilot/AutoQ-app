@@ -10,6 +10,7 @@ import globalStyles from "@Helper/GlobalStyles";
 import { updateUserImage } from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
+import { SuccessMsgViewTwo } from "@Component";
 
 const Profile = () => {
     const [loader, setLoader] = useState(false);
@@ -40,13 +41,16 @@ const Profile = () => {
             } else {
                 // setLoader(true)
                 const img = response.assets[0].fileName
-                console.log( response.assets[0].uri)
-                const data = { picture:  {
-                    uri : response.assets[0].uri,
+                const data = new FormData();
+                data.append('name', 'picture');
+                data.append('picture', {
+                    uri: response.assets[0].uri,
                     type: response.assets[0].type,
                     name: response.assets[0].fileName
-                   }, id: user.id }
-                dispatch(updateUserImage(data))
+                });
+                console.log(data)
+                const datas = { picture: data, id: user.id }
+                dispatch(updateUserImage(datas))
             }
         });
         // ImagePicker.openPicker({
@@ -54,7 +58,7 @@ const Profile = () => {
         //     mediaType: 'photo'
         // }).then(images => {
         //     setLoader(true)
-           
+
         //     if (images.size > 2000000) {
         //         console.log(images.size)
         //         waitTime2("Image size is too large")

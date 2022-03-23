@@ -142,7 +142,7 @@ const Step1 = (props) => {
                                                         </View>
 
                                                         <InputField
-                                                            style={styles.innerLabelPhone}
+                                                            style={!editable ? styles.innerLabelPhone: styles.innerLabelPhoneEnabled}
                                                             value={props.values.phone}
                                                             onBlur={props.handleBlur('phone')}
                                                             placeholder="234809XXXXXXX"

@@ -931,13 +931,21 @@ export default styles = StyleSheet.create({
     innerLabelPhone: {
         fontSize: 16,
         fontFamily: "Urbanist-Regular",
-        // lineHeight: 24,
         color: "#adadad",
         letterSpacing: 0.3,
         fontWeight: "400",
         marginTop: 3,
         marginBottom: 5,
-        // width: "70%",
+        paddingLeft: 40,
+    },
+    innerLabelPhoneEnabled: {
+        fontSize: 16,
+        fontFamily: "Urbanist-Regular",
+        color: "#212121",
+        letterSpacing: 0.3,
+        fontWeight: "400",
+        marginTop: 3,
+        marginBottom: 5,
         paddingLeft: 40,
     },
     flag: {

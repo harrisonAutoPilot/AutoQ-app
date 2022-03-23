@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback,} from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
@@ -19,7 +19,6 @@ const Registration = (props) => {
     const [activeId, setActiveId] = useState(1);
     const [storePhotoOne, setStorePhotoOne] = useState("");
     const [storePhotoTwo, setStorePhotoTwo] = useState("");
-    const bottomSheetRegConfirm = useRef();
     const details = props.route.params?.items
     let [data, setData] = useState({})
     let [dataOne, setDataOne] = useState({})
@@ -80,7 +79,7 @@ const Registration = (props) => {
     const submit = (val) => {
         let newData = Object.assign(data, val)
         setData(newData)
-        bottomSheetRegConfirm.current.show();
+        props.navigation.navigate("RegConfirm", {data})
     };
 
     const licenseImg = (id, props) => {
@@ -197,7 +196,7 @@ const Registration = (props) => {
             </View>
             {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={redirectToStepTwo} user_details={props.route.params?.items ? props.route.params?.items : undefined} /> : activeId === 2 ?
                 <Step2 user_details={props.route.params?.items ? props.route.params?.items : undefined} details={registerState2} submit={redirectToStepThree} redirect={redirectToStepOne} /> :
-                <Step3 details={registerState3} storePhotoOne={storePhotoOne} storePhotoTwo={storePhotoTwo} licenseImg={licenseImg} submit={submit} redirect={redirectToStepTwoAgain} bottomSheetRegConfirm={bottomSheetRegConfirm} />}
+                <Step3 details={registerState3} storePhotoOne={storePhotoOne} storePhotoTwo={storePhotoTwo} licenseImg={licenseImg} submit={submit} redirect={redirectToStepTwoAgain}  />}
         </View>
     )
 };
