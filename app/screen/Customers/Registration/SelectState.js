@@ -4,14 +4,17 @@ import { SelectCountry } from 'react-native-element-dropdown';
 import { useSelector } from "react-redux";
 
 const SelectState = ({onSelect, props, values}) => {
-  const [state, setState] = useState(0);
+  const [state, setState] = useState("");
 
   const { states } = useSelector((state) => state.state);
 
   useEffect(() => {
-      let id = states.filter(id => id === 2);
-      setState(id.name)
-  }, [props.values.state_id.length])
+    if(props.values.state_id){
+      let id = states.filter(id => id.id === props.values.state_id);
+      setState(id[0]?.name)
+      onSelect(id[0])
+    }
+  }, [props.values.state_id?.length])
 
 
   return (

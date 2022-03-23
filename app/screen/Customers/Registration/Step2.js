@@ -1,33 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { View, Text, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
+import { useSelector } from "react-redux";
 
 import styles from "./style";
-import { BtnLg, BtnPre, FormikValidator, InputField, SuccessMsgViewTwo } from "@Component";
-import { addStoreSchema } from "@Helper/Schema";
-import { updateUserDetails } from "@Request/Auth";
-import { cleanup } from "@Store/Auth";
+import { BtnLg, BtnPre, FormikValidator, InputField} from "@Component";
+import { addStoreSchema2 } from "@Helper/Schema";
 import SelectState from "./SelectState"
 import SelectLga from "./SelectLga"
 
 const Step2 = (props) => {
-    const dispatch = useDispatch();
     const dismissKeyboard = () => Keyboard.dismiss();
     const registerState2 = props.details;
-
-    const [category, setCategory] = useState("");
-    const [active, setActive] = useState("0");
     const [state_id, setState_id] = useState({});
+    const {submit, redirect} = props;
 
-
-    const { user, errors, update } = useSelector((state) => state.auth);
-
-
-    const submit = async (values) => {
-        const { firstname, surname } = values;
-        const newValue = { name: `${firstname} ${surname}`, id: user.id };
-        await dispatch(updateUserDetails(newValue))
-    };
+    const { states } = useSelector((state) => state.state);
 
     return (
         <ScrollView
@@ -35,27 +22,25 @@ const Step2 = (props) => {
             contentContainerStyle={[
                 styles.scrollContentContainer
             ]}
-            horizontal={true}
-            >
+        >
 
             <View style={styles.bottomCover}>
                 <View style={styles.card}>
                     <View style={styles.bioTitleCover}>
                         <Text style={styles.bioTitleText}>STORE</Text>
                     </View>
-                    <View style={styles.formCover}>
                         <TouchableWithoutFeedback onPress={dismissKeyboard}>
                             <View>
 
                                 <FormikValidator
                                     initialValues={registerState2}
-                                    validationSchema={addStoreSchema}
+                                    validationSchema={addStoreSchema2}
                                     onSubmit={(values, actions) => {
                                         submit(values)
                                     }}
                                 >
                                     {props => (
-                                        <View>
+                                        <View style={styles.bottomNextView}>
                                             <View>
                                                 <View style={[styles.registerInputHolder, props.touched.name && props.errors.name ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
@@ -72,7 +57,7 @@ const Step2 = (props) => {
                                                         onChangeText={(val) => {
                                                             props.setFieldValue('name', val)
                                                             props.setFieldTouched('name', true, false);
-                                                            setErrMsg("")
+                                                        
                                                         }}
                                                     />
                                                 </View>
@@ -109,36 +94,45 @@ const Step2 = (props) => {
                                                     </View>) : null}
                                             </View>
                                             <View>
-                                            <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.state_id && props.errors.state_id ? styles.inputErrHolder : null]}>
-                                                <View style={styles.labelView}>
-                                                    <Text style={styles.label}>State</Text>
-                                                </View>
+                                                <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.state_id && props.errors.state_id ? styles.inputErrHolder : null]}>
+                                                    <View style={styles.labelView}>
+                                                        <Text style={styles.label}>State</Text>
+                                                    </View>
+                                                    {states.length ?
 
-                                                <SelectState onSelect={setState_id}  props={props}/>
+                                                        <SelectState onSelect={setState_id} props={props} />
+                                                        : <Text style={styles.loadingLabel}>Loading....</Text>}
+
+                                                </View>
+                                                {props.touched.state_id && props.errors.state_id ? (
+                                                    <View style={styles.errView}>
+                                                        <Text style={styles.errText}>{props.errors.state_id}</Text>
+                                                    </View>) : null}
 
                                             </View>
-                                            {props.touched.state_id && props.errors.state_id ? (
-                                                <View style={styles.errView}>
-                                                    <Text style={styles.errText}>{props.errors.state_id}</Text>
-                                                </View>) : null}
 
-                                        </View>
+                                            <View >
+                                                <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.lga_id && props.errors.lga_id ? styles.inputErrHolder : null]}>
+                                                    <View style={styles.labelView}>
+                                                        <Text style={styles.label}>LGA</Text>
+                                                    </View>
 
-                                        <View >
-                                            <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.lga_id && props.errors.lga_id ? styles.inputErrHolder : null]}>
-                                                <View style={styles.labelView}>
-                                                    <Text style={styles.label}>LGA</Text>
+                                                    {state_id?.lgas ?
+                                                        <SelectLga data={state_id?.lgas} props={props} />
+                                                        : <Text style={styles.loadingLabel}>Loading....</Text>}
+
                                                 </View>
-
-                                                <SelectLga data={state_id?.lgas} props={props} />
+                                                {props.touched.lga_id && props.errors.lga_id ? (
+                                                    <View style={styles.errView}>
+                                                        <Text style={styles.errText}>{props.errors.lga_id}</Text>
+                                                    </View>) : null}
 
                                             </View>
-                                            {props.touched.lga_id && props.errors.lga_id ? (
-                                                <View style={styles.errView}>
-                                                    <Text style={styles.errText}>{props.errors.lga_id}</Text>
-                                                </View>) : null}
 
-                                        </View>
+                                            <View style={styles.btnStep2Cover}>
+                                                <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
+                                                <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
+                                            </View>
 
                                         </View>
                                     )}
@@ -147,14 +141,10 @@ const Step2 = (props) => {
                             </View>
 
                         </TouchableWithoutFeedback>
-                    </View>
 
                 </View>
 
-                <View style={styles.btnStep2Cover}>
-                    <BtnPre title="Previous" onPress={props.handleSubmit} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
-                    <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
-                </View>
+
             </View>
         </ScrollView>
     )

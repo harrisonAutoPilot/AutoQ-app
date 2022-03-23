@@ -102,7 +102,7 @@ const Active = (props) => {
             </View>
             <View style={styles.bottomCover}>
 
-            {status === "pending" ? <PlaceholderCard />
+            {status === "pending" || status === "idle" ? <PlaceholderCard />
                 :
                 <FlatList
                     showsVerticalScrollIndicator={false}

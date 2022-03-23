@@ -195,7 +195,7 @@ borderRadius:10,
   },
 
   detailCardView: {
-    width: wp('50%'),
+    width: wp('90%'),
   
   },
   detailCardIconView: {
@@ -216,24 +216,17 @@ borderRadius:10,
   storeTitle: {
     color: '#424242',
     fontSize: 14,
-    fontFamily: "Urbanist",
+    fontFamily: "Urbanist-SemiBold",
     lineHeight: 20,
     letterSpacing: 0.1,
-    fontWeight: "600",
-    fontStyle:'normal'
-
   },
   storeName: {
     color: '#616161',
     fontSize: 16,
-    fontFamily: "Urbanist",
+    fontFamily: "Urbanist-Regular",
     lineHeight: 24,
-    fontWeight: "400",
     letterSpacing: 0.1,
-    fontStyle:'normal',
-    marginTop: 5,
-    width:270,
-    
+    marginTop: 3,
   },
   storeAddress: {
     color: '#212121',

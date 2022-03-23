@@ -76,12 +76,12 @@ export const storeSlice = createSlice({
                 state.errors = {};
             })
             .addCase(createStore.fulfilled, (state, action) => {
-                console.log(action)
+          
                 state.update = "success";
                 state.errors = {};
             })
             .addCase(createStore.rejected, (state, { payload }) => {
-                console.log(payload)
+           
                 state.update = "failed";
                 state.errors = payload;
             })

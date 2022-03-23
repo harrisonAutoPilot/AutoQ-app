@@ -148,7 +148,7 @@ export default styles = StyleSheet.create({
         borderRadius: 5,
         minHeight: 80,
         maxHeight: 120
-  
+
     },
     inputHolder2: {
         borderWidth: 1,
@@ -205,39 +205,37 @@ export default styles = StyleSheet.create({
         paddingTop: 20,
         alignItems: "center",
         paddingHorizontal: 40,
-        alignSelf: "center"
+        alignSelf: "center",
+        paddingBottom: 20
     },
 
     btnStep2Cover: {
         flexDirection: 'row',
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        height: "37%",
-        width: "100%",
+        width: "120%",
         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
         justifyContent: 'space-around',
         alignItems: "center",
         paddingHorizontal: 20,
-    //    flex: 1,
-    top:hp('63%'),
-      position:'absolute'
+        marginTop: Dimensions.get("window").height / 9,
+        alignSelf:"center"
     },
-    btnStep2Cover: {
+    btnStep3Cover: {
         flexDirection: 'row',
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        height: "37%",
-        width: "100%",
+        width: "120%",
         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
         justifyContent: 'space-around',
         alignItems: "center",
         paddingHorizontal: 20,
-       flex: 1,
-     top:hp('31ss%'),
-    //   position:'absolute'
+        marginTop: Dimensions.get("window").height / 2.6,
+        alignSelf:"center"
     },
+
     btnCover2: {
         top: hp("54%")
     },
@@ -823,6 +821,14 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.2,
         width: "100%"
     },
+    loadingLabel: {
+        fontSize: 16,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 24,
+        color: "#BDBDBD",
+        letterSpacing: 0.2,
+        width: "100%"
+    },
     innerLabelPhone2: {
         fontSize: 16,
         fontFamily: "Urbanist-Medium",
@@ -937,7 +943,7 @@ export default styles = StyleSheet.create({
     flag: {
         marginTop: 21,
         paddingLeft: 18,
-        position:'absolute',
+        position: 'absolute',
     },
     nigImg: {
         width: 20,
@@ -945,10 +951,10 @@ export default styles = StyleSheet.create({
     },
     card: {
         width: wp('100%'),
-        padding: 20,
-        paddingTop: -10,
+        paddingHorizontal: 20,
         borderBottomWidth: 0.1,
         borderColor: '#f2f3f4',
+        paddingTop: 10
     },
     card1: {
         // width: wp('100%'),
@@ -973,7 +979,7 @@ export default styles = StyleSheet.create({
         marginBottom: 10
     },
     optionViewBetween1: {
-       borderColor: "rgba(70, 157, 0, 1)"
+        borderColor: "rgba(70, 157, 0, 1)"
     },
     optionViewBetween2: {
         // marginTop: Dimensions.get("screen").height / 54,
@@ -1013,7 +1019,7 @@ export default styles = StyleSheet.create({
         color: "#212121",
         textTransform: "capitalize"
     },
-    onboardSubTitle1:{
+    onboardSubTitle1: {
         fontFamily: "Urbanist-Medium",
         fontSize: 11,
         lineHeight: 16,
@@ -1097,11 +1103,11 @@ export default styles = StyleSheet.create({
         padding: 5,
         borderRadius: 50,
         marginTop: -40,
-        justifyContent:'center',
-        width:90,
-       left:wp('60%'),
-       alignContent:'center',
-       paddingLeft:9
+        justifyContent: 'center',
+        width: 90,
+        left: wp('58%'),
+        alignContent: 'center',
+        paddingLeft: 9
     },
     selectText: {
         fontFamily: "Urbanist-Regular",
@@ -1113,13 +1119,13 @@ export default styles = StyleSheet.create({
         textTransform: "capitalize",
 
     },
-  
+
     calenderImg: {
         width: 20,
         height: 20,
         resizeMode: 'contain'
     },
-    scrollContentContainer:{
+    scrollContentContainer: {
         flexGrow: 1,
     }
 })

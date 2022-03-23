@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { SelectCountry } from 'react-native-element-dropdown';
 
 
 const SelectLga = props => {
-  const [state, setState] = useState('0');
+  const [state, setState] = useState('');
+
+  useEffect(() => {
+    if(props.data){
+    let id = props.data?.filter(id => id.id === props.props.values.lga_id);
+    setState(id[0]?.name)
+    }
+}, [props.props.values.lga_id?.length])
 
 
   return (
@@ -25,7 +32,7 @@ const SelectLga = props => {
       searchPlaceholder="Search..."
       onChange={e => {
         setState(e.name);
-        props.props.setFieldValue('lga_id', e.id)
+        props.props.setFieldValue('lga_id',  props.props.values.lga_id?.length ? props.props.values.lga_id : e.id)
         props.props.setFieldTouched('lga_id', true, false);
       }}
       dropdownPosition="top"
