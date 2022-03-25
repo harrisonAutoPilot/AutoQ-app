@@ -20,6 +20,7 @@ const Registration = (props) => {
     const [storePhotoOne, setStorePhotoOne] = useState("");
     const [storePhotoTwo, setStorePhotoTwo] = useState("");
     const details = props.route.params?.items
+    const key = props.route.params?.key
     let [data, setData] = useState({})
     let [dataOne, setDataOne] = useState({})
 
@@ -56,7 +57,8 @@ const Registration = (props) => {
 
     const redirectToStepTwo = (val, type) => {
         const {firstname, surname, phone} = val
-        const newData = {name: `${firstname} ${surname}`, phone, user_type: type}
+        
+        const newData = {name: `${firstname} ${surname}`, phone, user_type: type, id: details?.id, key }
         setDataOne(newData);
         setActiveId(2)
 
@@ -74,6 +76,8 @@ const Registration = (props) => {
 
     const redirectToStepTwoAgain = () => {
         setActiveId(2)
+        setStorePhotoOne("");
+        setStorePhotoTwo("")
     };
 
     const submit = (val) => {
@@ -93,17 +97,15 @@ const Registration = (props) => {
 
                 setStorePhotoOne("License Image Received")
                 const img = images.map(img => {
-                    return `data:image/jpg;base64,${img.data}`
+                    return {path: `data:image/jpg;base64,${img.data}`}
                 })
                 props.setFieldValue('images', img)
-                setImages(img)
             } else {
                 setStorePhotoTwo("Image Received")
                 const img = images.map(img => {
-                    return `data:image/jpg;base64,${img.data}`
+                    return {path: `data:image/jpg;base64,${img.data}`}
                 })
                 props.setFieldValue('images2', img)
-                setImages2(img)
             }
         }).catch(err => {
             console.log(err)

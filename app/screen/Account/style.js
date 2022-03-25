@@ -214,7 +214,7 @@ export default styles = StyleSheet.create({
         width: 64,
         height: 64,
         borderRadius: 100,
-        resizeMode: 'contain'
+        resizeMode: 'cover',
     },
     imgCover: {
         width: 67,

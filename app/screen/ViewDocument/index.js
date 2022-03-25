@@ -31,25 +31,15 @@ const ViewDocument = (props) => {
             setShowDocument(false);
           }
         }} >
-        <View style={styles.body5}>
 
           <View style={styles.imageHolder}>
-           
-            <View style={styles.delCover}>
-            <TouchableOpacity >
-              <Icon name="md-trash-outline" color="red" size={20} style={styles.iconStyle} />
-              </TouchableOpacity>
-            </View>
-           
+
             <View style={styles.docCover}>
-              <Image source={require("@Assets/image/certBg.png")} style={styles.certImg} />
+              <Image source={{ uri: props.img }} style={styles.certImg} />
             </View>
 
           </View>
 
-
-
-        </View>
       </Pressable>
     </Modal>
   )

@@ -79,7 +79,7 @@ const MyStore = (props) => {
                 </TouchableOpacity>
 
             </View>
-            {status === "pending" ? <StorePlaceholder />
+            {status === "pending"  || status === "idle" ? <StorePlaceholder />
                 :
                 <FlatList
                     data={usersStore}

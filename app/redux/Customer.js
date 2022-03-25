@@ -7,7 +7,6 @@ export const customerSlice = createSlice({
         customers: [],
         status: "idle",
         update: "idle",
-        create: "idle",
         errors: {}
     },
     reducers:{
@@ -15,7 +14,6 @@ export const customerSlice = createSlice({
             state.errors = {}
             state.status = "idle",
             state.update = "idle",
-            state.create = "idle",
             state.customers = []
         },
    
@@ -55,16 +53,16 @@ export const customerSlice = createSlice({
 
             builder
             .addCase(registerCustomer.pending, state => {
-                state.create = "pending";
+                state.update = "pending";
                 state.errors = {};
             })
             .addCase(registerCustomer.fulfilled, (state, action) => {
                 console.log(action.payload)
-                state.create = "success";
+                state.update = "success";
                 state.errors = {};
             })
             .addCase(registerCustomer.rejected, (state, { payload }) => {
-                state.create = "failed";
+                state.update = "failed";
                 state.errors = payload;
             })
     }

@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import ImagePicker from 'react-native-image-crop-picker';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 
 import styles from "./style";
 import globalStyles from "@Helper/GlobalStyles";
-import { updateUserImage } from "@Request/Auth";
+import { updateUserImage, getUser } from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
 import { SuccessMsgViewTwo } from "@Component";
@@ -18,7 +17,6 @@ const Profile = () => {
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const { user, update, errors } = useSelector((state) => state.auth);
-    // console.log(user)
 
     const updateProfilePic = () => {
         setErrMsg("");
@@ -28,7 +26,9 @@ const Profile = () => {
                 skipBackup: true,
                 path: 'images',
             },
+            includeBase64: true,
             title: "Select Photo",
+           
         };
 
         launchImageLibrary(options, (response) => {
@@ -39,38 +39,12 @@ const Profile = () => {
             } else if (response.fileSize > 2000000) {
                 waitTime2("Image size is too large")
             } else {
-                // setLoader(true)
-                const img = response.assets[0].fileName
-                const data = new FormData();
-                data.append('name', 'picture');
-                data.append('picture', {
-                    uri: response.assets[0].uri,
-                    type: response.assets[0].type,
-                    name: response.assets[0].fileName
-                });
-                console.log(data)
-                const datas = { picture: data, id: user.id }
+                setLoader(true);
+                const img = `data:image/jpg;base64,${response.assets[0].base64}`;
+                const datas = { picture: {path: img}, id: user.id }
                 dispatch(updateUserImage(datas))
             }
         });
-        // ImagePicker.openPicker({
-        //     multiple: false,
-        //     mediaType: 'photo'
-        // }).then(images => {
-        //     setLoader(true)
-
-        //     if (images.size > 2000000) {
-        //         console.log(images.size)
-        //         waitTime2("Image size is too large")
-        //     } else {
-        //         const img = images.path
-        //         const data = { picture: "IMG-20210929-WA0000.jpg", id: user.id }
-        //         dispatch(updateUserImage(data))
-        //     }
-
-        // }).catch(err => {
-        //     console.log(err)
-        // })
 
     };
 
@@ -81,17 +55,20 @@ const Profile = () => {
     const waitTime = useCallback((err, suc) => {
         wait(1000).then(() => {
             setLoader(false);
-            setErrMsg(err);
-            setSuccessMsg(suc);
+           
+         
             if (suc) {
+                setSuccessMsg(suc);
                 Toast.show({
                     type: 'tomatoToast',
                     visibilityTime: 5000,
                     autoHide: true,
                     position: 'top',
                     topOffset: 0
-                })
+                });
+                dispatch(getUser())
             } else {
+                setErrMsg(err);
                 Toast.show({
                     type: 'error',
                     visibilityTime: 5000,
@@ -126,7 +103,7 @@ const Profile = () => {
         if (update === "failed") {
             waitTime(errors?.msg, "");
         } else if (update === "success") {
-            waitTime("", "Password Updated");
+            waitTime("", "Profile Image Updated");
         } else {
             setSuccessMsg("");
             setErrMsg("");
@@ -153,7 +130,7 @@ const Profile = () => {
             {successMsg ? <Toast config={toastConfig} /> : null}
             <View style={styles.topCover}>
                 <View style={styles.imgCover}>
-                    <Image source={require("@Assets/image/agentFace.png")} style={styles.img} />
+                    <Image source={{uri: user?.picture_url}} style={styles.img} />
                     <View style={styles.cameraCover}>
                         <TouchableOpacity onPress={updateProfilePic}>
                             <Image source={require("@Assets/image/camera.png")} style={styles.camImg} />

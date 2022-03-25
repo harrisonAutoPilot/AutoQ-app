@@ -20,8 +20,9 @@ const styles = StyleSheet.create({
     agentImg: {
         width: 80,
         height: 80,
-        resizeMode: 'contain',
-        alignItems: 'center'
+        resizeMode: 'cover',
+        alignItems: 'center',
+        borderRadius: 40
     },
     welcomeCover: {
         flexDirection: 'row',
