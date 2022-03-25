@@ -92,7 +92,7 @@ export default styles = StyleSheet.create({
         borderRadius: 5
     },
     inputMainHolder: {
-        marginTop: Dimensions.get("window").height / 90,
+        marginTop: Dimensions.get("window").height / 40,
     },
     labelView: {
         position: "absolute",
