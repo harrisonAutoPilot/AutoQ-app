@@ -21,16 +21,19 @@ export const customerSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(getCustomers.pending, state => {
+                console.log("ho")
                 state.status = "pending";
                 state.errors = {};
                 state.customers = [];
             })
             .addCase(getCustomers.fulfilled, (state, action) => {
+                console.log(action.payload)
                 state.customers = action.payload;
                 state.status = "success";
                 state.errors = {};
             })
             .addCase(getCustomers.rejected, (state, { payload }) => {
+                console.log(payload)
                 state.status = "failed";
                 state.errors = payload;
                 state.customers = [];
