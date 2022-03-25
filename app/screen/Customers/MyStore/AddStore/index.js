@@ -81,7 +81,7 @@ const MyStore = (props) => {
                 setSuccessMsg(sucmsg);
                 Toast.show({
                     type: 'tomatoToast',
-                    visibilityTime: 50000,
+                    visibilityTime: 5000,
                     autoHide: true,
                     position: 'top',
                     topOffset: 0
@@ -126,7 +126,6 @@ const MyStore = (props) => {
             setLoader(true);
             const { name, address, state_id, lga_id } = values;
             const newValues = { name, address, images2, images, state_id, lga_id, user_id: props.route.params?.id };
-            console.log(props.route.params?.id)
             await dispatch(createStore(newValues));
         }
     };
@@ -141,16 +140,18 @@ const MyStore = (props) => {
             setErrMsg("");
             if (id === 1) {
               
-                setStorePhotoOne("License Image Received")
+                setStorePhotoOne("License Image Received");
                     const img = images.map(img => {
-                        return `data:image/jpg;base64,${img.data}`
-                    })
-                    props.setFieldValue('images', img)
+                        return {path: `data:image/jpg;base64,${img.data}`}
+                    });
+                   
+                    props.setFieldValue('images', img);
+
                     setImages(img)
             } else {
                 setStorePhotoTwo("Image Received")
                     const img = images.map(img => {
-                        return `data:image/jpg;base64,${img.data}`
+                        return {path: `data:image/jpg;base64,${img.data}`}
                     })
                     props.setFieldValue('images2', img)
                     setImages2(img)

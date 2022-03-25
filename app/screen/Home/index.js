@@ -6,8 +6,6 @@ import { getAgent } from "@Request/Agent";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers} from "@Request/Customer";
-import { ScrollView } from "react-native-gesture-handler";
-
 
 const Home = (props) => {
     const dispatch = useDispatch();
@@ -49,7 +47,7 @@ const Home = (props) => {
             <View style={styles.topCover}>
                 <Header drawer={openDrawer} notify={openNotification} cart={openCart} />
                 <View style={styles.agentFaceCover}>
-                    <Image style={styles.agentImg} source={require("@Assets/image/agentFace.png")} />
+                    <Image style={styles.agentImg} source={{uri: user?.picture_url}}/>
                 </View>
                 <View style={styles.welcomeCover}>
                     <Image style={styles.sunImg} source={dayTimeImage} />

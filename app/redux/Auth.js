@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, getUser, register, updateUserPassword, updateUserDetails} from "@Request/Auth";
+import { login, getUser, updateUserPassword, updateUserDetails, updateUserImage} from "@Request/Auth";
 
 export const authSlice = createSlice({
     name: "auth",
@@ -52,27 +52,6 @@ export const authSlice = createSlice({
             })
 
         builder
-            .addCase(register.pending, state => {
-                state.status = "pending";
-                state.errors = {};
-                state.user = {};
-                state.userVerified = false
-            })
-            .addCase(register.fulfilled, (state, action) => {
-                state.isAuthenticated = true;
-                state.status = "success";
-                state.errors = {};
-                state.userVerified = action?.payload?.user.user_verified,
-                state.signedIn = true
-            })
-            .addCase(register.rejected, (state, { payload }) => {
-                state.status = "failed";
-                state.errors = payload;
-                state.isAuthenticated = false;
-                state.userVerified = false
-            })
-
-        builder
             .addCase(getUser.pending, state => {
                 state.status = "pending",
                 state.errors = {},
@@ -119,12 +98,27 @@ export const authSlice = createSlice({
                 state.signedIn = false
             })
             .addCase(updateUserDetails.fulfilled, (state, {payload}) => {
-                console.log(payload)
                 state.update = "success";
                 state.errors = {};
             })
             .addCase(updateUserDetails.rejected, (state, { payload }) => {
-                console.log("hi")
+
+                state.update = "failed";
+                state.errors = payload;
+            })
+
+            builder
+            .addCase(updateUserImage.pending, state => {
+                state.update = "pending";
+                state.errors = {};
+                state.signedIn = false
+            })
+            .addCase(updateUserImage.fulfilled, (state, {payload}) => {
+                state.update = "success";
+                state.errors = {};
+            })
+            .addCase(updateUserImage.rejected, (state, { payload }) => {
+
                 state.update = "failed";
                 state.errors = payload;
             })

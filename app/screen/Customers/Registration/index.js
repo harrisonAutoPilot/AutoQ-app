@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback,} from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
@@ -19,8 +19,8 @@ const Registration = (props) => {
     const [activeId, setActiveId] = useState(1);
     const [storePhotoOne, setStorePhotoOne] = useState("");
     const [storePhotoTwo, setStorePhotoTwo] = useState("");
-    const bottomSheetRegConfirm = useRef();
     const details = props.route.params?.items
+    const key = props.route.params?.key
     let [data, setData] = useState({})
     let [dataOne, setDataOne] = useState({})
 
@@ -42,7 +42,7 @@ const Registration = (props) => {
     };
 
     const registerState2 = {
-        name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
+        store_name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
         address: details?.stores[0]?.address ? details?.stores[0]?.address : "",
         state_id: details?.stores[0]?.state_id ? details?.stores[0]?.state_id : "",
         lga_id: details?.stores[0]?.lga_id ? details?.stores[0]?.lga_id : "",
@@ -55,9 +55,10 @@ const Registration = (props) => {
     };
 
 
-    const redirectToStepTwo = (val) => {
+    const redirectToStepTwo = (val, type) => {
         const {firstname, surname, phone} = val
-        const newData = {name: `${firstname} ${surname}`, phone}
+        
+        const newData = {name: `${firstname} ${surname}`, phone, user_type: type, id: details?.id, key }
         setDataOne(newData);
         setActiveId(2)
 
@@ -75,12 +76,14 @@ const Registration = (props) => {
 
     const redirectToStepTwoAgain = () => {
         setActiveId(2)
+        setStorePhotoOne("");
+        setStorePhotoTwo("")
     };
 
     const submit = (val) => {
         let newData = Object.assign(data, val)
         setData(newData)
-        bottomSheetRegConfirm.current.show();
+        props.navigation.navigate("RegConfirm", {data})
     };
 
     const licenseImg = (id, props) => {
@@ -94,17 +97,15 @@ const Registration = (props) => {
 
                 setStorePhotoOne("License Image Received")
                 const img = images.map(img => {
-                    return `data:image/jpg;base64,${img.data}`
+                    return {path: `data:image/jpg;base64,${img.data}`}
                 })
                 props.setFieldValue('images', img)
-                setImages(img)
             } else {
                 setStorePhotoTwo("Image Received")
                 const img = images.map(img => {
-                    return `data:image/jpg;base64,${img.data}`
+                    return {path: `data:image/jpg;base64,${img.data}`}
                 })
                 props.setFieldValue('images2', img)
-                setImages2(img)
             }
         }).catch(err => {
             console.log(err)
@@ -197,7 +198,7 @@ const Registration = (props) => {
             </View>
             {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={redirectToStepTwo} user_details={props.route.params?.items ? props.route.params?.items : undefined} /> : activeId === 2 ?
                 <Step2 user_details={props.route.params?.items ? props.route.params?.items : undefined} details={registerState2} submit={redirectToStepThree} redirect={redirectToStepOne} /> :
-                <Step3 details={registerState3} storePhotoOne={storePhotoOne} storePhotoTwo={storePhotoTwo} licenseImg={licenseImg} submit={submit} redirect={redirectToStepTwoAgain} bottomSheetRegConfirm={bottomSheetRegConfirm} />}
+                <Step3 details={registerState3} storePhotoOne={storePhotoOne} storePhotoTwo={storePhotoTwo} licenseImg={licenseImg} submit={submit} redirect={redirectToStepTwoAgain}  />}
         </View>
     )
 };

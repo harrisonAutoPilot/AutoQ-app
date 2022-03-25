@@ -42,28 +42,28 @@ const Step2 = (props) => {
                                     {props => (
                                         <View style={styles.bottomNextView}>
                                             <View>
-                                                <View style={[styles.registerInputHolder, props.touched.name && props.errors.name ? styles.inputErrHolder : null]}>
+                                                <View style={[styles.registerInputHolder, props.touched.store_name && props.errors.store_name ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
                                                         <Text style={styles.label}>STORE NAME</Text>
                                                     </View>
 
                                                     <InputField
                                                         style={styles.label4}
-                                                        value={props.values.name}
-                                                        onBlur={props.handleBlur('name')}
+                                                        value={props.values.store_name}
+                                                        onBlur={props.handleBlur('store_name')}
                                                         placeholder="Kingsley"
                                                         placeholderTextColor="#757575"
                                                         keyboardType="default"
                                                         onChangeText={(val) => {
-                                                            props.setFieldValue('name', val)
-                                                            props.setFieldTouched('name', true, false);
+                                                            props.setFieldValue('store_name', val)
+                                                            props.setFieldTouched('store_name', true, false);
                                                         
                                                         }}
                                                     />
                                                 </View>
-                                                {props.touched.name && props.errors.name ? (
+                                                {props.touched.store_name && props.errors.store_name ? (
                                                     <View style={styles.errView}>
-                                                        <Text style={styles.errText}>{props.errors.name}</Text>
+                                                        <Text style={styles.errText}>{props.errors.store_name}</Text>
                                                     </View>) : null}
                                             </View>
 

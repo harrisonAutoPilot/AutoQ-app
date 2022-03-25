@@ -13,26 +13,28 @@ const Step1 = (props) => {
     const dismissKeyboard = () => Keyboard.dismiss();
     const [category, setCategory] = useState("");
     const [active, setActive] = useState("");
+    const [userType, setUserType] = useState("")
     const registerState = props.details;
     const editable = props.active;
     const submit = props.submit
     const type = props.user_details?.user_type;
 
-    const selectUserType = id => {
-        setActive(id)
+    const selectUserType = (id, name) => {
+        console.log(id, name)
+        setActive(id);
+        setUserType(name)
     };
 
-    const confirm = () => this.props.navigation.navigate("RegConfirm");
     const RenderItem = ({ item }) => {
         return (
             <View style={[styles.optionView, active === item.id ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
                 <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
                     {type?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
-                        <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id); setCategory(item.title); }}>
+                        <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); setCategory(item.title); }}>
                             <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
                         </TouchableOpacity >
                         :
-                        <TouchableOpacity style={styles.iconCircle2} onPress={ () => { selectUserType(item.id); setCategory(item.title); }}>
+                        <TouchableOpacity style={styles.iconCircle2} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); setCategory(item.title); }}>
 
                         </TouchableOpacity>
                     }
@@ -80,7 +82,7 @@ const Step1 = (props) => {
                                         initialValues={registerState}
                                         validationSchema={registerSchema}
                                         onSubmit={(values, actions) => {
-                                            submit(values)
+                                            submit(values, userType)
                                         }}
                                     >
                                         {props => (
@@ -142,7 +144,7 @@ const Step1 = (props) => {
                                                         </View>
 
                                                         <InputField
-                                                            style={styles.innerLabelPhone}
+                                                            style={!editable ? styles.innerLabelPhone: styles.innerLabelPhoneEnabled}
                                                             value={props.values.phone}
                                                             onBlur={props.handleBlur('phone')}
                                                             placeholder="234809XXXXXXX"
@@ -179,7 +181,7 @@ const Step1 = (props) => {
 
                                                 </View>
                                                 <View style={styles.btnCover}>
-                                                    <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submit} stylea={styles.angleImg} />
+                                                    <BtnLg title="Next" onPress={active ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
                                                 </View>
 
                                             </View>

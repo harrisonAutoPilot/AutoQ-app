@@ -46,6 +46,8 @@ export default styles = StyleSheet.create({
     agentImg: {
         width: 43,
         height: 43,
+        borderRadius: 26,
+        resizeMode: "cover"
     },
     agentImgView: {
         width: 50,

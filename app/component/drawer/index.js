@@ -18,7 +18,6 @@ const Drawer = (props) => {
 
     useEffect(() => {
         dispatch(getCustomers());
-
     }, []);
 
     const logUserOut = () => {
@@ -96,7 +95,7 @@ const Drawer = (props) => {
                         end={{ x: 1, y: 1 }}
                     >
                         <View style={styles.agentImgView}>
-                            <Image style={styles.agentImg} source={require("@Assets/image/agentFace.png")} />
+                            <Image style={styles.agentImg} source={{uri: user?.picture_url}} />
                         </View>
 
                     </LinearGradient>

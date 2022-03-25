@@ -59,7 +59,7 @@ const List = (props) => {
 
     return (
         <Animated.View style={[ { transform: [{ scale: props.scale }] }]}>
-            <TouchableOpacity style={[styles.listContainer, {backgroundColor : getRandomColor(item.id), borderColor: getRandomBorderColor(item.id)}]} onPress={redirectToNavigationDetail}>
+            <TouchableOpacity style={[styles.listContainer, {backgroundColor : getRandomColor(item.id), borderColor: getRandomBorderColor(item.id)}]} onPress={() => redirectToNavigationDetail(item)}>
             <View style={[styles.listIcon, {backgroundColor: getRandomIconColor(item.id)}]}>
                 <Icon name="bell" color={getRandomTextColor(item.id)} size={20}/>
             </View>
@@ -70,11 +70,11 @@ const List = (props) => {
                     </View>
                 </View>
                 <View style={styles.descView}>
-                    <Text style={styles.desc} numberOfLines={1}>{item.desc}</Text>
+                    <Text style={styles.desc} numberOfLines={1}>{item.description}</Text>
                 </View>
             </View>
             <View style={styles.thrashIcon}>
-            <Text style={[styles.desc]}>8/11/21</Text>
+            <Text style={[styles.desc]}>{item.created_at.substring(0, 10).split('-').reverse().join('/')}</Text>
             </View>
             </TouchableOpacity>
         </Animated.View>

@@ -9,13 +9,6 @@ export const login = createAsyncThunk("auth/login",
             thunkAPI, "auth")
     });
 
-export const register = createAsyncThunk("auth/register",
-    async (user, thunkAPI) => {
-        const Axios = await AxiosBase();
-        return apiRequest(Axios.post('api/v1/register', user),
-            thunkAPI, "auth")
-    });
-
 export const getUser = createAsyncThunk("auth/user",
     async (_, thunkAPI) => {
         const Axios = await AxiosBase();
@@ -60,4 +53,10 @@ export const updateUserPassword = createAsyncThunk("auth/password/update",
         const Axios = await AxiosBase();
         return apiRequest(Axios.patch(`api/v1/users/password/${user.id}`, user),
             thunkAPI)
+    });
+
+    export const updateUserImage = createAsyncThunk("auth/image/update",
+    async (user, thunkAPI) => {
+        const Axios = await AxiosBase();
+        return apiRequest(Axios.post(`api/v1/users/upload-image/${user.id}`, user),thunkAPI)
     });

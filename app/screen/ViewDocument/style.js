@@ -24,18 +24,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     
   },
-  body5: {
-    backgroundColor: '#fff',
-    borderRadius: 4,
-    paddingTop: 30,
-    padding:5,
-    paddingBottom:20,
-  },
   imageHolder: {
-    alignItems: "center",
-    justifyContent:'center',
-    height:hp('68%'),
-    width:wp('90%'),
+    // alignItems: "center",
+    // justifyContent:'center',
+    // height:hp('68%'),
+    // width:wp('90%'),
   },
 
   titleText: {

@@ -223,7 +223,7 @@ borderRadius:10,
   storeName: {
     color: '#616161',
     fontSize: 16,
-    fontFamily: "Urbanist-Regular",
+    fontFamily: "Urbanist-Medium",
     lineHeight: 24,
     letterSpacing: 0.1,
     marginTop: 3,

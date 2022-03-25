@@ -11,7 +11,6 @@ import { deleteStore } from "@Request/Store";
 import { cleanup } from "@Store/Stores";
 import globalStyles from "@Helper/GlobalStyles";
 import ViewDocument from "@Screen/ViewDocument"
-import data from "./data"
 import Loader from "@Screen/Loader";
 
 const StoreDetails = (props) => {
@@ -21,6 +20,8 @@ const StoreDetails = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
     const [showDocument, setShowDocument] = useState(false);
+    const [storeImg, setStoreIMg] = useState("");
+
 
     const items = props.route.params?.item
     const { errors, deletes } = useSelector((state) => state.store);
@@ -31,7 +32,10 @@ const StoreDetails = (props) => {
     };
 
     const goBack = () => props.navigation.goBack();
-    const viewDoc = () => setShowDocument(true);
+    const viewDoc = (img) => {
+        setShowDocument(true);
+        setStoreIMg(img)
+    }
 
     useEffect(() => {
         if (deletes === "success") {
@@ -95,9 +99,9 @@ const StoreDetails = (props) => {
 
     const RenderItem = ({ item }) => (
 
-        <TouchableOpacity onPress={viewDoc} >
+        <TouchableOpacity onPress={() => viewDoc(item.path)} >
             <View style={styles.fileCover} key={item.id}>
-                <Image source={require("@Assets/image/cert.png")} style={styles.certImg} />
+                <Image source={{uri: item.path}} style={styles.certImg} />
             </View>
         </TouchableOpacity>
 
@@ -113,7 +117,7 @@ const StoreDetails = (props) => {
             <ScrollView contentContainerStyle={{ marginTop: 10, paddingBottom: 50 }}>
                 <View style={styles.detailCard}>
                     <View style={styles.detailCardView}>
-                        <Text style={styles.storeTitle}>NAME OF STORE:</Text>
+                        <Text style={styles.storeTitle}>STORE DETAILS:</Text>
                         <View style={{ marginTop: 5 }}>
                             <Text style={styles.storeName}>{items?.name}</Text>
                             <Text style={styles.storeName}>{items.address}</Text>
@@ -131,7 +135,7 @@ const StoreDetails = (props) => {
                     </View>
                     <FlatList
                         horizontal={true}
-                        data={data}
+                        data={items?.license_images}
                         renderItem={RenderItem}
                         keyExtractor={item => item.id}
                         ListFooterComponent={<View style={{ height: 50 }} />}
@@ -149,7 +153,7 @@ const StoreDetails = (props) => {
 
                     <FlatList
                         horizontal={true}
-                        data={data}
+                        data={items?.store_images}
                         renderItem={RenderItem}
                         keyExtractor={item => item.id}
                         ListFooterComponent={<View style={{ height: 50 }} />}
@@ -166,6 +170,7 @@ const StoreDetails = (props) => {
             <ViewDocument
                 visibleDocument={showDocument}
                 returnBack={() => setShowDocument(false)}
+                img ={storeImg}
             />
 
             <Loader isVisible={loader} />

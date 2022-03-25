@@ -6,12 +6,11 @@ import Icon from 'react-native-vector-icons/Feather';
 import styles from "./style";
 import { EmptyPlaceHolder, COHeader as Header } from "@Component";
 import List from "./ListView";
-import data from "./data";
-import {getNotification} from "@Request/Notification";
+import { getNotification } from "@Request/Notification";
 import NotificationPlaceholder from "./NotificationPlaceholder";
 
 const Notification = (props) => {
-   
+
     const dispatch = useDispatch();
     const scrollY = useRef(new Animated.Value(0)).current;
     const [err, setErr] = useState("");
@@ -33,13 +32,13 @@ const Notification = (props) => {
             item={item}
             getItem={() => getItem(item.id)}
             scale={scale}
-            navigation={() => props.navigation.navigate("NotificationDetail")}
+            navigation={(item) => props.navigation.navigate("NotificationDetail", { item })}
         />
     };
 
     return (
         <View style={styles.view}>
-            <Header title="Notification" onPress={goBack} styleView={styles.body}/> 
+            <Header title="Notification" onPress={goBack} styleView={styles.body} />
             <View style={styles.mainBody}>
                 <View style={styles.subHeading}>
                     <View>
@@ -57,17 +56,18 @@ const Notification = (props) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                <Animated.FlatList
-                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
-                    showsVerticalScrollIndicator={false}
-                    data={data}
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={NotificationPlaceholder}
-                    renderItem={ListView}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
-                    columnWrapperStyle={styles.column}
-                />
+                {status === "pending" || status === "idle" ?
+                    <NotificationPlaceholder /> :
+                    <Animated.FlatList
+                        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+                        showsVerticalScrollIndicator={false}
+                        data={notification.notifications}
+                        keyExtractor={item => item.id}
+                        ListEmptyComponent={EmptyPlaceHolder}
+                        renderItem={ListView}
+                        ListFooterComponent={<View style={{ height: 50 }} />}
+                        columnWrapperStyle={styles.column}
+                    />}
 
             </View>
 

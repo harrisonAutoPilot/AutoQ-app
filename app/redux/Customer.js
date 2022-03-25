@@ -1,17 +1,19 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getCustomers} from "@Request/Customer";
+import {getCustomers, updatePendingCustomers, registerCustomer} from "@Request/Customer";
 
 export const customerSlice = createSlice({
     name: "customer",
     initialState: {
         customers: [],
         status: "idle",
+        update: "idle",
         errors: {}
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
             state.status = "idle",
+            state.update = "idle",
             state.customers = []
         },
    
@@ -32,6 +34,36 @@ export const customerSlice = createSlice({
                 state.status = "failed";
                 state.errors = payload;
                 state.customers = [];
+            })
+
+            builder
+            .addCase(updatePendingCustomers.pending, state => {
+                state.update = "pending";
+                state.errors = {};
+            })
+            .addCase(updatePendingCustomers.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.update = "success";
+                state.errors = {};
+            })
+            .addCase(updatePendingCustomers.rejected, (state, { payload }) => {
+                state.update = "failed";
+                state.errors = payload;
+            })
+
+            builder
+            .addCase(registerCustomer.pending, state => {
+                state.update = "pending";
+                state.errors = {};
+            })
+            .addCase(registerCustomer.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.update = "success";
+                state.errors = {};
+            })
+            .addCase(registerCustomer.rejected, (state, { payload }) => {
+                state.update = "failed";
+                state.errors = payload;
             })
     }
 });

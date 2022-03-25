@@ -44,8 +44,8 @@ const CustomersDashboard = (props) => {
 
     const dismissKeyboard = () => Keyboard.dismiss();
     const openDrawer = () => props.navigation.openDrawer();
-    const reg = () => props.navigation.navigate("CustomerRegistration");
-    const reg_details = (items) => props.navigation.navigate("CustomerRegistration", { items });
+    const reg = () => props.navigation.navigate("CustomerRegistration", {key: 2});
+    const reg_details = (items) => props.navigation.navigate("CustomerRegistration", { items, key: 1 });
 
     const openFavourite = () => props.navigation.navigate("SavedItem", { id: 1 })
     const openNotification = () => props.navigation.navigate("Notification");

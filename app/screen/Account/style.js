@@ -179,6 +179,7 @@ export default styles = StyleSheet.create({
     },
     inputOuterView: {
         marginHorizontal: 20,
+        marginTop:"-7%"
 
     },
     sucToastCover: {
@@ -213,7 +214,7 @@ export default styles = StyleSheet.create({
         width: 64,
         height: 64,
         borderRadius: 100,
-        resizeMode: 'contain'
+        resizeMode: 'cover',
     },
     imgCover: {
         width: 67,
