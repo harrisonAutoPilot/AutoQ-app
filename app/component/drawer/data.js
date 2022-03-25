@@ -4,12 +4,12 @@ const links = [{
     icon: "folder-open",
     route: "CustomersDashboard"
 },
-// {
-//     id: "2",
-//     name: "My Items",
-//     icon: "heart-outline",
-//     route: "SavedItem"
-// },
+{
+    id: "2",
+    name: "My Items",
+    icon: "heart-outline",
+    route: "CustomerSuccess"
+},
 // {
 //     id: "3",
 //     name: "My Store(s)",

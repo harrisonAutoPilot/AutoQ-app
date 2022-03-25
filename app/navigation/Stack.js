@@ -25,6 +25,7 @@ import TransactionDetail from "@Screen/TransactionDetail";
 import CustomerDetails from "@Screen/Customers/AccountDetails";
 import CustomerRegistration from "@Screen/Customers/Registration";
 import CheckoutSuccess from "@Screen/CheckoutSuccess";
+import CustomerSuccess from "@Screen/CustomerSuccess";
 import MyStore from "@Screen/Customers/MyStore";
 import AddStore from "@Screen/Customers/MyStore/AddStore";
 import StoreDetails from "@Screen/Customers/MyStore/StoreDetails";
@@ -91,6 +92,7 @@ const RootStackNavigator = () => {
                 <RootStack.Screen name="AddStore" component={AddStore} />
                 <RootStack.Screen name="StoreDetails" component={StoreDetails} />
                 <RootStack.Screen name="RegConfirm" component={RegConfirm} />
+                <RootStack.Screen name="CustomerSuccess" component={CustomerSuccess} />
             </RootStack.Group>
 
         </>
