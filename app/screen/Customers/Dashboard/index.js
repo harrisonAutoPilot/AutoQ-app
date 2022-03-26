@@ -18,13 +18,13 @@ const CustomersDashboard = (props) => {
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
 
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(getCustomers());
-            return () => dispatch(cleanup())
-        }, [])
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         dispatch(getCustomers());
+    //         return () => dispatch(cleanup())
+    //     }, [])
 
-    );
+    // );
 
     useEffect(() => {
         if (search.length) {
@@ -34,7 +34,10 @@ const CustomersDashboard = (props) => {
         }
     }, [search.length]);
 
-
+    useEffect(() => {
+        dispatch(getCustomers());
+        return () => dispatch(cleanup())
+    }, [])
 
     useEffect(() => {
         if (props.route.params?.id === 1) {

@@ -19,7 +19,7 @@ export const cartSlice = createSlice({
             state.addCart = "idle",
             state.removeCart = "idle",
             state.updateCartItems = "idle"
-            state.loaded = "idle";
+            // state.loaded = "idle";
         }
     },
     extraReducers: builder => {

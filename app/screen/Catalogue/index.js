@@ -126,6 +126,7 @@ const Catalogue = (props) => {
                         { length: 100, offset: 100 * index, index }
                     )}
                     ref={flatListRef}
+                    extraData={categories}
                 />
             </View>
         </View>

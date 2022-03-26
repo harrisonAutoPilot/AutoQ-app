@@ -120,6 +120,7 @@ const InActive = (props) => {
 
                     }
                     ref={flatListRef}
+                    extraData={customers?.pending?.users}
                 />
 }
 

@@ -19,9 +19,8 @@ const Step1 = (props) => {
     useEffect(() => {
         if(type){
             setUserType(type)
-        }
-
-    },[type])
+        };
+    },[type]);
 
     const selectUserType = (id, name) => {
         setActive(id);
@@ -32,7 +31,7 @@ const Step1 = (props) => {
         return (
             <View style={[styles.optionView, active === item.id ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
                 <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
-                    {type?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
+                    {userType?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
                         <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); }}>
                             <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
                         </TouchableOpacity >
@@ -42,7 +41,7 @@ const Step1 = (props) => {
                         </TouchableOpacity>
                     }
                 </View>
-                {active === item.id || type?.toLowerCase() === item.title.toLowerCase() ?
+                {active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ?
                     <View style={styles.optionTextViewNew}>
                         <Text style={styles.optionText}>{item.title}</Text>
                         <View style={styles.optionMiniTextView}>

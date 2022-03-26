@@ -13,8 +13,8 @@ export const customerSlice = createSlice({
         cleanup: (state) => {
             state.errors = {}
             state.status = "idle",
-            state.update = "idle",
-            state.customers = []
+            state.update = "idle"
+            // state.customers = []
         },
    
     },

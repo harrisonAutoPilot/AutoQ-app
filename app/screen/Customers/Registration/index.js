@@ -19,6 +19,7 @@ const Registration = (props) => {
     const [activeId, setActiveId] = useState(1);
     const [storePhotoOne, setStorePhotoOne] = useState("");
     const [storePhotoTwo, setStorePhotoTwo] = useState("");
+    
     const details = props.route.params?.items
     const key = props.route.params?.key
     let [data, setData] = useState({})
@@ -50,8 +51,8 @@ const Registration = (props) => {
     };
 
     const registerState3 = {
-        images: [],
-        images2: [],
+        images: details?.stores[0]?.store_images ? details?.stores[0]?.store_images: [],
+        images2: details?.stores[0]?.license_images ? details?.stores[0]?.license_images: [],
     };
 
 

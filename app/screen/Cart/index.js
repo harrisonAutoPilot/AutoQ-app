@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
@@ -26,19 +26,13 @@ const Cart = (props) => {
     const [copyCartAmount, setCopyCartAmount] = useState([]);
     const [copyCart, setCopyCart] = useState([]);
     const [scrollText, setScrollText] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
 
     const { items, removeCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
 
     const browse = () => props.navigation.navigate("Catalogue");
     const openCart = () =>  dispatch(listCart());
     const redirectToSearch = () => props.navigation.navigate("Search");
-
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(listCart());
-            return () => dispatch(cleanup());
-        }, [])
-    );
 
     useEffect(() => {
         if (items.carts && items.carts.length) {
@@ -114,12 +108,23 @@ const Cart = (props) => {
         })
     }, []);
 
+
+    const refreshCartView = useCallback(() => {
+        setRefreshing(true);
+        dispatch(listCart());
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
     useEffect(() => {
+        dispatch(listCart());
         // Change the state every second or the time given by User.
         const interval = setInterval(() => {
             setScrollText((scrollText) => !scrollText);
         }, 1000);
-        return () => clearInterval(interval);
+        return () =>{ 
+            clearInterval(interval);
+            dispatch(cleanup());
+        }
     }, []);
 
 
@@ -298,6 +303,10 @@ const Cart = (props) => {
                         renderItem={ListView}
                         ListFooterComponent={<View style={{ height: 50 }} />}
                         columnWrapperStyle={styles.column}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={refreshCartView} />
+                        }
+                        extraData={copyCart}
                     />}
 
 
