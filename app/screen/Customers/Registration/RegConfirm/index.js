@@ -22,7 +22,7 @@ const RegConfirm = (props) => {
     const details = props.route.params.data;
 
     const goBack = () => props.navigation.goBack();
-    const storeSuccess = () => props.navigation.navigate("RegSuccess");
+    const storeSuccess = () => props.navigation.navigate("CustomerSuccess", {details});
     const { errors, update } = useSelector((state) => state.customer);
 
     const viewDoc = (img) => {

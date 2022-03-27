@@ -116,6 +116,7 @@ const Active = (props) => {
                     refreshControl= {
                         <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
                     }
+                    extraData={customers?.active?.users}
                 />
 }
 
@@ -124,9 +125,9 @@ const Active = (props) => {
 
             <Modal
                 bottomSheetS={bottomSheetS}
-                // closeSort={closeSheetSort}
+                closeSort={closeSheetSort}
                 sort={sortOrder}
-                // sheet={sheetOpen}
+                sheet={sheetOpen}
 
             />
 

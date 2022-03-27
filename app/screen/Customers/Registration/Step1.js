@@ -1,17 +1,14 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Image, FlatList } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import Toast from 'react-native-toast-message';
 import FIcon from "react-native-vector-icons/MaterialIcons";
 
 import styles from "./style";
-import { BtnLg, FormikValidator, InputField, SuccessMsgViewTwo } from "@Component";
+import { BtnLg, FormikValidator, InputField} from "@Component";
 import { registerSchema } from "@Helper/Schema";
 import data2 from "./data2";
 
 const Step1 = (props) => {
     const dismissKeyboard = () => Keyboard.dismiss();
-    const [category, setCategory] = useState("");
     const [active, setActive] = useState("");
     const [userType, setUserType] = useState("")
     const registerState = props.details;
@@ -19,8 +16,13 @@ const Step1 = (props) => {
     const submit = props.submit
     const type = props.user_details?.user_type;
 
+    useEffect(() => {
+        if(type){
+            setUserType(type)
+        };
+    },[type]);
+
     const selectUserType = (id, name) => {
-        console.log(id, name)
         setActive(id);
         setUserType(name)
     };
@@ -29,17 +31,17 @@ const Step1 = (props) => {
         return (
             <View style={[styles.optionView, active === item.id ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
                 <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
-                    {type?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
-                        <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); setCategory(item.title); }}>
+                    {userType?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
+                        <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); }}>
                             <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
                         </TouchableOpacity >
                         :
-                        <TouchableOpacity style={styles.iconCircle2} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); setCategory(item.title); }}>
+                        <TouchableOpacity style={styles.iconCircle2} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); }}>
 
                         </TouchableOpacity>
                     }
                 </View>
-                {active === item.id || type?.toLowerCase() === item.title.toLowerCase() ?
+                {active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ?
                     <View style={styles.optionTextViewNew}>
                         <Text style={styles.optionText}>{item.title}</Text>
                         <View style={styles.optionMiniTextView}>
@@ -181,7 +183,7 @@ const Step1 = (props) => {
 
                                                 </View>
                                                 <View style={styles.btnCover}>
-                                                    <BtnLg title="Next" onPress={active ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
+                                                    <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
                                                 </View>
 
                                             </View>

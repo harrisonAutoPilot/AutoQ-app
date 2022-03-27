@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar, Animated, Image } from "react-native";
+import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
+
 import { InputField } from "@Component/index";
 import { browseCategories } from "@Request/Category";
 import { searchProducts} from "@Request/Product";
 import styles from "./style";
 import ListItems from "@Screen/Product/ListView";
-
+import BottomSheet from "@Screen/Overlay";
 
 const Search = (props) => {
     const dispatch = useDispatch();
@@ -20,19 +21,14 @@ const Search = (props) => {
     const [searchArray, setSearchArray] = useState([]);
     const [searchCategoryArray, setSearchCategoryArray] = useState([]);
     const [result, setResult] = useState({});
-    const [showModal, setShowModal] = useState(false);
     const bottomSheet = useRef();
-    const [cartItem, setCartItem] = useState("");
-    const [cartNewAmount, setCartNewAmount] = useState(1);
-    const [cartItemId, setCartItemId] = useState("");
+    const [visible, setVisible] = useState(false);
 
     const { categories } = useSelector((state) => state.category);
-    const { status, errors, searchedProducts, update, type_head } = useSelector((state) => state.product);
-    const closeCart = () => setShowModal(!showModal);
+    const { status, errors, searchedProducts,  } = useSelector((state) => state.product);
 
     useEffect(() => {
         dispatch(browseCategories())
-        // dispatch(listCart())
     }, []);
 
     useEffect(() => {
@@ -130,11 +126,13 @@ const Search = (props) => {
         />
     };
 
-    // Get the ID of the product to filter and show the Modal
-    const getItem = (id) => {
+     // Get the ID of the product to filter and show the Modal
+     const getItem = (id) => {
         filterProduct(id);
+        setVisible(true)
         bottomSheet.current.show();
     };
+
 
     const cancelSearch = () => props.navigation.goBack();
 
@@ -220,16 +218,13 @@ const Search = (props) => {
                 }
             />
 
-            {/* <ModalView
+<BottomSheet
                 bottomSheet={bottomSheet}
                 onPress={closeSheet}
-                onSwipeComplete1={closeCart}
                 result={result}
-                wishlist={() => itemsAddedToWishlist(result.id)}
-                cartNewAmount = {cartNewAmount}
-                cartItem = {cartItem}
-                cartItemId = {cartItemId}
-            /> */}
+                isVisible={visible}
+            />
+
         </View>
     )
 };

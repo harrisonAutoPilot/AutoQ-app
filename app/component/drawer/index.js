@@ -37,8 +37,6 @@ const Drawer = (props) => {
                 routes: [{ name: route }]
             })
         );
-       
-        // props.navigation.navigate(route);
 
     };
 

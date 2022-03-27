@@ -121,6 +121,7 @@ const InActive = (props) => {
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
                         }
+                        extraData={customers?.inactive?.users}
                     />
                 }
 

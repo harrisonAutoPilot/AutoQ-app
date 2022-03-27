@@ -170,6 +170,7 @@ const Products = (props) => {
                 getItemLayout={(data, index) => (
                     { length: 100, offset: 100 * index, index }
                 )}
+                extraData={searchedProducts}
             />
 
             <BottomSheet
