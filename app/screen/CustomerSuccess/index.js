@@ -34,7 +34,7 @@ const CustomerSuccess = (props) => {
   }, []);
 
   return (
-    <Success style={{marginTop:-50}}>
+    <Success>
       <View style={styles.afterTop}>
         <Text style={styles.topText}>Success!!!</Text>
         <Text style={styles.downText}>Customer has been registered successfully.</Text>
