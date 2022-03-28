@@ -12,12 +12,13 @@ const List = (props) => {
     console.log(item)
 
     return (
-        <Animated.View style={[styles.listContainer, { transform: [{ scale: props.scale }] }]}>
+        <Animated.View style={ { transform: [{ scale: props.scale }] }}>
+            <TouchableOpacity style={styles.listContainer} onPress={props.getItem}>
             <View style={styles.listContainerImageView}>
                 <Image source={{ uri: `${URL}${item?.product_images[0]?.url}` }} style={styles.image} resizeMode="contain" />
             </View>
 
-            <View style={styles.listTitleView} onPress={props.getItem}>
+            <View style={styles.listTitleView} >
                     <View style={styles.listTitleView2}>
                         <Text style={styles.listTitle}>{item.name}</Text>
                     </View>
@@ -32,7 +33,7 @@ const List = (props) => {
                         </TouchableOpacity>
                     </View>
             </View>
-
+            </TouchableOpacity>
 
         </Animated.View>
     )

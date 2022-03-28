@@ -13,6 +13,7 @@ import Dropdown from './Dropdown';
 import commafy from "@Helper/Commafy";
 import { getWallet } from "@Request/Wallet";
 import PlaceholderComponent from "./placeholderComponent";
+import { listCart} from "@Request/Cart";
 
 const CheckOut = (props) => {
 
@@ -39,6 +40,7 @@ const CheckOut = (props) => {
 
     useEffect(() => {
         dispatch(listPaymentMethod());
+        dispatch(listCart())
         dispatch(getWallet())
     }, []);
 

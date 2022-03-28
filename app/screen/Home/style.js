@@ -371,7 +371,8 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         paddingHorizontal: 29.75,
         paddingTop: 25.5,
-        paddingBottom: 200
+        paddingBottom: 200,
+        marginTop: 20
     },
     modalPadding: {
         paddingHorizontal: 29.75,

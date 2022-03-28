@@ -149,14 +149,14 @@ const Overlay = (props) => {
                                     <Text style={styles.modalminiTitle}>Price/Roll: <Text style={{ color: "#469D00" }}>&#8358;{commafy(result.price_per_pack)}</Text></Text>
                                 </View>
 
-                                <View style={styles.modalDiscount}>
+                                {/* <View style={styles.modalDiscount}>
                                     <View>
                                         <Icon name="info" size={18} color="#00319D" />
                                     </View>
                                     <View style={styles.modalDiscountTextView}>
                                         <Text style={styles.modalDiscountText}>Discount on Carton: {result.discount_on_carton}</Text>
                                     </View>
-                                </View>
+                                </View> */}
 
                                 <View style={styles.increaseCartMainAmountView}>
                                     <View style={styles.cartAmountView}>

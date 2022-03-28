@@ -83,7 +83,7 @@ const Catalogue = (props) => {
 
     return (
         <View style={styles.main}>
-            <Header title="Product" style={styles.btnText} notify={openNotification} cart={openCart} drawer={openDrawer}>
+            <Header title="Catalog" style={styles.btnText} notify={openNotification} cart={openCart} drawer={openDrawer}>
 
             <TouchableWithoutFeedback onPress={dismissKeyboard}>
                 <View style={styles.blueColor}>
@@ -92,7 +92,7 @@ const Catalogue = (props) => {
                         <InputField
                             style={styles.inputField}
                             value={searchCategory}
-                            placeholder="Search product name"
+                            placeholder="Search product catalog by name"
                             placeholderTextColor="rgba(255, 255, 255, 0.8)"
                             onChangeText={(text) => setSearchCategory(text)}
                         />
