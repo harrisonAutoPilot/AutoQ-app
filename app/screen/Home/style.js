@@ -50,15 +50,31 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         marginLeft: 5,
     },
+    scrollStyle:{
+        // width: wp('100%'),
+        // height: hp('70%'),
+        // borderTopRightRadius: 35,
+        // borderTopLeftRadius: 35,
+        // // alignItems: 'center',
+        // backgroundColor: '#fff',
+        // marginTop:10,
+        // top: hp('-5%'),
+        // zIndex:120,
+    },
+    smCover:{
+        width: wp('100%'),
+        height: hp('60%'),
+    },
 
     bottomCover: {
         width: wp('100%'),
-        height: hp('90%'),
+        // height: hp('90%'),
         borderTopRightRadius: 35,
         borderTopLeftRadius: 35,
         alignItems: 'center',
         backgroundColor: '#fff',
-        top: hp('-11%'),
+        marginTop:10,
+        top: hp('-9%'),
     },
     cardCover: {
         padding: 10,
