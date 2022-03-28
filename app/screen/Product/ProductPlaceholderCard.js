@@ -15,7 +15,7 @@ const ProductPlaceholderCard = () => (
 
                 <View style={styles.priceOverviewP}>
                     <View style={styles.priceViewP} />
-                    <View style={styles.priceView2P} />
+                   
 
                 </View>
             </View>
@@ -32,7 +32,7 @@ const ProductPlaceholderCard = () => (
 
                 <View style={styles.priceOverviewP}>
                     <View style={styles.priceViewP} />
-                    <View style={styles.priceView2P} />
+                   
 
                 </View>
             </View>
@@ -49,7 +49,7 @@ const ProductPlaceholderCard = () => (
 
                 <View style={styles.priceOverviewP}>
                     <View style={styles.priceViewP} />
-                    <View style={styles.priceView2P} />
+                    
 
                 </View>
             </View>
@@ -66,7 +66,7 @@ const ProductPlaceholderCard = () => (
 
                 <View style={styles.priceOverviewP}>
                     <View style={styles.priceViewP} />
-                    <View style={styles.priceView2P} />
+                   
 
                 </View>
             </View>

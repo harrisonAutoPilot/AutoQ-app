@@ -6,6 +6,7 @@ import { getAgent } from "@Request/Agent";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers} from "@Request/Customer";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Home = (props) => {
     const dispatch = useDispatch();
@@ -54,7 +55,12 @@ const Home = (props) => {
                     <Text style={styles.welcomeText}>{dayTime} {user.name?.split(" ")[0]}</Text>
                 </View>
             </View>
-            <View style={styles.bottomCover}>
+           
+           <View style={styles.bottomCover}>
+           <ScrollView
+                indicatorStyle="white"
+                contentContainerStyle={styles.scrollContentContainer}>
+               <View style={styles.smCover}>
                 <View style={styles.sectorCover}>
                     <Text style={styles.titleCover}>Agent Dashboard</Text>
                 </View>
@@ -104,9 +110,10 @@ const Home = (props) => {
                     </TouchableOpacity>
 
                 </View>
-             
-
+                </View>
+                </ScrollView>
             </View>
+            
         </View>
     )
 };
