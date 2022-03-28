@@ -63,18 +63,25 @@ const styles = StyleSheet.create({
     },
     smCover:{
         width: wp('100%'),
-        height: hp('60%'),
+        height: hp('70%'),
+        
     },
 
     bottomCover: {
         width: wp('100%'),
-        // height: hp('90%'),
+         height: hp('90%'),
         borderTopRightRadius: 35,
         borderTopLeftRadius: 35,
         alignItems: 'center',
         backgroundColor: '#fff',
         marginTop:10,
         top: hp('-9%'),
+       
+    },
+    scrollContentContainer:{
+        height: "115%",
+        // paddingBottom: 300,
+
     },
     cardCover: {
         padding: 10,

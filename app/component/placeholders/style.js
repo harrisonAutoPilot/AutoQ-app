@@ -19,12 +19,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 40,
         marginBottom: 25,
+     
     },
 
     emptyCartImg: {
         width: 85,
         height: 85,
         resizeMode: 'contain',
+       
     },
     emptyTextBig: {
         fontFamily: "Urbanist-SemiBold",
@@ -48,11 +50,11 @@ const styles = StyleSheet.create({
         marginTop: 100,
         marginBottom: 30,
     },
-    emptyCartImg: {
-        width: 85,
-        height: 85,
-        resizeMode: 'contain',
-    },
+    // emptyCartImg: {
+    //     width: 85,
+    //     height: 85,
+    //     resizeMode: 'contain',
+    // },
     emptyText: {
         fontFamily: "Urbanist-SemiBold",
         fontSize: 14,

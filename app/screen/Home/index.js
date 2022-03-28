@@ -55,9 +55,11 @@ const Home = (props) => {
                     <Text style={styles.welcomeText}>{dayTime} {user.name?.split(" ")[0]}</Text>
                 </View>
             </View>
-          
+           
            <View style={styles.bottomCover}>
-           <ScrollView style={styles.scrollStyle} showsVerticalScrollIndicator={true}>
+           <ScrollView
+                indicatorStyle="white"
+                contentContainerStyle={styles.scrollContentContainer}>
                <View style={styles.smCover}>
                 <View style={styles.sectorCover}>
                     <Text style={styles.titleCover}>Agent Dashboard</Text>
@@ -111,7 +113,7 @@ const Home = (props) => {
                 </View>
                 </ScrollView>
             </View>
-           
+            
         </View>
     )
 };
