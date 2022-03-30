@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList, BackHandler } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from 'react-native-vector-icons/MaterialIcons';
@@ -15,7 +15,7 @@ import styles from "@Screen/CustomerOrder/style";
 import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
-import BottomSheet from "@Screen/ConfirmCheckout/ConfirmOrder";
+import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
 
 const PendingOrder = (props) => {
     const dispatch = useDispatch();
@@ -31,7 +31,22 @@ const PendingOrder = (props) => {
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
-    const { errors, pendingOrders, update, loaded, verify, verificationStatus } = useSelector((state) => state.order);
+    const { errors, pendingOrders, update, loaded, verify, verificationStatus } = useSelector((state) => state.order);    
+    
+      const handleBackButton = () => {
+        if (props.navigation.isFocused()) {
+            props.navigation.navigate("Home");
+          return true;
+        }
+      };
+    
+      useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", handleBackButton);
+        return () => {
+          dispatch(cleanup())
+          BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+        }
+      }, []);
 
     const toastConfig = {
         error: () => (

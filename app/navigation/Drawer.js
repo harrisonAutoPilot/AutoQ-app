@@ -7,6 +7,7 @@ import PendingOrder from "@Screen/PendingOrders";
 import Account from "@Screen/Account";
 import TabHomeNavigator from "./Tab";
 import CustomerSupport from "@Screen/CustomerSupport";
+import ProductRequest from "@Screen/ProductRequest";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,6 +19,7 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="Account" component={Account} /> 
             <Drawer.Screen name="PendingOrder" component={PendingOrder} /> 
             <Drawer.Screen name="CustomerSupport" component={CustomerSupport} /> 
+            <Drawer.Screen name="ProductRequest" component={ProductRequest} /> 
         </Drawer.Navigator>
     )
 }

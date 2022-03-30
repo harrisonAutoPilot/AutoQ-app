@@ -26,6 +26,9 @@ export const orderSlice = createSlice({
         },
         cleanErr: (state) => {
             state.errors = {}
+        },
+        cleanVerify: (state) => {
+            state.verificationStatus = "idle"
         }
     },
     extraReducers: builder => {
@@ -157,6 +160,6 @@ export const orderSlice = createSlice({
 
 });
 
-export const { cleanup, cleanErr } = orderSlice.actions
+export const { cleanup, cleanErr, cleanVerify } = orderSlice.actions
 
 export default orderSlice.reducer;

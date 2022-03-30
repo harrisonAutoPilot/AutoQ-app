@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar, Animated } from "react-native";
+import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar, Animated, Keyboard } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -24,19 +24,41 @@ const Search = (props) => {
     const [result, setResult] = useState({});
     const bottomSheet = useRef();
     const [visible, setVisible] = useState(false);
+    const [request, setRequest] = useState(false);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     const { categories } = useSelector((state) => state.category);
     const { status, errors, searchedProducts } = useSelector((state) => state.product);
+    const redirectToRequest = () => props.navigation.navigate("ProductRequest");
 
     useEffect(() => {
-        dispatch(browseCategories())
+        dispatch(browseCategories());
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true); // or some other action
+            }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false); // or some other action
+            }
+        );
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
     }, []);
 
     useEffect(() => {
         if (search.length) {
             searchItem();
+            setRequest(true)
         } else if (!search.length) {
             setSearchArray([]);
+            setRequest(false)
         }
         if (searchCategory.length) {
             searchCategoryItem();
@@ -193,17 +215,18 @@ const Search = (props) => {
                     renderItem={ListView}
                 />
             </View>
-            {active === "" ?
+            {active === ""
+                ?
                 <FlatList
                     data={searchCategoryArray}
                     keyExtractor={item => item.id}
-                    // ListEmptyComponent={ListEmptyComponent}
+                    ListEmptyComponent={<View />}
                     renderItem={ListView2}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                 />
                 : null}
 
-            {status === "pending" || status === "idle" ?
+            {(status === "pending" || status === "idle") && active !== "" ?
                 <ProductPlaceholderCard />
                 :
 
@@ -227,6 +250,17 @@ const Search = (props) => {
                 result={result}
                 isVisible={visible}
             />
+
+
+            {
+                request ?
+                    <TouchableOpacity onPress={redirectToRequest} style={isKeyboardVisible ? styles.requestCover2 : styles.requestCover}>
+                        <View >
+                            <Text style={styles.requestText}>Click to request for products if you can't find it</Text>
+                        </View>
+                    </TouchableOpacity>
+                    : null
+            }
 
         </View>
     )

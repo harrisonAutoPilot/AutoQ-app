@@ -15,20 +15,9 @@ const Tab = createBottomTabNavigator();
 
 export default TabHomeNavigator = () => {
 
-    const tabBarListeners = ({ navigation, route }) => ({
-        tabPress: () => {
-            navigation.dispatch(
-                CommonActions.reset({
-                    index: 0,
-                    routes: [{ name: route.name }]
-                })
-            );
-        }
-    });
-    
     return (
         <Tab.Navigator screenOptions={{
-            tabBarHideOnKeyboard: true,  
+            tabBarHideOnKeyboard: true,
             headerShown: false,
             tabBarLabelStyle: Platform.OS === "android" ? styles.tabLable : null,
             tabBarActiveTintColor: "#3858CF",
@@ -41,16 +30,16 @@ export default TabHomeNavigator = () => {
             <Tab.Screen name="HomeScreen" component={Home} options={{
                 tabBarLabel: 'Home',
                 tabBarIcon: ({ color, focused }) => {
-                   
-                   return <View style={focused ?  styles.innerTabView : null}>
+
+                    return <View style={focused ? styles.innerTabView : null}>
                         {focused ? <View style={styles.tabLableTop}></View> : null}
                         <FIcon name="home" color={color} size={20} style={styles.iconStyle} />
                     </View>
                 },
             }}
-                // listeners={tabBarListeners}
             />
-            <Tab.Screen  name="CustomersDashboard" component={CustomersDashboard} options={{
+
+            <Tab.Screen name="CustomersDashboard" component={CustomersDashboard} options={{
                 tabBarLabel: 'Customers',
                 tabBarIcon: ({ color, focused }) => (
                     <View>
@@ -59,8 +48,8 @@ export default TabHomeNavigator = () => {
                     </View>
                 ),
             }}
-                // listeners={tabBarListeners}
             />
+
             <Tab.Screen name="Wallet" component={Wallet} options={{
                 tabBarLabel: 'Wallet',
                 tabBarIcon: ({ color, focused }) => (
@@ -70,8 +59,8 @@ export default TabHomeNavigator = () => {
                     </View>
                 ),
             }}
-                // listeners={tabBarListeners}
             />
+
             <Tab.Screen name="Catalogue" component={Catalogue} options={{
                 tabBarLabel: 'Catalogue',
                 tabBarBadgeStyle: styles.badgeStyle,
@@ -82,7 +71,6 @@ export default TabHomeNavigator = () => {
                     </View>
                 ),
             }}
-                // listeners={tabBarListeners}
             />
         </Tab.Navigator>
     )

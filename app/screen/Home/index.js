@@ -7,6 +7,7 @@ import styles from './style';
 import { Header } from "@Component";
 import { getCustomers} from "@Request/Customer";
 import { ScrollView } from "react-native-gesture-handler";
+import { listCart } from "@Request/Cart";
 
 const Home = (props) => {
     const dispatch = useDispatch();
@@ -40,7 +41,8 @@ const Home = (props) => {
         }
 
         dispatch(getAgent());
-        dispatch(getCustomers())
+        dispatch(getCustomers());
+        // dispatch(listCart());
     }, [])
 
     return (

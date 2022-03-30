@@ -26,6 +26,7 @@ const Drawer = (props) => {
 
     }
     const pendingOrders = () => props.navigation.navigate("PendingOrder");
+    const productRequest = () => props.navigation.navigate("ProductRequest");
 
     const { customers } = useSelector((state) => state.customer);
 
@@ -182,6 +183,19 @@ const Drawer = (props) => {
                                         <Image source={require("@Assets/image/Question.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Frequently Asked Questions</Text>
+                                </View>
+                                <View>
+                                    <Icon name="chevron-right" size={18} color="#9E9E9E" />
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.routeInnerView} onPress={productRequest}>
+
+                                <View style={styles.routeTextView}>
+                                    <View style={styles.routeTextIconView}>
+                                        <Image source={require("@Assets/image/Question.png")} style={globalStyles.quesImg} />
+                                    </View>
+                                    <Text style={styles.routeText}>Product Request</Text>
                                 </View>
                                 <View>
                                     <Icon name="chevron-right" size={18} color="#9E9E9E" />

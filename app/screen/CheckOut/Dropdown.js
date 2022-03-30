@@ -22,6 +22,7 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
   const dispatch = useDispatch();
 
   const { stores } = useSelector((state) => state.store);
+  console.log(stores)
 
   useEffect(() => {
     dispatch(getStore())

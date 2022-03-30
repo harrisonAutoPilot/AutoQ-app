@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 
     bottomCover: {
         width: wp('100%'),
-         height: hp('90%'),
+        height: hp('60%'),
         borderTopRightRadius: 35,
         borderTopLeftRadius: 35,
         alignItems: 'center',
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 29.75,
         paddingTop: 25.5,
         paddingBottom: 200,
-        marginTop: 20
+        marginTop: 5
     },
     modalPadding: {
         paddingHorizontal: 29.75,

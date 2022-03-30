@@ -9,11 +9,12 @@ import { cleanup } from "@Store/Customer";
 
 const CustomerSuccess = (props) => {
   const dispatch = useDispatch();
+  const details = props.route.params?.details
 
   const goBack = () => {
-    dispatch(cleanup())
-  }
-
+    dispatch(cleanup());
+    props.navigation.navigate("CustomersDashboard")
+  };
 
   const handleBackButton = () => {
     if (props.navigation.isFocused()) {
@@ -40,20 +41,17 @@ const CustomerSuccess = (props) => {
         <Text style={styles.detailText}>DETAILS</Text>
       </View>
       <View style={styles.midCover}>
-        <View style={styles.imgCover}>
-          <Image style={styles.regImg} source={require("@Assets/image/cross.png")} />
-        </View>
         <View style={styles.itemCover}>
           <Image style={styles.itemImg} source={require("@Assets/image/whiteStore.png")} />
-          <Text style={styles.itemText}>Medpharm</Text>
+          <Text style={styles.itemText}>{details.store_name}</Text>
         </View>
         <View style={styles.itemCover}>
           <Image style={styles.itemImg} source={require("@Assets/image/map-pin.png")} />
-          <Text style={styles.itemText}>12 Dignity Street, Ikeja, Lagos State</Text>
+          <Text style={styles.itemText}>{details.address}</Text>
         </View>
         <View style={styles.itemCover}>
           <Image style={styles.itemImg} source={require("@Assets/image/whitePhone.png")} />
-          <Text style={styles.itemText}>+234 802 432 0000</Text>
+          <Text style={styles.itemText}>+{details.phone}</Text>
         </View>
       </View>
 

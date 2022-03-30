@@ -36,14 +36,6 @@ const Cart = (props) => {
 
     useEffect(() => {
         if (items.carts && items.carts.length) {
-            setCopyCart(items.carts)
-        }
-
-    }, [items.carts])
-
-
-    useEffect(() => {
-        if (items.carts && items.carts.length) {
             let quantity = items.carts.map((item) => {
                 return {
                     quantity: item.quantity,
@@ -53,6 +45,9 @@ const Cart = (props) => {
                 }
             })
             setCartAmount2(quantity)
+            setCopyCart(items.carts)
+        }else if(items.carts && !items.carts.length){
+            setCopyCart(items.carts)
         }
 
     }, [items.carts])
@@ -117,13 +112,13 @@ const Cart = (props) => {
 
     useEffect(() => {
         dispatch(listCart());
-        // Change the state every second or the time given by User.
         const interval = setInterval(() => {
             setScrollText((scrollText) => !scrollText);
         }, 1000);
-        return () =>{ 
+        return () => { 
             clearInterval(interval);
             dispatch(cleanup());
+            setCopyCart([]);
         }
     }, []);
 
@@ -306,7 +301,7 @@ const Cart = (props) => {
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={refreshCartView} />
                         }
-                        extraData={copyCart}
+                        extraData={items.cart}
                     />}
 
 

@@ -6,7 +6,7 @@ import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
 import { placeOrder, verifyOrder, verifyCode } from "@Request/CustomerOrder";
 import { AuthBtn as Btn, COHeader as Header} from "@Component";
-import { cleanup, cleanErr } from "@Store/CustomerOrder";
+import { cleanup, cleanErr, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import commafy from "@Helper/Commafy";
 import BottomSheet from "./ConfirmOrder";
@@ -44,7 +44,7 @@ const ConfirmCheckOut = (props) => {
         if (verificationStatus === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
         } else if (verificationStatus === "success" && props.navigation.isFocused()) {
-            setSuccessMsg("Verification code sent")
+           waitSuccessTime()
         }
 
     }, [errors]);
@@ -64,6 +64,18 @@ const ConfirmCheckOut = (props) => {
 
         wait(5000).then(() => { 
           dispatch(cleanErr())
+        });
+    }, []);
+
+    const waitSuccessTime = useCallback(() => {
+        wait(1000).then(() => { 
+                setLoader(false);
+                setSuccessMsg("Verification code sent")
+        });
+
+        wait(5000).then(() => { 
+          dispatch(cleanVerify());
+          setSuccessMsg("")
         });
     }, []);
 
@@ -91,6 +103,11 @@ const ConfirmCheckOut = (props) => {
         const details = { orderGroup_id: orderDetail.order_group_id};
         dispatch(verifyOrder(details));
     };
+
+    const closeBottomSheet = () => {
+        dispatch(cleanup())
+        props.navigation.navigate("PendingOrder");
+    }
 
 
     return (
@@ -190,6 +207,7 @@ const ConfirmCheckOut = (props) => {
                 err ={err}
                 success={successMsg}
                 resendToken={resendToken}
+                close={closeBottomSheet}
             />
         </View>
     )

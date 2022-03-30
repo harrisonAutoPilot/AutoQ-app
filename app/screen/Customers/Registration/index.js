@@ -26,6 +26,7 @@ const Registration = (props) => {
     let [dataOne, setDataOne] = useState({})
 
     const goBack = () => props.navigation.goBack();
+    console.log(details?.stores[0])
 
     useFocusEffect(
         useCallback(() => {

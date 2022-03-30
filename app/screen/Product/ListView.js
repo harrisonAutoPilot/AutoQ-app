@@ -27,10 +27,10 @@ const List = (props) => {
                         <View style={styles.priceView}>
                             <Text style={styles.priceText}>&#8358;{item.price_per_pack ? commafy(item.price_per_pack): 0}/<Text style={styles.priceRoll}>Pack</Text></Text>
                         </View>
-                        <TouchableOpacity style={styles.priceView2} onPress={props.getItem}>
+                        {/* <TouchableOpacity style={styles.priceView2} onPress={props.getItem}>
                             <Icon name="plus" color="#3858CF" size={16} style={styles.icon}/>
                             <Text style={styles.priceText2}>Add to Cart</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
             </View>
             </TouchableOpacity>
