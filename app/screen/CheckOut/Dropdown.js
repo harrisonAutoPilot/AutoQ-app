@@ -6,10 +6,9 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Modal from "react-native-modal";
 import FIcon from "react-native-vector-icons/MaterialIcons";
-import {getStore} from "@Request/Store";
 import styles from "./styleDropdown";
 
 const Dropdown = ({ label, onSelect, storeAddress }) => {
@@ -19,15 +18,8 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
   const [dropdownTop, setDropdownTop] = useState(0);
   const [selectId, setSelectId] = useState();
 
-  const dispatch = useDispatch();
 
   const { stores } = useSelector((state) => state.store);
-  console.log(stores)
-
-  useEffect(() => {
-    dispatch(getStore())
-  }, [])
-
   const toggleDropdown = () => {
     visible ? setVisible(false) : openDropdown();
 
@@ -87,8 +79,7 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
         <TouchableOpacity
           style={styles.overlay}
           onPress={() => setVisible(false)}
-        >
-         
+        > 
 
           <View style={[styles.dropdown, { top: dropdownTop }]}>
             <View style={styles.dropLabelCover}><Text style={styles.dropLabel}>Select Store to deliver products</Text></View>

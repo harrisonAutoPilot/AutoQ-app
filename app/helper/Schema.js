@@ -11,7 +11,7 @@ const loginSchema = yup.object({
 });
 
 const changePinSchema = yup.object({
-    current_password: yup.number().required("Current Pin is required"),
+    current_password: yup.number().required("Current Pin is required").test('len', 'Pin should be exactly 4 digits', val => {if(val) return val.toString().length === 4}),
     new_password: yup.number().required("Pin is required").test('len', 'Pin should be exactly 4 digits', val => {if(val) return val.toString().length === 4}),
     retype_password: yup.number().required("Pin is required").oneOf([yup.ref('new_password'), null], 'Pins must match'),
 });
@@ -49,5 +49,9 @@ const addStoreSchemaImg = yup.object({
     images2: yup.array().min(1, "Store Image is required").required("Store Image is required")
 });
 
+const productSchema = yup.object({
+    description: yup.string().required("Field is required"),
+});
 
-export {searchSchema, loginSchema, changePinSchema, registerSchema, profileSchema, addStoreSchema, addStoreSchema2, addStoreSchemaImg}
+
+export {searchSchema, loginSchema, changePinSchema, registerSchema, profileSchema, addStoreSchema, addStoreSchema2, addStoreSchemaImg, productSchema}

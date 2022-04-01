@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, Image, Keyboard, TouchableWithoutFeedback, ScrollView } from "react-native";
-import { Btn, FormikValidator, InputField } from "@Component";
-import { productSchema } from "@Helper/schema";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import styles from "./style";
+import { productSchema } from "@Helper/Schema";
 import globalStyles from "@Helper/GlobalStyles";
-import {COHeader as Header, SuccessMsgViewTwo} from "@Component";
+import {COHeader as Header, SuccessMsgViewTwo,  AuthBtn, FormikValidator, InputField } from "@Component";
 import { productRequest } from "@Request/ProductRequest";
 import { cleanup } from "@Store/ProductRequest";
 import Loader from "@Screen/Loader";
 
 const ProductRequest = (props) => {
   const dispatch = useDispatch();
+
   const productState = {
     description: ""
   };
@@ -22,9 +22,9 @@ const ProductRequest = (props) => {
   const [successMsg, setSuccessMsg] = useState("");
   const [loader, setLoader] = useState(false);
 
-  const { status, errors, request } = useSelector((state) => state.productRequest);
+  const { status, errors } = useSelector((state) => state.productRequest);
 
-  const goBack = () => props.navigation.navigate("Home");
+  const goBack = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
 
   const toastConfig = {
 
@@ -96,11 +96,11 @@ const ProductRequest = (props) => {
 
   return (
     <View style={styles.main}>
-      <Header title="Product Request" onPress={goBack} styleView={styles.body} statusBar="#fff" />
+      <Header title="Product Request" onPress={goBack} styleView={styles.body} />
 
       <ScrollView contentContainerStyle={{paddingBottom: 20}}>
         <View style={styles.infoContainer}>
-          <Image source={require("@Assets/image/request/3.jpg")} style={styles.customerImg} />
+          <Image source={require("@Assets/image/3.jpg")} style={styles.customerImg} />
 
         </View>
 
@@ -148,7 +148,7 @@ const ProductRequest = (props) => {
                       />
                     </View>
 
-                    <Btn title="Request" onPress={props.handleSubmit} style={styles.submit} />
+                    <AuthBtn title="Request" onPress={props.handleSubmit} style={styles.submit} />
 
                  
                   </View>

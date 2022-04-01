@@ -14,12 +14,13 @@ import Loader from "@Screen/Loader";
 const Pin = () => {
 
     const dispatch = useDispatch();
-    const { errors, update, user } = useSelector((state) => state.auth);
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [pinVisibility, setPinVisibility] = useState(true);
     const [status, setStatus] = useState(false);
     const [loader, setLoader] = useState(false);
+
+    const { errors, update, user } = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(cleanup());
@@ -85,7 +86,7 @@ const Pin = () => {
         if (update === "failed" && status) {
             waitTime(errors?.msg, "");
         } else if (update === "success" && status) {
-            waitTime("", "Password Updated");
+            waitTime("", "PIN Updated");
         } else {
             setSuccessMsg("");
             setErrMsg("");

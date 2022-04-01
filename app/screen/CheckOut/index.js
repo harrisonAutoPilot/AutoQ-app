@@ -13,7 +13,8 @@ import Dropdown from './Dropdown';
 import commafy from "@Helper/Commafy";
 import { getWallet } from "@Request/Wallet";
 import PlaceholderComponent from "./placeholderComponent";
-import { listCart} from "@Request/Cart";
+import { listCart } from "@Request/Cart";
+import { getStore } from "@Request/Store";
 
 const CheckOut = (props) => {
 
@@ -27,12 +28,13 @@ const CheckOut = (props) => {
     const [selected, setSelected] = useState({});
     const { payment } = useSelector((state) => state.payment);
     const { wallet } = useSelector((state) => state.wallet);
+    const { stores } = useSelector((state) => state.store);
 
     const Confirm = () => {
         if (active && selected.id) {
             if (active === 1 && wallet.balance < items.total_amount)
                 return setErr("Insufficient Balance")
-            props.navigation.navigate("ConfirmCheckOut", { selected, active, wallet: wallet.balance, amount: items.total_amount, id: items.carts.map((cart) =>  cart.id )});
+            props.navigation.navigate("ConfirmCheckOut", { selected, active, wallet: wallet.balance, amount: items.total_amount, id: items.carts.map((cart) => cart.id) });
         } else {
             setErr("Payment Method and Store are Required")
         }
@@ -42,6 +44,7 @@ const CheckOut = (props) => {
         dispatch(listPaymentMethod());
         dispatch(listCart())
         dispatch(getWallet())
+        dispatch(getStore())
     }, []);
 
     const backToCart = () => props.navigation.navigate("Cart");
@@ -96,7 +99,7 @@ const CheckOut = (props) => {
             <Header title="Check Out"
                 onPress={backToCart}
                 styleView={styles.body}
-                styles={styles.headerText}/>
+                styles={styles.headerText} />
 
             <View style={styles.mainBody}>
                 {err ? <View style={[globalStyle.errMainView, { marginBottom: 10 }]}>
@@ -110,7 +113,7 @@ const CheckOut = (props) => {
             <ScrollView showsVerticalScrollIndicator={false} horizontal={false} containerStyle={styles.scrollView}>
                 <ScrollView horizontal={true}>
                     <View style={styles.mainContainer}>
-                        
+
                         <View style={styles.titleCover}>
                             <Text style={styles.titleText}>DELIVERY ADDRESS</Text>
                         </View>
@@ -118,13 +121,17 @@ const CheckOut = (props) => {
                         <View style={styles.selectContainer}>
                             <Text style={styles.selectText}>Select Store to deliver products</Text>
                             <View style={styles.dropCover}>
-                                <Dropdown label="" storeAddress="Select Store" data={data} onSelect={setSelected} />
+                                {stores.stores ?
+                                    <Dropdown label="" storeAddress="Select Store" data={data} onSelect={setSelected} />
+                                    :
+                                    <Text style={styles.itemDetails} >Loading...</Text>}
                             </View>
                         </View>
 
                         <View style={styles.title2Cover}>
                             <Text style={styles.titleText}>PAYMENT</Text>
                         </View>
+                        
                         {errMsg ? <View style={styles.errMainView}>
                             <Text style={styles.failedResponseText}>{errMsg}</Text>
                         </View> :
@@ -155,7 +162,7 @@ const CheckOut = (props) => {
                                         data={items.carts}
                                         renderItem={renderItem2}
                                         keyExtractor={item => item.id}
-                                         ListEmptyComponent={PlaceholderComponent}
+                                        ListEmptyComponent={PlaceholderComponent}
                                         horizontal={false}
                                     />
                                 </View>

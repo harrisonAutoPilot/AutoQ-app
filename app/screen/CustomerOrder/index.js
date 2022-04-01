@@ -27,7 +27,6 @@ const CustomerOrder = (props) => {
     const flatListRef = useRef()
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
-
     const { errors, orders, update, loaded } = useSelector((state) => state.order);
 
     const toastConfig = {
@@ -132,7 +131,7 @@ const CustomerOrder = (props) => {
     };
 
     const dismissKeyboard = () => Keyboard.dismiss();
-    const goToCat = () => props.navigation.navigate("Home");
+    const goToCat = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
 
     const ListView = ({ item }) => (

@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { View, Text, TouchableOpacity, ScrollView, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import Toast from 'react-native-toast-message';
 
 import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
 import { placeOrder, verifyOrder, verifyCode } from "@Request/CustomerOrder";
-import { AuthBtn as Btn, COHeader as Header} from "@Component";
+import { AuthBtn as Btn, COHeader as Header } from "@Component";
 import { cleanup, cleanErr, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import commafy from "@Helper/Commafy";
@@ -17,21 +18,31 @@ const ConfirmCheckOut = (props) => {
     const [err, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
-    const { selected, active, amount, wallet, id } = props.route.params;
+    const { selected, active, amount, wallet } = props.route.params;
     const bottomSheet = useRef();
 
     const backToCart = () => props.navigation.navigate("CheckOut");
+    const closeBottomSheet = () => props.navigation.navigate("PendingOrder");
     const { update, errors, orderDetail, verify, verificationStatus } = useSelector((state) => state.order);
 
     useEffect(() => {
         return () => dispatch(cleanup())
     }, []);
 
+
+    useEffect(() => {
+        if (orderDetail.order_group_id ) {
+            const details = { orderGroup_id: orderDetail.order_group_id };
+            dispatch(verifyOrder(details));
+            bottomSheet.current.show();
+        }
+    }, [orderDetail.order_group_id])
+
     useEffect(() => {
         if (update === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
         } else if (update === "success" && props.navigation.isFocused()) {
-            waitTime("Order Placed Successfully")
+            waitTime("Order Placed Successfully", "")
         }
 
         if (verify === "failed" && props.navigation.isFocused()) {
@@ -44,7 +55,7 @@ const ConfirmCheckOut = (props) => {
         if (verificationStatus === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
         } else if (verificationStatus === "success" && props.navigation.isFocused()) {
-           waitSuccessTime()
+            waitSuccessTime()
         }
 
     }, [errors]);
@@ -55,37 +66,32 @@ const ConfirmCheckOut = (props) => {
     };
 
     const waitTime = useCallback((suc, err) => {
-        wait(1000).then(() => { 
-            if(err){
+        wait(1000).then(() => {
+            if (err) {  
                 setLoader(false);
                 setErr(err)
-            } 
+            }
         });
 
-        wait(5000).then(() => { 
-          dispatch(cleanErr())
+        wait(5000).then(() => {
+            setErr("")
+            dispatch(cleanErr())
         });
     }, []);
 
     const waitSuccessTime = useCallback(() => {
-        wait(1000).then(() => { 
-                setLoader(false);
-                setSuccessMsg("Verification code sent")
+        wait(1000).then(() => {
+            setLoader(false);
+            setSuccessMsg("Verification code sent")
         });
 
-        wait(5000).then(() => { 
-          dispatch(cleanVerify());
-          setSuccessMsg("")
+        wait(1000).then(() => {
+            setSuccessMsg("")
+            dispatch(cleanVerify());
+
         });
     }, []);
 
-    useEffect(() => {
-        if(orderDetail.order_group_id){
-            const details = { orderGroup_id: orderDetail.order_group_id};
-            dispatch(verifyOrder(details));
-            bottomSheet.current.show();
-        }
-    }, [orderDetail.order_group_id])
 
     const submit = () => {
         const details = { store_id: selected.id, payment_method_id: active };
@@ -94,20 +100,16 @@ const ConfirmCheckOut = (props) => {
     };
 
     const verifyToken = (a, b, c, d) => {
-        const code = {code:parseInt(`${a}${b}${c}${d}`)}
+        const code = { code: parseInt(`${a}${b}${c}${d}`) }
+        setLoader(true)
         dispatch(verifyCode(code));
     };
 
-
     const resendToken = () => {
-        const details = { orderGroup_id: orderDetail.order_group_id};
+        const details = { orderGroup_id: orderDetail.order_group_id };
+        setLoader(true)
         dispatch(verifyOrder(details));
     };
-
-    const closeBottomSheet = () => {
-        dispatch(cleanup())
-        props.navigation.navigate("PendingOrder");
-    }
 
 
     return (
@@ -124,7 +126,6 @@ const ConfirmCheckOut = (props) => {
                     <Text style={globalStyle.failedResponseText}>{err}</Text>
                 </View>
                     : null}
-                  
             </View>
             <View style={styles.bottomCover} >
 
@@ -200,15 +201,18 @@ const ConfirmCheckOut = (props) => {
 
                 </ScrollView>
             </View>
-            <Loader isVisible={loader} />
+
             <BottomSheet
                 bottomSheet={bottomSheet}
-                submit = {verifyToken}
-                err ={err}
+                submit={verifyToken}
+                err={err}
                 success={successMsg}
                 resendToken={resendToken}
                 close={closeBottomSheet}
+                phone={selected?.user?.phone}
             />
+
+            <Loader isVisible={loader} />
         </View>
     )
 };

@@ -151,7 +151,7 @@ const Step1 = (props) => {
                                                             onBlur={props.handleBlur('phone')}
                                                             placeholder="234809XXXXXXX"
                                                             placeholderTextColor="#757575"
-                                                            keyboardType="default"
+                                                            keyboardType="number-pad"
                                                             onChangeText={(val) => {
                                                                 props.setFieldValue('phone', val)
                                                                 props.setFieldTouched('phone', true, false);

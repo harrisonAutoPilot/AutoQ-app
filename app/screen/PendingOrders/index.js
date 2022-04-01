@@ -168,7 +168,7 @@ const PendingOrder = (props) => {
     }, []);
 
     const dismissKeyboard = () => Keyboard.dismiss();
-    const goToCat = () => props.navigation.navigate("Home");
+    const goToCat = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
 
     const ListView = ({ item }) => (

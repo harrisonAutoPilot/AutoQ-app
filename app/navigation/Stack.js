@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSelector, useDispatch } from "react-redux";
+import VersionCheck from 'react-native-version-check';
 
 import { getUser } from "@Request/Auth";
 import credentials from "@Request/Credentials";
@@ -30,18 +31,31 @@ import MyStore from "@Screen/Customers/MyStore";
 import AddStore from "@Screen/Customers/MyStore/AddStore";
 import StoreDetails from "@Screen/Customers/MyStore/StoreDetails";
 import RegConfirm from "@Screen/Customers/Registration/RegConfirm";
+import SoftUpdate from "@Screen/SoftUpdate";
 
 
 const Stack = createNativeStackNavigator();
 const RootStack = createNativeStackNavigator();
 const LoginStack = createNativeStackNavigator();
 const SplashStack = createNativeStackNavigator();
+const SoftUpdateStack = createNativeStackNavigator();
 
 const SplashStackNavigator = () => {
     return (
         <SplashStack.Group >
             <SplashStack.Screen name="Splash" component={SplashScreen} />
         </SplashStack.Group>
+    )
+};
+
+const SoftUpdateNavigator = () => {
+    return (
+        <SoftUpdateStack.Group
+            screenOptions={{
+                presentation: 'modal',
+            }}>
+            <SoftUpdateStack.Screen name="SoftUpdate" component={SoftUpdate} />
+        </SoftUpdateStack.Group>
     )
 };
 
@@ -112,7 +126,7 @@ const StackNavigator = () => {
     const dispatch = useDispatch();
     const { isAuthenticated, userVerified, userStatus } = useSelector((state) => state.auth);
     const [timer, setTimer] = useState(false);
-    const [isOffline, setOfflineStatus] = useState(false);
+    const [versionStatus, setVersionState] = useState(false);
 
 
     const wait = (timeout) => {
@@ -120,7 +134,18 @@ const StackNavigator = () => {
     };
 
     useEffect(() => {
+
+        // VersionCheck.needUpdate()
+        //     .then(async res => {
+        //         if (res.isNeeded) {
+        //             setVersionState(true)
+        //         } else {
+        //             setVersionState(false)
+        //         }
+        //     });
+
         wait(1000).then(() => setTimer(true));
+
         (async () => {
             const checkCredential = await credentials();
             if (!checkCredential) {
@@ -139,21 +164,20 @@ const StackNavigator = () => {
     return (
         <Stack.Navigator
             screenOptions={{
-                headerShown: false,
-                // gestureEnabled: true,
-                // gestureDirection: "horizontal",
-                // ...TransitionPresets.SlideFromRightIOS,
-                // animation: "fade"
+                headerShown: false
             }}
         >
             {
-                timer 
-                ?
-                    isAuthenticated 
+                timer
                     ?
-                    RootStackNavigator()
-                         :
-                        LoginStackNavigator()
+                    !versionStatus ?
+                        isAuthenticated
+                            ?
+                            RootStackNavigator()
+                            :
+                            LoginStackNavigator()
+                        :
+                        SoftUpdateNavigator()
                     :
                     SplashStackNavigator()
             }

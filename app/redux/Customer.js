@@ -56,6 +56,7 @@ export const customerSlice = createSlice({
 
             builder
             .addCase(registerCustomer.pending, state => {
+                console.log("ho")
                 state.update = "pending";
                 state.errors = {};
             })
@@ -65,6 +66,7 @@ export const customerSlice = createSlice({
                 state.errors = {};
             })
             .addCase(registerCustomer.rejected, (state, { payload }) => {
+                console.log("hor")
                 state.update = "failed";
                 state.errors = payload;
             })

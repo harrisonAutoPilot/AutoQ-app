@@ -17,6 +17,6 @@ export const updatePendingCustomers = createAsyncThunk("customer/pending/update"
 export const registerCustomer = createAsyncThunk("customer/register",
    async (user, thunkAPI) => {
       const Axios = await AxiosBase();
-      return apiRequest(Axios.post('api/v1/register', user),
+      return apiRequest(Axios.post('api/v1/agent/users', user),
          thunkAPI, "auth")
    });

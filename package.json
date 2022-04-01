@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.16.1",
     "@react-native-community/clipboard": "^1.5.1",
+    "@react-native-community/netinfo": "^8.2.0",
     "@react-native-toolkit/triangle": "^0.0.1",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/drawer": "^6.3.1",
@@ -44,6 +45,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-toast-message": "^2.1.1",
     "react-native-vector-icons": "^9.1.0",
+    "react-native-version-check": "^3.4.2",
     "react-redux": "^7.2.6",
     "redux-persist": "^6.0.0",
     "redux-persist-sensitive-storage": "^1.0.0",

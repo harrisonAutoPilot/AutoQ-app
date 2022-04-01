@@ -7,7 +7,7 @@ import { COHeader as Header } from "@Component";
 
 
 const CustomerSupport = (props) => {
-    const goBack = () => props.navigation.navigate("Home");
+    const goBack = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
 
   const mobileCall = () => Linking.openURL(`tel:${'07081402414'}`);
 

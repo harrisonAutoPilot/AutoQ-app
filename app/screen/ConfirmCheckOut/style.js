@@ -445,5 +445,9 @@ export default styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignContent: "center",
+    fontSize: 14,
+    fontFamily: "Urbanist-Medium",
+    lineHeight: 16,
+    color: "#424242",
   }
 })

@@ -7,9 +7,9 @@ import {
 
 const styles = StyleSheet.create({
    main: {
-     
+
       flex: 1,
-      backgroundColor:'#fff'
+      backgroundColor: '#fff'
    },
    headerTitle: {
       position: 'absolute',
@@ -36,17 +36,17 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       textAlign: 'center',
       justifyContent: 'center',
-     
+
 
    },
-      linearView: {
-        paddingVertical: 10,
-        height: "100%",
-        borderRadius: 100,
-        width: 126,
-        height: 126,
-        marginRight: 16
-    },
+   linearView: {
+      paddingVertical: 10,
+      height: "100%",
+      borderRadius: 100,
+      width: 126,
+      height: 126,
+      marginRight: 16
+   },
    agentNameText: {
       color: '#1C1B1F',
       fontSize: 22,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
       borderStyle: 'solid',
       borderWidth: 1,
       borderColor: "#EEEEEE",
-      backgroundColor:'#fff',
+      backgroundColor: '#fff',
       alignItems: 'center',
       textAlign: 'center',
       padding: 10,
@@ -120,15 +120,15 @@ const styles = StyleSheet.create({
       marginRight: 10,
       marginTop: -5,
    },
-    whatsappImg: {
-    
+   whatsappImg: {
+
       marginRight: 10,
       marginTop: -5,
    },
-   italic:{
-      fontSize:12,
-      fontStyle:'italic',
-      color:'gray',
+   italic: {
+      fontSize: 12,
+      fontStyle: 'italic',
+      color: 'gray',
    },
    cardsDown: {
 
@@ -171,111 +171,112 @@ const styles = StyleSheet.create({
       letterSpacing: 0.1,
    },
    body: {
+      backgroundColor: "#00319D",
+      marginBottom: 5,
+      paddingBottom: 5
+   },
+   headerText: {
+      fontSize: 22,
+      fontFamily: "Urbanist-Regular",
+      lineHeight: 28,
+      color: "rgba(33, 33, 33, 1)",
+      letterSpacing: 0.2,
+      fontWeight: "400",
+      textAlign: "center"
+   },
+   textCover: {
+      width: wp('100%'),
+      alignItems: 'center',
+      padding: 20,
+      paddingTop: 2,
+
+   },
+   customerImg: {
+      width: 200,
+      height: 200,
+      borderRadius: 100,
+      // resizeMode:'contain',
+
+
+   },
+   bgText: {
+      fontSize: 20,
+      fontFamily: "Urbanist-SemiBold",
+      lineHeight: 28,
+      color: "rgba(33, 33, 33, 1)",
+      letterSpacing: 0.2,
+      textAlign: "center",
+      marginBottom: 5
+   },
+   smText: {
+      fontSize: 14,
+      fontFamily: "Urbanist-Regular",
+      lineHeight: 18,
+      color: "gray",
+      letterSpacing: 0.2,
+      fontWeight: "400",
+      textAlign: "center"
+   },
+   registerInputHolder: {
+      borderWidth: 1,
+      borderColor: "#BDBDBD",
+      paddingVertical: Platform.OS === "ios" ? 20 : 5,
+      paddingHorizontal: 10,
+      marginTop: Dimensions.get("window").height / 30,
+      marginBottom: Dimensions.get("window").height / 30,
+      borderRadius: 5,
+      maxHeight: 150
+
+      // flexWrap: "nowrap",
+      // flexGrow: 1
+   },
+   inputContainer: {
+      width: wp('100%'),
+      paddingLeft: 20,
+      paddingRight: 20,
+   },
+   productTitle: {
+      flexWrap: "wrap",
+      width: Dimensions.get("window").width - 65,
+      fontSize: 14,
+      fontFamily: "Urbanist-Regular",
+      lineHeight: 18,
+      color: "gray",
+      letterSpacing: 0.2,
+      fontWeight: "400",
+      textAlignVertical: "top"
+   },
+   inputErrHolder: {
+      borderColor: "red"
+   },
+   inputPinHolder: {
+      marginTop: 25,
+   },
+   registerInputPinHolder: {
+      marginTop: 10,
+   },
+   labelView: {
+      position: "absolute",
+      top: -10,
+      left: 10,
       backgroundColor: "#fff",
-      marginBottom: 20
-  },
-  headerText:{
-   fontSize: 22,
-   fontFamily: "Urbanist-Regular",
-   lineHeight: 28,
-   color: "rgba(33, 33, 33, 1)",
-   letterSpacing: 0.2,
-   fontWeight: "400",
-   textAlign: "center"
-},
-textCover:{
-   width:wp('100%'),
-   alignItems:'center',
-   padding:20,
-   paddingTop:2,
-  
-},
-customerImg:{
-   width:200,
-   height:200,
-   borderRadius:100,
-   // resizeMode:'contain',
-
-
-},
-bgText:{
-   fontSize: 20,
-   fontFamily: "Urbanist-SemiBold",
-   lineHeight: 28,
-   color: "rgba(33, 33, 33, 1)",
-   letterSpacing: 0.2,
-   textAlign: "center", 
-   marginBottom: 5
-},
-smText:{
-   fontSize: 14,
-   fontFamily: "Urbanist-Regular",
-   lineHeight: 18,
-   color: "gray",
-   letterSpacing: 0.2,
-   fontWeight: "400",
-   textAlign: "center" 
-},
-registerInputHolder: {
-   borderWidth: 1,
-   borderColor: "#BDBDBD",
-   paddingVertical: Platform.OS === "ios" ? 20 : 5,
-   paddingHorizontal: 10,
-   marginTop: Dimensions.get("window").height / 30,
-   marginBottom: Dimensions.get("window").height / 30,
-   borderRadius: 5,
-   maxHeight: 150
-  
-   // flexWrap: "nowrap",
-   // flexGrow: 1
-},
-inputContainer:{
-width:wp('100%'),
-paddingLeft:20,
-paddingRight:20,
-},
-productTitle:{
-   flexWrap: "wrap",
-   width: Dimensions.get("window").width - 65,
-   fontSize: 14,
-   fontFamily: "Urbanist-Regular",
-   lineHeight: 18,
-   color: "gray",
-   letterSpacing: 0.2,
-   fontWeight: "400", 
-   textAlignVertical: "top"
-},
-inputErrHolder: {
-   borderColor: "red"
-},
-inputPinHolder: {
-   marginTop: 25,
-},
-registerInputPinHolder: {
-   marginTop: 10,
-},
-labelView: {
-   position: "absolute",
-   top: -10,
-   left: 10,
-   backgroundColor: "#fff",
-   paddingHorizontal: 5,
-   zIndex: 2
-},
-label: {
-   fontSize: 12,
-   fontFamily: "Urbanist-Medium",
-   lineHeight: 16,
-   color: "#212121",
-   letterSpacing: 0.2
-},
-submit:{
-   marginTop: 10,
-   paddingVertical: 16,
-   paddingHorizontal: 24,
-   backgroundColor: "#3858CF",
-   borderRadius: 100,
-}
+      paddingHorizontal: 5,
+      zIndex: 2
+   },
+   label: {
+      fontSize: 12,
+      fontFamily: "Urbanist-Medium",
+      lineHeight: 16,
+      color: "#212121",
+      letterSpacing: 0.2
+   },
+   submit: {
+      marginTop: 10,
+      paddingVertical: 16,
+      paddingHorizontal: 24,
+      backgroundColor: "#3858CF",
+      borderRadius: 100,
+   }
 
 });
 

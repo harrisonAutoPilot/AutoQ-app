@@ -139,7 +139,7 @@ const Profile = () => {
                 </View>
                 <View style={styles.topTextCover}>
                     <Text style={styles.agentNameText}>{user?.name}</Text>
-                    <Text style={styles.agentCodeText}>RH/AG/004 - Registered Agent</Text>
+                    <Text style={styles.agentCodeText}>RH/AG/{user?.agent_id} - Registered Agent</Text>
                 </View>
 
             </View>

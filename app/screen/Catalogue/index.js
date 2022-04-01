@@ -93,7 +93,7 @@ const Catalogue = (props) => {
                         <InputField
                             style={styles.inputField}
                             value={searchCategory}
-                            placeholder="Search product catalog by name"
+                            placeholder="Search product by name"
                             placeholderTextColor="rgba(255, 255, 255, 0.8)"
                             onChangeText={(text) => setSearchCategory(text)}
                             editable={false}
