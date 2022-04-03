@@ -15,6 +15,7 @@ import notificationReducer from "./Notification";
 import customerReducer from "./Customer";
 import stateReducer from "./State";
 import lgaReducer from "./Lga";
+import productRequestReducer from "./ProductRequest";
 
 const persistConfig = {
     key: 'root',
@@ -40,5 +41,6 @@ export default combineReducers({
     notification: notificationReducer,
     customer: customerReducer,
     state: stateReducer,
-    lga: lgaReducer
+    lga: lgaReducer,
+    productRequest: productRequestReducer
 });

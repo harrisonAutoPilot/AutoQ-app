@@ -102,7 +102,6 @@ export const authSlice = createSlice({
                 state.errors = {};
             })
             .addCase(updateUserDetails.rejected, (state, { payload }) => {
-
                 state.update = "failed";
                 state.errors = payload;
             })

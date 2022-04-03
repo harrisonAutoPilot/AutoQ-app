@@ -26,6 +26,9 @@ export const orderSlice = createSlice({
         },
         cleanErr: (state) => {
             state.errors = {}
+        },
+        cleanVerify: (state) => {
+            state.verificationStatus = "idle"
         }
     },
     extraReducers: builder => {
@@ -104,7 +107,6 @@ export const orderSlice = createSlice({
 
             builder
             .addCase(verifyCode.pending, state => {
-                state.orderDetail = {};
                 state.errors = {};
                 state.verify = "pending";
             })
@@ -122,7 +124,7 @@ export const orderSlice = createSlice({
             .addCase(reOrder.pending, state => {
                 state.update = "pending";
                 state.errors = {};
-                state.orderDetail = []
+                state.orderDetail = {}
             })
             .addCase(reOrder.fulfilled, (state, action) => {
                 state.update = "success";
@@ -133,7 +135,7 @@ export const orderSlice = createSlice({
             .addCase(reOrder.rejected, (state, { payload }) => {
                 state.update = "failed";
                 state.errors = payload;
-                state.orderDetail = []
+                state.orderDetail = {}
             })
 
             builder
@@ -157,6 +159,6 @@ export const orderSlice = createSlice({
 
 });
 
-export const { cleanup, cleanErr } = orderSlice.actions
+export const { cleanup, cleanErr, cleanVerify } = orderSlice.actions
 
 export default orderSlice.reducer;

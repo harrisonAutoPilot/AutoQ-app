@@ -21,10 +21,11 @@ const Overlay = (props) => {
     const inputFourRef = useRef(null);
 
     const dismissKeyboard = () => Keyboard.dismiss();
+    console.log(props)
 
     const ModalView = () => (
         <View>
-            <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.20} radius={50} styles={styles.addStoreBottomSheet}>
+            <BottomSheet draggable={false} ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.20} radius={50} styles={styles.addStoreBottomSheet}>
                 <View style={globalStyle.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
 
                 <View style={globalStyle.errInCoverNew2}>
@@ -35,7 +36,7 @@ const Overlay = (props) => {
                     {props.success ? <SuccessMsgViewTwo title={props.success} /> : null}
                 </View>
                 <View style={styles.modalPadding}>
-                    <TouchableOpacity onPress={props.bottomSheetWClose} style={styles.backCover}>
+                    <TouchableOpacity onPress={props.close} style={styles.backCover}>
                         <Image source={require("@Assets/image/leading-iconn.png")} style={globalStyle.backImg} />
                     </TouchableOpacity>
                     <Text style={styles.modalTitle}>Confirm Withdrawal</Text>
@@ -48,7 +49,7 @@ const Overlay = (props) => {
                         <View style={styles.topPrompt}>
                             <View style={styles.topPromptTextCover}>
                                 <Text style={styles.topPromptText}>
-                                    Please enter the SMS confirmation code sent to the registered number <Text style={styles.phone}>+{ }</Text>.
+                                    Please enter the SMS confirmation code sent to the registered number <Text style={styles.phone}>+{props.phone}</Text>.
                                     The code is valid for 15 minutes.
                                 </Text>
 
@@ -129,9 +130,9 @@ const Overlay = (props) => {
                                     </View>
                                 </View>
 
-                                <View style={styles.labelCover2}>
-                                    <Text style={styles.label4}>Yet to receive SMS code? <Text style={styles.label5} onPress={props.resendToken}>Resend</Text></Text>
-                                </View>
+                                <TouchableOpacity style={styles.labelCover2} onPress={props.resendToken}>
+                                    <Text style={styles.label4}>Yet to receive SMS code? <Text style={styles.label5}>Resend</Text></Text>
+                                </TouchableOpacity>
                             </View>
                         </TouchableWithoutFeedback>
 
@@ -139,7 +140,9 @@ const Overlay = (props) => {
 
                 </ ScrollView >
                 <View style={[styles.addBtnCover2]}>
-                    <Btn title="Confirm Order" style={styles.addressBtn2} onPress={() => props.submit(inputOne, inputTwo, inputThree, inputFour)} />
+                    {inputOne.length && inputTwo.length && inputThree.length && inputFour.length ?
+                        <Btn title="Confirm Order" style={styles.addressBtn2} onPress={() => props.submit(inputOne, inputTwo, inputThree, inputFour)} />
+                        : null}
                 </View>
             </BottomSheet>
         </View>

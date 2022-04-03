@@ -17,7 +17,6 @@ const Header = (props) => {
         dispatch(listCart());
         dispatch(getNotification())
     }, []);
-
     
     return (
         <View>

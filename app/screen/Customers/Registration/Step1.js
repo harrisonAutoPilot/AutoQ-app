@@ -29,8 +29,8 @@ const Step1 = (props) => {
 
     const RenderItem = ({ item }) => {
         return (
-            <View style={[styles.optionView, active === item.id ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
-                <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
+            <View style={[styles.optionView, active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
+                <View style={active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionIconView : styles.optionIconView2}>
                     {userType?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
                         <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); }}>
                             <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
@@ -151,7 +151,7 @@ const Step1 = (props) => {
                                                             onBlur={props.handleBlur('phone')}
                                                             placeholder="234809XXXXXXX"
                                                             placeholderTextColor="#757575"
-                                                            keyboardType="default"
+                                                            keyboardType="number-pad"
                                                             onChangeText={(val) => {
                                                                 props.setFieldValue('phone', val)
                                                                 props.setFieldTouched('phone', true, false);

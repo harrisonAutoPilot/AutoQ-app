@@ -90,7 +90,7 @@ export default styles = StyleSheet.create({
     lineHeight: 20,
     color: "#3858CF",
     letterSpacing: 0.2,
-    paddingLeft: 3,
+    // paddingLeft: 3,
   },
 
   bottomDownCover: {

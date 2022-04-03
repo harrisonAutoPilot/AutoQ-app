@@ -18,7 +18,7 @@ const Catalogue = (props) => {
     const [searchCategoryArray, setSearchCategoryArray] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [err, setErr] = useState("");
-    const flatListRef = useRef()
+    const flatListRef = useRef();
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
@@ -28,6 +28,7 @@ const Catalogue = (props) => {
     const openNotification = () => props.navigation.navigate("Notification");
     const openCart = () => props.navigation.navigate("Cart");
     const openDrawer = () => props.navigation.openDrawer();
+    const redirectToSearch = () => props.navigation.navigate("Search");
 
     useEffect(()=> {
             dispatch(browseCategories())
@@ -83,21 +84,22 @@ const Catalogue = (props) => {
 
     return (
         <View style={styles.main}>
-            <Header title="Product" style={styles.btnText} notify={openNotification} cart={openCart} drawer={openDrawer}>
+            <Header title="Catalog" style={styles.btnText} notify={openNotification} cart={openCart} drawer={openDrawer}>
 
             <TouchableWithoutFeedback onPress={dismissKeyboard}>
-                <View style={styles.blueColor}>
+                <TouchableOpacity style={styles.blueColor} onPress={redirectToSearch}>
                     <View style={[styles.searchSection]}>
                         <Icon name="search" color="rgba(255, 255, 255, 0.8)" size={24} style={styles.searchIcon} />
                         <InputField
                             style={styles.inputField}
                             value={searchCategory}
-                            placeholder="Search product name"
+                            placeholder="Search product by name"
                             placeholderTextColor="rgba(255, 255, 255, 0.8)"
                             onChangeText={(text) => setSearchCategory(text)}
+                            editable={false}
                         />
                     </View>
-                </View>
+                </TouchableOpacity>
 
             </TouchableWithoutFeedback>
             </Header>

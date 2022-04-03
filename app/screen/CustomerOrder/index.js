@@ -3,7 +3,6 @@ import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from 'react-native-vector-icons/MaterialIcons';
-import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 import Modal from "./SortBy";
@@ -28,7 +27,6 @@ const CustomerOrder = (props) => {
     const flatListRef = useRef()
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
-
     const { errors, orders, update, loaded } = useSelector((state) => state.order);
 
     const toastConfig = {
@@ -43,12 +41,11 @@ const CustomerOrder = (props) => {
         setShowModal(true)
     };
 
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(getCustomerOrders());
-            return () => dispatch(cleanup());
-        }, [])
-    );
+
+    useEffect(() => {
+        dispatch(getCustomerOrders());
+        return () => dispatch(cleanup());
+    }, [])
 
     useEffect(() => {
         if (search.length > 0) {
@@ -134,7 +131,7 @@ const CustomerOrder = (props) => {
     };
 
     const dismissKeyboard = () => Keyboard.dismiss();
-    const goToCat = () => props.navigation.navigate("Home");
+    const goToCat = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
 
     const ListView = ({ item }) => (
@@ -183,43 +180,43 @@ const CustomerOrder = (props) => {
         <View style={styles.main}>
             <Header title="Customer Orders" style={styles.btnText} onPress={goToCat} />
 
-                <TouchableWithoutFeedback  onPress={dismissKeyboard}>
-                    <View style={styles.blueColor}>
-                        <View style={[styles.searchSection]}>
-                            <Icon name="search" color="rgba(255, 255, 255, 0.8)" size={24} style={styles.searchIcon} />
-                            <InputField
-                                style={styles.inputField}
-                                value={search}
-                                placeholder="Search by name, order no..."
-                                placeholderTextColor="rgba(255, 255, 255, 0.8)"
-                                onChangeText={(text) => setSearch(text)}
-                            />
-                        </View>
-
-                        <View style={styles.exchangeCover}>
-                            <Text style={styles.allOrderText}> All Orders</Text>
-                            {orders.orders?.length ?
-                            <TouchableOpacity style={styles.exchangeClickk} onPress={ redirectToSort }>
-                            <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
-                                <Text style={styles.exchangeText}>Sort by</Text>
-                            </TouchableOpacity>: null}
-                        </View>
+            <TouchableWithoutFeedback onPress={dismissKeyboard}>
+                <View style={styles.blueColor}>
+                    <View style={[styles.searchSection]}>
+                        <Icon name="search" color="rgba(255, 255, 255, 0.8)" size={24} style={styles.searchIcon} />
+                        <InputField
+                            style={styles.inputField}
+                            value={search}
+                            placeholder="Search by name, order no..."
+                            placeholderTextColor="rgba(255, 255, 255, 0.8)"
+                            onChangeText={(text) => setSearch(text)}
+                        />
                     </View>
 
+                    <View style={styles.exchangeCover}>
+                        <Text style={styles.allOrderText}> All Orders</Text>
+                        {orders.orders?.length ?
+                            <TouchableOpacity style={styles.exchangeClickk} onPress={redirectToSort}>
+                                <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
+                                <Text style={styles.exchangeText}>Sort by</Text>
+                            </TouchableOpacity> : null}
+                    </View>
+                </View>
 
-                </TouchableWithoutFeedback>
+
+            </TouchableWithoutFeedback>
 
             {err ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.bottomCover}>
-                {orders.orders && !orders.orders.length && loaded === "success" ?
-                    <EmptyPlaceHolder />
+                {loaded === "pending"  || loaded === "idle" ?
+                    <CustomerPlaceholderCard />
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={!result.length ? orders.orders : result}
                         renderItem={ListView}
-                        ListEmptyComponent={CustomerPlaceholderCard}
+                        ListEmptyComponent={EmptyPlaceHolder}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
                         refreshControl={
@@ -229,11 +226,12 @@ const CustomerOrder = (props) => {
                         getItemLayout={(data, index) => (
                             { length: 100, offset: 100 * index, index }
                         )}
+                        extraData={orders.orders}
                     />
                 }
             </View>
-            <Modal 
-            isVisible={showModal}
+            <Modal
+                isVisible={showModal}
                 sort={sortOrder}
                 onSwipeComplete={() => setShowModal(false)}
                 close={() => setShowModal(!showModal)}

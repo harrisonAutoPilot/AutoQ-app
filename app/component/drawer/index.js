@@ -26,6 +26,7 @@ const Drawer = (props) => {
 
     }
     const pendingOrders = () => props.navigation.navigate("PendingOrder");
+    const productRequest = () => props.navigation.navigate("ProductRequest");
 
     const { customers } = useSelector((state) => state.customer);
 
@@ -125,7 +126,7 @@ const Drawer = (props) => {
                         {/* <TouchableOpacity style={styles.agentView} onPress={myAgent}> */}
                         <TouchableOpacity style={styles.agentView} onPress={() => {props.navigation.navigate("CustomerOrder");}} >
                             <View style={styles.agentInnerView}>
-                                <Text style={styles.headerTitle}>Product</Text>
+                                <Text style={styles.headerTitle}>Orders</Text>
                             </View>
 
                             <View style={styles.routeInnerView}>
@@ -162,7 +163,7 @@ const Drawer = (props) => {
                             <View style={styles.agentInnerView}>
                                 <Text style={styles.headerTitle}>Help</Text>
                             </View>
-                            <View style={styles.routeInnerView}>
+                            <TouchableOpacity style={styles.routeInnerView} onPress={() => props.navigation.navigate("CustomerSupport")}>
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
@@ -173,7 +174,7 @@ const Drawer = (props) => {
                                 <View>
                                     <Icon name="chevron-right" size={18} color="#9E9E9E" />
                                 </View>
-                            </View>
+                            </TouchableOpacity>
 
                             <TouchableOpacity style={styles.routeInnerView} onPress={redirectToFAQ}>
 
@@ -182,6 +183,19 @@ const Drawer = (props) => {
                                         <Image source={require("@Assets/image/question-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Frequently Asked Questions</Text>
+                                </View>
+                                <View>
+                                    <Icon name="chevron-right" size={18} color="#9E9E9E" />
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.routeInnerView} onPress={productRequest}>
+
+                                <View style={styles.routeTextView}>
+                                    <View style={styles.routeTextIconView}>
+                                        <Image source={require("@Assets/image/Question.png")} style={globalStyles.quesImg} />
+                                    </View>
+                                    <Text style={styles.routeText}>Product Request</Text>
                                 </View>
                                 <View>
                                     <Icon name="chevron-right" size={18} color="#9E9E9E" />

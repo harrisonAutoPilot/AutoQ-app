@@ -14,7 +14,7 @@ const Active = (props) => {
     const [sheetOpen, setSheetOpen] = useState(false);
     const [result, setResult] = useState([]);
     const bottomSheetS = useRef();
-    const flatListRef = React.useRef()
+    const flatListRef = React.useRef();
 
     const { status, errors, customers } = useSelector((state) => state.customer);
 
@@ -82,7 +82,7 @@ const Active = (props) => {
                         <Text style={styles.phoneText}>+{item?.phone}</Text>
                     </View>
                     <View style={styles.cardDown}>
-                        <View style={styles.cardDownInner}><Text style={styles.phoneText} numberOfLines={2}>{item?.stores[0].address}</Text></View>
+                        <View style={styles.cardDownInner}><Text style={styles.phoneText} numberOfLines={2}>{item?.stores[0]?.address}</Text></View>
 
                     </View>
             </TouchableOpacity>

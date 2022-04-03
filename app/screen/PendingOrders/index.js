@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList, BackHandler } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from 'react-native-vector-icons/MaterialIcons';
@@ -9,12 +9,13 @@ import Toast from 'react-native-toast-message';
 import Modal from "@Screen/CustomerOrder/SortBy";
 import commafy from "@Helper/Commafy";
 import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
-import { getCustomerPendingOrders, reOrder } from "@Request/CustomerOrder";
+import { getCustomerPendingOrders, reOrder,  verifyOrder, verifyCode  } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
 import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
+import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
 
 const PendingOrder = (props) => {
     const dispatch = useDispatch();
@@ -24,11 +25,28 @@ const PendingOrder = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [err, setErr] = useState("");
     const [loader, setLoader] = useState(false);
+    const [successMsg, setSuccessMsg] = useState("");
     const flatListRef = useRef()
+    const bottomSheet = useRef();
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
-    const { errors, pendingOrders, update, loaded } = useSelector((state) => state.order);
+    const { errors, pendingOrders, update, loaded, verify, verificationStatus } = useSelector((state) => state.order);    
+    
+      const handleBackButton = () => {
+        if (props.navigation.isFocused()) {
+            props.navigation.navigate("Home");
+          return true;
+        }
+      };
+    
+      useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", handleBackButton);
+        return () => {
+          dispatch(cleanup())
+          BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+        }
+      }, []);
 
     const toastConfig = {
         error: () => (
@@ -57,13 +75,25 @@ const PendingOrder = (props) => {
 
     useEffect(() => {
         if (update === "failed" && props.navigation.isFocused()) {
-            waitTime(errors?.msg);
+            waitTime("", errors?.msg)
         } else if (update === "success" && props.navigation.isFocused()) {
-            props.navigation.navigate("Cart")
-        } else {
-            setErr("")
+            waitTime("Order Placed Successfully")
         }
-    }, [update]);
+
+        if (verify === "failed" && props.navigation.isFocused()) {
+            waitTime("", errors?.msg)
+        } else if (verify === "success" && props.navigation.isFocused()) {
+            dispatch(cleanup())
+            props.navigation.navigate("CheckoutSuccess", amount)
+        }
+
+        if (verificationStatus === "failed" && props.navigation.isFocused()) {
+            waitTime("", errors?.msg)
+        } else if (verificationStatus === "success" && props.navigation.isFocused()) {
+            setSuccessMsg("Verification code sent")
+        }
+
+    }, [errors]);
 
     const filterOrder = () => {
         let searched = pendingOrders.orders.filter(val => {
@@ -97,7 +127,18 @@ const PendingOrder = (props) => {
                 break;
 
         }
-    }
+    };
+
+    const verifyToken = (a, b, c, d) => {
+        const code = {code:parseInt(`${a}${b}${c}${d}`)}
+        dispatch(verifyCode(code));
+    };
+
+    const resendToken = () => {
+        const details = { orderGroup_id: orderDetail.order_group_id};
+        dispatch(verifyOrder(details));
+    };
+
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -126,14 +167,8 @@ const PendingOrder = (props) => {
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
-    const reOrders = (id) => {
-        const details = { order_group_id: id };
-        setLoader(true)
-        dispatch(reOrder(details));
-    };
-
     const dismissKeyboard = () => Keyboard.dismiss();
-    const goToCat = () => props.navigation.navigate("Home");
+    const goToCat = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
 
     const ListView = ({ item }) => (
@@ -211,14 +246,14 @@ const PendingOrder = (props) => {
             {err ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.bottomCover}>
-                {pendingOrders.orders && !pendingOrders.orders.length && loaded === "success" ?
-                    <EmptyPlaceHolder />
+                {loaded === "idle" || loaded === "pending" ?
+                    <CustomerPlaceholderCard />
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={!result.length ? pendingOrders.orders : result}
                         renderItem={ListView}
-                        ListEmptyComponent={CustomerPlaceholderCard}
+                        ListEmptyComponent={EmptyPlaceHolder}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
                         refreshControl={
@@ -240,6 +275,13 @@ const PendingOrder = (props) => {
             />
 
             <Loader isVisible={loader} />
+            <BottomSheet
+                bottomSheet={bottomSheet}
+                submit = {verifyToken}
+                err ={err}
+                success={successMsg}
+                resendToken={resendToken}
+            />
 
         </View>
     )

@@ -139,7 +139,7 @@ const Profile = () => {
                 </View>
                 <View style={styles.topTextCover}>
                     <Text style={styles.agentNameText}>{user?.name}</Text>
-                    <Text style={styles.agentCodeText}>RH/AG/004 - Registered Agent</Text>
+                    <Text style={styles.agentCodeText}>RH/AG/{user?.agent_id} - Registered Agent</Text>
                 </View>
 
             </View>
@@ -194,7 +194,7 @@ const Profile = () => {
                         </View>
                     </View>
 
-                    <View style={styles.bankCaption}>
+                    {/* <View style={styles.bankCaption}>
                         <Text style={styles.captionText}>Bank Details</Text>
                     </View>
                     <View style={styles.downCover}>
@@ -216,7 +216,7 @@ const Profile = () => {
                                 <Text style={styles.locText}>0045678900</Text>
                             </View>
                         </View>
-                    </View>
+                    </View> */}
                 </View>
                 {/* Added this line to know if its reflecting */}
             </ScrollView>

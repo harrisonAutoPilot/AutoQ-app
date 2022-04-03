@@ -118,6 +118,15 @@ export default styles = StyleSheet.create({
         flexGrow: 1,
        
     },
+    inputMainHolder2: {
+        marginTop: Dimensions.get("window").height /50,
+        height: "100%",
+        backgroundColor: "#fff",
+        alignSelf: "center",
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
+       
+    },
     labelView: {
         position: "absolute",
         top: -10,

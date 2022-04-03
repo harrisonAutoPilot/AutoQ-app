@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar, Animated } from "react-native";
+import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar, Animated, Keyboard } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 
 import { InputField } from "@Component/index";
 import { browseCategories } from "@Request/Category";
-import { searchProducts} from "@Request/Product";
+import { searchProducts } from "@Request/Product";
 import styles from "./style";
 import ListItems from "@Screen/Product/ListView";
 import BottomSheet from "@Screen/Overlay";
+import ProductPlaceholderCard from "@Screen/Product/ProductPlaceholderCard";
 
 const Search = (props) => {
     const dispatch = useDispatch();
@@ -23,19 +24,41 @@ const Search = (props) => {
     const [result, setResult] = useState({});
     const bottomSheet = useRef();
     const [visible, setVisible] = useState(false);
+    const [request, setRequest] = useState(false);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     const { categories } = useSelector((state) => state.category);
-    const { status, errors, searchedProducts,  } = useSelector((state) => state.product);
+    const { status, errors, searchedProducts } = useSelector((state) => state.product);
+    const redirectToRequest = () => props.navigation.navigate("ProductRequest");
 
     useEffect(() => {
-        dispatch(browseCategories())
+        dispatch(browseCategories());
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true); // or some other action
+            }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false); // or some other action
+            }
+        );
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
     }, []);
 
     useEffect(() => {
         if (search.length) {
             searchItem();
+            setRequest(true)
         } else if (!search.length) {
             setSearchArray([]);
+            setRequest(false)
         }
         if (searchCategory.length) {
             searchCategoryItem();
@@ -56,7 +79,7 @@ const Search = (props) => {
     const closeSheet = () => {
         bottomSheet.current.close();
     }
-    
+
 
     const searchItem = () => {
         let searched = searchedProducts.filter(val => {
@@ -68,7 +91,7 @@ const Search = (props) => {
 
         setSearchArray(searched)
     };
-    
+
     const searchCategoryItem = () => {
         dispatch(searchProducts(searchCategory.toLowerCase()))
         setSearchCategoryArray(searchedProducts)
@@ -95,9 +118,9 @@ const Search = (props) => {
     const ListView = ({ item }) => {
 
         return <View style={[styles.listContainer, active === item.name ? styles.activeColor : null]}>
-                <TouchableOpacity onPress={() => showMapCategory(item.name)}>
-                    <Text style={[styles.inputTitle, styles.color2]}>{item.display_name.trim()}</Text>
-                </TouchableOpacity>
+            <TouchableOpacity onPress={() => showMapCategory(item.name)}>
+                <Text style={[styles.inputTitle, styles.color2]}>{item.display_name.trim()}</Text>
+            </TouchableOpacity>
         </View>
     };
 
@@ -126,8 +149,8 @@ const Search = (props) => {
         />
     };
 
-     // Get the ID of the product to filter and show the Modal
-     const getItem = (id) => {
+    // Get the ID of the product to filter and show the Modal
+    const getItem = (id) => {
         filterProduct(id);
         setVisible(true)
         bottomSheet.current.show();
@@ -144,7 +167,7 @@ const Search = (props) => {
                     <View style={styles.column}>
                         <View style={styles.inputHolder}>
                             <Icon name="search" style={styles.searchIcon} size={20} color="#616161" />
-                          
+
                             {active === "" ?
                                 <View style={styles.inputText} >
                                     <InputField
@@ -154,7 +177,7 @@ const Search = (props) => {
                                         onChangeText={(text) => setSearchCategory(text)}
                                         value={searchCategory}
                                     />
-                                      <TouchableOpacity style={styles.clearTextView} onPress={() =>  setSearchCategory("")}>
+                                    <TouchableOpacity style={styles.clearTextView} onPress={() => setSearchCategory("")}>
                                         <Text style={styles.clearText}>X</Text>
                                     </TouchableOpacity>
                                 </View> : <View style={styles.inputText}>
@@ -166,7 +189,7 @@ const Search = (props) => {
                                         onChangeText={(text) => setSearch(text)}
                                         value={search}
                                     />
-                                   <TouchableOpacity style={styles.clearTextView} onPress={() =>  setSearch("")}>
+                                    <TouchableOpacity style={styles.clearTextView} onPress={() => setSearch("")}>
                                         <Text style={styles.clearText}>X</Text>
                                     </TouchableOpacity>
                                 </View>}
@@ -182,48 +205,62 @@ const Search = (props) => {
                 <TouchableOpacity style={[!active ? styles.activeColor : null, styles.innerContainer]} onPress={() => setActive("")}>
                     <Text style={[styles.inputTitle, styles.color1]}>All Categories</Text>
                 </TouchableOpacity>
- 
-                    <FlatList
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        data={categories}
-                        keyExtractor={item => item.id}
-                        ListEmptyComponent={<View />}
-                        renderItem={ListView}
-                    />
+
+                <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={categories}
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={<View />}
+                    renderItem={ListView}
+                />
             </View>
-            {active === "" ?
+            {active === ""
+                ?
                 <FlatList
                     data={searchCategoryArray}
                     keyExtractor={item => item.id}
-                    // ListEmptyComponent={ListEmptyComponent}
+                    ListEmptyComponent={<View />}
                     renderItem={ListView2}
                     ListFooterComponent={<View style={{ height: 50 }} />}
-                    // numColumns={2}
-                    // columnWrapperStyle={styles.column}
                 />
                 : null}
 
+            {(status === "pending" || status === "idle") && active !== "" ?
+                <ProductPlaceholderCard />
+                :
 
-            <Animated.FlatList
-                onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
-                showsVerticalScrollIndicator={false}
-                data={active ? !searchArray.length ? searchedProducts : searchArray : []}
-                keyExtractor={item => item.id}
-                ListEmptyComponent={<View />}
-                renderItem={ListItem}
-                ListFooterComponent={<View style={{ height: 50 }} />}
-                refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
-                }
-            />
+                <Animated.FlatList
+                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+                    showsVerticalScrollIndicator={false}
+                    data={active ? !searchArray.length ? searchedProducts : searchArray : []}
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={<View />}
+                    renderItem={ListItem}
+                    ListFooterComponent={<View style={{ height: 50 }} />}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+                    }
+                />
+            }
 
-<BottomSheet
+            <BottomSheet
                 bottomSheet={bottomSheet}
                 onPress={closeSheet}
                 result={result}
                 isVisible={visible}
             />
+
+
+            {
+                request ?
+                    <TouchableOpacity onPress={redirectToRequest} style={isKeyboardVisible ? styles.requestCover2 : styles.requestCover}>
+                        <View >
+                            <Text style={styles.requestText}>Click to request for products if you can't find it</Text>
+                        </View>
+                    </TouchableOpacity>
+                    : null
+            }
 
         </View>
     )

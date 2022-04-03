@@ -53,11 +53,10 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 16,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 28,
         color: "rgba(255, 255, 255, 0.6)",
         letterSpacing: 0.2,
-        fontWeight: "700",
         textAlign: "center"
 
     },

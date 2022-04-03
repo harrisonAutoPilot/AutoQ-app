@@ -7,6 +7,7 @@ import { Header } from "@Component";
 import MyWallet from "./MyWallet";
 import { cleanup } from "@Store/Auth";
 import { getWallet } from "@Request/Wallet";
+import ComingSoon from "./ComingSoon";
 
 const Wallet = (props) => {
 
@@ -27,9 +28,11 @@ const Wallet = (props) => {
         <View style={styles.view}>
             <Header drawer={openDrawer} notify={openNotification} cart={openCart} />
             <View style={styles.mainBody}>
-                <View style={styles.subHeader}>
+                {/* <View style={styles.subHeader}>
                     <MyWallet detail={detail} />
-                </View>
+                    
+                </View> */}
+                <ComingSoon />
 
             </View>
 

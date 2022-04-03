@@ -106,7 +106,32 @@ export default styles = StyleSheet.create({
         height: "100%",
         flexGrow: 1
     },
-    cancelView: {
-
+    requestCover: {
+        position: 'absolute',
+        width: wp('80%'),
+        right: wp('1%'),
+        top: hp('90%'),
+        padding: 10,
+        alignItems: 'center',
+        backgroundColor: '#7CCF24',
+        borderBottomLeftRadius: 50,
+        borderTopLeftRadius: 50,
+        borderBottomRightRadius: 60,
+    },
+    requestCover2: {
+        position: 'absolute',
+        width: wp('80%'),
+        right: wp('1%'),
+        top: hp('10%'),
+        padding: 10,
+        alignItems: 'center',
+        backgroundColor: '#7CCF24',
+        borderBottomLeftRadius: 50,
+        borderTopLeftRadius: 50,
+        borderBottomRightRadius: 60,
+    },
+    requestText: {
+        color: '#fff',
+        fontSize: 12,
     }
 })

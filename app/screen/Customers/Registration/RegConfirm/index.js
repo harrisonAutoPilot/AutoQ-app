@@ -14,6 +14,7 @@ import ViewDocument from "@Screen/ViewDocument"
 
 const RegConfirm = (props) => {
 
+
     const dispatch = useDispatch();
     const [errMsg, setErrMsg] = useState("");
     const [loader, setLoader] = useState(false);
@@ -22,7 +23,7 @@ const RegConfirm = (props) => {
     const details = props.route.params.data;
 
     const goBack = () => props.navigation.goBack();
-    const storeSuccess = () => props.navigation.navigate("CustomerSuccess", {details});
+    const storeSuccess = () => props.navigation.navigate("CustomerSuccess", { details });
     const { errors, update } = useSelector((state) => state.customer);
 
     const viewDoc = (img) => {
@@ -63,7 +64,7 @@ const RegConfirm = (props) => {
 
     useEffect(() => {
         if (update === "success" && props.navigation.isFocused()) {
-           storeSuccess();
+            storeSuccess();
         } else if (update === "failed" && props.navigation.isFocused()) {
             refreshView(errors?.msg, "")
         }
@@ -83,6 +84,7 @@ const RegConfirm = (props) => {
 
     const submit = () => {
         setLoader(true);
+        console.log("po")
         if (details.key === 1) {
             dispatch(updatePendingCustomers(details))
         }
@@ -111,11 +113,7 @@ const RegConfirm = (props) => {
             <View style={styles.smCard}>
                 <Image source={{ uri: item.path }} style={styles.smImg} />
             </View>
-            <TouchableOpacity>
-                <View>
-                    <Text style={styles.viewText}>View</Text>
-                </View>
-            </TouchableOpacity>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     );
 

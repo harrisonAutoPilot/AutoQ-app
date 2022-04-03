@@ -109,8 +109,8 @@ const Overlay = (props) => {
 
 
     const ModalView = () => (
-        <View>
-            <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.20} radius={50} styles={styles.addStoreBottomSheet}>
+        <View style={{flex: 1}}>
+            <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.13} radius={50} styles={styles.addStoreBottomSheet}>
                 <View style={globalStyle.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
 
                 <View style={globalStyle.errInCoverNew}>
@@ -118,7 +118,6 @@ const Overlay = (props) => {
                     {successMsg ? <Toast config={toastConfig} /> : null}
                 </View>
                 <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
-
                     <Image source={require("@Assets/image/left.png")} style={globalStyle.backImg} />
                 </TouchableOpacity>
 
@@ -148,15 +147,21 @@ const Overlay = (props) => {
                                 <View style={styles.modalminiSecondView}>
                                     <Text style={styles.modalminiTitle}>Price/Roll: <Text style={{ color: "#469D00" }}>&#8358;{commafy(result.price_per_pack)}</Text></Text>
                                 </View>
+                                <View style={styles.modalminiSecondView}>
+                                    <Text style={styles.modalminiTitle}>Carton Quantity: <Text style={{ color: "#469D00" }}>{result.quantity_per_carton}</Text></Text>
+                                </View>
+                                <View style={styles.modalminiSecondView}>
+                                    <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result.quantity_per_pack}</Text></Text>
+                                </View>
 
-                                <View style={styles.modalDiscount}>
+                                {/* <View style={styles.modalDiscount}>
                                     <View>
                                         <Icon name="info" size={18} color="#00319D" />
                                     </View>
                                     <View style={styles.modalDiscountTextView}>
                                         <Text style={styles.modalDiscountText}>Discount on Carton: {result.discount_on_carton}</Text>
                                     </View>
-                                </View>
+                                </View> */}
 
                                 <View style={styles.increaseCartMainAmountView}>
                                     <View style={styles.cartAmountView}>
