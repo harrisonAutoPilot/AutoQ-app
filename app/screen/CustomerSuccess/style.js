@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: 75,
     },
-    sucBtnText:{
+    sucBtnText: {
         fontSize: 14,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
@@ -104,17 +104,17 @@ const styles = StyleSheet.create({
         letterSpacing: 0.1,
         textAlign: "center"
     },
-    detailCover:{
-        width:wp('80%'),
-        padding:20,
-        borderTopWidth:1,
-        borderColor:'rgba(255, 255, 255, 0.2)',
-        alignItems:'center',
-        justifyContent:'center',
-        alignSelf:'center',
-        marginTop:20,
+    detailCover: {
+        width: wp('80%'),
+        padding: 20,
+        borderTopWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginTop: 20,
     },
-    detailText:{
+    detailText: {
         fontSize: 16,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
@@ -122,47 +122,47 @@ const styles = StyleSheet.create({
         letterSpacing: 0.1,
         textAlign: "center"
     },
-    imgCover:{
-        width:70,
-        height:70,
-        borderWidth:3,
-        borderColor:'#fff',
-        borderRadius:10,
-        alignSelf:'center',
-        alignItems:'center',
-        justifyContent:'center'
+    imgCover: {
+        width: 70,
+        height: 70,
+        borderWidth: 3,
+        borderColor: '#fff',
+        borderRadius: 10,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    regImg:{
-        width:70,
-        height:70,
-        resizeMode:'contain'   
+    regImg: {
+        width: 70,
+        height: 70,
+        resizeMode: 'contain'
     },
-    itemCover:{
-        flexDirection:'row',
-        padding:10,
-        marginBottom:-10,
-        width:wp('70%'),
+    itemCover: {
+        flexDirection: 'row',
+        padding: 10,
+        marginBottom: -10,
+        width: wp('70%'),
 
     },
-    itemImg:{
-        width:20,
-        height:20,
-        resizeMode:'contain',
+    itemImg: {
+        width: 20,
+        height: 20,
+        resizeMode: 'contain',
     },
-    itemText:{
+    itemText: {
         fontSize: 16,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "#FFFFFF",
         letterSpacing: 0.3,
         textAlign: "left",
-        fontWeight:'400',
-        marginTop:-2,
-        marginLeft:10,
+        fontWeight: '400',
+        marginTop: -2,
+        marginLeft: 10,
     },
-sucBtnCover:{
-marginTop:-25,
-}
+    sucBtnCover: {
+        marginTop: -25,
+    }
 });
 
 export default styles

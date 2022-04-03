@@ -13,7 +13,6 @@ const Notification = (props) => {
 
     const dispatch = useDispatch();
     const scrollY = useRef(new Animated.Value(0)).current;
-    const [err, setErr] = useState("");
     const ITEM_SIZE = 120
 
     useEffect(() => {
@@ -44,7 +43,7 @@ const Notification = (props) => {
                     <View>
                         <Text style={styles.subHeadingTitle}>This Week</Text>
                     </View>
-                    <View style={styles.subHeading}>
+                    {/* <View style={styles.subHeading}>
                         <TouchableOpacity style={[styles.miniHeaderView, styles.filterView]}>
                             <Icon name="chevron-down" size={14} color="#212121" />
                             <View style={styles.margin}>
@@ -54,7 +53,7 @@ const Notification = (props) => {
                         <TouchableOpacity style={[styles.miniHeaderView, styles.filterView]}>
                             <Text style={styles.text}>Clear All</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </View>
                 {status === "pending" || status === "idle" ?
                     <NotificationPlaceholder /> :
