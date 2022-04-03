@@ -4,6 +4,7 @@ import styles from "./style";
 import { COHeader as Header } from "@Component";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import TrackOrderPlaceholderCard from './TrackOrderPlaceholder'
 
 import { trackOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
@@ -51,7 +52,7 @@ const TrackOrder = (props) => {
 
                <FlatList
                   data={trackOrderList?.tracks}
-                  renderItem={ListView}
+                  renderItem={TrackOrderPlaceholderCard}
                   keyExtractor={item => item.id}
                />
                {trackOrderList?.status ?
