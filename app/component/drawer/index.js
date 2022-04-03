@@ -68,7 +68,7 @@ const Drawer = (props) => {
         <TouchableOpacity onPress={() => redirectToScreen(item.route)} style={styles.routeInnerView}>
             <View style={styles.routeTextView}>
                 <View style={styles.routeTextIconView}>
-                    <FIcon name={item.icon} size={17} color="#00319D" />
+                <Image source={require("@Assets/image/folder-notch-open-fill.png")} style={globalStyles.quesImg} />
                 </View>
                 <Text style={styles.routeText}>{item.name}</Text>
                 <View style={styles.firstInnerHeader}>
@@ -133,7 +133,7 @@ const Drawer = (props) => {
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                        <FIcon name="download-box" size={17} color="#00319D" />
+                                    <Image source={require("@Assets/image/archive-box-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Customer Orders</Text>
                                 </View>
@@ -148,7 +148,7 @@ const Drawer = (props) => {
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                        <Icon name="refresh-cw" size={17} color="#00319D" />
+                                    <Image source={require("@Assets/image/arrows-counter-clockwise-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Pending Orders</Text>
                                 </View>
@@ -193,7 +193,7 @@ const Drawer = (props) => {
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                        <Image source={require("@Assets/image/Question.png")} style={globalStyles.quesImg} />
+                                    <FIcon name="comment-edit-outline" size={18} color="#00319D" />
                                     </View>
                                     <Text style={styles.routeText}>Product Request</Text>
                                 </View>
