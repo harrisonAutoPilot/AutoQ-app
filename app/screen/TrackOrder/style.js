@@ -121,6 +121,15 @@ const styles = StyleSheet.create({
     marginRight: 30,
     paddingLeft: 30,
   },
+  checkLineCoverP: {
+    width: wp('80%'),
+    marginRight: 30,
+    paddingLeft: 30,
+    backgroundColor:'#bfbfbf',
+    height:40,
+    borderRadaius:5,
+
+  },
   upTextOne: {
     color: '#424242',
     fontSize: 16,
@@ -243,9 +252,34 @@ const styles = StyleSheet.create({
     padding: 8,
 
   },
+  checkImgCoverP: {
+    backgroundColor: '#bfbfbf',
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+    marginRight: 20,
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: 8,
+
+  },
+  lines:{
+    marginTop:2,
+    width:180,
+    height:30,
+    backgroundColor:'#bfbfbf',
+    borderRadius:20,
+    marginBottom:10,
+  },
   checkImg: {
     width: 14,
     height: 14,
+  },
+  checkImgP: {
+    width: 14,
+    height: 14,
+    backgroundColor:'#bfbfbf',
+    borderRadius:100,
   },
   lineImg: {
     width: 25,

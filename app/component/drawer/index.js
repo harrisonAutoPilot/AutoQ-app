@@ -167,7 +167,7 @@ const Drawer = (props) => {
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                        <FIcon name="comment-multiple-outline" size={17} color="#00319D" />
+                                    <Image source={require("@Assets/image/chats-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Customer Support</Text>
                                 </View>
@@ -180,7 +180,7 @@ const Drawer = (props) => {
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                        <Image source={require("@Assets/image/Question.png")} style={globalStyles.quesImg} />
+                                        <Image source={require("@Assets/image/question-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Frequently Asked Questions</Text>
                                 </View>
@@ -211,7 +211,7 @@ const Drawer = (props) => {
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                        <Icon name="file-text" size={17} color="#00319D" />
+                                    <Image source={require("@Assets/image/file-text-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Terms of Use &amp; Privacy Policy</Text>
                                 </View>
