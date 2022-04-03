@@ -64,6 +64,7 @@ const RegConfirm = (props) => {
 
     useEffect(() => {
         if (update === "success" && props.navigation.isFocused()) {
+            setLoader(false);
             storeSuccess();
         } else if (update === "failed" && props.navigation.isFocused()) {
             refreshView(errors?.msg, "")

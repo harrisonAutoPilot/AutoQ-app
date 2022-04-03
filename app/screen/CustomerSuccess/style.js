@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
     itemText:{
         fontSize: 16,
-        fontFamily: "Urbanist",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 24,
         color: "#FFFFFF",
         letterSpacing: 0.3,
