@@ -84,6 +84,7 @@ const RegConfirm = (props) => {
 
     const submit = () => {
         setLoader(true);
+        console.log("po")
         if (details.key === 1) {
             dispatch(updatePendingCustomers(details))
         }
