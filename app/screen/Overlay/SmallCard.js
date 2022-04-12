@@ -1,6 +1,8 @@
 import React from 'react'
 import { View } from "react-native"
 import Carousel, { Pagination } from 'react-native-snap-carousel'
+import {NativeViewGestureHandler} from "react-native-gesture-handler"
+
 import CardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CardItems'
 
 
@@ -10,6 +12,7 @@ const SmallCard = (props) => {
 
   return (
     <View>
+       <NativeViewGestureHandler>
       <Carousel
         layout="default"
         layoutCardOffset={9}
@@ -32,6 +35,7 @@ const SmallCard = (props) => {
         onSnapToItem={(index) => setIndex(index)}
         useScrollView={true}
       />
+      </NativeViewGestureHandler>
       <Pagination
         dotsLength={props.img.length}
         activeDotIndex={index}

@@ -4,14 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import styles from "./style";
-import globalStyles from "@Helper/GlobalStyles";
 import { AuthBtn as Btn, FormikValidator, InputField, SuccessMsgViewTwo } from "@Component";
 import { changePinSchema } from "@Helper/Schema";
 import { updateUserPassword } from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
 
-const Pin = () => {
+export default Pin = () => {
 
     const dispatch = useDispatch();
     const [errMsg, setErrMsg] = useState("");
@@ -249,5 +248,3 @@ const Pin = () => {
         </View>
     )
 };
-
-export default Pin;

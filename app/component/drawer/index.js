@@ -9,7 +9,6 @@ import { CommonActions } from '@react-navigation/native';
 import links from "./data";
 import styles from "./style";
 import { logout } from "@Store/Auth";
-import globalStyles from "@Helper/GlobalStyles";
 import { getCustomers } from "@Request/Customer";
 
 const Drawer = (props) => {
@@ -94,7 +93,7 @@ const Drawer = (props) => {
                         end={{ x: 1, y: 1 }}
                     >
                         <View style={styles.agentImgView}>
-                            <Image style={styles.agentImg} source={{uri: user?.picture_url}} />
+                            <Image style={styles.agentImg} source={{uri: `${URL}${user?.picture_url}`}} />
                         </View>
 
                     </LinearGradient>

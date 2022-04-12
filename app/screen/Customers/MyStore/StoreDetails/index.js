@@ -9,7 +9,6 @@ import styles from './style';
 import { useSelector, useDispatch } from "react-redux";
 import { deleteStore } from "@Request/Store";
 import { cleanup } from "@Store/Stores";
-import globalStyles from "@Helper/GlobalStyles";
 import ViewDocument from "@Screen/ViewDocument"
 import Loader from "@Screen/Loader";
 

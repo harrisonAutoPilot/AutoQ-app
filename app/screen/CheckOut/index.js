@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, FlatList, ScrollView, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
 import { AuthBtn as Btn, COHeader as Header } from "@Component";
 import FIcon from "react-native-vector-icons/MaterialIcons";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { listPaymentMethod } from "@Request/PaymentMethod";
-import URL from "@Helper/Constant";
 import Dropdown from './Dropdown';
-import commafy from "@Helper/Commafy";
 import { getWallet } from "@Request/Wallet";
 import PlaceholderComponent from "./placeholderComponent";
 import { listCart } from "@Request/Cart";
@@ -71,7 +68,8 @@ const CheckOut = (props) => {
                 <View style={active === item.id ? styles.optionTextView : styles.optionTextView2} >
                     <Text style={styles.optionText}>{item.display_name}</Text>
                     <View style={styles.optionMiniTextView}>
-                        <Text style={styles.itemDetails}>{item.id == "1" ? ` Balance: ₦${wallet.balance ? commafy(wallet.balance) : 0}` : "Pay on Delivery"}</Text>
+                        <Text style={styles.itemDetails}>{item.id == "1" ? ` Balance: ₦${wallet.balance ? commafy(wallet.balance) : 0}` 
+                        : item.id == "2" ? "Pay on Delivery" :  "Remedial Health Solutions Ltd"}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -102,10 +100,10 @@ const CheckOut = (props) => {
                 styles={styles.headerText} />
 
             <View style={styles.mainBody}>
-                {err ? <View style={[globalStyle.errMainView, { marginBottom: 10 }]}>
+                {err ? <View style={[globalStyles.errMainView, { marginBottom: 10 }]}>
 
-                    <Icon name="exclamation-circle" color="#fff" style={globalStyle.exclaImg} size={20} />
-                    <Text style={globalStyle.failedResponseText}>{err}</Text>
+                    <Icon name="exclamation-circle" color="#fff" style={globalStyles.exclaImg} size={20} />
+                    <Text style={globalStyles.failedResponseText}>{err}</Text>
                 </View>
                     : null}
             </View>

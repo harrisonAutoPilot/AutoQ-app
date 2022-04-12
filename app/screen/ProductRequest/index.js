@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, Image, Keyboard, TouchableWithoutFeedback, ScrollView } from "react-native";
+import { View, Text, Image, Keyboard, TouchableWithoutFeedback, ScrollView, BackHandler } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
+import { CommonActions } from '@react-navigation/native';
 
 import styles from "./style";
 import { productSchema } from "@Helper/Schema";
-import globalStyles from "@Helper/GlobalStyles";
 import {COHeader as Header, SuccessMsgViewTwo,  AuthBtn, FormikValidator, InputField } from "@Component";
 import { productRequest } from "@Request/ProductRequest";
 import { cleanup } from "@Store/ProductRequest";
@@ -24,7 +24,25 @@ const ProductRequest = (props) => {
 
   const { status, errors } = useSelector((state) => state.productRequest);
 
-  const goBack = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
+  const goBack = () => {
+    const navigateAction = CommonActions.reset({
+      index: 1,
+      routes: [
+          { name: 'Home' }
+        ],
+    })
+    props.navigation.dispatch(navigateAction);
+  
+  };
+
+
+  const handleBackButton = () => {
+    if (props.navigation.isFocused()) {
+      goBack()
+      return true;
+    }
+  };
+
 
   const toastConfig = {
 
@@ -73,7 +91,11 @@ const ProductRequest = (props) => {
   }, []);
 
   useEffect(() => {
-    return () => dispatch(cleanup())
+    BackHandler.addEventListener("hardwareBackPress", handleBackButton);
+    return () => {
+      dispatch(cleanup())
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+    }
   }, [])
 
   useEffect(() => {

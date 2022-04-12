@@ -6,12 +6,10 @@ import FIcon from 'react-native-vector-icons/MaterialIcons';
 import Toast from 'react-native-toast-message';
 
 import Modal from "./SortBy";
-import commafy from "@Helper/Commafy";
 import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
 import { getCustomerOrders, reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "./style";
-import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "./CustomerPlaceholderCard";
 import EmptyOrder from "@Component/Empty/emptyOrder"
@@ -151,7 +149,7 @@ const CustomerOrder = (props) => {
                         <Text style={styles.midTextOne}>{item.orders.length} {item.orders.length > 1 ? "Items" : "Item"}</Text>
                     </View>
                     <View style={styles.cardMidDown}>
-                        <Text style={styles.midTextTwo} numberOfLines={1}>{item.orders[0]?.product.name} .....</Text>
+                        <Text style={styles.midTextTwo} numberOfLines={1}>{item.orders[0]?.product?.name} .....</Text>
                     </View>
                 </View>
 

@@ -3,19 +3,17 @@ import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from 'react-native-vector-icons/MaterialIcons';
-import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 import Modal from "@Screen/CustomerOrder/SortBy";
-import commafy from "@Helper/Commafy";
 import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
-import { getCustomerPendingOrders, reOrder,  verifyOrder, verifyCode  } from "@Request/CustomerOrder";
+import { getCustomerPendingOrders, verifyOrder, verifyCode  } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
-import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
 import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
+
 
 const PendingOrder = (props) => {
     const dispatch = useDispatch();
@@ -26,12 +24,15 @@ const PendingOrder = (props) => {
     const [err, setErr] = useState("");
     const [loader, setLoader] = useState(false);
     const [successMsg, setSuccessMsg] = useState("");
+    const [amount, setAmount] = useState("");
+    const [phone, setPhone] = useState("")
+    const [id, setId] = useState("")
     const flatListRef = useRef()
     const bottomSheet = useRef();
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
-    const { errors, pendingOrders, update, loaded, verify, verificationStatus } = useSelector((state) => state.order);    
+    const { errors, pendingOrders, update, loaded, verify, verificationStatus } = useSelector((state) => state.order);   
     
       const handleBackButton = () => {
         if (props.navigation.isFocused()) {
@@ -41,6 +42,7 @@ const PendingOrder = (props) => {
       };
     
       useEffect(() => {
+        dispatch(getCustomerPendingOrders());
         BackHandler.addEventListener("hardwareBackPress", handleBackButton);
         return () => {
           dispatch(cleanup())
@@ -60,12 +62,12 @@ const PendingOrder = (props) => {
         setShowModal(true)
     };
 
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(getCustomerPendingOrders());
-            return () => dispatch(cleanup());
-        }, [])
-    );
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         dispatch(getCustomerPendingOrders());
+    //         return () => dispatch(cleanup());
+    //     }, [])
+    // );
 
     useEffect(() => {
         if (search.length > 0) {
@@ -83,14 +85,17 @@ const PendingOrder = (props) => {
         if (verify === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
         } else if (verify === "success" && props.navigation.isFocused()) {
-            dispatch(cleanup())
+            setLoader(false)
+            dispatch(cleanup());
+            dispatch(getCustomerPendingOrders())
             props.navigation.navigate("CheckoutSuccess", amount)
         }
 
         if (verificationStatus === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
         } else if (verificationStatus === "success" && props.navigation.isFocused()) {
-            setSuccessMsg("Verification code sent")
+            setSuccessMsg("Verification code sent");
+            bottomSheet.current.show();
         }
 
     }, [errors]);
@@ -131,11 +136,13 @@ const PendingOrder = (props) => {
 
     const verifyToken = (a, b, c, d) => {
         const code = {code:parseInt(`${a}${b}${c}${d}`)}
+        setLoader(true);
         dispatch(verifyCode(code));
     };
 
-    const resendToken = () => {
-        const details = { orderGroup_id: orderDetail.order_group_id};
+    const resendToken = (id) => {
+        const details = { orderGroup_id: id};
+        setLoader(true);
         dispatch(verifyOrder(details));
     };
 
@@ -172,7 +179,7 @@ const PendingOrder = (props) => {
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
 
     const ListView = ({ item }) => (
-        <TouchableOpacity onPress={() => details(item)}>
+        <TouchableOpacity >
             <View style={[styles.card, styles.elevation]}>
                 <View style={styles.cardUpCover}>
                     <View style={styles.cardUpTop}>
@@ -194,12 +201,12 @@ const PendingOrder = (props) => {
 
                 <View style={styles.cardDownCover}>
 
-                    <View style={styles.StatusCover}>
-                        <Text style={styles.statusText}>{item.status_text}</Text>
+                    <View style={styles.StatusCoverB}>
+                        <Text style={styles.statusText2}>Pending</Text>
                     </View>
 
                     {item.ref_no !== null ?
-                        <TouchableOpacity style={styles.reorderCover} onPress={() => reOrders(item.id)}>
+                        <TouchableOpacity style={styles.reorderCover} onPress={() => {resendToken(item.id); setPhone(item?.user?.phone); setId(item.id); setAmount(item.total_amount)}}>
                             <Text style={styles.reOrderText}>Re-Send Code</Text>
                             <Image source={require("@Assets/image/refresh.png")} style={styles.refreshImg} />
                         </TouchableOpacity>
@@ -280,7 +287,8 @@ const PendingOrder = (props) => {
                 submit = {verifyToken}
                 err ={err}
                 success={successMsg}
-                resendToken={resendToken}
+                resendToken={() => resendToken(id)}
+                phone= {phone}
             />
 
         </View>

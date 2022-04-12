@@ -1,4 +1,4 @@
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import Navigation from '@Navigation/index';
 import { Provider } from "react-redux";

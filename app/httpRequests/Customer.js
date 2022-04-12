@@ -18,5 +18,5 @@ export const registerCustomer = createAsyncThunk("customer/register",
    async (user, thunkAPI) => {
       const Axios = await AxiosBase();
       return apiRequest(Axios.post('api/v1/agent/users', user),
-         thunkAPI, "auth")
+         thunkAPI)
    });

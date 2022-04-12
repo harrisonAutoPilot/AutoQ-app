@@ -328,6 +328,15 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         // height: 30,
     },
+    StatusCoverB: {
+        backgroundColor: 'rgba(233, 235, 249, 1)',
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 16,
+        paddingRight: 16,
+        borderRadius: 20,
+        // height: 30,
+    },
     StatusCoverP: {
         backgroundColor: '#bfbfbf',
         paddingTop: 6,
@@ -341,6 +350,15 @@ const styles = StyleSheet.create({
     },
     statusText: {
         color: '#469D00',
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 20,
+        fontWeight: "600",
+        letterSpacing: 0.1,
+        textTransform: 'capitalize',
+    },
+    statusText2: {
+        color: 'rgba(0, 49, 157, 1)',
         fontSize: 14,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,

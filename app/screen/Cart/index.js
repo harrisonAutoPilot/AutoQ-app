@@ -7,11 +7,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
-import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
 import { listCart, deleteCart, updateCart } from "@Request/Cart";
-import commafy from "@Helper/Commafy";
-import URL from "@Helper/Constant";
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup } from "@Store/Cart";
@@ -125,8 +122,8 @@ const Cart = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyle.errMainView, { marginBottom: 10 }]}>
-                <Text style={globalStyle.failedResponseText}>{err}</Text>
+            <View style={[globalStyles.errMainView, { marginBottom: 10 }]}>
+                <Text style={globalStyles.failedResponseText}>{err}</Text>
             </View>
         ),
 

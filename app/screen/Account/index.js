@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, TouchableOpacity} from "react-native";
 import { useDispatch } from "react-redux";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect , CommonActions} from '@react-navigation/native';
 
 import styles from "./style";
 import {COHeader as Header} from "@Component";
@@ -13,7 +13,15 @@ const AccountSettings = (props) => {
 
     const dispatch = useDispatch();
     const [activeId, setActiveId] = useState(1);
-    const goBack = () => props.navigation.navigate("Home");
+    const goBack = () => {
+        const navigateAction = CommonActions.reset({
+            index: 1,
+            routes: [
+                { name: 'Home' }
+              ],
+          })
+          props.navigation.dispatch(navigateAction);
+    }
 
     useFocusEffect(
         useCallback(() => {

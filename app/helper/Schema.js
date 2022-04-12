@@ -50,7 +50,7 @@ const addStoreSchemaImg = yup.object({
 });
 
 const productSchema = yup.object({
-    description: yup.string().required("Field is required"),
+    description: yup.string().required("Field is required").trim().min(8, "Minimum of eight (8) characters"),
 });
 
 

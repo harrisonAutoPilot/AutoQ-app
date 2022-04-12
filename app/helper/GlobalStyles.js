@@ -1,10 +1,10 @@
-import { StyleSheet, Dimensions, StatusBar } from "react-native";
+import { StyleSheet, Dimensions} from "react-native";
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-export default styles = StyleSheet.create({
+export default globalStyles = StyleSheet.create({
     title: {
         fontSize: 16,
         fontFamily: "Urbanist-SemiBold",

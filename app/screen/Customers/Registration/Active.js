@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native'
 import styles from "./style";
-import globalStyles from "@Helper/globalStyles";
 import { Btn, FormikValidator, InputField, SuccessMsgViewTwo } from "@Component/index";
 import { profileSchema } from "@Helper/schema";
 import { updateUserDetails, getUser } from "@Request/auth";

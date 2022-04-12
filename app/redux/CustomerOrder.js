@@ -12,7 +12,9 @@ export const orderSlice = createSlice({
         loaded: "idle",
         verify: "idle",
         verificationStatus:"idle",
-        pendingOrders: []
+        pendingOrders: [],
+        trackOrderStatus: "idle",
+        trackOrderList: []
     },
     reducers:{
         cleanup: (state) => {
@@ -22,7 +24,9 @@ export const orderSlice = createSlice({
             state.orderDetail = {},
             state.verify = "idle",
             state.verificationStatus = "idle",
-            state.pendingOrders = []
+            state.pendingOrders = [],
+            state.trackOrderList= [],
+            state.trackOrderStatus = "idle"
         },
         cleanErr: (state) => {
             state.errors = {}

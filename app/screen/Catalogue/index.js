@@ -8,9 +8,7 @@ import { searchProducts } from "@Request/Product";
 import { InputField, Header } from "@Component";
 import { browseCategories } from "@Request/Category";
 import styles from "./style";
-import globalStyle from "@Helper/GlobalStyles";
-import {cleanup} from"@Store/Category"
-
+import {cleanup} from"@Store/Category";
 
 const Catalogue = (props) => {
     const dispatch = useDispatch();
@@ -105,10 +103,10 @@ const Catalogue = (props) => {
             </Header>
 
             <View style={styles.mainBody}>
-                <Text style={globalStyle.title}>PRODUCT CATALOG</Text>
+                <Text style={globalStyles.title}>PRODUCT CATALOG</Text>
 
-                {err ? <View style={globalStyle.errMainView}>
-                    <Text style={globalStyle.failedResponseText}>{err}</Text>
+                {err ? <View style={globalStyles.errMainView}>
+                    <Text style={globalStyles.failedResponseText}>{err}</Text>
                 </View> : null}
 
                 <FlatList

@@ -3,7 +3,6 @@ import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
-import commafy from "@Helper/Commafy";
 import { EmptyPlaceHolder } from "@Component";
 import { reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";

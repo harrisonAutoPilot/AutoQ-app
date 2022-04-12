@@ -5,11 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import { AuthBtn, COHeader as Header } from "@Component/index";
-import commafy from "@Helper/Commafy";
 import { reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
-import globalStyles from "@Helper/GlobalStyles";
 
 const CustomerOrderDetails = (props) => {
 
@@ -19,6 +17,7 @@ const CustomerOrderDetails = (props) => {
    let no = 0;
    const orders = props.route.params.item;
    const { errors, update } = useSelector((state) => state.order);
+ 
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -76,13 +75,13 @@ const CustomerOrderDetails = (props) => {
                
                <Text style={styles.snTextOne}>{no += 1}.</Text>
                <View style={styles.productNameCover}>
-               <Text style={styles.upTextOne} numberOfLines={1}>{item.product.name}</Text>
+               <Text style={styles.upTextOne} numberOfLines={1}>{item.product?.name}</Text>
                </View>
               </View>
-            <Text style={[styles.snTextTwo, styles.snTextTwoAlign]}>₦ {commafy(item.total_amount)}</Text>
+            <Text style={[styles.snTextTwo, styles.snTextTwoAlign]}>₦ {commafy(item?.total_amount)}</Text>
          </View>
          <View style={styles.snDown}>
-            <Text style={styles.snDownText}>QTY/<Text style={styles.capitalize}>{item.product.pack_style}</Text> : {item.product.total_quantity_sold}</Text>
+            <Text style={styles.snDownText}>QTY/<Text style={styles.capitalize}>{item.product?.pack_style}</Text> : {item.product?.total_quantity_sold}</Text>
          </View>
       </View>
    )

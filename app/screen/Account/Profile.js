@@ -5,13 +5,12 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 
 import styles from "./style";
-import globalStyles from "@Helper/GlobalStyles";
 import { updateUserImage, getUser } from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
 import Loader from "@Screen/Loader";
 import { SuccessMsgViewTwo } from "@Component";
 
-const Profile = () => {
+export default Profile = () => {
     const [loader, setLoader] = useState(false);
     const dispatch = useDispatch();
     const [errMsg, setErrMsg] = useState("");
@@ -130,7 +129,7 @@ const Profile = () => {
             {successMsg ? <Toast config={toastConfig} /> : null}
             <View style={styles.topCover}>
                 <View style={styles.imgCover}>
-                    <Image source={{uri: user?.picture_url}} style={styles.img} />
+                    <Image source={{uri: `${URL}${user?.picture_url}`}} style={styles.img} />
                     <View style={styles.cameraCover}>
                         <TouchableOpacity onPress={updateProfilePic}>
                             <Image source={require("@Assets/image/camera.png")} style={styles.camImg} />
@@ -139,7 +138,7 @@ const Profile = () => {
                 </View>
                 <View style={styles.topTextCover}>
                     <Text style={styles.agentNameText}>{user?.name}</Text>
-                    <Text style={styles.agentCodeText}>RH/AG/{user?.agent_id} - Registered Agent</Text>
+                    <Text style={styles.agentCodeText}>RH/AG/{user?.id} - Registered Agent</Text>
                 </View>
 
             </View>
@@ -224,5 +223,3 @@ const Profile = () => {
         </View>
     )
 };
-
-export default Profile;

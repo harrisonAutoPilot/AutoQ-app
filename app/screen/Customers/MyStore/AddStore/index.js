@@ -11,7 +11,6 @@ import SelectState from "@Screen/Customers/Registration/SelectState"
 import SelectLga from "@Screen/Customers/Registration/SelectLga"
 import styles from './style';
 import Loader from "@Screen/Loader";
-import globalStyle from "@Helper/GlobalStyles";
 import { getState } from "@Request/State";
 import { createStore } from "@Request/Store";
 import { cleanup } from "@Store/Stores";
@@ -62,8 +61,8 @@ const MyStore = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyle.errMainView, { marginHorizontal: 20}]}>
-                <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
+            <View style={[globalStyles.errMainView, { marginHorizontal: 20}]}>
+                <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
             </View>
         ),
 

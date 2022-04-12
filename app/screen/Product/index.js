@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-message';
 
-import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
 import { searchProducts } from "@Request/Product";
 import { SuccessMsgViewTwo, COHeader as Header } from "@Component/index";
@@ -73,8 +72,8 @@ const Products = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyle.errMainView, globalStyle.marginTop, { marginHorizontal: 20 }]}>
-                <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
+            <View style={[globalStyles.errMainView, globalStyles.marginTop, { marginHorizontal: 20 }]}>
+                <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
             </View>
         ),
 
@@ -148,8 +147,8 @@ const Products = (props) => {
                         </TouchableOpacity> : null}
                 </View>
 
-                {err ? <View style={[globalStyle.errMainView, { marginBottom: 10 }]}>
-                    <Text style={globalStyle.failedResponseText}>{err}</Text>
+                {err ? <View style={[globalStyles.errMainView, { marginBottom: 10 }]}>
+                    <Text style={globalStyles.failedResponseText}>{err}</Text>
                 </View>
                     : null}
 

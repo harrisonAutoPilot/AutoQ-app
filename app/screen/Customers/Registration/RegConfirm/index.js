@@ -6,7 +6,6 @@ import Toast from 'react-native-toast-message';
 import { BtnLg } from "@Component/index";
 import { NavHeader as Header } from "@Component";
 import styles from './style';
-import globalStyle from "@Helper/GlobalStyles";
 import { updatePendingCustomers, registerCustomer } from "@Request/Customer";
 import { cleanup } from "@Store/Customer";
 import Loader from "@Screen/Loader";
@@ -76,8 +75,8 @@ const RegConfirm = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyle.errMainView, { marginHorizontal: 20 }]}>
-                <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
+            <View style={[globalStyles.errMainView, { marginHorizontal: 20 }]}>
+                <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
             </View>
         ),
 
@@ -85,7 +84,6 @@ const RegConfirm = (props) => {
 
     const submit = () => {
         setLoader(true);
-        console.log("po")
         if (details.key === 1) {
             dispatch(updatePendingCustomers(details))
         }
