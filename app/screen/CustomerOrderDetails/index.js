@@ -104,13 +104,13 @@ const CustomerOrderDetails = (props) => {
                            <Text style={styles.downTextTwo}>{orders.ref_no}</Text>
                         </View>
 
-                        {item?.status_text?.toLowerCase() === "cancelled" ?
+                        {orders?.status_text?.toLowerCase() === "cancelled" ?
 
                            <View style={styles.StatusCoverC}>
-                              <Text style={styles.statusTextC}>{item.status_text}</Text>
+                              <Text style={styles.statusTextC}>{orders.status_text}</Text>
                            </View>
                            :
-                           orders?.status_text?.toLowerCase() === "being processed" ?
+                           orders?.status_text?.toLowerCase() === "being processed"  || orders?.status_text?.toLowerCase() === "pending" ?
 
                               <View style={styles.StatusCoverB}>
                                  <Text style={styles.statusText2}>{orders.status_text}</Text>

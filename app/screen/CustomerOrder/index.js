@@ -160,7 +160,7 @@ const CustomerOrder = (props) => {
                             <Text style={styles.statusTextC}>{item?.status_text}</Text>
                         </View>
                         :
-                        item?.status_text?.toLowerCase() === "being_processed" ?
+                        item?.status_text?.toLowerCase() === "being processed" ||  item?.status_text?.toLowerCase() === "pending" ?
 
                             <View style={styles.StatusCoverB}>
                                 <Text style={styles.statusText2}>{item?.status_text}</Text>
