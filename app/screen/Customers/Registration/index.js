@@ -1,6 +1,6 @@
 import React, { useState, useCallback,} from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -12,6 +12,8 @@ import Step3 from "./Step3";
 import { cleanup } from "@Store/Auth";
 import Triangle from "@react-native-toolkit/triangle";
 import { getState } from "@Request/State";
+import { getPendingUserStore } from "@Request/Store";
+import { cleanup as clean } from "@Store/Stores";
 
 const Registration = (props) => {
 
@@ -24,15 +26,24 @@ const Registration = (props) => {
     const key = props.route.params?.key
     let [data, setData] = useState({})
     let [dataOne, setDataOne] = useState({})
+ 
+
+    const { pendingStatus, pending } = useSelector((state) => state.store);
 
     const goBack = () => props.navigation.goBack();
 
     useFocusEffect(
         useCallback(() => {
+            if(details?.id){
+                dispatch(getPendingUserStore(details?.id))
+            }
             dispatch(getState())
             dispatch(cleanup())
 
-            return () => dispatch(cleanup());
+            return () => {
+                dispatch(cleanup());
+                dispatch(clean());
+            }
         }, [])
     );
 
@@ -43,22 +54,21 @@ const Registration = (props) => {
     };
 
     const registerState2 = {
-        store_name: details?.stores[0]?.name ? details?.stores[0]?.name : "",
-        address: details?.stores[0]?.address ? details?.stores[0]?.address : "",
-        state_id: details?.stores[0]?.state_id ? details?.stores[0]?.state_id : "",
-        lga_id: details?.stores[0]?.lga_id ? details?.stores[0]?.lga_id : "",
+        store_name: pending.stores && pending?.stores[0]?.name ? pending?.stores[0]?.name : "",
+        address: pending.stores && pending?.stores[0]?.address ? pending?.stores[0]?.address : "",
+        state_id: pending.stores && pending?.stores[0]?.state_id ? pending?.stores[0]?.state_id : "",
+        lga_id: pending.stores && pending?.stores[0]?.lga_id ? pending?.stores[0]?.lga_id : "",
 
     };
 
     const registerState3 = {
-        images: details?.stores[0]?.store_images ? details?.stores[0]?.store_images: [],
-        images2: details?.stores[0]?.license_images ? details?.stores[0]?.license_images: [],
+        images: pending.stores && pending?.stores[0]?.store_images ? pending?.stores[0]?.store_images: [],
+        images2: pending.stores && pending?.stores[0]?.license_images ? pending?.stores[0]?.license_images: [],
     };
 
 
     const redirectToStepTwo = (val, type) => {
         const {firstname, surname, phone} = val
-        
         const newData = {name: `${firstname} ${surname}`, phone, user_type: type, id: details?.id, key }
         setDataOne(newData);
         setActiveId(2)
@@ -197,7 +207,7 @@ const Registration = (props) => {
 
 
             </View>
-            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={redirectToStepTwo} user_details={props.route.params?.items ? props.route.params?.items : undefined} /> : activeId === 2 ?
+            {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={redirectToStepTwo} user_details={props.route.params?.items ? props.route.params?.items : undefined}  keys={key}/> : activeId === 2 ?
                 <Step2 user_details={props.route.params?.items ? props.route.params?.items : undefined} details={registerState2} submit={redirectToStepThree} redirect={redirectToStepOne} /> :
                 <Step3 details={registerState3} storePhotoOne={storePhotoOne} storePhotoTwo={storePhotoTwo} licenseImg={licenseImg} submit={submit} redirect={redirectToStepTwoAgain}  />}
         </View>

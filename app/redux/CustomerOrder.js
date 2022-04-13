@@ -19,12 +19,12 @@ export const orderSlice = createSlice({
     reducers:{
         cleanup: (state) => {
             state.errors = {}
-            state.status = "idle",
+            // state.status = "idle",
             state.update = "idle",
             state.orderDetail = {},
             state.verify = "idle",
             state.verificationStatus = "idle",
-            state.pendingOrders = [],
+            // state.pendingOrders = [],
             state.trackOrderList= [],
             state.trackOrderStatus = "idle"
         },
@@ -41,36 +41,30 @@ export const orderSlice = createSlice({
                 state.status = "pending";
                 state.errors = {};
                 state.orders = [];
-                state.loaded = "pending"
             })
             .addCase(getCustomerOrders.fulfilled, (state, action) => {
                 state.orders = action.payload;
                 state.status = "success";
                 state.errors = {};
-                state.loaded = "success";
             })
             .addCase(getCustomerOrders.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
                 state.orders = [];
-                state.loaded = "failed";
             })
 
             builder
             .addCase(getCustomerPendingOrders.pending, state => {
-                state.status = "pending";
                 state.errors = {};
                 state.pendingOrders = [];
                 state.loaded = "pending"
             })
             .addCase(getCustomerPendingOrders.fulfilled, (state, action) => {
                 state.pendingOrders = action.payload;
-                state.status = "success";
                 state.errors = {};
                 state.loaded = "success";
             })
             .addCase(getCustomerPendingOrders.rejected, (state, { payload }) => {
-                state.status = "failed";
                 state.errors = payload;
                 state.pendingOrders = [];
                 state.loaded = "failed";

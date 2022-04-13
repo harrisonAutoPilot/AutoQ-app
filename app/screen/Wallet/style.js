@@ -113,9 +113,12 @@ export default styles = StyleSheet.create({
         borderRadius: 5,
     },
     inputMainHolder: {
-        marginTop: Dimensions.get("window").height /70,
+        // marginTop: Dimensions.get("window").height /50,
         height: "100%",
         flexGrow: 1,
+        alignItems: "center",
+        alignSelf: "center",
+        justifyContent: "center"
        
     },
     inputMainHolder2: {
@@ -383,11 +386,17 @@ export default styles = StyleSheet.create({
     comingSoonCover:{
         width:wp('80%'),
         height:hp('80%'),
-        marginLeft:wp('5%'),
-        marginRight:wp('15%'),
+        marginLeft:wp('10%'),
+        marginRight:wp('10%'),
+        marginTop: 20
+        // alignItems:'center',
+        // justifyContent:'center',
+    },
+    comingSoonCover2:{
         alignItems:'center',
         justifyContent:'center',
-        marginTop:-55,
+        alignSelf: "center",
+        height:hp('60%'),
     },
     comingSoonText:{
         color: '#424242',
@@ -396,6 +405,7 @@ export default styles = StyleSheet.create({
         lineHeight: 36,
         fontWeight: "600",
         letterSpacing: 0.1,
+        textAlign: "center"
        
     },
     comingSoonImg:{

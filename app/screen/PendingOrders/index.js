@@ -179,7 +179,7 @@ const PendingOrder = (props) => {
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
 
     const ListView = ({ item }) => (
-        <TouchableOpacity >
+        <View >
             <View style={[styles.card, styles.elevation]}>
                 <View style={styles.cardUpCover}>
                     <View style={styles.cardUpTop}>
@@ -202,7 +202,7 @@ const PendingOrder = (props) => {
                 <View style={styles.cardDownCover}>
 
                     <View style={styles.StatusCoverB}>
-                        <Text style={styles.statusText2}>Pending</Text>
+                        <Text style={styles.statusText2}>Incomplete</Text>
                     </View>
 
                     {item.ref_no !== null ?
@@ -216,13 +216,13 @@ const PendingOrder = (props) => {
 
             </View>
 
-        </TouchableOpacity>
+        </View>
 
     )
 
     return (
         <View style={styles.main}>
-            <Header title="Pending Orders" style={styles.btnText} onPress={goToCat} />
+            <Header title="Incomplete Orders" style={styles.btnText} onPress={goToCat} />
 
                 <TouchableWithoutFeedback  onPress={dismissKeyboard}>
                     <View style={styles.blueColor}>
@@ -238,7 +238,7 @@ const PendingOrder = (props) => {
                         </View>
 
                         <View style={styles.exchangeCover}>
-                            <Text style={styles.allOrderText}> Pending Orders</Text>
+                            <Text style={styles.allOrderText}>Incomplete  Orders</Text>
                             {pendingOrders.orders?.length ?
                             <TouchableOpacity style={styles.exchangeClickk} onPress={ redirectToSort }>
                             <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />

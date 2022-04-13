@@ -19,6 +19,7 @@ const Order = (props) => {
     const flatListRef = useRef()
 
     const { errors, update } = useSelector((state) => state.order);
+    const { orders, orderStatus } = useSelector((state) => state.customer);
 
     const reOrders = (id) => {
         const details = { order_group_id: id };
@@ -27,9 +28,9 @@ const Order = (props) => {
     };
 
     useEffect(() => {
-        if (update === "failed" ) {
+        if (update === "failed") {
             waitTime(errors?.msg);
-        } else if (update === "success" ) {
+        } else if (update === "success") {
             props.cart()
         } else {
             setErr("")
@@ -81,11 +82,24 @@ const Order = (props) => {
 
                 <View style={styles.cardDownCover}>
 
-                    <View style={styles.StatusCover}>
-                        <Text style={styles.statusText}>{item.status_text}</Text>
-                    </View>
+                    {item?.status_text?.toLowerCase() === "cancelled" ?
 
-                    {item.ref_no !== null ?
+                        <View style={styles.StatusCoverC}>
+                            <Text style={styles.statusTextC}>{item.status_text}</Text>
+                        </View>
+                        :
+                        item?.status_text?.toLowerCase() === "being processed" || item?.status_text?.toLowerCase() === "pending" ?
+
+                            <View style={styles.StatusCoverB}>
+                                <Text style={styles.statusText2}>{item.status_text}</Text>
+                            </View> 
+                            :
+                            <View style={styles.StatusCover}>
+                                <Text style={styles.statusText}>{item.status_text}</Text>
+                            </View>
+                    }
+
+                    {item?.ref_no !== null ?
                         <TouchableOpacity style={styles.reorderCover} onPress={() => reOrders(item.id)}>
                             <Text style={styles.reOrderText}>RE-ORDER</Text>
                             <Image source={require("@Assets/image/refresh.png")} style={styles.refreshImg} />
@@ -104,12 +118,16 @@ const Order = (props) => {
         <View style={styles.main}>
             {err ? <Toast config={toastConfig} /> : null}
 
+
             <View style={styles.bottomCover2}>
+                {orderStatus === "idle" || orderStatus === "pending" ?
+                    <CustomerPlaceholderCard />
+                    :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={props.details.order_groups}
+                        data={orders.orders}
                         renderItem={ListView}
-                         ListEmptyComponent={EmptyPlaceHolder}
+                        ListEmptyComponent={EmptyPlaceHolder}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
                         initialNumToRender={3}
@@ -117,8 +135,9 @@ const Order = (props) => {
                             { length: 100, offset: 100 * index, index }
                         )}
                     />
-                
+                }
             </View>
+
 
             <Loader isVisible={loader} />
 

@@ -5,6 +5,8 @@ import styles from "./style";
 
 import { AuthBtn as Btn, Success } from "@Component";
 import { cleanup } from "@Store/Customer";
+import { getCustomerOrders } from "@Request/CustomerOrder";
+// import { listCart} from "@Request/Cart";
 
 
 const CustomerSuccess = (props) => {
@@ -12,7 +14,9 @@ const CustomerSuccess = (props) => {
   const details = props.route.params?.details
 
   const goBack = () => {
+    dispatch(getCustomerOrders());
     dispatch(cleanup());
+    // dispatch(listCart());
     props.navigation.navigate("CustomersDashboard")
   };
 
@@ -27,6 +31,8 @@ const CustomerSuccess = (props) => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButton);
     return () => {
       dispatch(cleanup())
+      dispatch(getCustomerOrders());
+      // dispatch(listCart());
       BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
     }
   }, []);

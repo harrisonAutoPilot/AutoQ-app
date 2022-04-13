@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector, useDispatch } from "react-redux";
 import FIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions, StackActions  } from '@react-navigation/native';
 
 import links from "./data";
 import styles from "./style";
@@ -31,12 +31,18 @@ const Drawer = (props) => {
 
     const redirectToScreen = (route) => {
         props.navigation.closeDrawer();
-        props.navigation.dispatch(
-            CommonActions.reset({
-                index: 0,
-                routes: [{ name: route }]
-            })
-        );
+        if(route === "CustomersDashboard"){
+            props.navigation.navigate(route, {id: "pending"})
+        }else {
+            props.navigation.navigate(route)
+        }
+     
+        // props.navigation.dispatch(
+        //     CommonActions.reset({
+        //         index: 0,
+        //         routes: [{ name: route }]
+        //     })
+        // );
 
     };
 
@@ -71,7 +77,7 @@ const Drawer = (props) => {
                 </View>
                 <Text style={styles.routeText}>{item.name}</Text>
                 <View style={styles.firstInnerHeader}>
-                    <Text style={styles.firstInnerTitle}>{customers?.pending?.count}</Text>
+                    <Text style={styles.firstInnerTitle}>{customers?.pending?.count ? customers?.pending?.count : 0}</Text>
                 </View>
             </View>
             <View>
@@ -149,7 +155,7 @@ const Drawer = (props) => {
                                     <View style={styles.routeTextIconView}>
                                     <Image source={require("@Assets/image/arrows-counter-clockwise-fill.png")} style={globalStyles.quesImg} />
                                     </View>
-                                    <Text style={styles.routeText}>Pending Orders</Text>
+                                    <Text style={styles.routeText}>Incomplete Orders</Text>
                                 </View>
                                 <View>
                                     <Icon name="chevron-right" size={18} color="#9E9E9E" />

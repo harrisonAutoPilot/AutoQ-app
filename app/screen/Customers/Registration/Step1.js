@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Image, FlatList } from "react-native";
 import FIcon from "react-native-vector-icons/MaterialIcons";
+import { useSelector } from "react-redux";
 
 import styles from "./style";
-import { BtnLg, FormikValidator, InputField} from "@Component";
+import { BtnLg, FormikValidator, InputField } from "@Component";
 import { registerSchema } from "@Helper/Schema";
 import data2 from "./data2";
 
@@ -15,12 +16,16 @@ const Step1 = (props) => {
     const editable = props.active;
     const submit = props.submit
     const type = props.user_details?.user_type;
+    const keys = props.keys;
+
+    const { pendingStatus } = useSelector((state) => state.store);
+    console.log(pendingStatus, props.keys)
 
     useEffect(() => {
-        if(type){
+        if (type) {
             setUserType(type)
         };
-    },[type]);
+    }, [type]);
 
     const selectUserType = (id, name) => {
         setActive(id);
@@ -32,11 +37,11 @@ const Step1 = (props) => {
             <View style={[styles.optionView, active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
                 <View style={active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionIconView : styles.optionIconView2}>
                     {userType?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
-                        <TouchableOpacity style={styles.iconCircle} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); }}>
+                        <TouchableOpacity style={styles.iconCircle} onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
                             <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
                         </TouchableOpacity >
                         :
-                        <TouchableOpacity style={styles.iconCircle2} onPress={ () => { selectUserType(item.id, item.title.toLowerCase()); }}>
+                        <TouchableOpacity style={styles.iconCircle2} onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
 
                         </TouchableOpacity>
                     }
@@ -146,7 +151,7 @@ const Step1 = (props) => {
                                                         </View>
 
                                                         <InputField
-                                                            style={!editable ? styles.innerLabelPhone: styles.innerLabelPhoneEnabled}
+                                                            style={!editable ? styles.innerLabelPhone : styles.innerLabelPhoneEnabled}
                                                             value={props.values.phone}
                                                             onBlur={props.handleBlur('phone')}
                                                             placeholder="234809XXXXXXX"
@@ -182,9 +187,16 @@ const Step1 = (props) => {
                                                     </View>
 
                                                 </View>
-                                                <View style={styles.btnCover}>
-                                                    <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
-                                                </View>
+                                                {keys === 1 && pendingStatus === "success" ?
+                                                    <View style={styles.btnCover}>
+                                                        <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
+                                                    </View> :
+                                                    keys === 2 ?
+                                                        <View style={styles.btnCover}>
+                                                            <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
+                                                        </View> : <View style={styles.btnCover}>
+                                                            <BtnLg title="Loading ..." style={styles.submit} stylea={styles.angleImg} />
+                                                        </View>}
 
                                             </View>
                                         )}

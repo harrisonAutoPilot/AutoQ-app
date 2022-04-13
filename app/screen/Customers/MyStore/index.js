@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList,} from "react-native";
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -7,27 +7,24 @@ import EmptyStore from "@Component/Empty/emptyStore"
 import { COHeader as Header } from "@Component";
 import styles from './style';
 import { getUserStore} from "@Request/Store";
-import { cleanup } from "@Store/Stores";
+// import { cleanup } from "@Store/Stores";
 import StorePlaceholder from "./StorePlaceholder";
 
 
 const MyStore = (props) => {
     const dispatch = useDispatch();
     const { status, usersStore } = useSelector((state) => state.store);
-    console.log(usersStore)
 
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(getUserStore(props.route.params?.id))
-            return () => dispatch(cleanup());
-        }, [])
-    );
+    useEffect(() => {
+        dispatch(getUserStore(props.route.params?.id))
+        // return () => dispatch(cleanup());
+    }, [])
 
     const goBack = () => props.navigation.goBack();
     const addStore = () => props.navigation.navigate("AddStore", { id: props.route.params?.id });
 
     const details = (item) => {
-        props.navigation.navigate("StoreDetails", {item})
+        props.navigation.navigate("StoreDetails", {item, id:props.route.params?.id})
     };
 
   

@@ -25,7 +25,8 @@ const CustomerOrder = (props) => {
     const flatListRef = useRef()
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
-    const { errors, orders, update, loaded } = useSelector((state) => state.order);
+    const { errors, orders, update, status } = useSelector((state) => state.order);
+console.log(orders)
 
     const toastConfig = {
         error: () => (
@@ -129,7 +130,7 @@ const CustomerOrder = (props) => {
     };
 
     const dismissKeyboard = () => Keyboard.dismiss();
-    const goToCat = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
+    const goToCat = () => props.navigation.navigate("Home", { screen: 'HomeScreen' });
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
 
     const ListView = ({ item }) => (
@@ -154,10 +155,21 @@ const CustomerOrder = (props) => {
                 </View>
 
                 <View style={styles.cardDownCover}>
+                    {item?.status_text?.toLowerCase() === "cancelled" ?
 
-                    <View style={styles.StatusCover}>
-                        <Text style={styles.statusText}>{item.status_text}</Text>
-                    </View>
+                        <View style={styles.StatusCoverC}>
+                            <Text style={styles.statusTextC}>{item.status_text}</Text>
+                        </View>
+                        :
+                        item?.status_text?.toLowerCase() === "being_processed" ?
+
+                            <View style={styles.StatusCoverB}>
+                                <Text style={styles.statusText2}>{item.status_text}</Text>
+                            </View> :
+                            <View style={styles.StatusCover}>
+                                <Text style={styles.statusText}>{item.status_text}</Text>
+                            </View>
+                    }
 
                     {item.ref_no !== null ?
                         <TouchableOpacity style={styles.reorderCover} onPress={() => reOrders(item.id)}>
@@ -207,7 +219,7 @@ const CustomerOrder = (props) => {
             {err ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.bottomCover}>
-                {loaded === "pending"  || loaded === "idle" ?
+                {status === "pending" || status === "idle" ?
                     <CustomerPlaceholderCard />
                     :
                     <FlatList

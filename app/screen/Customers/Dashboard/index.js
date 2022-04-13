@@ -22,9 +22,11 @@ const CustomersDashboard = (props) => {
     //     useCallback(() => {
     //         dispatch(getCustomers());
     //         return () => dispatch(cleanup())
+            
     //     }, [])
 
     // );
+    
 
     useEffect(() => {
         if (search.length) {
@@ -42,18 +44,21 @@ const CustomersDashboard = (props) => {
     useEffect(() => {
         if (props.route.params?.id === 1) {
             setActiveId(3)
+        }else if(props.route.params?.id === "pending") {
+            setActiveId(1)
         }
     }, [props.route.params])
 
     const dismissKeyboard = () => Keyboard.dismiss();
+
     const openDrawer = () => props.navigation.openDrawer();
     const reg = () => props.navigation.navigate("CustomerRegistration", {key: 2});
     const reg_details = (items) => props.navigation.navigate("CustomerRegistration", { items, key: 1 });
-
     const openFavourite = () => props.navigation.navigate("SavedItem", { id: 1 })
     const openNotification = () => props.navigation.navigate("Notification");
     const openCart = () => props.navigation.navigate("Cart");
     const custom_details = (details, name) => props.navigation.navigate("CustomerDetails", { details, name });
+
     const { customers } = useSelector((state) => state.customer);
     const showActive = (id) => setActiveId(id);
 
@@ -128,7 +133,7 @@ const CustomersDashboard = (props) => {
                             <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PENDING </Text>
                         </View>
                         <View style={styles.firstInnerHeader}>
-                            <Text style={styles.firstInnerTitle}>{customers?.pending?.count}</Text>
+                            <Text style={styles.firstInnerTitle}>{customers?.pending?.count ? customers?.pending?.count : 0}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={[activeId === 2 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => { showActive(2); setSearch("") }}>

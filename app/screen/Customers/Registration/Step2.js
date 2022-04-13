@@ -49,7 +49,7 @@ const Step2 = (props) => {
 
                                                     <InputField
                                                         style={styles.label4}
-                                                        value={props.values.store_name}
+                                                        value={props.values.store_name }
                                                         onBlur={props.handleBlur('store_name')}
                                                         placeholder="Kingsley"
                                                         placeholderTextColor="#757575"

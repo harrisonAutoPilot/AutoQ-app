@@ -429,7 +429,42 @@ const styles = StyleSheet.create({
   },
   weight: {
     fontWeight: "600"
-  }
+  },
+  StatusCoverC: {
+    backgroundColor: 'rgba(211, 47, 47, 0.1)',
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 16,
+    paddingRight: 16,
+    borderRadius: 20,
+    height: 30,
+  },
+  statusTextC: {
+    color: 'rgba(211, 47, 47, 1)',
+    fontSize: 12,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 20,
+    letterSpacing: 0.1,
+    textTransform: 'capitalize',
+  },
+  StatusCoverB: {
+    backgroundColor: 'rgba(233, 235, 249, 1)',
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 16,
+    paddingRight: 16,
+    borderRadius: 20,
+    // height: 30,
+},
+statusText2: {
+  color: 'rgba(0, 49, 157, 1)',
+  fontSize: 14,
+  fontFamily: "Urbanist-SemiBold",
+  lineHeight: 20,
+  fontWeight: "600",
+  letterSpacing: 0.1,
+  textTransform: 'capitalize',
+},
 });
 
 export default styles

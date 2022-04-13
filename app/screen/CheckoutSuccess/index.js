@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import styles from "./style";
 
 import { AuthBtn as Btn, Success } from "@Component";
-import { cleanup } from "@Store/CustomerOrder";
-
+import { cleanup} from "@Store/CustomerOrder";
+import { idle } from "@Store/Cart";
 
 const CheckoutSuccess = (props) => {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const CheckoutSuccess = (props) => {
   const goBack = () => {
     props.navigation.navigate("CustomerOrder");
     dispatch(cleanup())
+    dispatch(idle())
   }
 
 
@@ -27,7 +28,8 @@ const CheckoutSuccess = (props) => {
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButton);
     return () => {
-      dispatch(cleanup())
+      dispatch(cleanup());
+      dispatch(idle())
       BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
     }
   }, []);

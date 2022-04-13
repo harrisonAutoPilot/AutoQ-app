@@ -43,13 +43,15 @@ const Active = (props) => {
             let searched = customer.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) });
             toTop()
             return setResult(searched)
-        } else if (id === 3) {
-            let searched = customer.sort((a, b) => {
-                if (a.stores[0].address.toLowerCase() < b.stores[0].address.toLowerCase()) return -1;
-            });
-            toTop()
-            return setResult(searched)
-        } else if (id === 4) {
+        } 
+        // else if (id === 3) {
+        //     let searched = customer.sort((a, b) => {
+        //         if (a.stores[0].address.toLowerCase() < b.stores[0].address.toLowerCase()) return -1;
+        //     });
+        //     toTop()
+        //     return setResult(searched)
+        // } 
+        else if (id === 4) {
             let searched = customer.sort((a, b) => { return new Date(a.created_at) - new Date(b.created_at) })
             toTop()
             return setResult(searched)
@@ -82,7 +84,7 @@ const Active = (props) => {
                         <Text style={styles.phoneText}>+{item?.phone}</Text>
                     </View>
                     <View style={styles.cardDown}>
-                        <View style={styles.cardDownInner}><Text style={styles.phoneText} numberOfLines={2}>{item?.stores[0]?.address}</Text></View>
+                        {/* <View style={styles.cardDownInner}><Text style={styles.phoneText} numberOfLines={2}>{item?.stores[0]?.address}</Text></View> */}
 
                     </View>
             </TouchableOpacity>
@@ -110,7 +112,7 @@ const Active = (props) => {
                     keyExtractor={item => item.id}
                     ListEmptyComponent={EmptyCustomer}
                     renderItem={ListView}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
+                    ListFooterComponent={<View style={{ height: 70 }} />}
                     columnWrapperStyle={styles.column}
                     ref={flatListRef}
                     refreshControl= {

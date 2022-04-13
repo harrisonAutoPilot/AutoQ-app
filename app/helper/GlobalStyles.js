@@ -277,7 +277,7 @@ export default globalStyles = StyleSheet.create({
     },
     errInCoverNew2: {
         position: 'absolute',
-        top: hp('10%'),
+        top: hp('20%'),
         zIndex: 9000,
         justifyContent: 'center',
         alignItems: 'center',
