@@ -6,6 +6,7 @@ import styles from "./style";
 import { AuthBtn as Btn, Success } from "@Component";
 import { cleanup } from "@Store/Customer";
 import { getCustomerOrders } from "@Request/CustomerOrder";
+import { getCustomers } from "@Request/Customer";
 // import { listCart} from "@Request/Cart";
 
 
@@ -16,7 +17,7 @@ const CustomerSuccess = (props) => {
   const goBack = () => {
     dispatch(getCustomerOrders());
     dispatch(cleanup());
-    // dispatch(listCart());
+  dispatch(getCustomers());
     props.navigation.navigate("CustomersDashboard")
   };
 
@@ -32,7 +33,7 @@ const CustomerSuccess = (props) => {
     return () => {
       dispatch(cleanup())
       dispatch(getCustomerOrders());
-      // dispatch(listCart());
+      dispatch(getCustomers());
       BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
     }
   }, []);
@@ -49,7 +50,7 @@ const CustomerSuccess = (props) => {
       <View style={styles.midCover}>
         <View style={styles.itemCover}>
           <Image style={styles.itemImg} source={require("@Assets/image/whiteStore.png")} />
-          <Text style={styles.itemText}>{details.store_name}</Text>
+          <Text style={styles.itemText}>{details.name}</Text>
         </View>
         <View style={styles.itemCover}>
           <Image style={styles.itemImg} source={require("@Assets/image/map-pin.png")} />
