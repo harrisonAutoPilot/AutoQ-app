@@ -26,7 +26,6 @@ const CustomerOrder = (props) => {
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
     const { errors, orders, update, status } = useSelector((state) => state.order);
-console.log(orders)
 
     const toastConfig = {
         error: () => (
@@ -158,16 +157,16 @@ console.log(orders)
                     {item?.status_text?.toLowerCase() === "cancelled" ?
 
                         <View style={styles.StatusCoverC}>
-                            <Text style={styles.statusTextC}>{item.status_text}</Text>
+                            <Text style={styles.statusTextC}>{item?.status_text}</Text>
                         </View>
                         :
                         item?.status_text?.toLowerCase() === "being_processed" ?
 
                             <View style={styles.StatusCoverB}>
-                                <Text style={styles.statusText2}>{item.status_text}</Text>
+                                <Text style={styles.statusText2}>{item?.status_text}</Text>
                             </View> :
                             <View style={styles.StatusCover}>
-                                <Text style={styles.statusText}>{item.status_text}</Text>
+                                <Text style={styles.statusText}>{item?.status_text}</Text>
                             </View>
                     }
 
