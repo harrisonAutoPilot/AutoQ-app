@@ -19,7 +19,6 @@ const Step1 = (props) => {
     const keys = props.keys;
 
     const { pendingStatus } = useSelector((state) => state.store);
-    console.log(pendingStatus, props.keys)
 
     useEffect(() => {
         if (type) {
@@ -144,6 +143,33 @@ const Step1 = (props) => {
                                                             <Text style={styles.errText}>{props.errors.surname}</Text>
                                                         </View>) : null}
                                                 </View>
+
+                                                <View>
+                                                    <View style={[styles.inputHolder, styles.registerInputPinHolder, props.touched.email && props.errors.email ? styles.inputErrHolder : null]}>
+                                                        <View style={styles.labelView}>
+                                                            <Text style={styles.label}>EMAIL</Text>
+                                                        </View>
+
+                                                        <InputField
+                                                            style={styles.label4}
+                                                            value={props.values.email}
+                                                            onBlur={props.handleBlur('email')}
+                                                            placeholder="samwr@gmail.com"
+                                                            placeholderTextColor="#757575"
+                                                            keyboardType="default"
+                                                            onChangeText={(val) => {
+                                                                props.setFieldValue('email', val)
+                                                                props.setFieldTouched('email', true, false);
+                                                            }}
+                                                            editable={editable}
+                                                        />
+                                                    </View>
+                                                    {props.touched.email && props.errors.email ? (
+                                                        <View style={styles.errView}>
+                                                            <Text style={styles.errText}>{props.errors.email}</Text>
+                                                        </View>) : null}
+                                                </View>
+
                                                 <View>
                                                     <View style={[styles.inputHolder, styles.registerInputPinHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
                                                         <View style={styles.labelView}>

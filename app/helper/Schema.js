@@ -19,7 +19,8 @@ const changePinSchema = yup.object({
 const registerSchema = yup.object({
     phone: yup.number().required("Phone Number is required").test('len', 'Phone Number should be exactly 13 digits', val => {if(val) return val.toString().length === 13}),
     firstname: yup.string().required("First Name is required"),
-    surname: yup.string().required("Surname is required")
+    surname: yup.string().required("Surname is required"),
+    email: yup.string().required("Email is required").email(),
 
 });
 

@@ -51,6 +51,7 @@ const Registration = (props) => {
         phone: details?.phone ? details.phone : "",
         firstname: details?.name ? details?.name?.substr(0, details.name.indexOf(' ')) : "",
         surname: details?.name ? details?.name.substr(details?.name.indexOf(' ') + 1) : "",
+        email: details?.email ? details?.email : "",
     };
 
     const registerState2 = {
@@ -68,8 +69,8 @@ const Registration = (props) => {
 
 
     const redirectToStepTwo = (val, type) => {
-        const {firstname, surname, phone} = val
-        const newData = {name: `${firstname} ${surname}`, phone, user_type: type, id: details?.id, key }
+        const {firstname, surname, phone, email} = val
+        const newData = {name: `${firstname} ${surname}`, phone, user_type: type, id: details?.id, key, email }
         setDataOne(newData);
         setActiveId(2)
 
