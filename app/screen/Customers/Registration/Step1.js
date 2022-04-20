@@ -135,7 +135,7 @@ const Step1 = (props) => {
                                                                 props.setFieldValue('surname', val)
                                                                 props.setFieldTouched('surname', true, false);
                                                             }}
-                                                            editable={editable}
+                                                          
                                                         />
                                                     </View>
                                                     {props.touched.surname && props.errors.surname ? (
@@ -161,7 +161,7 @@ const Step1 = (props) => {
                                                                 props.setFieldValue('email', val)
                                                                 props.setFieldTouched('email', true, false);
                                                             }}
-                                                            editable={editable}
+                                                            // editable={editable}
                                                         />
                                                     </View>
                                                     {props.touched.email && props.errors.email ? (
