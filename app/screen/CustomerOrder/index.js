@@ -6,12 +6,10 @@ import FIcon from 'react-native-vector-icons/MaterialIcons';
 import Toast from 'react-native-toast-message';
 
 import Modal from "./SortBy";
-import commafy from "@Helper/Commafy";
 import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
 import { getCustomerOrders, reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "./style";
-import globalStyles from "@Helper/GlobalStyles";
 import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "./CustomerPlaceholderCard";
 import EmptyOrder from "@Component/Empty/emptyOrder"
@@ -27,7 +25,7 @@ const CustomerOrder = (props) => {
     const flatListRef = useRef()
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
-    const { errors, orders, update, loaded } = useSelector((state) => state.order);
+    const { errors, orders, update, status } = useSelector((state) => state.order);
 
     const toastConfig = {
         error: () => (
@@ -131,7 +129,7 @@ const CustomerOrder = (props) => {
     };
 
     const dismissKeyboard = () => Keyboard.dismiss();
-    const goToCat = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
+    const goToCat = () => props.navigation.navigate("Home", { screen: 'HomeScreen' });
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
 
     const ListView = ({ item }) => (
@@ -151,15 +149,26 @@ const CustomerOrder = (props) => {
                         <Text style={styles.midTextOne}>{item.orders.length} {item.orders.length > 1 ? "Items" : "Item"}</Text>
                     </View>
                     <View style={styles.cardMidDown}>
-                        <Text style={styles.midTextTwo} numberOfLines={1}>{item.orders[0]?.product.name} .....</Text>
+                        <Text style={styles.midTextTwo} numberOfLines={1}>{item.orders[0]?.product?.name} .....</Text>
                     </View>
                 </View>
 
                 <View style={styles.cardDownCover}>
+                    {item?.status_text?.toLowerCase() === "cancelled" ?
 
-                    <View style={styles.StatusCover}>
-                        <Text style={styles.statusText}>{item.status_text}</Text>
-                    </View>
+                        <View style={styles.StatusCoverC}>
+                            <Text style={styles.statusTextC}>{item?.status_text}</Text>
+                        </View>
+                        :
+                        item?.status_text?.toLowerCase() === "being processed" ||  item?.status_text?.toLowerCase() === "pending" ?
+
+                            <View style={styles.StatusCoverB}>
+                                <Text style={styles.statusText2}>{item?.status_text}</Text>
+                            </View> :
+                            <View style={styles.StatusCover}>
+                                <Text style={styles.statusText}>{item?.status_text}</Text>
+                            </View>
+                    }
 
                     {item.ref_no !== null ?
                         <TouchableOpacity style={styles.reorderCover} onPress={() => reOrders(item.id)}>
@@ -209,7 +218,7 @@ const CustomerOrder = (props) => {
             {err ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.bottomCover}>
-                {loaded === "pending"  || loaded === "idle" ?
+                {status === "pending" || status === "idle" ?
                     <CustomerPlaceholderCard />
                     :
                     <FlatList

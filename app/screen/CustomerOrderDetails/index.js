@@ -5,11 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import { AuthBtn, COHeader as Header } from "@Component/index";
-import commafy from "@Helper/Commafy";
 import { reOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
-import globalStyles from "@Helper/GlobalStyles";
 
 const CustomerOrderDetails = (props) => {
 
@@ -19,6 +17,7 @@ const CustomerOrderDetails = (props) => {
    let no = 0;
    const orders = props.route.params.item;
    const { errors, update } = useSelector((state) => state.order);
+   console.log(orders)
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -28,13 +27,13 @@ const CustomerOrderDetails = (props) => {
       wait(1000).then(() => {
          setLoader(false);
          setErr(msg)
-            Toast.show({
-                type: 'error',
-                visibilityTime: 5000,
-                autoHide: true,
-                position: 'top',
-                topOffset: 0
-            })
+         Toast.show({
+            type: 'error',
+            visibilityTime: 5000,
+            autoHide: true,
+            position: 'top',
+            topOffset: 0
+         })
       });
       wait(4000).then(() => {
          dispatch(cleanup());
@@ -43,7 +42,7 @@ const CustomerOrderDetails = (props) => {
 
    const toastConfig = {
       error: () => (
-         <View style={[{marginHorizontal: 20},globalStyles.errMainView2, globalStyles.marginTop]}>
+         <View style={[{ marginHorizontal: 20 }, globalStyles.errMainView2, globalStyles.marginTop]}>
             <Text style={globalStyles.failedResponseText}>{err}</Text>
          </View>
       ),
@@ -61,10 +60,10 @@ const CustomerOrderDetails = (props) => {
 
 
    const goBack = () => props.navigation.goBack();
-   const trackOrder = () => props.navigation.navigate("TrackOrder", {id:props.route.params.item.id});
+   const trackOrder = () => props.navigation.navigate("TrackOrder", { id: props.route.params.item.id });
 
    const reOrders = () => {
-      const details = {order_group_id: orders.id};
+      const details = { order_group_id: orders.id };
       setLoader(true)
       dispatch(reOrder(details));
    };
@@ -73,16 +72,16 @@ const CustomerOrderDetails = (props) => {
       <View style={styles.cardMidCover}>
          <View style={styles.cardUpTop}>
             <View style={styles.snCover2}>
-               
+
                <Text style={styles.snTextOne}>{no += 1}.</Text>
                <View style={styles.productNameCover}>
-               <Text style={styles.upTextOne} numberOfLines={1}>{item.product.name}</Text>
+                  <Text style={styles.upTextOne} numberOfLines={1}>{item.product?.name}</Text>
                </View>
-              </View>
-            <Text style={[styles.snTextTwo, styles.snTextTwoAlign]}>₦ {commafy(item.total_amount)}</Text>
+            </View>
+            <Text style={[styles.snTextTwo, styles.snTextTwoAlign]}>₦ {commafy(item?.total_amount)}</Text>
          </View>
          <View style={styles.snDown}>
-            <Text style={styles.snDownText}>QTY/<Text style={styles.capitalize}>{item.product.pack_style}</Text> : {item.product.total_quantity_sold}</Text>
+            <Text style={styles.snDownText}>QTY/<Text style={styles.capitalize}>{item.product?.pack_style}</Text> : {item.product?.total_quantity_sold}</Text>
          </View>
       </View>
    )
@@ -95,22 +94,35 @@ const CustomerOrderDetails = (props) => {
                <View style={styles.mainContainer}>
 
                   <View style={[styles.smCard, styles.elevation]}>
-                        <View style={styles.cardUpTop}>
-                           <View>
-                              <Text style={styles.upTextTwo}>Order Date</Text>
-                              <Text style={styles.downTextTwo}>{new Date(orders.created_at).toDateString().substr(new Date(orders.created_at).toDateString().indexOf(' ') + 1)}</Text>
-                           </View>
-                           <View>
-                              <Text style={styles.upTextTwo}>Order No:</Text>
-                              <Text style={styles.downTextTwo}>{orders.ref_no}</Text>
-                           </View>
-                           <View style={styles.StatusCover}>
-                              <Text style={styles.statusText}>{orders.status_text}</Text>
-                           </View>
+                     <View style={styles.cardUpTop}>
+                        <View>
+                           <Text style={styles.upTextTwo}>Order Date</Text>
+                           <Text style={styles.downTextTwo}>{new Date(orders.created_at).toDateString().substr(new Date(orders.created_at).toDateString().indexOf(' ') + 1)}</Text>
                         </View>
+                        <View>
+                           <Text style={styles.upTextTwo}>Order No:</Text>
+                           <Text style={styles.downTextTwo}>{orders.ref_no}</Text>
+                        </View>
+
+                        {orders?.status_text?.toLowerCase() === "cancelled" ?
+
+                           <View style={styles.StatusCoverC}>
+                              <Text style={styles.statusTextC}>{orders.status_text}</Text>
+                           </View>
+                           :
+                           orders?.status_text?.toLowerCase() === "being processed"  || orders?.status_text?.toLowerCase() === "pending" ?
+
+                              <View style={styles.StatusCoverB}>
+                                 <Text style={styles.statusText2}>{orders.status_text}</Text>
+                              </View> :
+                              <View style={styles.StatusCover}>
+                                 <Text style={styles.statusText}>{orders.status_text}</Text>
+                              </View>
+                        }
+                     </View>
                   </View>
 
-                  {err ? <Toast config={toastConfig} />  : null}
+                  {err ? <Toast config={toastConfig} /> : null}
 
                   <View style={[styles.midCard, styles.elevation]}>
                      <FlatList
@@ -131,10 +143,10 @@ const CustomerOrderDetails = (props) => {
                      </View>
                      <View style={styles.cardAddressCover}>
                         <View style={styles.cardMidTop}>
-                           <Text style={styles.addTextOne}>{orders.store.name}</Text>
+                           <Text style={styles.addTextOne}>{orders?.store?.name}</Text>
                         </View>
                         <View style={styles.cardMidDown}>
-                           <Text style={styles.addTextTwo}>{orders.store.address}</Text>
+                           <Text style={styles.addTextTwo}>{orders?.store?.address}</Text>
                         </View>
                      </View>
 
@@ -161,24 +173,24 @@ const CustomerOrderDetails = (props) => {
                   </View>
 
                   <View style={[styles.midCard2, styles.elevation]}>
-                        <View style={styles.cardUpTop}>
-                           <Text style={[styles.upTextThree, styles.weight]}>SubTotal</Text>
-                           <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount) : 0}</Text>
-                        </View>
-                        <View style={styles.cardUpTop}>
-                           <Text style={[styles.upTextThree, styles.weight]}>Delivery Fee</Text>
-                           <Text style={[styles.upTextThree, styles.weight]}>Free</Text>
-                        </View>
-                        <View style={styles.cardUpTop}>
-                           <Text style={[styles.upTextThree, styles.weight]}>Total</Text>
-                           <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount) : 0}</Text>
-                        </View>
+                     <View style={styles.cardUpTop}>
+                        <Text style={[styles.upTextThree, styles.weight]}>SubTotal</Text>
+                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount) : 0}</Text>
+                     </View>
+                     <View style={styles.cardUpTop}>
+                        <Text style={[styles.upTextThree, styles.weight]}>Delivery Fee</Text>
+                        <Text style={[styles.upTextThree, styles.weight]}>Free</Text>
+                     </View>
+                     <View style={styles.cardUpTop}>
+                        <Text style={[styles.upTextThree, styles.weight]}>Total</Text>
+                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount) : 0}</Text>
+                     </View>
                   </View>
 
                   {orders?.orders.length ?
                      <View style={[styles.orderBtn]}>
                         <View style={[styles.addBtnCover]}>
-                           <AuthBtn title="Re-Order" style={styles.addressBtn2} onPress={reOrders}  styles={styles.btnText2}/>
+                           <AuthBtn title="Re-Order" style={styles.addressBtn2} onPress={reOrders} styles={styles.btnText2} />
                         </View>
                      </View>
                      : null}

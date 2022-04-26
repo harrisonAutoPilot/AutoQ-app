@@ -11,10 +11,9 @@ import SelectState from "@Screen/Customers/Registration/SelectState"
 import SelectLga from "@Screen/Customers/Registration/SelectLga"
 import styles from './style';
 import Loader from "@Screen/Loader";
-import globalStyle from "@Helper/GlobalStyles";
 import { getState } from "@Request/State";
-import { createStore } from "@Request/Store";
-import { cleanup } from "@Store/Stores";
+import { createStore, getUserStore } from "@Request/Store";
+import { cleanup, cleanupDelete } from "@Store/Stores";
 
 const MyStore = (props) => {
 
@@ -32,7 +31,7 @@ const MyStore = (props) => {
 
     useEffect(() => {
         dispatch(getState())
-        return () => dispatch(cleanup())
+        return () => dispatch(cleanupDelete())
     }, [])
 
     const wait = (timeout) => {
@@ -62,8 +61,8 @@ const MyStore = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyle.errMainView, { marginHorizontal: 20}]}>
-                <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
+            <View style={[globalStyles.errMainView, { marginHorizontal: 20}]}>
+                <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
             </View>
         ),
 
@@ -85,7 +84,9 @@ const MyStore = (props) => {
                     autoHide: true,
                     position: 'top',
                     topOffset: 0
-                })
+                });
+                console.log(props.route.params?.id)
+                dispatch(getUserStore(props.route.params?.id))
             } else {
                 setErrMsg(errmsg);
                 Toast.show({
@@ -98,7 +99,7 @@ const MyStore = (props) => {
             }
         });
 
-        wait(5000).then(() => { dispatch(cleanup()); })
+        wait(5000).then(() => { dispatch(cleanupDelete()); })
     }, []);
 
     const refreshView2 = useCallback((errmsg) => {

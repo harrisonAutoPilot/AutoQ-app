@@ -62,8 +62,10 @@ const Search = (props) => {
         }
         if (searchCategory.length) {
             searchCategoryItem();
+            setRequest(true)
         } else if (!searchCategory.length) {
             setSearchCategoryArray([]);
+            setRequest(false)
         }
     }, [search.length, searchCategory]);
 

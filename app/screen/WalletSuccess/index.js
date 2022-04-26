@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./style";
 
 import { AuthBtn as Btn } from "@Component/index";
-import commafy from "@Helper/commafy";
 import { cleanup } from "@Store/order";
 
 const WalletSuccess = (props) => {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView, Image, Linking } from "react-native";
 
-
 import styles from "./style";
 import { COHeader as Header } from "@Component";
 

@@ -3,13 +3,11 @@ import { View, Text, TouchableOpacity, ScrollView, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
-import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
-import { placeOrder, verifyOrder, verifyCode } from "@Request/CustomerOrder";
+import { placeOrder, verifyOrder, verifyCode, getCustomerPendingOrders } from "@Request/CustomerOrder";
 import { AuthBtn as Btn, COHeader as Header } from "@Component";
 import { cleanup, cleanErr, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
-import commafy from "@Helper/Commafy";
 import BottomSheet from "./ConfirmOrder";
 
 const ConfirmCheckOut = (props) => {
@@ -22,7 +20,11 @@ const ConfirmCheckOut = (props) => {
     const bottomSheet = useRef();
 
     const backToCart = () => props.navigation.navigate("CheckOut");
-    const closeBottomSheet = () => props.navigation.navigate("PendingOrder");
+    const closeBottomSheet = () => {
+        dispatch(cleanup());
+        dispatch(getCustomerPendingOrders());
+        props.navigation.navigate("PendingOrder");
+    }
     const { update, errors, orderDetail, verify, verificationStatus } = useSelector((state) => state.order);
 
     useEffect(() => {
@@ -122,8 +124,8 @@ const ConfirmCheckOut = (props) => {
 
             <View style={styles.mainBody}>
 
-                {err ? <View style={[globalStyle.errMainView]}>
-                    <Text style={globalStyle.failedResponseText}>{err}</Text>
+                {err ? <View style={[globalStyles.errMainView]}>
+                    <Text style={globalStyles.failedResponseText}>{err}</Text>
                 </View>
                     : null}
             </View>

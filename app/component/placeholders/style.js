@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     emptyCover: {
-        backgroundColor: '#f2f3f4',
+        // backgroundColor: '#f2f3f4',
         alignItems: 'center',
         justifyContent: 'center',
         width: wp('100%'),

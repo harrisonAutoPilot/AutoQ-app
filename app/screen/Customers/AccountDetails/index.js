@@ -8,10 +8,10 @@ import { COHeader as Header } from "@Component";
 import InActive from "./Inactive";
 import CustomerInfo from "./Info";
 import Orders from "./Orders";
-import { cleanup } from "@Store/CustomerOrder";
+import { getCustomerOrder } from "@Request/Customer";
 
 const CustomerDetails = (props) => {
-
+    const dispatch = useDispatch();
     const cart = () => props.navigation.navigate("Cart")
     const [activeId, setActiveId] = useState(1);
     const details = props.route?.params?.details;
@@ -21,6 +21,11 @@ const CustomerDetails = (props) => {
     const detailsScreen = (item) => props.navigation.navigate("OrderDetails", { item });
     const showActive = (id) => setActiveId(id)
     const viewStore = () => props.navigation.navigate("MyStore", {id:details.id});
+
+    useEffect(() => {
+        dispatch(getCustomerOrder(details.id))
+    }, [])
+
     return (
         <View style={styles.view}>
             <Header title="Account Details" onPress={goBack} styleView={styles.body} />

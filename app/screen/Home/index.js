@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, ImageBackground } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAgent } from "@Request/Agent";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers} from "@Request/Customer";
-import { ScrollView } from "react-native-gesture-handler";
-import { listCart } from "@Request/Cart";
 
 const Home = (props) => {
     const dispatch = useDispatch();
@@ -43,14 +41,14 @@ const Home = (props) => {
         dispatch(getAgent());
         dispatch(getCustomers());
         // dispatch(listCart());
-    }, [])
+    }, []);
 
     return (
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
                 <Header drawer={openDrawer} notify={openNotification} cart={openCart} />
                 <View style={styles.agentFaceCover}>
-                    <Image style={styles.agentImg} source={{uri: user?.picture_url}}/>
+                    <Image style={styles.agentImg} source={{uri: `${URL}${user?.picture_url}`}}/>
                 </View>
                 <View style={styles.welcomeCover}>
                     <Image style={styles.sunImg} source={dayTimeImage} />

@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, TouchableW
 import Toast from 'react-native-toast-message';
 
 import styles from './style';
-import globalStyle from "@Helper/GlobalStyles";
 import FIcon from "react-native-vector-icons/FontAwesome5";
 import { SuccessMsgViewTwo } from "@Component";
 import BottomSheet from "react-native-gesture-bottom-sheet";
@@ -21,23 +20,23 @@ const Overlay = (props) => {
     const inputFourRef = useRef(null);
 
     const dismissKeyboard = () => Keyboard.dismiss();
-    console.log(props)
+ 
 
     const ModalView = () => (
         <View>
             <BottomSheet draggable={false} ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.20} radius={50} styles={styles.addStoreBottomSheet}>
-                <View style={globalStyle.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
+                <View style={globalStyles.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
 
-                <View style={globalStyle.errInCoverNew2}>
-                    {props.err ? <View style={[globalStyle.errMainView, globalStyle.marginTop, { marginHorizontal: 20 }]}>
-                        <FIcon name="exclamation-circle" color="#fff" style={globalStyle.exclaImg} size={20} />
-                        <Text style={globalStyle.failedResponseText}>{props.err}</Text>
+                <View style={globalStyles.errInCoverNew2}>
+                    {props.err ? <View style={[globalStyles.errMainView, globalStyles.marginTop, { marginHorizontal: 20 }]}>
+                        <FIcon name="exclamation-circle" color="#fff" style={globalStyles.exclaImg} size={20} />
+                        <Text style={globalStyles.failedResponseText}>{props.err}</Text>
                     </View> : null}
                     {props.success ? <SuccessMsgViewTwo title={props.success} /> : null}
                 </View>
                 <View style={styles.modalPadding}>
                     <TouchableOpacity onPress={props.close} style={styles.backCover}>
-                        <Image source={require("@Assets/image/leading-iconn.png")} style={globalStyle.backImg} />
+                        <Image source={require("@Assets/image/leading-iconn.png")} style={globalStyles.backImg} />
                     </TouchableOpacity>
                     <Text style={styles.modalTitle}>Confirm Withdrawal</Text>
                 </View>
@@ -49,7 +48,7 @@ const Overlay = (props) => {
                         <View style={styles.topPrompt}>
                             <View style={styles.topPromptTextCover}>
                                 <Text style={styles.topPromptText}>
-                                    Please enter the SMS confirmation code sent to the registered number <Text style={styles.phone}>+{props.phone}</Text>.
+                                    Please enter the SMS confirmation code sent to the registered number <Text style={styles.phone}>+{props?.phone}</Text>.
                                     The code is valid for 15 minutes.
                                 </Text>
 

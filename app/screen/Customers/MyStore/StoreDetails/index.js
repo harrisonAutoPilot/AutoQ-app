@@ -7,9 +7,8 @@ import { COHeader as Header } from "@Component";
 import { SuccessMsgViewTwo } from "@Component/index";
 import styles from './style';
 import { useSelector, useDispatch } from "react-redux";
-import { deleteStore } from "@Request/Store";
-import { cleanup } from "@Store/Stores";
-import globalStyles from "@Helper/GlobalStyles";
+import { deleteStore, getUserStore } from "@Request/Store";
+import { cleanupDelete } from "@Store/Stores";
 import ViewDocument from "@Screen/ViewDocument"
 import Loader from "@Screen/Loader";
 
@@ -25,6 +24,8 @@ const StoreDetails = (props) => {
 
     const items = props.route.params?.item
     const { errors, deletes } = useSelector((state) => state.store);
+
+    console.log(items)
 
     const deleteStoreDetails = (id) => {
         dispatch(deleteStore(id));
@@ -66,7 +67,7 @@ const StoreDetails = (props) => {
                     position: 'top',
                     topOffset: 0
                 });
-                dispatch(cleanup());
+                dispatch(getUserStore(props.route.params?.id))
                 props.navigation.navigate("MyStore")
             } else {
                 setLoader(false);
@@ -81,7 +82,7 @@ const StoreDetails = (props) => {
             }
         });
 
-        wait(3000).then(() => { dispatch(cleanup()); })
+        wait(3000).then(() => { dispatch(cleanupDelete()); })
     }, []);
 
     const toastConfig = {
@@ -101,7 +102,7 @@ const StoreDetails = (props) => {
 
         <TouchableOpacity onPress={() => viewDoc(item.path)} >
             <View style={styles.fileCover} key={item.id}>
-                <Image source={{uri: item.path}} style={styles.certImg} />
+                <Image source={{uri: `${URL}${item.url}`}} style={styles.certImg} />
             </View>
         </TouchableOpacity>
 

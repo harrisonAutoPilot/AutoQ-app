@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getCustomers, updatePendingCustomers, registerCustomer} from "@Request/Customer";
+import {getCustomers, updatePendingCustomers, registerCustomer, getCustomerOrder} from "@Request/Customer";
 
 export const customerSlice = createSlice({
     name: "customer",
@@ -7,12 +7,14 @@ export const customerSlice = createSlice({
         customers: [],
         status: "idle",
         update: "idle",
-        errors: {}
+        errors: {},
+        orders: {},
+        orderStatus: "idle"
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
-            state.status = "idle",
+            // state.status = "idle",
             state.update = "idle"
             // state.customers = []
         },
@@ -21,22 +23,36 @@ export const customerSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(getCustomers.pending, state => {
-                console.log("ho")
                 state.status = "pending";
                 state.errors = {};
                 state.customers = [];
             })
             .addCase(getCustomers.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.customers = action.payload;
                 state.status = "success";
                 state.errors = {};
             })
             .addCase(getCustomers.rejected, (state, { payload }) => {
-                console.log(payload)
                 state.status = "failed";
                 state.errors = payload;
                 state.customers = [];
+            })
+
+            builder
+            .addCase(getCustomerOrder.pending, state => {
+                state.orderStatus = "pending";
+                state.errors = {};
+                state.orders = [];
+            })
+            .addCase(getCustomerOrder.fulfilled, (state, action) => {
+                state.orders = action.payload;
+                state.orderStatus = "success";
+                state.errors = {};
+            })
+            .addCase(getCustomerOrder.rejected, (state, { payload }) => {
+                state.orderStatus = "failed";
+                state.errors = payload;
+                state.orders = {};
             })
 
             builder
@@ -45,7 +61,6 @@ export const customerSlice = createSlice({
                 state.errors = {};
             })
             .addCase(updatePendingCustomers.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.update = "success";
                 state.errors = {};
             })
@@ -56,17 +71,15 @@ export const customerSlice = createSlice({
 
             builder
             .addCase(registerCustomer.pending, state => {
-                console.log("ho")
                 state.update = "pending";
                 state.errors = {};
             })
             .addCase(registerCustomer.fulfilled, (state, action) => {
-                console.log(action.payload, "kio")
                 state.update = "success";
                 state.errors = {};
             })
             .addCase(registerCustomer.rejected, (state, { payload }) => {
-                console.log("hor", payload)
+                console.log("not again", payload)
                 state.update = "failed";
                 state.errors = payload;
             })

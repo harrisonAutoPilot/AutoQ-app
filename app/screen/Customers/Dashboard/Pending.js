@@ -43,13 +43,15 @@ const InActive = (props) => {
             let searched = customer.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) })
             toTop()
             return setResult(searched)
-        } else if (id === 3) {
-            let searched = customer.sort((a, b) => {
-                if (a.stores[0].address.toLowerCase() < b.stores[0].address.toLowerCase()) return -1;
-            });
-            toTop()
-            return setResult(searched)
-        } else if (id === 4) {
+        } 
+        // else if (id === 3) {
+        //     let searched = customer.sort((a, b) => {
+        //         if (a.stores[0].address.toLowerCase() < b.stores[0].address.toLowerCase()) return -1;
+        //     });
+        //     toTop()
+        //     return setResult(searched)
+        // } 
+        else if (id === 4) {
             let searched = customer.sort((a, b) => { return new Date(a.created_at) - new Date(b.created_at) })
             toTop()
             return setResult(searched)
@@ -76,7 +78,7 @@ const InActive = (props) => {
     const ListView = ({ item, index }) => {
 
         return (
-            <TouchableOpacity style={styles.cardCover}  onPress={() => props.details(item)} key={item.id}>
+            <TouchableOpacity style={styles.cardCover} onPress={() => props.details(item)}  key={item.id}>
                 <View style={styles.cardTop}>
                     <View><Text style={styles.nameText}>{item.name}</Text></View>
                     <View style={styles.penCover}><Text style={styles.penText}>Pending</Text></View>
@@ -86,7 +88,9 @@ const InActive = (props) => {
 
                 </View>
                 <View style={styles.cardDown}>
-                <View style={styles.cardDownInner}><Text style={styles.phoneText} >{item?.stores[0].address}</Text></View>
+                <View style={styles.cardDownInner}>
+                    {/* <Text style={styles.phoneText} >{item?.stores[0].address}</Text> */}
+                    </View>
 
                 </View>
             </TouchableOpacity>
@@ -113,7 +117,7 @@ const InActive = (props) => {
                     keyExtractor={item => item.id}
                     ListEmptyComponent={EmptyCustomer}
                     renderItem={ListView}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
+                    ListFooterComponent={<View style={{ height: 70 }} />}
                     columnWrapperStyle={styles.column}
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={refreshView} />

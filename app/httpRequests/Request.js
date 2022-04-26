@@ -12,7 +12,7 @@ const apiRequest = async (asyncFn, thunkAPI, route) => {
       }
       return data
    } catch (error) {
-      console.log(error.response.data, "err")
+      console.log(error.response.data, "err", error?.response)
       return thunkAPI.rejectWithValue({ msg: error?.response?.data?.error ? error?.response?.data?.error || "An Error Occured" : error?.response?.data?.phone_number_verification , status: error?.response?.status || 400 });
    }
 };

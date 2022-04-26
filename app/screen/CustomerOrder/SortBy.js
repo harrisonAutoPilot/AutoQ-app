@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity,  Image, } from "react-native";
 import Modal from "react-native-modal";
 import FIcon from "react-native-vector-icons/FontAwesome5";
 import styles from "./style";
-import globalStyle from "@Helper/GlobalStyles";
 
 const Sort = (props) => {
 
@@ -20,10 +19,10 @@ const Sort = (props) => {
             onSwipeComplete={props.onSwipeComplete}
         >
             <View style={styles.body}>
-            <View style={globalStyle.dragIconSm}><FIcon name="minus" color="gray" size={35}/></View>
+            <View style={globalStyles.dragIconSm}><FIcon name="minus" color="gray" size={35}/></View>
             <View style={styles.modalPadding}>
                     <TouchableOpacity onPress={props.close} style={styles.backCover}>
-                        <Image source={require("@Assets/image/left.png")} style={globalStyle.backImgSort} />
+                        <Image source={require("@Assets/image/left.png")} style={globalStyles.backImgSort} />
                     </TouchableOpacity>
                     
                     <Text style={styles.modalTitle}>Sort By</Text>

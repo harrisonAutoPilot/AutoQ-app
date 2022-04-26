@@ -5,9 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { Portal } from 'react-native-portalize';
 import styles from '@Screen/Home/style';
-import globalStyle from "@Helper/GlobalStyles";
 import { addToCart} from "@Request/Cart";
-import commafy from "@Helper/Commafy";
 import FIcon from "react-native-vector-icons/FontAwesome5";
 import { SuccessMsgViewTwo } from "@Component";
 import { cleanup } from "@Store/Cart";
@@ -127,9 +125,9 @@ const Overlay = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyle.errMainView, globalStyle.marginTop]}>
-                <FIcon name="exclamation-circle" color="#fff" style={globalStyle.exclaImg} size={20} />
-                <Text style={globalStyle.failedResponseText}>{errMsg}</Text>
+            <View style={[globalStyles.errMainView, globalStyles.marginTop]}>
+                <FIcon name="exclamation-circle" color="#fff" style={globalStyles.exclaImg} size={20} />
+                <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
             </View>
         ),
 
@@ -174,12 +172,12 @@ const Overlay = (props) => {
             {/* <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.13} radius={50} styles={styles.addStoreBottomSheet}> */}
                 <View style={globalStyle.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
 
-                <View style={globalStyle.errInCoverNew}>
+                <View style={globalStyles.errInCoverNew}>
                     {errMsg ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
                 </View>
                 <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
-                    <Image source={require("@Assets/image/left.png")} style={globalStyle.backImg} />
+                    <Image source={require("@Assets/image/left.png")} style={globalStyles.backImg} />
                 </TouchableOpacity>
 
 

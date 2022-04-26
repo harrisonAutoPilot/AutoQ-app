@@ -20,7 +20,11 @@ export const cartSlice = createSlice({
             state.removeCart = "idle",
             state.updateCartItems = "idle"
             // state.loaded = "idle";
-        }
+        },
+        idle: (state) => {
+            state.loaded = "idle";
+        },
+
     },
     extraReducers: builder => {
         builder
@@ -88,6 +92,6 @@ export const cartSlice = createSlice({
 
     }
 });
-export const { cleanup } = cartSlice.actions
+export const { cleanup, idle } = cartSlice.actions
 
 export default cartSlice.reducer;

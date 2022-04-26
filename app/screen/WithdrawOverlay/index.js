@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { View, Text, TouchableOpacity, Image, Keyboard, TouchableWithoutFeedback, Dimensions, ScrollView, TextInput } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import styles from './style';
-import globalStyle from "@Helper/GlobalStyles";
 import { addToCart } from "@Request/Cart";
 import { AuthBtn as Btn, FormikValidator, InputField } from "@Component";
 import BottomSheet from "react-native-gesture-bottom-sheet";
@@ -72,7 +71,7 @@ const Overlay = (props) => {
                 <View style={styles.modalView}>
                     <View style={styles.modalPadding}>
                         <TouchableOpacity onPress={props.bottomSheetWClose} style={styles.backCover}>
-                            <Image source={require("@Assets/image/leading-iconn.png")} style={globalStyle.backImg} />
+                            <Image source={require("@Assets/image/leading-iconn.png")} style={globalStyles.backImg} />
                         </TouchableOpacity>
                         <Text style={styles.modalTitle}>Confirm Withdrawal</Text>
                     </View>

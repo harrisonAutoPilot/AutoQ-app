@@ -3,7 +3,6 @@ import { View, Text } from "react-native";
 
 import styles from "./style";
 import { COHeader as Header } from "@Component";
-import commafy from "@Helper/Commafy";
 
 const TransactionDetail = (props) => {
     const goBack = () => props.navigation.navigate("Wallet");

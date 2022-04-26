@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { View, Text, Image, FlatList } from "react-native";
-import styles from "./style";
-import { COHeader as Header } from "@Component";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import TrackOrderPlaceholderCard from './TrackOrderPlaceholder'
 
+import styles from "./style";
+import { COHeader as Header } from "@Component";
+import TrackOrderPlaceholderCard from './TrackOrderPlaceholder'
 import { trackOrder } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 
@@ -16,7 +16,6 @@ const TrackOrder = (props) => {
 
    useEffect(() => {
       dispatch(trackOrder({ id: props.route.params.id }));
-
       return () => dispatch(cleanup())
    }, [])
 
@@ -45,20 +44,25 @@ const TrackOrder = (props) => {
 
    return (
       <View style={styles.main}>
-         <Header title="Track Order" onPress={goBack}  styleView={styles.body}/>
+         <Header title="Track Order" onPress={goBack} styleView={styles.body} />
 
          <View style={styles.bottomCover} >
             <View style={[styles.midCard, styles.elevation]}>
 
-               <FlatList
-                  data={trackOrderList?.tracks}
-                  renderItem={TrackOrderPlaceholderCard}
-                  keyExtractor={item => item.id}
-               />
+               {trackOrderStatus === "idle" || trackOrderStatus === "pending" ?
+                  <TrackOrderPlaceholderCard />
+                  :
+                  <FlatList
+                     data={trackOrderList?.tracks}
+                     renderItem={ListView}
+                     keyExtractor={item => item.id}
+
+                  />
+               }
                {trackOrderList?.status ?
                   <View style={styles.lastCover}>
                      <View style={styles.tickCover}>
-                        <Icon name="check" size={14} color="#212121"/>
+                        <Icon name="check" size={14} color="#212121" />
                      </View>
                      <Text style={styles.tickText}>{trackOrderList.message}.</Text>
 

@@ -14,6 +14,12 @@ export const getUserStore = createAsyncThunk("store/user",
       return apiRequest(Axios.get(`api/v1/stores/users/${id}`), thunkAPI)
    });
 
+export const getPendingUserStore = createAsyncThunk("store/pending_user",
+   async (id, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.get(`api/v1/agent/customers/${id}/stores`), thunkAPI)
+   });
+
 export const deleteStore = createAsyncThunk("store/update",
    async (id, thunkAPI) => {
       const Axios = await AxiosBase();

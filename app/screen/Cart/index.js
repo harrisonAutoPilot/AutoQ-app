@@ -7,11 +7,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
-import globalStyle from "@Helper/GlobalStyles";
 import styles from "./style";
 import { listCart, deleteCart, updateCart } from "@Request/Cart";
-import commafy from "@Helper/Commafy";
-import URL from "@Helper/Constant";
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup } from "@Store/Cart";
@@ -125,8 +122,8 @@ const Cart = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyle.errMainView, { marginBottom: 10 }]}>
-                <Text style={globalStyle.failedResponseText}>{err}</Text>
+            <View style={[globalStyles.errMainView, { marginBottom: 10 }]}>
+                <Text style={globalStyles.failedResponseText}>{err}</Text>
             </View>
         ),
 
@@ -285,16 +282,16 @@ const Cart = (props) => {
             </View>
 
             <View style={styles.bottomCover}>
-                {(items.carts && !items.carts.length && loaded === "success") && !copyCart.length
+                {loaded === "idle" || loaded === "pending"
                     ?
-                    <AddCartListEmptyBig browse={browse} />
+                    <CartPlaceholderComponent />
                     :
 
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={copyCart}
                         keyExtractor={item => item.id}
-                        ListEmptyComponent={CartPlaceholderComponent}
+                        ListEmptyComponent={<AddCartListEmptyBig browse={browse} />}
                         renderItem={ListView}
                         ListFooterComponent={<View style={{ height: 50 }} />}
                         columnWrapperStyle={styles.column}

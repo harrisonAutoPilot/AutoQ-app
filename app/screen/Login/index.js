@@ -11,7 +11,6 @@ import Toast from 'react-native-toast-message';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import styles from "./style";
-import globalStyles from "@Helper/GlobalStyles";
 import { AuthBtn as Btn, FormikValidator, InputField } from "@Component/index";
 import { login } from "@Request/Auth";
 import { cleanup } from "@Store/Auth";

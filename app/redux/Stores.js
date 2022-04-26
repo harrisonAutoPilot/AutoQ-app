@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getStore, deleteStore, createStore, getUserStore } from "@Request/Store";
+import { getStore, deleteStore, createStore, getUserStore, getPendingUserStore } from "@Request/Store";
 
 export const storeSlice = createSlice({
     name: "store",
@@ -10,15 +10,25 @@ export const storeSlice = createSlice({
         update: "idle",
         deletes: "idle",
         errors: {},
+        pending: {},
+        pendingStatus: "idle"
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
             state.status = "idle",
             state.update = "idle",
-            state.deletes = "idle"
+            state.deletes = "idle",
+            state.pending = {}
+            state.pendingStatus = "idle"
             // state.usersStore = []
         },
+        cleanupDelete: (state) => {
+            state.errors = {}
+            state.update = "idle",
+            state.deletes = "idle"
+        },
+        
     },
     extraReducers: builder => {
         builder
@@ -55,6 +65,24 @@ export const storeSlice = createSlice({
                 state.usersStore = [];
             })
 
+            builder
+            .addCase(getPendingUserStore.pending, state => {
+                state.pendingStatus = "pending";
+                state.errors = {};
+                state.pending = {};
+            })
+            .addCase(getPendingUserStore.fulfilled, (state, action) => {
+                state.pending = action.payload;
+                state.pendingStatus = "success";
+                state.errors = {};
+            })
+            .addCase(getPendingUserStore.rejected, (state, { payload }) => {
+                state.pendingStatus = "failed";
+                state.errors = payload;
+                state.pending = {};
+            })
+
+
 
         builder
             .addCase(deleteStore.pending, state => {
@@ -76,18 +104,16 @@ export const storeSlice = createSlice({
                 state.errors = {};
             })
             .addCase(createStore.fulfilled, (state, action) => {
-          
                 state.update = "success";
                 state.errors = {};
             })
             .addCase(createStore.rejected, (state, { payload }) => {
-           
                 state.update = "failed";
                 state.errors = payload;
             })
     }
 });
 
-export const {cleanup } = storeSlice.actions
+export const {cleanup, cleanupDelete } = storeSlice.actions
 
 export default storeSlice.reducer;

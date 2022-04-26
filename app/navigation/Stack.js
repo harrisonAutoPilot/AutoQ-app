@@ -124,7 +124,7 @@ const LoginStackNavigator = () => {
 
 const StackNavigator = () => {
     const dispatch = useDispatch();
-    const { isAuthenticated, userVerified, userStatus } = useSelector((state) => state.auth);
+    const { isAuthenticated } = useSelector((state) => state.auth);
     const [timer, setTimer] = useState(false);
     const [versionStatus, setVersionState] = useState(false);
 
@@ -135,14 +135,14 @@ const StackNavigator = () => {
 
     useEffect(() => {
 
-        // VersionCheck.needUpdate()
-        //     .then(async res => {
-        //         if (res.isNeeded) {
-        //             setVersionState(true)
-        //         } else {
-        //             setVersionState(false)
-        //         }
-        //     });
+        VersionCheck.needUpdate()
+            .then(async res => {
+                if (res.isNeeded) {
+                    setVersionState(true)
+                } else {
+                    setVersionState(false)
+                }
+            });
 
         wait(1000).then(() => setTimer(true));
 

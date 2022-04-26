@@ -1,15 +1,11 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, Animated } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
-import FIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from "./style";
-import commafy from "@Helper/Commafy";
-import URL from "@Helper/Constant";
 
 const List = (props) => {
     const item = props.item.product ? props.item.product : props.item;
-    console.log(item)
 
     return (
         <Animated.View style={ { transform: [{ scale: props.scale }] }}>

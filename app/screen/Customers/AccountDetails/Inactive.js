@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import styles from "./style";
-import globalStyles from "@Helper/GlobalStyles";
 import { SuccessMsgViewTwo } from "@Component";
 import { updateUserDetails, getUser } from "@Request/Auth";
 import { cleanup } from "@Store/Auth";
