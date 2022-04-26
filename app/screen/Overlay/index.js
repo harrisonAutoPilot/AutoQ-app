@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Platform, Dimensions } from "react-native";
+import React, { useEffect, useState, useRef, useCallback, useMemo, Fragment } from "react";
+import { View, Text, TouchableOpacity, Image, ScrollView, Platform, Dimensions, Animated } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
-
+import { Portal } from 'react-native-portalize';
 import styles from '@Screen/Home/style';
 import globalStyle from "@Helper/GlobalStyles";
 import { addToCart} from "@Request/Cart";
@@ -11,7 +11,13 @@ import commafy from "@Helper/Commafy";
 import FIcon from "react-native-vector-icons/FontAwesome5";
 import { SuccessMsgViewTwo } from "@Component";
 import { cleanup } from "@Store/Cart";
-import BottomSheet from "react-native-gesture-bottom-sheet";
+// import BottomSheet from "react-native-gesture-bottom-sheet";
+import { BottomSheetScrollView, useBottomSheetTimingConfigs, BottomSheetModal } from '@gorhom/bottom-sheet';
+import {
+    Easing, Extrapolate,
+    interpolate,
+    useAnimatedStyle,
+} from 'react-native-reanimated';
 import SmallCard from './SmallCard';
 import { listCart } from "@Request/Cart";
 import { searchProducts } from "@Request/Product";
@@ -23,8 +29,44 @@ const Overlay = (props) => {
     const [errMsg, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [adding, setAdding]  = useState(false);
-
     const { addCart, errors } = useSelector((state) => state.cart);
+
+    // const snapPoints = useMemo(() => [ '50%', '80%'], []);
+    const snapPoints = useMemo(() => ['50%', '80%'], []);
+    const handleSheetChanges = useCallback((index) => {
+        console.log('handleSheetChanges', index);
+    }, []);
+
+    const animationConfigs = useBottomSheetTimingConfigs({
+        duration: 250,
+        easing: Easing.exp,
+    });
+
+    const CustomBackdrop = ({ animatedIndex, style }) => {
+        // animated variables
+        const containerAnimatedStyle = useAnimatedStyle(() => ({
+            opacity: interpolate(
+                animatedIndex.value,
+                [0, 1],
+                [0, 1],
+                Extrapolate.CLAMP
+            ),
+        }));
+
+        const containerStyle = useMemo(
+            () => [
+                style,
+                {
+                    backgroundColor: "rgba(0,0,0,0.6)"
+                },
+                containerAnimatedStyle,
+            ],
+            [style, containerAnimatedStyle]
+        );
+
+        return <Animated.View style={containerStyle} />;
+    };
+
 
     useEffect(() => {
         if (addCart === "failed") {
@@ -109,8 +151,27 @@ const Overlay = (props) => {
 
 
     const ModalView = () => (
-        <View style={{flex: 1}}>
-            <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.13} radius={50} styles={styles.addStoreBottomSheet}>
+        // <Portal>
+        <Fragment>
+            <BottomSheetModal
+                    ref={props.bottomSheet}
+                    index={1}
+                    initialSnapIndex={1}
+                    snapPoints={snapPoints}
+                    onChange={handleSheetChanges}
+                    style={styles.addStoreBottomSheet}
+                    animationConfigs={animationConfigs}
+                    backdropComponent={CustomBackdrop}
+                    enablePanDownToClose
+                    draggable={true}
+                    animateOnMount={true}
+                    handleIndicatorStyle={{display:"none"}}
+                    hasDraggableIcon={true}
+                >
+        {/* <View style={{flex: 1}}> */}
+            
+             <BottomSheetScrollView contentContainerStyle={styles.scrollStyle} >
+            {/* <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.13} radius={50} styles={styles.addStoreBottomSheet}> */}
                 <View style={globalStyle.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
 
                 <View style={globalStyle.errInCoverNew}>
@@ -203,12 +264,18 @@ const Overlay = (props) => {
                                         : null}
                                 </View>
                             </View>
-
+                          
                         </View>
                         : null}
                 </ScrollView>
-            </BottomSheet>
-        </View>
+            {/* </BottomSheet> */}
+           
+            </BottomSheetScrollView>
+        {/* </View> */}
+        </BottomSheetModal>
+
+</Fragment>
+// </Portal>
     );
 
     return (

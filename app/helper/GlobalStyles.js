@@ -438,7 +438,7 @@ export default styles = StyleSheet.create({
         width: wp('100%'),
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: -38,
+        marginTop: -52,
 
     },
     dragIconFund: {
