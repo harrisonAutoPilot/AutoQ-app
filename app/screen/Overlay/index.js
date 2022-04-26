@@ -170,7 +170,7 @@ const Overlay = (props) => {
             
              <BottomSheetScrollView contentContainerStyle={styles.scrollStyle} >
             {/* <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.13} radius={50} styles={styles.addStoreBottomSheet}> */}
-                <View style={globalStyle.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
+                <View style={globalStyles.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
 
                 <View style={globalStyles.errInCoverNew}>
                     {errMsg ? <Toast config={toastConfig} /> : null}
