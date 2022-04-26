@@ -154,8 +154,8 @@ const Search = (props) => {
     // Get the ID of the product to filter and show the Modal
     const getItem = (id) => {
         filterProduct(id);
-        setVisible(true)
-        bottomSheet.current.show();
+        setVisible(true);
+        bottomSheet.current?.present()
     };
 
 

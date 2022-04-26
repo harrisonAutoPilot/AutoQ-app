@@ -29,7 +29,7 @@ const Overlay = (props) => {
     const [adding, setAdding]  = useState(false);
     const { addCart, errors } = useSelector((state) => state.cart);
 
-    // const snapPoints = useMemo(() => [ '50%', '80%'], []);
+  
     const snapPoints = useMemo(() => ['50%', '80%'], []);
     const handleSheetChanges = useCallback((index) => {
         console.log('handleSheetChanges', index);
@@ -55,7 +55,8 @@ const Overlay = (props) => {
             () => [
                 style,
                 {
-                    backgroundColor: "rgba(0,0,0,0.6)"
+                    backgroundColor: "rgba(0,0,0,0.6)",
+                
                 },
                 containerAnimatedStyle,
             ],
@@ -150,14 +151,16 @@ const Overlay = (props) => {
 
     const ModalView = () => (
         // <Portal>
+        
         <Fragment>
+           
             <BottomSheetModal
                     ref={props.bottomSheet}
                     index={1}
                     initialSnapIndex={1}
                     snapPoints={snapPoints}
                     onChange={handleSheetChanges}
-                    style={styles.addStoreBottomSheet}
+                    style={[styles.addStoreBottomSheet]}
                     animationConfigs={animationConfigs}
                     backdropComponent={CustomBackdrop}
                     enablePanDownToClose
@@ -166,9 +169,9 @@ const Overlay = (props) => {
                     handleIndicatorStyle={{display:"none"}}
                     hasDraggableIcon={true}
                 >
-        {/* <View style={{flex: 1}}> */}
+        <View style={{flex: 1, borderRadius:70}}>
             
-             <BottomSheetScrollView contentContainerStyle={styles.scrollStyle} >
+             <BottomSheetScrollView contentContainerStyle={styles.scrollStyle}  >
             {/* <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.13} radius={50} styles={styles.addStoreBottomSheet}> */}
                 <View style={globalStyles.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
 
@@ -269,11 +272,12 @@ const Overlay = (props) => {
             {/* </BottomSheet> */}
            
             </BottomSheetScrollView>
-        {/* </View> */}
+        </View>
         </BottomSheetModal>
-
+ 
 </Fragment>
-// </Portal>
+
+// {/*  </Portal> */}
     );
 
     return (

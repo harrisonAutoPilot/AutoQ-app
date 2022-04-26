@@ -22,10 +22,12 @@ export default styles = StyleSheet.create({
       resizeMode:'contain'
     },
     addStoreBottomSheet: {
-      borderTopLeftRadius: 40,
-      borderTopRightRadius:40,
-      overflow: "hidden"
+      borderRadius: 60,
+        overflow: "hidden"
   },
+  scrollStyle:{
+    borderRadius: 60,
+  }
 
     
   })
