@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Modal,Image, Linking} from "react-native";
 import styles from "./style";
 
-import { AuthBtn } from "@Component/index";
+import { AuthBtn } from "@Component";
 
 
 const SoftUpdate = () => {

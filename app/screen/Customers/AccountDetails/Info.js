@@ -39,6 +39,7 @@ const CustomerInfo = (props) => {
         firstname: details?.name ? details?.name?.substr(0, details.name.indexOf(' ')) : "",
         surname: details?.name ? details?.name.substr(details?.name.indexOf(' ') + 1) : "",
         phone: details?.phone ? details?.phone : "",
+        email: details?.email ? details?.email : "",
     };
 
     const submit = async (values) => {
@@ -193,7 +194,7 @@ const CustomerInfo = (props) => {
                                                     </View>
 
                                                 </View>
-                                                <View>
+                                               
                                                     <View style={[styles.inputHolder, props.touched.phone && props.errors.phone ? styles.inputErrHolder : null]}>
                                                         <View style={styles.labelView}>
                                                             <Text style={styles.label}>PHONE</Text>
@@ -204,12 +205,6 @@ const CustomerInfo = (props) => {
                                                             onBlur={props.handleBlur('phone')}
                                                             placeholder="James"
                                                             placeholderTextColor="#757575"
-                                                            onChangeText={(val) => {
-                                                                props.setFieldValue('phone', val)
-                                                                props.setFieldTouched('phone', true, false);
-                                                                setErrMsg("");;
-                                                                setSuccessMsg("")
-                                                            }}
                                                             editable={false}
                                                         />
                                                         <View style={styles.flag}>
@@ -217,7 +212,22 @@ const CustomerInfo = (props) => {
                                                         </View>
                                                     </View>
 
-                                                </View>
+                                                     
+                                                    <View style={[styles.inputHolder]}>
+                                                        <View style={styles.labelView}>
+                                                            <Text style={styles.label}>EMAIL</Text>
+                                                        </View>
+                                                        <InputField
+                                                            style={styles.innerLabel}
+                                                            value={props.values.email}
+                                                            onBlur={props.handleBlur('email')}
+                                                            placeholderTextColor="#757575"
+                                                            editable={false}
+                                                        />
+                            
+                                                    </View>
+
+                                              
                                             </View>
 
                                             <View style={styles.inbtwStore} />

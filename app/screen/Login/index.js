@@ -162,6 +162,7 @@ const Login = (props) => {
                                                                 setErrMsg("")
                                                             }}
                                                             style={styles.label2}
+                                                            autoFocus={true}
                                                         />
                                                     </View>
                                                     {props.touched.phone && props.errors.phone ? (

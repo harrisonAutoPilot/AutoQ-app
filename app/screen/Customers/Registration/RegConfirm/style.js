@@ -107,7 +107,7 @@ export default styles = StyleSheet.create({
         // position: "absolute",
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        height: "15%",
+        height: "17%",
         width: "100%",
         backgroundColor: '#f5f5f5',
         padding: 20,

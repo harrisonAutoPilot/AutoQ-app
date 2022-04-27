@@ -17,6 +17,7 @@ const InputField = props => {
             multiline={props.multiline}
             numberOfLines={props.numberOfLines}
             onPressIn={props.onPressIn}
+            autoFocus={props.autoFocus}
             />
 
     )

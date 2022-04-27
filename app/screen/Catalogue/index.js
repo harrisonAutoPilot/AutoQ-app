@@ -123,7 +123,7 @@ const Catalogue = (props) => {
                     }
                     showsVerticalScrollIndicator={false}
                     getItemLayout={(data, index) => (
-                        { length: 100, offset: 100 * index, index }
+                        { length: 170, offset: 170 * index, index }
                     )}
                     ref={flatListRef}
                     extraData={categories}

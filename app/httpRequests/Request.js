@@ -3,6 +3,7 @@ import Config from "react-native-config";
 
 
 const apiRequest = async (asyncFn, thunkAPI, route) => {
+   // console.log(thunkAPI, "jo")
    try {
       const { data } = await asyncFn;
       if (route === "auth") {

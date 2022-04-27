@@ -46,8 +46,8 @@ const addStoreSchema2 = yup.object({
 });
 
 const addStoreSchemaImg = yup.object({
-    images: yup.array().required("License Image is required").min(1, "License Image is required"),
-    images2: yup.array().min(1, "Store Image is required").required("Store Image is required")
+    images: yup.array(),
+    images2: yup.array()
 });
 
 const productSchema = yup.object({

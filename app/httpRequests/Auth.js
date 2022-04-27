@@ -5,6 +5,7 @@ import { apiRequest } from "@Request/Request";
 export const login = createAsyncThunk("auth/login",
     async (user, thunkAPI) => {
         const Axios = await AxiosBase();
+        // console.log(Axios)
         return apiRequest(Axios.post('api/v1/agent/login', user),
             thunkAPI, "auth")
     });
