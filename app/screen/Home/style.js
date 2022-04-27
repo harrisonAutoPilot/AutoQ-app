@@ -413,6 +413,8 @@ const styles = StyleSheet.create({
     },
     modalTitleView: {
         backgroundColor: "#fff",
+        width:wp('90%'),
+        alignSelf:'center',
     },
     modalminiTitle: {
         fontSize: 16,

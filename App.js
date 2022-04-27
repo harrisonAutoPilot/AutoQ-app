@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import NetInfo from "@react-native-community/netinfo";
-
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import store from "@Store/Store";
 import Network from "@Screen/Network";
 import { LogBox } from 'react-native';
@@ -33,7 +33,9 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
       {/* <GestureHandlerRootView> */}
+      <BottomSheetModalProvider>
         <Navigation />
+      </BottomSheetModalProvider>
         {isOffline ? <Network />: null}
         {/* </GestureHandlerRootView> */}
       </PersistGate>

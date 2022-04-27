@@ -1,5 +1,8 @@
 import { Platform, StyleSheet } from "react-native";
-
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen'
 
 export default styles = StyleSheet.create({
     container: {
@@ -14,10 +17,17 @@ export default styles = StyleSheet.create({
       
     },
     image: {
-      width: 120,
-      height: 150,
+      width: 130,
+      height: 100,
       resizeMode:'contain'
     },
-   
+    addStoreBottomSheet: {
+      borderRadius: 60,
+        overflow: "hidden"
+  },
+  scrollStyle:{
+    borderRadius: 60,
+  }
+
     
   })
