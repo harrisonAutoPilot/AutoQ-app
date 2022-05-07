@@ -19,7 +19,7 @@ const Products = (props) => {
     const dispatch = useDispatch();
     const scrollY = useRef(new Animated.Value(0)).current;
 
-    const ITEM_SIZE = 120
+    const ITEM_SIZE = 130
     const [err, setErr] = useState("");
     const [refreshing, setRefreshing] = useState(false);
     const [result, setResult] = useState({});
@@ -50,8 +50,9 @@ const Products = (props) => {
     }, [props.route.params?.item]);
 
     const closeSheet = () => {
-        bottomSheet.current.close();
         setVisible(false)
+        bottomSheet.current.close();
+        
     };
 
     const wait = (timeout) => {

@@ -30,6 +30,15 @@ export default styles = StyleSheet.create({
         backgroundColor: '#F5F5F5',
         marginBottom: 20
     },
+    listContainer2: {
+        width: wp('95%'),
+        marginTop: 15,
+        borderRadius: 16,
+        backgroundColor: '#F5F5F5',
+        marginBottom: 20,
+        flexDirection: "row",
+        justifyContent: "center"
+    },
     listContainerP: {
         width: wp('45%'),
         marginTop: 15,

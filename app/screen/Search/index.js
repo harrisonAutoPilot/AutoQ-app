@@ -14,7 +14,7 @@ import ProductPlaceholderCard from "@Screen/Product/ProductPlaceholderCard";
 const Search = (props) => {
     const dispatch = useDispatch();
     const scrollY = useRef(new Animated.Value(0)).current;
-    const ITEM_SIZE = 120
+    const ITEM_SIZE = 130
     const [refreshing, setRefreshing] = useState(false);
     const [search, setSearch] = useState("");
     const [searchCategory, setSearchCategory] = useState("");
@@ -79,6 +79,7 @@ const Search = (props) => {
         setActive(category)
     }
     const closeSheet = () => {
+        setVisible(false)
         bottomSheet.current.close();
     }
 

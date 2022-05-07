@@ -29,6 +29,7 @@ const Overlay = (props) => {
     const [adding, setAdding]  = useState(false);
     const { addCart, errors } = useSelector((state) => state.cart);
 
+  console.log(props.isVisible);
   
     const snapPoints = useMemo(() => ['50%', '80%'], []);
     const handleSheetChanges = useCallback((index) => {

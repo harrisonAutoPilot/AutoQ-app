@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl} from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl, Dimensions} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
 
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
@@ -258,6 +259,33 @@ const Cart = (props) => {
 
     )
 
+    let { width } = Dimensions.get('window');
+
+    const [dataProvider, setDataProvider] = useState(
+        new DataProvider((r1, r2) => {
+            return r1 !== r2;
+        }))
+
+    const [layoutProvider] = useState(
+        new LayoutProvider(
+          (index) => 0,
+          (type, dim) => {
+            dim.width = width
+            dim.height = 140
+          }
+        )
+      )
+
+    const rowRenderer = (type, data) => {
+        return <ListView item={data} />;
+    };
+
+   useEffect(() => {
+       if(items.carts){
+        setDataProvider((prevState) => prevState.cloneWithRows(copyCart))
+       }
+      }, [copyCart])
+
     return (
         <View style={styles.view}>
             <Header onPress={goBack} title="Cart" styleView={styles.body2} >
@@ -285,24 +313,36 @@ const Cart = (props) => {
                 {loaded === "idle" || loaded === "pending"
                     ?
                     <CartPlaceholderComponent />
-                    :
+                     :
+                    dataProvider && dataProvider.getSize() > 0 ?
 
-                    <FlatList
-                        showsVerticalScrollIndicator={false}
-                        data={copyCart}
-                        keyExtractor={item => item.id}
-                        ListEmptyComponent={<AddCartListEmptyBig browse={browse} />}
-                        renderItem={ListView}
-                        ListFooterComponent={<View style={{ height: 50 }} />}
-                        columnWrapperStyle={styles.column}
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={refreshCartView} />
-                        }
-                        extraData={items.cart}
-                    />}
+                    <RecyclerListView
+                        style={{ width: "100%"}}
+                        rowRenderer={rowRenderer}
+                        dataProvider={dataProvider}
+                        layoutProvider={layoutProvider}
+                    /> 
+                     :
+                    <AddCartListEmptyBig browse={browse}/> 
+                    // :
+
+                    // <FlatList
+                    //     showsVerticalScrollIndicator={false}
+                    //     data={copyCart}
+                    //     keyExtractor={item => item.id}
+                    //     ListEmptyComponent={<AddCartListEmptyBig browse={browse} />}
+                    //     renderItem={ListView}
+                    //     ListFooterComponent={<View style={{ height: 50 }} />}
+                    //     columnWrapperStyle={styles.column}
+                    //     refreshControl={
+                    //         <RefreshControl refreshing={refreshing} onRefresh={refreshCartView} />
+                    //     }
+                    //     extraData={items.cart}
+                    // />
+                }
 
 
-                {items.total_amount ?
+                {items.total_amount && loaded === "success" && copyCart && copyCart.length ?
                     <View style={styles.bottomDownCover}>
 
                         <View style={styles.orderCover}>

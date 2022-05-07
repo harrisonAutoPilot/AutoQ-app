@@ -163,6 +163,7 @@ const Login = (props) => {
                                                             }}
                                                             style={styles.label2}
                                                             autoFocus={true}
+                                                            maxLength={13}
                                                         />
                                                     </View>
                                                     {props.touched.phone && props.errors.phone ? (
