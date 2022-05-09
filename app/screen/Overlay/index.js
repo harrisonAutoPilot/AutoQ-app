@@ -31,7 +31,7 @@ const Overlay = (props) => {
 
   console.log(props.isVisible);
   
-    const snapPoints = useMemo(() => ['50%', '80%'], []);
+    const snapPoints = useMemo(() => ['50%', '85%'], []);
     const handleSheetChanges = useCallback((index) => {
         console.log('handleSheetChanges', index);
     }, []);
@@ -170,19 +170,19 @@ const Overlay = (props) => {
                     handleIndicatorStyle={{display:"none"}}
                     hasDraggableIcon={true}
                 >
-        <View style={{flex: 1, borderRadius:70}}>
-            
-             <BottomSheetScrollView contentContainerStyle={styles.scrollStyle}  >
-            {/* <BottomSheet hasDraggableIcon ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.13} radius={50} styles={styles.addStoreBottomSheet}> */}
+       
+               <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
+                    <Image source={require("@Assets/image/left.png")} style={globalStyles.backImg} />
+                </TouchableOpacity>
+               <BottomSheetScrollView contentContainerStyle={styles.scrollStyle}  >
+           
                 <View style={globalStyles.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
 
                 <View style={globalStyles.errInCoverNew}>
                     {errMsg ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
                 </View>
-                <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
-                    <Image source={require("@Assets/image/left.png")} style={globalStyles.backImg} />
-                </TouchableOpacity>
+               
 
 
                 <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollStyle} keyboardShouldPersistTaps="always">
@@ -273,7 +273,7 @@ const Overlay = (props) => {
             {/* </BottomSheet> */}
            
             </BottomSheetScrollView>
-        </View>
+       
         </BottomSheetModal>
  
 </Fragment>

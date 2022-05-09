@@ -209,7 +209,7 @@ const Cart = (props) => {
         <View style={styles.midCard}>
             <View style={styles.cover}>
                 <View style={styles.imgCover}>
-                    <Image source={{ uri: `${URL}${item.product.product_images[0].url}` }} style={styles.drugImg} />
+                    <Image source={{ uri: `${URL}${item.product?.product_images[0]?.url}` }} style={styles.drugImg} />
                 </View>
                 <View style={styles.descCover}>
                     <View style={styles.descTextView}>

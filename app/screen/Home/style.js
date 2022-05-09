@@ -51,15 +51,16 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     scrollStyle:{
+        
         // width: wp('100%'),
-        // height: hp('70%'),
+         height: hp('80%'),
         // borderTopRightRadius: 35,
         // borderTopLeftRadius: 35,
-        // // alignItems: 'center',
-        // backgroundColor: '#fff',
-        // marginTop:10,
+        // alignItems: 'center',
+        backgroundColor: '#fff',
+        marginTop:10,
         // top: hp('-5%'),
-        // zIndex:120,
+        zIndex:120,
     },
     smCover:{
         width: wp('100%'),
@@ -408,7 +409,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 29.75,
         marginLeft: 5,
         zIndex: 9000,
-        marginTop: 15,
+        marginTop: 8,
 
     },
     modalTitleView: {
@@ -656,7 +657,10 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     topModalView: {
-        height: "24%"
+        // height: "24%",
+        marginTop:10,
+        paddingTop:20,
+        paddingBottom:20,
     },
     topModalImageView: {
         height: 170,
@@ -703,7 +707,11 @@ const styles = StyleSheet.create({
     suninner:{
         paddingVertical: 20,
         paddingHorizontal: 16
-    }
+    },
+    addStoreBottomSheet: {
+        borderRadius: 50,
+          overflow: "hidden"
+    },
 });
 
 export default styles
