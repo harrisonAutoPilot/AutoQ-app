@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import styles from "./style";
 import { BtnLg, BtnPre, FormikValidator, InputField} from "@Component";
 import { addStoreSchema2 } from "@Helper/Schema";
+import SelectPayment from "./SelectPayment";
 import SelectState from "./SelectState"
 import SelectLga from "./SelectLga"
 
@@ -93,6 +94,18 @@ const Step2 = (props) => {
                                                         <Text style={styles.errText}>{props.errors.address}</Text>
                                                     </View>) : null}
                                             </View>
+                                            <View>
+                                                <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.state_id && props.errors.state_id ? styles.inputErrHolder : null]}>
+                                                    <View style={styles.labelView}>
+                                                        <Text style={styles.label}>PAYMENT OPTION</Text>
+                                                    </View>
+                                                    <SelectPayment props={props} />      
+                                                </View>
+                                               
+
+                                            </View>
+
+
                                             <View>
                                                 <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.state_id && props.errors.state_id ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
