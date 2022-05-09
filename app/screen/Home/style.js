@@ -53,14 +53,14 @@ const styles = StyleSheet.create({
     scrollStyle:{
         
         // width: wp('100%'),
-         height: hp('95%'),
+        //  height: hp('95%'),
         // borderTopRightRadius: 35,
         // borderTopLeftRadius: 35,
         // alignItems: 'center',
         backgroundColor: '#fff',
         marginTop:10,
         // top: hp('-5%'),
-        zIndex:120,
+        // zIndex:120,
     },
     smCover:{
         width: wp('100%'),
