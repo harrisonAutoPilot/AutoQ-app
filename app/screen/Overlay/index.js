@@ -186,8 +186,7 @@ const Overlay = (props) => {
                     {errMsg ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
                 </View>
-               
-                <NativeViewGestureHandler disallowInterruption={true}>
+              
 
                 <View >
                     {result?.id ?
@@ -274,7 +273,7 @@ const Overlay = (props) => {
                         </View>
                         : null}
                 </View>
-                </NativeViewGestureHandler>
+                
             {/* </BottomSheet> */}
            
             </BottomSheetScrollView>
