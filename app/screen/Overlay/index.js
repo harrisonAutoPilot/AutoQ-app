@@ -185,7 +185,7 @@ const Overlay = (props) => {
                
 
 
-                <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollStyle} keyboardShouldPersistTaps="always">
+                <View>
                     {result?.id ?
                         <View>
                             <View style={styles.topModalView}>
@@ -269,7 +269,7 @@ const Overlay = (props) => {
                           
                         </View>
                         : null}
-                </ScrollView>
+                </View>
             {/* </BottomSheet> */}
            
             </BottomSheetScrollView>
