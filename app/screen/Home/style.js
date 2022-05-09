@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     scrollStyle:{
         
         // width: wp('100%'),
-         height: hp('95%'),
+         height: hp('87%'),
         // borderTopRightRadius: 35,
         // borderTopLeftRadius: 35,
         // alignItems: 'center',
