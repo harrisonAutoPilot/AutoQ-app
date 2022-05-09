@@ -9,6 +9,9 @@ import { addToCart} from "@Request/Cart";
 import FIcon from "react-native-vector-icons/FontAwesome5";
 import { SuccessMsgViewTwo } from "@Component";
 import { cleanup } from "@Store/Cart";
+import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+
+
 // import BottomSheet from "react-native-gesture-bottom-sheet";
 import { BottomSheetScrollView, useBottomSheetTimingConfigs, BottomSheetModal } from '@gorhom/bottom-sheet';
 import {
@@ -31,7 +34,7 @@ const Overlay = (props) => {
 
   console.log(props.isVisible);
   
-    const snapPoints = useMemo(() => ['50%', '85%'], []);
+    const snapPoints = useMemo(() => ["25%", "85%"], []);
     const handleSheetChanges = useCallback((index) => {
         console.log('handleSheetChanges', index);
     }, []);
@@ -152,7 +155,8 @@ const Overlay = (props) => {
 
     const ModalView = () => (
         // <Portal>
-        
+      
+
         <Fragment>
            
             <BottomSheetModal
@@ -183,11 +187,11 @@ const Overlay = (props) => {
                     {successMsg ? <Toast config={toastConfig} /> : null}
                 </View>
                
+                <NativeViewGestureHandler disallowInterruption={true}>
 
-
-                <View>
+                <View >
                     {result?.id ?
-                        <View>
+                        <View  >
                             <View style={styles.topModalView}>
                                 <View style={styles.topModalImageView}>
                                     <SmallCard img={result.product_images} />
@@ -270,6 +274,7 @@ const Overlay = (props) => {
                         </View>
                         : null}
                 </View>
+                </NativeViewGestureHandler>
             {/* </BottomSheet> */}
            
             </BottomSheetScrollView>
@@ -277,6 +282,7 @@ const Overlay = (props) => {
         </BottomSheetModal>
  
 </Fragment>
+
 
 // {/*  </Portal> */}
     );
