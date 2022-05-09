@@ -94,7 +94,7 @@ const Catalogue = (props) => {
                         break;
 
                     case ViewTypes.HALF_RIGHT:
-                        dim.width = width / 2 - 10
+                        dim.width = width / 2 -5
                         dim.height = 190
                         break;
                     default:

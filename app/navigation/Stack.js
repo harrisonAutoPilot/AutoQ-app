@@ -137,7 +137,7 @@ const StackNavigator = () => {
 
         VersionCheck.needUpdate()
             .then(async res => {
-                if (res.isNeeded) {
+                if (res?.isNeeded) {
                     setVersionState(true)
                 } else {
                     setVersionState(false)
