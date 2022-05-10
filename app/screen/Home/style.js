@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop:10,
         // top: hp('-5%'),
-        zIndex:120,
+        // zIndex:120,
     },
     smCover:{
         width: wp('100%'),
