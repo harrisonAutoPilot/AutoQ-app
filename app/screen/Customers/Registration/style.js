@@ -1135,5 +1135,23 @@ export default styles = StyleSheet.create({
     },
     scrollContentContainer: {
         flexGrow: 1,
+    },
+    infoCover:{
+        width:wp('90%'),
+        flexDirection:'row',
+        paddingLeft:2,
+        paddingTop:3,
+        marginBottom:-8
+        
+    },
+    infoText:{
+        fontFamily: "Urbanist",
+        fontSize: 12,
+        lineHeight: 16,
+        letterSpacing: 0.5,
+        fontWeight: "500",
+        color: "#3858CF", 
+        marginLeft:5,
     }
+
 })

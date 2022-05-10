@@ -5,15 +5,15 @@ import { SelectCountry } from 'react-native-element-dropdown';
 const local_data = [
   {
     value: '1',
-    lable: '10 PERCENT',
+    lable: 'Weekly',
   },
   {
     value: '2',
-    lable: '15 PERCENT',
+    lable: 'Monthly',
   },
   {
     value: '3',
-    lable: '20 PERCENT',
+    lable: 'Every 2 Month',
   },
   
   

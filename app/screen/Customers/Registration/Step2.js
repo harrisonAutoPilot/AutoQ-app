@@ -3,6 +3,7 @@ import { View, Text, TouchableWithoutFeedback, Keyboard, ScrollView } from "reac
 import { useSelector } from "react-redux";
 
 import styles from "./style";
+import Icon from "react-native-vector-icons/Feather";
 import { BtnLg, BtnPre, FormikValidator, InputField} from "@Component";
 import { addStoreSchema2 } from "@Helper/Schema";
 import SelectPayment from "./SelectPayment";
@@ -99,9 +100,13 @@ const Step2 = (props) => {
                                                     <View style={styles.labelView}>
                                                         <Text style={styles.label}>PAYMENT OPTION</Text>
                                                     </View>
-                                                    <SelectPayment props={props} />      
+                                                    <SelectPayment props={props} />    
+                                                    
                                                 </View>
-                                               
+                                                <View style={styles.infoCover}>
+                                                    <Icon name="info" size={12} color="#3858CF" style={styles.icon} />
+                                                    <Text style={styles.infoText}>Order stocks and choose when to pay</Text>
+                                                </View> 
 
                                             </View>
 
