@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import NetInfo from "@react-native-community/netinfo";
+
 import store from "@Store/Store";
 import Network from "@Screen/Network";
 import { LogBox } from 'react-native';

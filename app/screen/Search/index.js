@@ -10,6 +10,7 @@ import styles from "./style";
 import ListItems from "@Screen/Product/ListView";
 import BottomSheet from "@Screen/Overlay";
 import ProductPlaceholderCard from "@Screen/Product/ProductPlaceholderCard";
+import Loader from "@Screen/Loader";
 
 const Search = (props) => {
     const dispatch = useDispatch();
@@ -83,6 +84,7 @@ const Search = (props) => {
     const closeSheet = () => {
         setVisible(false)
         bottomSheet.current.close();
+        setRequest(true)
     }
 
 
@@ -99,6 +101,7 @@ const Search = (props) => {
 
     const searchCategoryItem = () => {
         dispatch(searchProducts(searchCategory.toLowerCase()))
+        setSearching(true)
         // setSearchCategoryArray(searchedProducts)
     };
 
@@ -166,6 +169,7 @@ const Search = (props) => {
     const getItem = (id) => {
         filterProduct(id);
         setVisible(true);
+        setRequest(false)
         bottomSheet.current?.present()
     };
 

@@ -51,16 +51,9 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     scrollStyle:{
-        
-        // width: wp('100%'),
-         height: hp('86.5%'),
-        // borderTopRightRadius: 35,
-        // borderTopLeftRadius: 35,
-        // alignItems: 'center',
+        //  height: hp('86.5%'),
         backgroundColor: '#fff',
         marginTop:10,
-        // top: hp('-5%'),
-        // zIndex:120,
     },
     smCover:{
         width: wp('100%'),
@@ -406,7 +399,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         paddingHorizontal: 29.75,
         paddingTop: 25.5,
-        paddingBottom: 200,
+        paddingBottom: 20,
         marginTop: 5
     },
     modalPadding: {
@@ -511,7 +504,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 40
     },
     increaseText: {
-        paddingVertical: 11,
+        // paddingVertical: 11,
         paddingHorizontal: 14
     },
     browseView: {
