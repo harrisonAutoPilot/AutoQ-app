@@ -3,17 +3,17 @@ import { View, Text, TouchableOpacity, Image, ScrollView, Platform, Dimensions, 
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
-import { Portal } from 'react-native-portalize';
+
+
 import styles from '@Screen/Home/style';
 import { addToCart} from "@Request/Cart";
 import FIcon from "react-native-vector-icons/FontAwesome5";
 import { SuccessMsgViewTwo } from "@Component";
 import { cleanup } from "@Store/Cart";
-import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 
 
 // import BottomSheet from "react-native-gesture-bottom-sheet";
-import { BottomSheetScrollView, useBottomSheetTimingConfigs, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetScrollView, useBottomSheetTimingConfigs, BottomSheetModal, BottomSheetModalProvider, BottomSheetTextInput, } from '@gorhom/bottom-sheet';
 import {
     Easing, Extrapolate,
     interpolate,
@@ -32,7 +32,6 @@ const Overlay = (props) => {
     const [adding, setAdding]  = useState(false);
     const { addCart, errors } = useSelector((state) => state.cart);
 
-  console.log(props.isVisible);
   
     const snapPoints = useMemo(() => ["25%", "85%"], []);
     const handleSheetChanges = useCallback((index) => {
@@ -154,10 +153,7 @@ const Overlay = (props) => {
 
 
     const ModalView = () => (
-        // <Portal>
-      
-
-        <Fragment>
+        <BottomSheetModalProvider>
            
             <BottomSheetModal
                     ref={props.bottomSheet}
@@ -220,14 +216,7 @@ const Overlay = (props) => {
                                     <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result.quantity_per_pack}</Text></Text>
                                 </View>
 
-                                {/* <View style={styles.modalDiscount}>
-                                    <View>
-                                        <Icon name="info" size={18} color="#00319D" />
-                                    </View>
-                                    <View style={styles.modalDiscountTextView}>
-                                        <Text style={styles.modalDiscountText}>Discount on Carton: {result.discount_on_carton}</Text>
-                                    </View>
-                                </View> */}
+                                {result.quantity_available > 0 ?
 
                                 <View style={styles.increaseCartMainAmountView}>
                                     <View style={styles.cartAmountView}>
@@ -235,6 +224,18 @@ const Overlay = (props) => {
                                             <Icon name="minus" color="#212121" />
                                         </TouchableOpacity>
                                         <View style={styles.increaseText}>
+                                        <BottomSheetTextInput
+                                                        style={styles.label2}
+                                                        value={cartAmount.toString()}
+                                                        onChangeText={(val) => {
+                                                            if (result.quantity_available >= val) {
+                                                                val = val.replaceAll(regex, "")
+                                                                    setCartAmount(val.replace(/[^0-9]/g, '')) 
+                                                            }
+                                                        }
+                                                        }
+                                                        keyboardType="numeric"
+                                                    />
                                             <Text style={styles.productTitle}>{cartAmount}</Text>
                                         </View>
                                         <TouchableOpacity style={styles.decrease} onPress={increaseCart}>
@@ -245,6 +246,7 @@ const Overlay = (props) => {
                                         <Text style={styles.amountText}>&#8358;{commafy(result.price_per_pack * cartAmount)}</Text>
                                     </View>
                                 </View>
+                                : null}
 
                                 <View style={styles.modalHeartIconView}>
 
@@ -279,11 +281,7 @@ const Overlay = (props) => {
             </BottomSheetScrollView>
        
         </BottomSheetModal>
- 
-</Fragment>
-
-
-// {/*  </Portal> */}
+ </BottomSheetModalProvider>
     );
 
     return (

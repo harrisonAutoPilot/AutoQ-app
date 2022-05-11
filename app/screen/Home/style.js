@@ -67,6 +67,17 @@ const styles = StyleSheet.create({
         height: hp('70%'),
         
     },
+    label2: {
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 20,
+        color: "#616161",
+        letterSpacing: 0.1,
+        textTransform: "capitalize",
+        // height: 30,
+        textAlign: "center",
+        flex: 1
+    },
 
     bottomCover: {
         width: wp('100%'),

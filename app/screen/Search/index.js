@@ -26,6 +26,7 @@ const Search = (props) => {
     const [visible, setVisible] = useState(false);
     const [request, setRequest] = useState(false);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    const [searching, setSearching] = useState(false);
 
     const { categories } = useSelector((state) => state.category);
     const { status, errors, searchedProducts } = useSelector((state) => state.product);
@@ -64,6 +65,7 @@ const Search = (props) => {
             searchCategoryItem();
             setRequest(true)
         } else if (!searchCategory.length) {
+            setSearching(false)
             setSearchCategoryArray([]);
             setRequest(false)
         }
@@ -97,8 +99,16 @@ const Search = (props) => {
 
     const searchCategoryItem = () => {
         dispatch(searchProducts(searchCategory.toLowerCase()))
-        setSearchCategoryArray(searchedProducts)
+        // setSearchCategoryArray(searchedProducts)
     };
+
+    useEffect(() => {
+        if (searchProducts.length) {
+            setSearchCategoryArray(searchedProducts);
+            setSearching(false)
+        }
+
+    }, [searchedProducts])
 
     // Add Items to Wishlist
     const itemsAddedToWishlist = async (id) => {
@@ -122,7 +132,7 @@ const Search = (props) => {
 
         return <View style={[styles.listContainer, active === item.name ? styles.activeColor : null]}>
             <TouchableOpacity onPress={() => showMapCategory(item.name)}>
-                <Text style={[styles.inputTitle, styles.color2]}>{item.display_name.trim()}</Text>
+                <Text style={[styles.inputTitle, styles.color2]}>{item?.display_name?.trim()}</Text>
             </TouchableOpacity>
         </View>
     };
@@ -264,6 +274,8 @@ const Search = (props) => {
                     </TouchableOpacity>
                     : null
             }
+
+            <Loader isVisible={searching} />
 
         </View>
     )
