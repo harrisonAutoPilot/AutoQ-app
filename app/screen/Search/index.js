@@ -234,6 +234,10 @@ const Search = (props) => {
             </View>
             {active === ""
                 ?
+                searching ?
+
+                <ProductPlaceholderCard />:
+                
                 <FlatList
                     data={searchCategoryArray}
                     keyExtractor={item => item.id}
@@ -279,7 +283,6 @@ const Search = (props) => {
                     : null
             }
 
-            <Loader isVisible={searching} />
 
         </View>
     )

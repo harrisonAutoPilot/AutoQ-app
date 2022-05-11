@@ -164,7 +164,7 @@ const Overlay = (props) => {
                 enablePanDownToClose
                 draggable={true}
                 animateOnMount={true}
-                // handleIndicatorStyle={{ display: "none" }}
+                handleIndicatorStyle={{ display: "none" }}
             // hasDraggableIcon={true}
             >
 
