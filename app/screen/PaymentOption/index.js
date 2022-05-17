@@ -33,7 +33,7 @@ const PaymentOption = (props) => {
   const selectUserType = item => {
     setActive(item.id);
     setOption(item.name);
-    console.log(active);
+    
 
 };
 
@@ -41,23 +41,12 @@ const PaymentOption = (props) => {
       dispatch(getPaymentOptions())
   }, []);
 
-  const redirectToRegisterDetails = () => {
-      if (!option) return setErrMsg("Please select a payment option")
-      props.navigation.navigate("Register", { option });
 
-  };
 
 const closeModal = (item) => {
   props.returnBack (option);
-  console.log(option);
+ 
 }
-
-function onConfirm ({item,props}) {
-  let data = { name: "Harrison"};
-  props.onConfirm(item, data);
-}
-
-
 
 
   const renderItem = ({ item }) => (
