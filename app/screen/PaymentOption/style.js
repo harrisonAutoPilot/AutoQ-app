@@ -235,7 +235,33 @@ iconCircle2: {
 },
 icon: {
   alignSelf: "center"
-}
+},
+//THIS IS FOR THE PLACEHOLDER LOADER
+iconCircleP: {
+  backgroundColor: "#BDBDBD",
+  borderWidth: 0,
+  width: 25,
+  height: 25,
+  borderRadius: 20,
+  alignSelf: "center",
+  justifyContent: "center",
+},
+optionTextP: {
+width:80,
+height:15,
+backgroundColor:'#bfbfbf',
+borderRadius:20,
+marginTop:5,
+marginBottom:5,
+},
+optionTextPL: {
+  width:150,
+  height:15,
+  backgroundColor:'#bfbfbf',
+  borderRadius:20,
+  marginTop:5,
+  marginBottom:5,
+},
   
 });
 

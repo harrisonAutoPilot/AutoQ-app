@@ -3,6 +3,7 @@ import { View, Text, Image, FlatList,TouchableOpacity,BackHandler, Pressable} fr
 import FIcon from "react-native-vector-icons/MaterialIcons";
 import Icon from "react-native-vector-icons/Feather";
 import { useSelector, useDispatch } from "react-redux";
+import PlaceholderLoader from "./PlaceholderLoader";
 
 import { getPaymentOptions } from "@Request/paymentOptions";
 import Modal from "react-native-modal";
@@ -131,13 +132,17 @@ const closeModal = (item) => {
 
                 <View style={styles.itemCover}>
                     
+                         {active ?
                             <FlatList
-                                data={data2}
-                                renderItem={renderItem}
-                                keyExtractor={(item, index) => index.toString()}
-                                scrollEnabled={isScrollEnabled}
-                                // onChangeText={(item) => props.onInputChanged(item.name)}
-                            />
+                            data={data2}
+                            renderItem={renderItem}
+                            keyExtractor={(item, index) => index.toString()}
+                            scrollEnabled={isScrollEnabled}
+                           
+                        />
+                      : 
+                      <PlaceholderLoader />
+                      }
                             
                      
                    </View> 
