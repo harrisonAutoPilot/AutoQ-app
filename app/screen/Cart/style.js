@@ -370,4 +370,55 @@ badgeText: {
   alignSelf: "center"
 
 },
-})
+
+  //THIS IS FOR THE BOTTOM PLACEHOLDER
+  placeCover:{
+    padding:20,
+    width:wp('100%'),
+    paddingLeft:20,
+    paddingRight:40,
+    alignSelf:'center',
+    // alignItems:'center',
+      },
+      placeholderTitle:{
+        width:120,
+        height:25,
+        borderRadius:20,
+        backgroundColor:'#bfbfbf',
+      },
+      underCover:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        padding:20,
+        paddingLeft:30,
+        paddingRight:30,
+        width:wp('100%'),
+        alignSelf:'center',
+    
+      },
+      underCover1:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        padding:20,
+        paddingLeft:30,
+        paddingRight:30,
+        paddingTop:10,
+        width:wp('100%'),
+        alignSelf:'center',
+        marginTop:-10,
+    
+      },
+      underLine:{
+        width:70,
+        height:15,
+        borderRadius:20,
+        backgroundColor:'#bfbfbf',
+      },
+      btnLine:{
+        width:300,
+        height:45,
+        borderRadius:50,
+        backgroundColor:'#bfbfbf',
+        alignSelf:'center'
+      }
+    })

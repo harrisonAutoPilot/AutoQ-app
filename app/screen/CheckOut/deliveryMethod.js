@@ -29,40 +29,26 @@ import RegularOptions from './RegularOptions';
       };
   }, [method]);
 
-  const ChangeMethod =() =>{
-   setIsFocus(false);
-   setCloseDrop(false);
-   setShowMethodOption(true);
-   setCloseDrop(false);
+  const ChangeMethod =(item) =>{
+    if (method=== '2'){
+      console.log('chuchu :', item.value);
+      setIsFocus(false);
+      setCloseDrop(false);
+      setShowMethodOption(true);
+      setCloseDrop(false);
+    }
+  
   
   }
   
-const Render = (item) => {
-  return (
- 
-        <View style={styles.customItem}>
-      <Text>{item.label}</Text>
-      {
-        item.value === "2" ?
-        <TouchableOpacity onPress={ChangeMethod}>
-        <Text style={styles.changeText}>Change</Text>
-      </TouchableOpacity>
-      :
-      null
-      }
-  </View>
 
- 
-  )
-}
 
 const IconCheck= () => {
   return (
     <View>
     { method === '2' ?
   <View>
-      <Text style={styles.smDisplay}>Delivery Date :{methodName} </Text>  
-      
+      <Text style={styles.smDisplay}>Delivery Date :{methodName} </Text>   
   </View>
     :
     <AntDesign
@@ -100,7 +86,7 @@ const IconCheck= () => {
             setMethod(e.value);
             setIsFocus(false);
           }}
-          renderItem ={(item) => Render(item)}
+          // renderItem ={(item) => Render(item)}
         
           renderLeftIcon={() => IconCheck()}
           
