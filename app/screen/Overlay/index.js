@@ -171,7 +171,6 @@ const Overlay = (props) => {
                 <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
                     <Image source={require("@Assets/image/left.png")} style={globalStyles.backImg} />
                 </TouchableOpacity>
-                {/* <View style={globalStyles.dragIcon}><FIcon name="minus" color="gray" size={35} /></View> */}
 
                 <View style={globalStyles.errInCoverNew}>
                     {errMsg ? <Toast config={toastConfig} /> : null}
