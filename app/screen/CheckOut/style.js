@@ -402,8 +402,8 @@ export default styles = StyleSheet.create({
     padding: 8,
   },
   dropStyle:{
-    height: 50,
-    width: wp('92%'),
+    height: 55,
+    width: wp('90%'),
     borderWidth:1,
     borderColor:'#BDBDBD',
     borderRadius:8,
