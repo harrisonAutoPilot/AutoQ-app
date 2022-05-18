@@ -6,7 +6,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
-
+import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
 import { listCart, deleteCart, updateCart } from "@Request/Cart";
@@ -362,7 +362,7 @@ const Cart = (props) => {
                         <View style={styles.addBtnCover}>
                             <Btn title="Proceed to Check out" style={styles.addressBtn2} onPress={redirectToCheckOut} />
                         </View>
-                    </View> : null}
+                    </View> : <BottomPlaceholder />}
 
             </View>
             <Loader isVisible={loader} />
