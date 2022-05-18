@@ -12,6 +12,7 @@ import { getWallet } from "@Request/Wallet";
 import PlaceholderComponent from "./placeholderComponent";
 import { listCart } from "@Request/Cart";
 import { getStore } from "@Request/Store";
+import DeliverMethod from "./deliveryMethod"
 
 const CheckOut = (props) => {
 
@@ -125,7 +126,12 @@ const CheckOut = (props) => {
                                     <Text style={styles.itemDetails} >Loading...</Text>}
                             </View>
                         </View>
-
+                        <View style={styles.deliverMethodCover}>
+                        <View style={styles.titleCover}>
+                            <Text style={styles.titleText}>DELIVERY OPTION</Text>
+                        </View>
+                        <DeliverMethod />
+                        </View>
                         <View style={styles.title2Cover}>
                             <Text style={styles.titleText}>PAYMENT</Text>
                         </View>

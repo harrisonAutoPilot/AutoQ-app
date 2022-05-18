@@ -379,4 +379,91 @@ export default styles = StyleSheet.create({
    
     marginLeft:40,
   },
+
+  //THIS IS FOR THE DELIVERY METHOD 
+  deliverMethodCover:{
+    backgroundColor:'#fff',
+    paddingTop:10,
+    paddingBottom:10,
+
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    
+  },
+  deliverContainer:{
+    
+    justifyContent: 'center',
+    paddingTop: 20,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+  dropStyle:{
+    height: 50,
+    width: wp('92%'),
+    borderWidth:1,
+    borderColor:'#BDBDBD',
+    borderRadius:8,
+    alignSelf:'center',
+    paddingHorizontal:8,
+  },
+  dropdown: {
+    // height: 50,
+    paddingTop:3,
+    paddingBottom:3,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconNew:{
+    marginRight:20,
+    marginLeft:10,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+    marginRight:20,
+    marginLeft:10,
+  
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  smDisplay:{
+    fontSize:14,
+    color:'#3858CF',
+  },
+  customItem:{
+    padding:15,
+    flexDirection:'row',
+    justifyContent:'space-between',
+  },
+  changeText:{
+    color:'#3858CF',
+    fontFamily: "Urbanist-Regular",
+    fontSize: 14,
+    lineHeight: 20,
+    letterSpacing: 0.3,
+    fontWeight: "600",
+  }
 })

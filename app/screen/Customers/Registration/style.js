@@ -1152,6 +1152,99 @@ export default styles = StyleSheet.create({
         fontWeight: "500",
         color: "#3858CF", 
         marginLeft:5,
-    }
+    },
+    paymentHeader:{
+        fontFamily: "Urbanist",
+        fontSize: 16,
+        lineHeight: 24,
+        letterSpacing: 0.1,
+        fontWeight: "600",
+        color: "#3858CF",   
+        marginTop:10, 
+    },
+    paymentSmHeader:{
+        fontFamily: "Urbanist",
+        fontSize: 16,
+        lineHeight: 24,
+        letterSpacing: 0.1,
+        fontWeight: "600",
+        color: "#212121", 
+        marginTop:10,    
+    },
+    paymentInputCover:{
+        width:wp('90%'),
+        borderWidth:1,
+        borderColor:'#E0E0E0',
+        borderRadius:5,
+        height:60,
+        alignSelf:'center',
+        marginTop:5,
+        flexDirection:'row',
+        justifyContent:'space-between'
+
+    },
+    innerPaymentCover:{
+        flexDirection:'row',
+        width:100,
+        marginLeft:20,
+        marginTop:15,
+    },
+    calendarIcon:{
+        marginRight:10,
+    },
+    changeStyle:{
+        fontFamily: "Urbanist",
+        fontSize: 14,
+        lineHeight: 20,
+        letterSpacing: 0.1,
+        fontWeight: "600",
+        color: "#3858CF", 
+        marginTop:18, 
+        marginRight:20,  
+    },
+    colorInfo: {
+        width: wp('90%'),
+        flexDirection: 'row',
+        padding: 20,
+        backgroundColor: 'rgba(56, 88, 207, 0.16)',
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        alignSelf: 'center',
+        marginTop:10,
+    },
+    iconInfo: {
+        marginRight: 10,
+        marginTop: 5,
+    },
+    smTitleCover:{
+    flexDirection:'row',
+    justifyContent:'flex-start',
+    width:wp('80%'),
+    alignSelf:'center'
+    },
+   
+   
+    smTitle:{
+      fontFamily: "Urbanist",
+      fontSize: 16,
+      lineHeight: 24,
+      letterSpacing: 0.2,
+      color: "#1C1B1F",
+      fontWeight:'400',
+      paddingBottom:15,
+      paddingLeft:5,
+      
+    },
+    colorInfoText: {
+        fontFamily: "Urbanist-SemiBold",
+        fontSize: 12,
+        lineHeight: 16,
+        letterSpacing: 0.2,
+        color: "#00319D",
+        width: 270,
+        flexWrap: 'wrap',
+        flex: 1,
+    
+    },
 
 })
