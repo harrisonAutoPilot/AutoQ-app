@@ -95,21 +95,6 @@ const Step2 = (props) => {
                                                         <Text style={styles.errText}>{props.errors.address}</Text>
                                                     </View>) : null}
                                             </View>
-                                            <View>
-                                                <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.state_id && props.errors.state_id ? styles.inputErrHolder : null]}>
-                                                    <View style={styles.labelView}>
-                                                        <Text style={styles.label}>PAYMENT OPTION</Text>
-                                                    </View>
-                                                    <SelectPayment props={props} />    
-                                                    
-                                                </View>
-                                                <View style={styles.infoCover}>
-                                                    <Icon name="info" size={12} color="#3858CF" style={styles.icon} />
-                                                    <Text style={styles.infoText}>Order stocks and choose when to pay</Text>
-                                                </View> 
-
-                                            </View>
-
 
                                             <View>
                                                 <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.state_id && props.errors.state_id ? styles.inputErrHolder : null]}>

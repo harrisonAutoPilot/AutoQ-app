@@ -68,9 +68,9 @@ const Registration = (props) => {
     };
 
 
-    const redirectToStepTwo = (val, type) => {
+    const redirectToStepTwo = (val, type, payment) => {
         const {firstname, surname, phone, email} = val
-        const newData = {name: `${firstname} ${surname}`, phone, user_type: type, id: details?.id, key, email }
+        const newData = {name: `${firstname} ${surname}`, phone, user_type: type, id: details?.id, key, email, credit_option: payment }
         setDataOne(newData);
         setActiveId(2)
 

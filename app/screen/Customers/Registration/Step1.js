@@ -15,6 +15,7 @@ const Step1 = (props) => {
     const [active, setActive] = useState("");
     const [userType, setUserType] = useState("")
     const [payment, setPayment] = useState("Select Payment")
+    const [paymentId, setPaymentId] = useState()
     const [showPaymentOption, setShowPaymentOption] = useState(false);
     const registerState = props.details;
     const editable = props.active;
@@ -27,32 +28,32 @@ const Step1 = (props) => {
     useEffect(() => {
         if (type) {
             setUserType(type)
-           
+
         };
     }, [type]);
 
     const selectUserType = (id, name) => {
         setActive(id);
         setUserType(name)
-       
-       
     };
-    changeOption = () =>{
+
+    changeOption = () => {
         setShowPaymentOption(true)
     }
 
     const RenderItem = ({ item }) => {
         return (
-            <View style={[styles.optionView, active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
+            <TouchableOpacity 
+            style={[styles.optionView, active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id} 
+            onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
                 <View style={active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionIconView : styles.optionIconView2}>
                     {userType?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
-                        <TouchableOpacity style={styles.iconCircle} onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
+                        <View style={styles.iconCircle} >
                             <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
-                        </TouchableOpacity >
+                        </View >
                         :
-                        <TouchableOpacity style={styles.iconCircle2} onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
+                        <View style={styles.iconCircle2} />
 
-                        </TouchableOpacity>
                     }
                 </View>
                 {active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ?
@@ -69,7 +70,7 @@ const Step1 = (props) => {
                             <Text style={styles.onboardSubTitle1}>{item.desc}</Text>
                         </View>
                     </View>}
-            </View>
+            </TouchableOpacity>
         )
     };
 
@@ -98,7 +99,7 @@ const Step1 = (props) => {
                                         initialValues={registerState}
                                         validationSchema={registerSchema}
                                         onSubmit={(values, actions) => {
-                                            submit(values, userType)
+                                            submit(values, userType, paymentId)
                                         }}
                                     >
                                         {props => (
@@ -145,7 +146,7 @@ const Step1 = (props) => {
                                                                 props.setFieldValue('surname', val)
                                                                 props.setFieldTouched('surname', true, false);
                                                             }}
-                                                          
+
                                                         />
                                                     </View>
                                                     {props.touched.surname && props.errors.surname ? (
@@ -171,7 +172,7 @@ const Step1 = (props) => {
                                                                 props.setFieldValue('email', val)
                                                                 props.setFieldTouched('email', true, false);
                                                             }}
-                                                            // editable={editable}
+                                                        // editable={editable}
                                                         />
                                                     </View>
                                                     {props.touched.email && props.errors.email ? (
@@ -219,57 +220,63 @@ const Step1 = (props) => {
                                                             renderItem={RenderItem}
                                                             keyExtractor={item => item.id}
                                                         />
-                                               { userType && userType === "hospital" ?
-                                                       <View>
-                                                       <View>
-                                                           <Text style={styles.paymentHeader}>PAYMENT METHOD</Text>
-                                                       </View>
-                                                       <View>
-                                                           <Text style={styles.paymentSmHeader}>Select a Preferred Payment</Text>
-                                                       </View>
-                                                       <View style={styles.paymentInputCover}>
-                                                               {payment === "Select Payment" ?
-                                                            <View style={styles.innerPaymentCover}>
-                                                               <Icon name="calendar" size={22} color="#424242" style={styles.calendarIcon} />
-                                                               <Text>{payment}</Text>
+                                                        {userType && userType === "hospital" ?
+                                                            <View>
+                                                                <View>
+                                                                    <Text style={styles.paymentHeader}>PAYMENT METHOD</Text>
+                                                                </View>
+                                                                <View>
+                                                                    <Text style={styles.paymentSmHeader}>Select a Preferred Payment</Text>
+                                                                </View>
+                                                                <View style={styles.paymentInputCover}>
+                                                                    {payment === "Select Payment" ?
+                                                                        <View style={styles.innerPaymentCover}>
+                                                                            <Icon name="calendar" size={22} color="#424242" style={styles.calendarIcon} />
+                                                                            <Text>{payment}</Text>
+                                                                        </View>
+                                                                        :
+                                                                        <View style={styles.innerPaymentCover}>
+                                                                            <FIcon name="check-circle-outline" size={22} color="#469D00" style={styles.calendarIcon} />
+                                                                            <Text style={styles.paymentOptionText}>{payment}</Text>
+                                                                        </View>
+                                                                    }
+                                                                    <TouchableOpacity onPress={changeOption}>
+                                                                        <Text style={styles.changeStyle}>Change</Text>
+                                                                    </TouchableOpacity>
+                                                                </View>
+
+                                                                <View style={styles.colorInfo}>
+                                                                    <Icon name="info" size={22} color="#00319D" style={styles.iconInfo} />
+                                                                    <Text style={styles.colorInfoText}>
+                                                                        Exclusive for Hospitals Only. Make Orders and Select Preffered Payment Method.
+                                                                    </Text>
+                                                                </View>
                                                             </View>
+
                                                             :
-                                                            <View style={styles.innerPaymentCover}>
-                                                               <FIcon name="check-circle-outline" size={22} color="#469D00" style={styles.calendarIcon} />
-                                                               <Text style={styles.paymentOptionText}>{payment}</Text>
-                                                            </View>
-                                                            }
-                                                      <TouchableOpacity onPress={changeOption}>
-                                                      <Text style={styles.changeStyle}>Change</Text>
-                                                      </TouchableOpacity>
-                                                       </View>
+                                                            null
 
-                                                       <View style={styles.colorInfo}>
-                                                       <Icon name="info" size={22} color="#00319D" style={styles.iconInfo} />
-                                                       <Text style={styles.colorInfoText}>
-                                                       Exclusive for Hospitals Only. Make Orders and Select Preffered Payment Method.
-                                                       </Text>
-                                                   </View>
-                                                   </View>
-
-                                                    :
-                                                    null
-                                                    
-                                                    }
+                                                        }
                                                     </View>
-                                                   
+
 
                                                 </View>
-                                                {keys === 1 && pendingStatus === "success" ?
+                                                {keys === 1 && pendingStatus === "success"
+                                                    ?
+
                                                     <View style={styles.btnCover}>
                                                         <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
                                                     </View> :
-                                                    keys === 2 ?
-                                                        <View style={styles.btnCover}>
-                                                            <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
-                                                        </View> : <View style={styles.btnCover}>
-                                                            <BtnLg title="Loading ..." style={styles.submit} stylea={styles.angleImg} />
-                                                        </View>}
+                                                    userType === "hospital" && payment === "Select Payment" ?
+                                                        <View style={styles.btnCover} />
+                                                        :
+                                                        keys === 2 ?
+                                                            <View style={styles.btnCover}>
+                                                                <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
+                                                            </View> : <View style={styles.btnCover}>
+                                                                <BtnLg title="Loading ..." style={styles.submit} stylea={styles.angleImg} />
+                                                            </View>
+                                                }
 
                                             </View>
                                         )}
@@ -288,13 +295,13 @@ const Step1 = (props) => {
 
             <PaymentOption
                  visibleRetrieve={showPaymentOption}
-                 returnBack={(option) => {
+                 returnBack={(option, id) => {
                      setShowPaymentOption(false);
-                     console.log('Faceless:', option);
                      setPayment(option) 
+                     setPaymentId(id) 
                  }}
                 closeOption={() => setShowPaymentOption(false)}
-                onInputChanged={ () => setPayment(payment)}
+                onInputChanged={() => setPayment(payment)}
             />
         </ScrollView>
     )

@@ -1154,11 +1154,10 @@ export default styles = StyleSheet.create({
         marginLeft:5,
     },
     paymentHeader:{
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         fontSize: 16,
         lineHeight: 24,
         letterSpacing: 0.1,
-        fontWeight: "600",
         color: "#3858CF",   
         marginTop:10, 
     },
