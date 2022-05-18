@@ -1145,7 +1145,7 @@ export default styles = StyleSheet.create({
         
     },
     infoText:{
-        fontFamily: "Urbanist",
+        fontFamily: "Urbanist-Regular",
         fontSize: 12,
         lineHeight: 16,
         letterSpacing: 0.5,
@@ -1154,7 +1154,7 @@ export default styles = StyleSheet.create({
         marginLeft:5,
     },
     paymentHeader:{
-        fontFamily: "Urbanist",
+        fontFamily: "Urbanist-Regular",
         fontSize: 16,
         lineHeight: 24,
         letterSpacing: 0.1,
@@ -1163,7 +1163,7 @@ export default styles = StyleSheet.create({
         marginTop:10, 
     },
     paymentSmHeader:{
-        fontFamily: "Urbanist",
+        fontFamily: "Urbanist-Regular",
         fontSize: 16,
         lineHeight: 24,
         letterSpacing: 0.1,
@@ -1193,7 +1193,7 @@ export default styles = StyleSheet.create({
         marginRight:10,
     },
     changeStyle:{
-        fontFamily: "Urbanist",
+        fontFamily: "Urbanist-Regular",
         fontSize: 14,
         lineHeight: 20,
         letterSpacing: 0.1,
@@ -1225,7 +1225,7 @@ export default styles = StyleSheet.create({
    
    
     smTitle:{
-      fontFamily: "Urbanist",
+      fontFamily: "Urbanist-Regular",
       fontSize: 16,
       lineHeight: 24,
       letterSpacing: 0.2,

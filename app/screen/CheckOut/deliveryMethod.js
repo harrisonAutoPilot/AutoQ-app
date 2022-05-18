@@ -91,7 +91,7 @@ const IconCheck= () => {
           maxHeight={110}
           labelField="label"
           valueField="value"
-          placeholder={!isFocus ? 'Select Delivery Option' : '...'}
+          placeholder={!isFocus ? 'Options' : '...'}
           searchPlaceholder="Search..."
           value={value}
           onFocus={() => setIsFocus(true)}
