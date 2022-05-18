@@ -27,17 +27,17 @@ const Step1 = (props) => {
     useEffect(() => {
         if (type) {
             setUserType(type)
-           
+
         };
     }, [type]);
 
     const selectUserType = (id, name) => {
         setActive(id);
         setUserType(name)
-       
-       
+
+
     };
-    changeOption = () =>{
+    changeOption = () => {
         setShowPaymentOption(true)
     }
 
@@ -145,7 +145,7 @@ const Step1 = (props) => {
                                                                 props.setFieldValue('surname', val)
                                                                 props.setFieldTouched('surname', true, false);
                                                             }}
-                                                          
+
                                                         />
                                                     </View>
                                                     {props.touched.surname && props.errors.surname ? (
@@ -171,7 +171,7 @@ const Step1 = (props) => {
                                                                 props.setFieldValue('email', val)
                                                                 props.setFieldTouched('email', true, false);
                                                             }}
-                                                            // editable={editable}
+                                                        // editable={editable}
                                                         />
                                                     </View>
                                                     {props.touched.email && props.errors.email ? (
@@ -219,51 +219,56 @@ const Step1 = (props) => {
                                                             renderItem={RenderItem}
                                                             keyExtractor={item => item.id}
                                                         />
-                                               { userType && userType === "hospital" ?
-                                                       <View>
-                                                       <View>
-                                                           <Text style={styles.paymentHeader}>PAYMENT METHOD</Text>
-                                                       </View>
-                                                       <View>
-                                                           <Text style={styles.paymentSmHeader}>Select a Preferred Payment</Text>
-                                                       </View>
-                                                       <View style={styles.paymentInputCover}>
-                                                               {payment === "Select Payment" ?
-                                                            <View style={styles.innerPaymentCover}>
-                                                               <Icon name="calendar" size={22} color="#424242" style={styles.calendarIcon} />
-                                                               <Text>{payment}</Text>
+                                                        {userType && userType === "hospital" ?
+                                                            <View>
+                                                                <View>
+                                                                    <Text style={styles.paymentHeader}>PAYMENT METHOD</Text>
+                                                                </View>
+                                                                <View>
+                                                                    <Text style={styles.paymentSmHeader}>Select a Preferred Payment</Text>
+                                                                </View>
+                                                                <View style={styles.paymentInputCover}>
+                                                                    {payment === "Select Payment" ?
+                                                                        <View style={styles.innerPaymentCover}>
+                                                                            <Icon name="calendar" size={22} color="#424242" style={styles.calendarIcon} />
+                                                                            <Text>{payment}</Text>
+                                                                        </View>
+                                                                        :
+                                                                        <View style={styles.innerPaymentCover}>
+                                                                            <FIcon name="check-circle-outline" size={22} color="#469D00" style={styles.calendarIcon} />
+                                                                            <Text>{payment}</Text>
+                                                                        </View>
+                                                                    }
+                                                                    <TouchableOpacity onPress={changeOption}>
+                                                                        <Text style={styles.changeStyle}>Change</Text>
+                                                                    </TouchableOpacity>
+                                                                </View>
+
+                                                                <View style={styles.colorInfo}>
+                                                                    <Icon name="info" size={22} color="#00319D" style={styles.iconInfo} />
+                                                                    <Text style={styles.colorInfoText}>
+                                                                        Exclusive for Hospitals Only. Make Orders and Select Preffered Payment Method.
+                                                                    </Text>
+                                                                </View>
                                                             </View>
+
                                                             :
-                                                            <View style={styles.innerPaymentCover}>
-                                                               <FIcon name="check-circle-outline" size={22} color="#469D00" style={styles.calendarIcon} />
-                                                               <Text>{payment}</Text>
-                                                            </View>
-                                                            }
-                                                      <TouchableOpacity onPress={changeOption}>
-                                                      <Text style={styles.changeStyle}>Change</Text>
-                                                      </TouchableOpacity>
-                                                       </View>
+                                                            null
 
-                                                       <View style={styles.colorInfo}>
-                                                       <Icon name="info" size={22} color="#00319D" style={styles.iconInfo} />
-                                                       <Text style={styles.colorInfoText}>
-                                                       Exclusive for Hospitals Only. Make Orders and Select Preffered Payment Method.
-                                                       </Text>
-                                                   </View>
-                                                   </View>
-
-                                                    :
-                                                    null
-                                                    
-                                                    }
+                                                        }
                                                     </View>
-                                                   
+
 
                                                 </View>
-                                                {keys === 1 && pendingStatus === "success" ?
-                                                    <View style={styles.btnCover}>
-                                                        <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
-                                                    </View> :
+                                                {keys === 1 && pendingStatus === "success"
+                                                    ?
+                                                    userType === "hospital" && payment === ""
+                                                        ?
+                                                        <View style={styles.btnCover} />
+                                                        :
+                                                        <View style={styles.btnCover}>
+                                                            <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
+                                                        </View> :
                                                     keys === 2 ?
                                                         <View style={styles.btnCover}>
                                                             <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
@@ -287,13 +292,13 @@ const Step1 = (props) => {
             </ScrollView>
 
             <PaymentOption
-                 visibleRetrieve={showPaymentOption}
-                 returnBack={(option) => {
-                     setShowPaymentOption(false);
-                     setPayment(option) 
-                 }}
+                visibleRetrieve={showPaymentOption}
+                returnBack={(option) => {
+                    setShowPaymentOption(false);
+                    setPayment(option)
+                }}
                 closeOption={() => setShowPaymentOption(false)}
-                onInputChanged={ () => setPayment(payment)}
+                onInputChanged={() => setPayment(payment)}
             />
         </ScrollView>
     )
