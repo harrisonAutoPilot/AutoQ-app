@@ -22,7 +22,6 @@ const PaymentOption = (props) => {
 
   const { errors, options } = useSelector((state) => state.paymentOptions);
 
-
   const selectUserType = item => {
     setActive(item.id);
     setOption(item.name);
@@ -43,7 +42,7 @@ const PaymentOption = (props) => {
   const renderItem = ({ item }) => (
 
 
-    <TouchableOpacity onPress={() => { selectUserType(item); setOption(item.id); setErrMsg("") }} style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]}>
+    <TouchableOpacity onPress={() => { selectUserType(item); setOption(item.name,item.id); setErrMsg("") }} style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]}>
       <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
           {active && active === item.id ?
             <View style={styles.activeCover}>
@@ -72,9 +71,6 @@ const PaymentOption = (props) => {
 
 
   );
-
-
-
 
 
   return (

@@ -15,6 +15,7 @@ const Step1 = (props) => {
     const [active, setActive] = useState("");
     const [userType, setUserType] = useState("")
     const [payment, setPayment] = useState("Select Payment")
+    const [paymentId, setPaymentId] = useState()
     const [showPaymentOption, setShowPaymentOption] = useState(false);
     const registerState = props.details;
     const editable = props.active;
@@ -98,7 +99,7 @@ const Step1 = (props) => {
                                         initialValues={registerState}
                                         validationSchema={registerSchema}
                                         onSubmit={(values, actions) => {
-                                            submit(values, userType, payment)
+                                            submit(values, userType, paymentId)
                                         }}
                                     >
                                         {props => (
@@ -236,7 +237,7 @@ const Step1 = (props) => {
                                                                         :
                                                                         <View style={styles.innerPaymentCover}>
                                                                             <FIcon name="check-circle-outline" size={22} color="#469D00" style={styles.calendarIcon} />
-                                                                            <Text>{payment}</Text>
+                                                                            <Text style={styles.paymentOptionText}>{payment}</Text>
                                                                         </View>
                                                                     }
                                                                     <TouchableOpacity onPress={changeOption}>
@@ -269,7 +270,6 @@ const Step1 = (props) => {
                                                     userType === "hospital" && payment === "Select Payment" ?
                                                         <View style={styles.btnCover} />
                                                         :
-
                                                         keys === 2 ?
                                                             <View style={styles.btnCover}>
                                                                 <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
@@ -294,12 +294,12 @@ const Step1 = (props) => {
             </ScrollView>
 
             <PaymentOption
-                visibleRetrieve={showPaymentOption}
-                returnBack={(option) => {
-                    console.log(option, "ko")
-                    setShowPaymentOption(false);
-                    setPayment(option)
-                }}
+                 visibleRetrieve={showPaymentOption}
+                 returnBack={(option, id) => {
+                     setShowPaymentOption(false);
+                     setPayment(option) 
+                     setPaymentId(id) 
+                 }}
                 closeOption={() => setShowPaymentOption(false)}
                 onInputChanged={() => setPayment(payment)}
             />

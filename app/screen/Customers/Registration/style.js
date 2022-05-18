@@ -1118,7 +1118,7 @@ export default styles = StyleSheet.create({
         paddingLeft: 9
     },
     selectText: {
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         fontSize: 11,
         lineHeight: 16,
         letterSpacing: 0.3,
@@ -1145,7 +1145,7 @@ export default styles = StyleSheet.create({
         
     },
     infoText:{
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-Medium",
         fontSize: 12,
         lineHeight: 16,
         letterSpacing: 0.5,
@@ -1162,7 +1162,7 @@ export default styles = StyleSheet.create({
         marginTop:10, 
     },
     paymentSmHeader:{
-        fontFamily: "Urbanist-SemiBold",
+        fontFamily: "Urbanist-Medium",
         fontSize: 16,
         lineHeight: 24,
         letterSpacing: 0.1,
@@ -1245,5 +1245,13 @@ export default styles = StyleSheet.create({
         flex: 1,
     
     },
+    paymentOptionText:{
+        color:'#212121',
+        fontFamily: "Urbanist-Medium",
+        fontSize: 16,
+        lineHeight: 24,
+        letterSpacing: 0.2,
+        fontWeight:'600',
+    }
 
 })
