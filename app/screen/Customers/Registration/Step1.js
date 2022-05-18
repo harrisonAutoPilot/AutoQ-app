@@ -236,7 +236,7 @@ const Step1 = (props) => {
                                                             :
                                                             <View style={styles.innerPaymentCover}>
                                                                <FIcon name="check-circle-outline" size={22} color="#469D00" style={styles.calendarIcon} />
-                                                               <Text>{payment}</Text>
+                                                               <Text style={styles.paymentOptionText}>{payment}</Text>
                                                             </View>
                                                             }
                                                       <TouchableOpacity onPress={changeOption}>
@@ -290,6 +290,7 @@ const Step1 = (props) => {
                  visibleRetrieve={showPaymentOption}
                  returnBack={(option) => {
                      setShowPaymentOption(false);
+                     console.log('Faceless:', option);
                      setPayment(option) 
                  }}
                 closeOption={() => setShowPaymentOption(false)}
