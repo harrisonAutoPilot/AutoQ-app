@@ -7,8 +7,6 @@ import PlaceholderLoader from "./PlaceholderLoader";
 
 import { getPaymentOptions } from "@Request/paymentOptions";
 import Modal from "react-native-modal";
-
-import data2 from "./data2";
 import styles from "./style";
 
 
@@ -45,7 +43,7 @@ const PaymentOption = (props) => {
   const renderItem = ({ item }) => (
 
 
-    <TouchableOpacity onPress={() => { selectUserType(item); setOption(item.name); setErrMsg("") }} style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]}>
+    <TouchableOpacity onPress={() => { selectUserType(item); setOption(item.id); setErrMsg("") }} style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]}>
       <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
           {active && active === item.id ?
             <View style={styles.activeCover}>

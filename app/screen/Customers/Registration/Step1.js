@@ -34,25 +34,25 @@ const Step1 = (props) => {
     const selectUserType = (id, name) => {
         setActive(id);
         setUserType(name)
-
-
     };
+
     changeOption = () => {
         setShowPaymentOption(true)
     }
 
     const RenderItem = ({ item }) => {
         return (
-            <View style={[styles.optionView, active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}>
+            <TouchableOpacity 
+            style={[styles.optionView, active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id} 
+            onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
                 <View style={active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionIconView : styles.optionIconView2}>
                     {userType?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
-                        <TouchableOpacity style={styles.iconCircle} onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
+                        <View style={styles.iconCircle} >
                             <FIcon name="lens" size={12} color="#469D00" style={styles.icon} />
-                        </TouchableOpacity >
+                        </View >
                         :
-                        <TouchableOpacity style={styles.iconCircle2} onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
+                        <View style={styles.iconCircle2} />
 
-                        </TouchableOpacity>
                     }
                 </View>
                 {active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ?
@@ -69,7 +69,7 @@ const Step1 = (props) => {
                             <Text style={styles.onboardSubTitle1}>{item.desc}</Text>
                         </View>
                     </View>}
-            </View>
+            </TouchableOpacity>
         )
     };
 
@@ -98,7 +98,7 @@ const Step1 = (props) => {
                                         initialValues={registerState}
                                         validationSchema={registerSchema}
                                         onSubmit={(values, actions) => {
-                                            submit(values, userType)
+                                            submit(values, userType, payment)
                                         }}
                                     >
                                         {props => (
@@ -262,19 +262,21 @@ const Step1 = (props) => {
                                                 </View>
                                                 {keys === 1 && pendingStatus === "success"
                                                     ?
-                                                    userType === "hospital" && payment === ""
-                                                        ?
+
+                                                    <View style={styles.btnCover}>
+                                                        <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
+                                                    </View> :
+                                                    userType === "hospital" && payment === "Select Payment" ?
                                                         <View style={styles.btnCover} />
                                                         :
-                                                        <View style={styles.btnCover}>
-                                                            <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
-                                                        </View> :
-                                                    keys === 2 ?
-                                                        <View style={styles.btnCover}>
-                                                            <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
-                                                        </View> : <View style={styles.btnCover}>
-                                                            <BtnLg title="Loading ..." style={styles.submit} stylea={styles.angleImg} />
-                                                        </View>}
+
+                                                        keys === 2 ?
+                                                            <View style={styles.btnCover}>
+                                                                <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} />
+                                                            </View> : <View style={styles.btnCover}>
+                                                                <BtnLg title="Loading ..." style={styles.submit} stylea={styles.angleImg} />
+                                                            </View>
+                                                }
 
                                             </View>
                                         )}
@@ -294,6 +296,7 @@ const Step1 = (props) => {
             <PaymentOption
                 visibleRetrieve={showPaymentOption}
                 returnBack={(option) => {
+                    console.log(option, "ko")
                     setShowPaymentOption(false);
                     setPayment(option)
                 }}
