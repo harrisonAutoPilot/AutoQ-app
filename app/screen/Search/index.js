@@ -134,7 +134,7 @@ const Search = (props) => {
     const ListView = ({ item }) => {
 
         return <View style={[styles.listContainer, active === item.name ? styles.activeColor : null]}>
-            <TouchableOpacity onPress={() => showMapCategory(item.name)}>
+            <TouchableOpacity onPress={() => {showMapCategory(item.name); setSearch("")}}>
                 <Text style={[styles.inputTitle, styles.color2]}>{item?.display_name?.trim()}</Text>
             </TouchableOpacity>
         </View>

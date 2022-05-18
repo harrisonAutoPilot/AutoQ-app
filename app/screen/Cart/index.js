@@ -20,11 +20,11 @@ const Cart = (props) => {
     const [err, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
-    const [cartAmount2, setCartAmount2] = useState([]);
-    const [copyCartAmount, setCopyCartAmount] = useState([]);
+    const [copyCartAmount, setCopyCartAmount] = useState({});
     const [copyCart, setCopyCart] = useState([]);
     const [scrollText, setScrollText] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [itemDeleted] = useState(false);
 
     const { items, removeCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
 
@@ -36,14 +36,14 @@ const Cart = (props) => {
         if (items.carts && items.carts.length) {
             let quantity = items.carts.map((item) => {
                 return {
+                    id: item.id,
                     quantity: item.quantity,
                     cart_id: item.id,
                     total_amount: item.total_amount,
-                    price_per_pack: parseInt(item.product.price_per_pack)
+                    product: {...item.product}
                 }
             })
-            setCartAmount2(quantity)
-            setCopyCart(items.carts)
+            setCopyCart(quantity);
         }else if(items.carts && !items.carts.length){
             setCopyCart(items.carts)
         }
@@ -135,7 +135,7 @@ const Cart = (props) => {
 
     const redirectToCheckOut = () => {
         setLoader(true)
-        dispatch(updateCart(cartAmount2))
+        dispatch(updateCart(copyCart))
     }
 
     useEffect(() => {
@@ -164,39 +164,47 @@ const Cart = (props) => {
 
     const increaseCart = (id, item, quantity) => {
         if (item < quantity) {
-            let filteredCart = cartAmount2.filter(quantity => {
-                if (quantity.cart_id === id) {
+            let filteredCart = copyCart.filter(quantity => {
+
+                if (quantity.id === id) {
                     quantity.quantity = quantity.quantity + 1
-                    quantity.total_amount = quantity.price_per_pack * quantity.quantity
-                    return { quantity: quantity.quantity, cart_id: quantity.cart_id, total_amount: quantity.total_amount, price_per_pack: quantity.price_per_pack }
+                    quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
 
                 }
             })
-            setCopyCartAmount(filteredCart)
-            var res = cartAmount2.map(obj => copyCartAmount.find(quantity => quantity.cart_id === obj.cart_id) || obj);
+
+            setCopyCartAmount(filteredCart[0])
+            let copiedcopyCartAmount = filteredCart
+
+            var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
+            setCopyCart(res)
             return res
         }
     };
 
     const decreaseCart = (id, item, quantity) => {
         if (item < quantity || item === quantity) {
-            let filteredCart = cartAmount2.filter(quantity => {
-                if (quantity.cart_id === id && quantity.quantity > 1) {
+            let filteredCart = copyCart.filter(quantity => {
+                if (quantity.id === id && quantity.quantity > 1) {
                     quantity.quantity = quantity.quantity - 1
-                    quantity.total_amount = quantity.price_per_pack * quantity.quantity
-                    return { quantity: quantity.quantity, cart_id: quantity.cart_id, total_amount: quantity.total_amount, price_per_pack: quantity.price_per_pack }
+                    quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
+                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
 
                 }
             })
-            setCopyCartAmount(filteredCart)
-            var res = cartAmount2.map(obj => copyCartAmount.find(quantity => quantity.cart_id === obj.cart_id) || obj);
-            return res
 
+            setCopyCartAmount(filteredCart[0])
+
+            let copiedcopyCartAmount = filteredCart
+            var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
+            setCopyCart(res)
+            return res
         }
     };
 
     const calculateFinalAmount = () => {
-        return commafy(cartAmount2.map(item => item.total_amount).reduce((prev, curr) => prev + curr, 0))
+        return commafy(copyCart.map(item => item.total_amount).reduce((prev, curr) => prev + curr, 0))
     }
 
     const deleteFromCart = (id) => {
@@ -215,36 +223,28 @@ const Cart = (props) => {
                     <View style={styles.descTextView}>
                         <Text style={styles.descText} numberOfLines={2}>{item.product.name}</Text>
                     </View>
-
-                    {cartAmount2.map(quantity => (
-                        quantity.cart_id === item.id ?
-                            <View style={styles.increaseCartMainAmountView} key={quantity.cart_id}>
+                            <View style={styles.increaseCartMainAmountView}>
 
                                 <View style={styles.cartAmountView}>
-                                    <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, quantity.quantity, item.product.quantity_available); }}>
+                                    <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, item.quantity, item.product.quantity_available); }}>
                                         <Icon name="minus" color="#757575" />
                                     </TouchableOpacity>
                                     <View style={styles.increaseText}>
-                                        <Text style={styles.productTitle} >{quantity.quantity}</Text>
+                                        <Text style={styles.productTitle} >{item.quantity}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, quantity.quantity, item.product.quantity_available); }}>
+                                    <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, item.quantity, item.product.quantity_available); }}>
                                         <Icon name="plus" color="#757575" />
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            : null
-
-                    ))}
 
                 </View>
 
                 <View>
-                    {cartAmount2.map(quantity => (
-                        quantity.cart_id === item.id ?
-                            <View style={styles.priceCover} key={quantity.cart_id}>
-                                <Text style={styles.priceText}>₦{quantity.total_amount !== "" ? commafy(quantity.total_amount) : 0}</Text>
-                            </View> : null
-                    ))}
+   
+                            <View style={styles.priceCover}>
+                                <Text style={styles.priceText}>₦{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
+                            </View> 
 
                     <View style={styles.iconCover}>
                         <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
@@ -281,6 +281,7 @@ const Cart = (props) => {
     };
 
    useEffect(() => {
+    setCopyCartAmount({})
        if(items.carts){
         setDataProvider((prevState) => prevState.cloneWithRows(copyCart))
        }
@@ -310,7 +311,7 @@ const Cart = (props) => {
             </View>
 
             <View style={styles.bottomCover}>
-                {loaded === "idle" || loaded === "pending"
+                {loaded !== "success" && itemDeleted
                     ?
                     <CartPlaceholderComponent />
                      :
@@ -321,24 +322,11 @@ const Cart = (props) => {
                         rowRenderer={rowRenderer}
                         dataProvider={dataProvider}
                         layoutProvider={layoutProvider}
+                        extendedState={copyCartAmount}
                     /> 
                      :
                     <AddCartListEmptyBig browse={browse}/> 
-                    // :
-
-                    // <FlatList
-                    //     showsVerticalScrollIndicator={false}
-                    //     data={copyCart}
-                    //     keyExtractor={item => item.id}
-                    //     ListEmptyComponent={<AddCartListEmptyBig browse={browse} />}
-                    //     renderItem={ListView}
-                    //     ListFooterComponent={<View style={{ height: 50 }} />}
-                    //     columnWrapperStyle={styles.column}
-                    //     refreshControl={
-                    //         <RefreshControl refreshing={refreshing} onRefresh={refreshCartView} />
-                    //     }
-                    //     extraData={items.cart}
-                    // />
+                   
                 }
 
 

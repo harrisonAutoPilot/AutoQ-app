@@ -164,26 +164,6 @@ const Catalogue = (props) => {
                     <Text style={globalStyles.failedResponseText}>{err}</Text>
                 </View> : null}
 
-                {/* <FlatList
-                    data={ searchCategoryArray.length ? searchCategoryArray : categories}
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={CatelogueCardPlaceholder}
-                    renderItem={ListView}
-                    ListFooterComponent={<View style={{ height: 10 }} />}
-                    numColumns={2}
-                    columnWrapperStyle={styles.column}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
-
-                    }
-                    showsVerticalScrollIndicator={false}
-                    getItemLayout={(data, index) => (
-                        { length: 170, offset: 170 * index, index }
-                    )}
-                    ref={flatListRef}
-                    extraData={categories}
-                /> */}
-
                 {dataProvider && dataProvider.getSize() > 0 ?
 
                     <RecyclerListView
