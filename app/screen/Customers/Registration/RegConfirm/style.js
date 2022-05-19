@@ -7,8 +7,11 @@ import {
 export default styles = StyleSheet.create({
     // MODAL
     view: {
-        flex: 1,
-        backgroundColor: '#fff'
+     height:hp('100%'),
+    flexDirection: 'column',
+     //flexGrow:1,       // all the available vertical space will be occupied by it
+        justifyContent: 'space-between', // will create the gutter between body and footer
+        backgroundColor: '#fff',
     },
     modalView: {
         backgroundColor: "#fff",
@@ -107,14 +110,14 @@ export default styles = StyleSheet.create({
         // position: "absolute",
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        height: "17%",
+        //height: "17%",
         width: "100%",
         backgroundColor: '#f5f5f5',
-        padding: 20,
+        padding: 10,
         alignItems: "center",
         justifyContent: 'center',
-        // top: hp("100%"),
-        marginTop: 50
+        alignSelf:'center',
+        // marginTop: 50
 
     },
     submit: {
@@ -122,10 +125,11 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 24,
         backgroundColor: "#3858CF",
         borderRadius: 100,
-        width: "100%",
+        width: "90%",
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop:10,
     },
     imgCardCover: {
         width: wp('100%'),
