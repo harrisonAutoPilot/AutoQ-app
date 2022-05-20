@@ -217,10 +217,11 @@ const RegConfirm = (props) => {
                     />
 
                 </View>
-                <View style={styles.btnCover}>
+                
+            </ScrollView>
+            <View style={styles.btnCover}>
                     <BtnLg title="Confirm & Submit" onPress={submit} style={styles.submit} stylea={styles.angleImg} styles={styles.preText1} />
                 </View>
-            </ScrollView>
             <ViewDocument
                 visibleDocument={showDocument}
                 returnBack={() => setShowDocument(false)}
