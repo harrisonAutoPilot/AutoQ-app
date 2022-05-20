@@ -12,7 +12,8 @@ import { getWallet } from "@Request/Wallet";
 import PlaceholderComponent from "./placeholderComponent";
 import { listCart } from "@Request/Cart";
 import { getStore } from "@Request/Store";
-import DeliverMethod from "./deliveryMethod"
+import DeliverMethod from "./deliveryMethod";
+import { cleanup as delivery } from "@Store/DeliveryOptions";
 
 const CheckOut = (props) => {
 
@@ -21,6 +22,10 @@ const CheckOut = (props) => {
     const [errMsg, setErrMsg] = useState("");
     const [err, setErr] = useState("");
     const [category, setCategory] = useState("");
+    const [deliveryType, setDeliveryType] = useState();
+    const [deliveryDate, setDeliveryDate] = useState();
+    const [deliveryPrice, setDeliveryPrice] = useState(0);
+    const [deliveryTypeName, setDeliveryTypeName] = useState();
 
     const { items } = useSelector((state) => state.cart);
     const [selected, setSelected] = useState({});
@@ -28,13 +33,29 @@ const CheckOut = (props) => {
     const { wallet } = useSelector((state) => state.wallet);
     const { stores } = useSelector((state) => state.store);
 
+    const { status, errors, options } = useSelector((state) => state.deliveryOptions);
+
     const Confirm = () => {
         if (active && selected.id) {
-            if (active === 1 && wallet.balance < items.total_amount)
-                return setErr("Insufficient Balance")
-            props.navigation.navigate("ConfirmCheckOut", { selected, active, wallet: wallet.balance, amount: items.total_amount, id: items.carts.map((cart) => cart.id) });
-        } else {
-            setErr("Payment Method and Store are Required")
+            if (active === 1 && wallet.balance < items.total_amount) return setErr("Insufficient Balance")
+            if (active === 1 && wallet.balance < items.total_amount) return setErr("Insufficient Balance")
+            if ((deliveryType === 3 && !deliveryDate)) return setErr("Delivery, Payment Method and Store Required")
+            props.navigation.navigate("ConfirmCheckOut", {
+                selected,
+                active,
+                wallet: wallet.balance,
+                amount: items.total_amount,
+                id: items.carts.map((cart) => cart.id),
+                delivery_type: deliveryType,
+                delivery_date: deliveryDate,
+                delivery_price: deliveryPrice,
+                category,
+                deliveryTypeName
+            });
+        } else if (!deliveryType || !active || !selected.id) {
+            setErr("Delivery, Payment Method and Store Required")
+        } else if (options.length && deliveryType && deliveryType === 3 && !deliveryDate) {
+            setErr("Delivery Date is Required")
         }
     };
 
@@ -45,7 +66,11 @@ const CheckOut = (props) => {
         dispatch(getStore())
     }, []);
 
-    const backToCart = () => props.navigation.navigate("Cart");
+
+    const backToCart = () => {
+        dispatch(delivery())
+        props.navigation.navigate("Cart");
+    }
 
     const selectUserType = id => {
         setActive(id);
@@ -69,8 +94,8 @@ const CheckOut = (props) => {
                 <View style={active === item.id ? styles.optionTextView : styles.optionTextView2} >
                     <Text style={styles.optionText}>{item.display_name}</Text>
                     <View style={styles.optionMiniTextView}>
-                        <Text style={styles.itemDetails}>{item.id == "1" ? ` Balance: ₦${wallet.balance ? commafy(wallet.balance) : 0}` 
-                        : item.id == "2" ? "Pay on Delivery" :  "Remedial Health Solutions Ltd"}</Text>
+                        <Text style={styles.itemDetails}>{item.id == "1" ? ` Balance: ₦${wallet.balance ? commafy(wallet.balance) : 0}`
+                            : item.id == "2" ? "Pay on Delivery" : "Remedial Health Solutions Ltd"}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -127,15 +152,33 @@ const CheckOut = (props) => {
                             </View>
                         </View>
                         <View style={styles.deliverMethodCover}>
-                        <View style={styles.titleCover}>
-                            <Text style={styles.titleText}>DELIVERY OPTION</Text>
+                            <View style={styles.titleCover}>
+                                <Text style={styles.titleText}>DELIVERY OPTION</Text>
+                            </View>
+
+                            {!options.length && status !== "success" ?
+                                <Text style={[styles.titleText, { paddingLeft: 20 }]}>Loading</Text>
+                                :
+                                !options.length && status === "success" ?
+                                    <Text style={[styles.titleText, { paddingLeft: 20 }]}>No Delivery Date available</Text>
+                                    :
+                                    <DeliverMethod
+                                        id={selected.state_id}
+                                        onSelect={setDeliveryType}
+                                        onSelectDate={setDeliveryDate}
+                                        err={setErr}
+                                        price={setDeliveryPrice}
+                                        date={deliveryDate} 
+                                        name={setDeliveryTypeName}
+                                        />
+                            }
                         </View>
-                        <DeliverMethod />
-                        </View>
+
+
                         <View style={styles.title2Cover}>
                             <Text style={styles.titleText}>PAYMENT</Text>
                         </View>
-                        
+
                         {errMsg ? <View style={styles.errMainView}>
                             <Text style={styles.failedResponseText}>{errMsg}</Text>
                         </View> :
@@ -180,20 +223,21 @@ const CheckOut = (props) => {
                                 </View>
                                 <View style={styles.totalCover}>
                                     <Text style={styles.totalText}>Delivery Fee</Text>
-                                    <Text style={styles.totalText}>Free</Text>
+                                    <Text style={styles.totalText}>₦{deliveryPrice ? commafy(deliveryPrice): 0}</Text>
                                 </View>
 
                                 <View style={styles.totalBorderCover}>
                                     <Text style={styles.totalBorderText}>Total</Text>
-                                    <Text style={styles.totalBorderText}>₦{items.total_amount !== undefined ? commafy(items.total_amount) : 0}</Text>
+                                    <Text style={styles.totalBorderText}>₦{items.total_amount !== undefined ? commafy(items.total_amount + deliveryPrice) : 0}</Text>
                                 </View>
 
+                                {status === "success" && (
                                 <View style={[styles.addBtnCover]}>
                                     <Btn title="Continue" style={styles.addressBtn2} onPress={Confirm} />
                                 </View>
+                                )}
 
                             </View>
-
                         </View>
                     </View>
                 </ScrollView>

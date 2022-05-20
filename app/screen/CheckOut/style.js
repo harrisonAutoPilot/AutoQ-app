@@ -430,9 +430,16 @@ export default styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    color: '#212121',
+    fontSize: 14,
+    fontFamily: "Urbanist-Regular",
+    lineHeight: 20,
+    letterSpacing: 0.25,
   },
   selectedTextStyle: {
     fontSize: 16,
+    color: '#212121',
+    fontFamily: "Urbanist-Regular",
   },
   iconNew:{
     marginRight:20,
@@ -452,6 +459,7 @@ export default styles = StyleSheet.create({
   smDisplay:{
     fontSize:14,
     color:'#3858CF',
+    fontFamily: "Urbanist-Regular",
   },
   customItem:{
     padding:15,

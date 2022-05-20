@@ -6,10 +6,11 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-native-modal";
 import FIcon from "react-native-vector-icons/MaterialIcons";
 import styles from "./styleDropdown";
+import { getDeliveryOptions } from "@Request/DeliveryOptions";
 
 const Dropdown = ({ label, onSelect, storeAddress }) => {
   const DropdownButton = useRef();
@@ -18,6 +19,7 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
   const [dropdownTop, setDropdownTop] = useState(0);
   const [selectId, setSelectId] = useState();
 
+  const dispatch = useDispatch();
 
   const { stores } = useSelector((state) => state.store);
   const toggleDropdown = () => {
@@ -37,6 +39,7 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
     onSelect(item);
     setVisible(false);
     setSelectId(item.id)
+    dispatch(getDeliveryOptions(item.state_id))
   };
 
   const renderItem = ({ item }) => {
