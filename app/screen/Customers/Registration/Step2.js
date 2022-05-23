@@ -132,13 +132,11 @@ const Step2 = (props) => {
 
                                             </View>
 
-                                            <View style={styles.btnStep2Cover}>
-                                                <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
-                                                <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
-                                            </View>
-
+                                           
                                         </View>
+                                        
                                     )}
+
 
                                 </FormikValidator>
                             </View>
@@ -148,6 +146,10 @@ const Step2 = (props) => {
                 </View>
 
 
+            </View>
+            <View style={styles.btnStep2Cover}>
+                <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
+                <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
             </View>
         </ScrollView>
     )

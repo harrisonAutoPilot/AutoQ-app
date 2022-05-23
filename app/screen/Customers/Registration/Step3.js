@@ -98,10 +98,7 @@ const Step3 = (props) => {
 
                                                 </View>
 
-                                                <View style={styles.btnStep3Cover}>
-                                                    <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
-                                                    <BtnLg title="Complete" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
-                                                </View>
+                                              
 
                                             </View>
                                         )}
@@ -116,7 +113,10 @@ const Step3 = (props) => {
                     </View>
 
                 </View>
-
+                <View style={styles.btnStep3Cover}>
+                    <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
+                    <BtnLg title="Complete" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
+                </View>
             </ScrollView>
         </View>
     )

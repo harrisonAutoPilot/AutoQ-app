@@ -135,7 +135,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 9
-        versionName "1.8"
+        versionName "1.9"
         vectorDrawables.useSupportLibrary = true
     }
     splits {

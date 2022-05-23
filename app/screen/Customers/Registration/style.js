@@ -213,17 +213,14 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        //width: "100%",
          width:wp('100%'),
-         bottom:hp('-2%'),
-        // position:'absolute',
-        // top:hp('55%'),
+         bottom:hp('0%'),
         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
         justifyContent: 'space-between',
         alignItems: "center",
         paddingHorizontal: 20,
-        marginTop: Dimensions.get("window").height / 9,
+         marginTop: Dimensions.get("window").height / 9,
         alignSelf:"center"
     },
     btnStep3Cover: {
@@ -231,8 +228,6 @@ export default styles = StyleSheet.create({
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
         width:wp('100%'),
-        // position:'absolute',
-         bottom:hp('-4%'),
         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
         justifyContent: 'space-between',
@@ -759,6 +754,7 @@ export default styles = StyleSheet.create({
         width: wp('100%'),
         paddingTop: 10,
         borderColor: '#f5f5f5',
+        flexDirection:'column',
         borderWidth: 1,
         flexGrow: 1,            // all the available vertical space will be occupied by it
         justifyContent: 'space-between' // will create the gutter between body and footer
