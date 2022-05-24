@@ -16,7 +16,13 @@ const List = (props) => {
 
             <View style={styles.listTitleView} >
                     <View style={styles.listTitleView2}>
-                        <Text style={styles.listTitle}>{item.name}</Text>
+                            <View style={styles.listTitleView22}>
+                               <Text style={styles.listTitle}>{item.name}</Text>
+                            </View>
+                            <View style={styles.crossCover}>
+                                <Image source={require("@Assets/image/cross2.png")} style={styles.smCrossImg} />
+                                <Text style={styles.listPercent}>15%</Text>
+                            </View>
                     </View>
 
                     <View style={styles.priceOverview}>

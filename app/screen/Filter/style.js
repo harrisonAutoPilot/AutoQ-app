@@ -38,6 +38,13 @@ export default styles = StyleSheet.create({
         justifyContent: "space-between",
         marginBottom: 24
     },
+    pricesView1: {
+        marginTop: 5,
+        paddingHorizontal: 16,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom: 10
+    },
     listView: {
         borderWidth: 1,
         borderRadius: 15,
@@ -59,6 +66,13 @@ export default styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "rgba(224, 224, 224, 1)",
         paddingBottom: 0,
+        paddingTop: 5,
+        maxHeight:200,
+    },
+    priceMainView1: {
+        borderWidth: 1,
+        borderColor: "rgba(224, 224, 224, 1)",
+        paddingBottom: 10,
         paddingTop: 5,
     },
     reset: {
@@ -118,5 +132,133 @@ export default styles = StyleSheet.create({
     },
     iconView: {
         marginRight: 10
-    }
+    },
+    //THIS IS FOR THE PRICES VIEW
+    optionView: {
+        flexDirection: "row",
+        borderRadius: 8,
+        borderWidth: 0,
+        borderColor: "#f0f0f5",
+        paddingTop:1,
+        paddingBottom:5,
+    
+    },
+    activeCover: {
+        flexDirection: 'row',
+        width: wp('100%'),
+        paddingLeft: 18,
+        paddingTop:0,
+       
+
+    },
+    bottomBorder: {
+        width: wp('80%'),
+        borderTopWidth: 1,
+        borderColor: '#E0E0E0',
+        alignSelf: 'center',
+        paddingTop: 30,
+         marginTop: 10,
+    },
+    colorInfo: {
+        width: wp('85%'),
+        flexDirection: 'row',
+        padding: 20,
+        backgroundColor: '#E9EBF9',
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        alignSelf: 'center'
+    },
+    iconInfo: {
+        marginRight: 10,
+        marginTop: 5,
+    },
+    colorInfoText: {
+        fontFamily: "Urbanist-SemiBold",
+        fontSize: 12,
+        lineHeight: 16,
+        letterSpacing: 0.2,
+        color: "#00319D",
+        width: 270,
+        flexWrap: 'wrap',
+        flex: 1,
+
+    },
+    optionIconView: {
+        width: 24,
+        borderRadius: 44,
+        justifyContent: "flex-start"
+    },
+    optionIconView2: {
+        width: 24,
+        borderRadius: 44,
+        justifyContent: "flex-start"
+    },
+    optionTextView: {
+        marginLeft: 0,
+        paddingTop: 5,
+        width: "80%",
+        color: '#3858CF'
+    },
+    optionText: {
+        fontFamily: "Urbanist-Medium",
+        fontSize: 14,
+        lineHeight: 24,
+        letterSpacing: 0.3,
+        color: "#3858CF",
+        textTransform: "capitalize",
+       
+    },
+    optionText2: {
+        fontFamily: "Urbanist-Regular",
+        fontSize: 14,
+        lineHeight: 24,
+        letterSpacing: 0.3,
+        color: "#616161",
+        textTransform: "capitalize",
+       
+    },
+    optionMiniTextView: {
+        justifyContent: "center",
+        paddingTop: 5,
+
+    },
+    iconCircle: {
+        borderColor: "#3858CF",
+        borderWidth: 2,
+        width: 20,
+        height: 20,
+        borderRadius: 15,
+        alignSelf: "center",
+        justifyContent: "center",
+    },
+    iconCircle2: {
+        borderColor: "#BDBDBD",
+        borderWidth: 2,
+        width: 20,
+        height: 20,
+        borderRadius: 15,
+        alignSelf: "center",
+        justifyContent: "center",
+    },
+    icon: {
+        alignSelf: "center"
+    },
+    optionTextCover:{
+        marginLeft:10,
+    },
+    itemCover:{
+        paddingBottom: 30
+    },
+    errMainView: {
+        top: 0,
+        width: wp('84%'),
+        borderWidth: 1,
+        borderColor: "red",
+        marginTop: 5,
+        backgroundColor: "#FFE5E5",
+        borderRadius: 8,
+        alignSelf: 'center',
+        paddingLeft: 30,
+        paddingVertical: 10,
+    },
 })

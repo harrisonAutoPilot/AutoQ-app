@@ -125,6 +125,15 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.25,
         textTransform: "capitalize"
     },
+    listPercent: {
+        fontSize: 12,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 16,
+        color: "#D32F2F",
+        letterSpacing: 0.25,
+        textTransform: "capitalize",
+        marginLeft:5,
+    },
     listTitleView: {
         marginLeft: 10,
         flexWrap: "wrap",
@@ -154,7 +163,15 @@ export default styles = StyleSheet.create({
     },
     listTitleView2: {
         // flexWrap: "wrap",
-        width: "58%",
+        width: "88%",
+        flexDirection:'row',
+        justifyContent:'space-between'
+    },
+    listTitleView22: {
+        // flexWrap: "wrap",
+        width: "80%",
+        flexDirection:'row',
+        justifyContent:'space-between'
     },
     mainBody: {
         paddingTop: 14,
@@ -164,6 +181,24 @@ export default styles = StyleSheet.create({
         height: "100%",
         backgroundColor: "#f2f3f4",
         flexGrow: 1
+    },
+    crossCover:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+      
+        height:25,
+        paddingLeft:10,
+        paddingRight:10,
+        borderWidth:1,
+        borderColor:'rgba(211, 47, 47, 0.24)',
+        borderRadius:30,
+        alignItems:'center',
+       
+    },
+    smCrossImg:{
+        width:13,
+        height:13,
+        resizeMode:'contain',
     },
     priceView: {
         marginTop: 10
