@@ -185,7 +185,8 @@ export default styles = StyleSheet.create({
     crossCover:{
         flexDirection:'row',
         justifyContent:'space-between',
-      
+        position:'absolute',
+        right:wp('-4%'),
         height:25,
         paddingLeft:10,
         paddingRight:10,
