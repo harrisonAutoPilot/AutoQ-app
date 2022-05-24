@@ -127,6 +127,7 @@ const Filter = (props) => {
 
     const filterByPack = (id, filterValue) => {
         let filtered;
+        
         switch (id) {
             case "8":
                 filtered = filterValue
@@ -148,21 +149,22 @@ const Filter = (props) => {
 
     const filterByType = (id, filterValue) => {
         let filtered;
+        let  searchedType = [...type];
         switch (id) {
             case "5":
-                filtered = filterValue
+                filtered = searchedType
                 break;
             case "6":
-                filtered = filterValue.filter(item => item.type === "Hospital 1")
+                filtered = searchedType.filter(item => item.type === "Hospital 1")
                 break;
             case "7":
-                filtered = filterValue.filter(item => item.type === "Hospital 2")
+                filtered = searchedType.filter(item => item.type === "Hospital 2")
                 break;
             case "18":
-                filtered = filterValue.filter(item => item.type === "Hospital 3")
+                filtered = searchedType.filter(item => item.type === "Hospital 3")
                 break;
             default:
-                filtered = filterValue
+                filtered = searchedType
 
         }
         return filtered
