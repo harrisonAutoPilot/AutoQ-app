@@ -216,26 +216,37 @@ export default styles = StyleSheet.create({
         paddingBottom: 20
     },
     smCover:{
-    flexGrow:1,
-     justifyContent:'space-between',
+    // flexGrow:1,
+    //  justifyContent:'space-between',
      width:"100%",
-     paddingTop: 10,
-    paddingBottom:20
+    
+    //  paddingBottom:100,
+    paddingBottom:hp('10%')
     },
     btnStep2Cover: {
         flexDirection: 'row',
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
         width:wp('100%'),
-         backgroundColor: '#f5f5f5',
+        backgroundColor: '#f5f5f5',
+        // position:'absolute',
         paddingVertical: 20,
         justifyContent: 'space-between',
         alignItems: "center",
         paddingHorizontal: 20,
         zIndex:90,
        
-         marginTop: Dimensions.get("window").height / 8,
+        //  marginTop: Dimensions.get("window").height / 8,
         alignSelf:"center"
+
+        // flexDirection: "row",
+        // justifyContent: "space-between",
+        // width: wp('98%'),
+        // position: "absolute",
+        // alignSelf:'center',
+        // padding: 20,
+        
+        // backgroundColor: "rgba(238, 238, 238, 1)",
     },
     btnStep3Cover: {
         flexDirection: 'row',
@@ -999,7 +1010,8 @@ export default styles = StyleSheet.create({
         // paddingHorizontal: 20,
         borderBottomWidth: 0.1,
         borderColor: '#f2f3f4',
-        flexGrow:1,
+        flex:1,
+        justifyContent:'space-between'
        
         
     },
@@ -1173,8 +1185,8 @@ export default styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     scrollContentContainer: {
-       
-       
+       flexGrow:1,
+       justifyContent:'space-between'
     },
     infoCover:{
         width:wp('90%'),
