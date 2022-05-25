@@ -22,8 +22,11 @@ const Filter = (props) => {
     const [active, setActive] = useState("5");
     const [categoryId, setCategoryId] = useState("");
     const [isScrollEnabled, setIsScrollEnabled] = useState(true);
+    const [creditOption, setCreditOption] = useState("");
 
     const { searchedProducts } = useSelector((state) => state.product);
+    const { options } = useSelector((state) => state.paymentOptions);
+
 
     const setItem = (id, value, filter) => {
         if (value === "price") {
@@ -34,6 +37,9 @@ const Filter = (props) => {
             setCategoryId(id);
         }else if (value === "type") {
             setTypeId(id);
+        }else if(value === "credit"){
+            setCreditOption(id)
+            selectUserType(id)
         }
 
     }
@@ -50,7 +56,7 @@ const Filter = (props) => {
     };
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]} onPress={() => { selectUserType(item.id); setOption(item.id); setErrMsg("") }}>
+        <TouchableOpacity style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]} onPress={() => { setItem(item.id, "credit"); setOption(item.id); setErrMsg("") }}>
             <View style={active === item.id ? styles.optionIconView : styles.optionIconView2} >
                 {active === item.id ?
                     <View style={styles.activeCover}>
@@ -58,7 +64,7 @@ const Filter = (props) => {
                             <FIcon name="lens" size={12} color="#3858CF" style={styles.icon} />
                         </View>
                         <View style={styles.optionTextCover}>
-                            <Text style={styles.optionText}>{item.type}</Text>
+                            <Text style={styles.optionText}>Hospital {item.price_increment}%</Text>
                            
                         </View>
 
@@ -67,7 +73,7 @@ const Filter = (props) => {
                     <View style={styles.activeCover}>
                         <View style={styles.iconCircle2} />
                         <View style={styles.optionTextCover}>
-                            <Text style={styles.optionText2}>{item.type}</Text>
+                            <Text style={styles.optionText2}>Hospital {item.price_increment}%</Text>
                         </View>
                     </View>
                 }
@@ -76,9 +82,6 @@ const Filter = (props) => {
         </TouchableOpacity>
 
     );
-
-
-
 
 
     const ListView = ({ item }) => (
@@ -218,7 +221,7 @@ const Filter = (props) => {
                         <Text style={styles.headerTitle}>Pricing</Text>
                     </View>
                     <FlatList
-                        data={type}
+                        data={options}
                          listKey={(id, index) => `_key${index.toString()}`}
                         keyExtractor={(id, index) => `_key${index.toString()}`}
                         renderItem={renderItem}

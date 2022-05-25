@@ -14,6 +14,7 @@ import ProductPlaceholderCard from "./ProductPlaceholderCard";
 import { listCart } from "@Request/Cart";
 // import BrowseCardPlaceholder from "./browseCardPlaceholder";
 import { cleanup } from "@Store/Product";
+import { getPaymentOptions } from "@Request/paymentOptions";
 
 const Products = (props) => {
     const dispatch = useDispatch();
@@ -32,9 +33,11 @@ const Products = (props) => {
     const { status, errors, searchedProducts } = useSelector((state) => state.product);
     const { items } = useSelector((state) => state.cart);
 
+
     useEffect(() => {
         dispatch(searchProducts(props.route.params?.category));
         dispatch(listCart());
+        dispatch(getPaymentOptions());
         return () => dispatch(cleanup())
     }, []);
 
