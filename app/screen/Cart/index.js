@@ -244,7 +244,7 @@ const Cart = (props) => {
    
                             <View style={styles.priceCover}>
                                {item.total_amount.length > 5 ?
-                             <Text style={styles.priceTextSm}>₦{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
+                             <Text style={styles.priceTextSm}>{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
                                :
                                <Text style={styles.priceText}>₦{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
                                }
