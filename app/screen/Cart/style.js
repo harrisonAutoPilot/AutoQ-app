@@ -14,6 +14,7 @@ export default styles = StyleSheet.create({
     // backgroundColor: "#fff"
 
   },
+
   mainBody: {
     // zIndex:9000,
     backgroundColor: "#fff"
@@ -36,7 +37,7 @@ export default styles = StyleSheet.create({
   },
   view: {
     flexGrow: 1,
-    height: "100%"
+    height:hp('100%')
   },
   midCard: {
     width: wp('100%'),
@@ -108,6 +109,18 @@ export default styles = StyleSheet.create({
     lineHeight: 24,
     color: "#469D00",
     letterSpacing: 0.2,
+    flexWrap:'wrap',
+    maxWidth:100,
+    // textAlign: "right"
+  },
+  priceTextSm: {
+    fontSize: 14,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 24,
+    color: "#469D00",
+    letterSpacing: 0.2,
+    flexWrap:'wrap',
+    maxWidth:100,
     // textAlign: "right"
   },
   productTitle: {
@@ -131,6 +144,7 @@ export default styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingLeft: 10,
     paddingRight: 10,
+  
   },
   iconCoverP: {
     flexDirection: 'row',

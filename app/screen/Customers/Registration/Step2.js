@@ -22,13 +22,11 @@ const Step2 = (props) => {
        
 
         <ScrollView
-        //  indicatorStyle="white"
-        //  style={{flexGrow:1, justifyContent:'space-between'}}
          contentContainerStyle={[
              styles.scrollContentContainer
          ]}
      >
-                <View style={styles.cardd}>
+                <View style={styles.formCover}>
                     <View style={styles.bioTitleCover}>
                         <Text style={styles.bioTitleText}>STORE</Text>
                     </View>
@@ -43,8 +41,13 @@ const Step2 = (props) => {
                                     }}
                                 >
                                     {props => (
-                                        <>
-                                        
+                                    <View>
+                                         <ScrollView
+                                         indicatorStyle="white"
+                                         contentContainerStyle={[
+                                             styles.scrollContentContainer,
+                                         ]}>
+                                      
                                      <View style={styles.smCover}>
                                          
                                         <View style={styles.fiedpadd}>
@@ -138,14 +141,16 @@ const Step2 = (props) => {
                                            
                                            
                                        
-                                        </View>
-                                        
-                                      
+                                      </View>
+                                     
+                                      </ScrollView>
+                                    
                                         <View style={styles.btnStep2Cover}>
                                         <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
                                         <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
                                     </View>
-                                    </>
+                                  </View>
+
                                     )}
 
 
