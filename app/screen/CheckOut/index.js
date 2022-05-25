@@ -36,7 +36,7 @@ const CheckOut = (props) => {
     const { status, errors, options } = useSelector((state) => state.deliveryOptions);
 
     const Confirm = () => {
-        if (active && selected.id) {
+        if ((active && selected.id && !options.length) || (active && selected.id && options.length && deliveryType)) {
             if (active === 1 && wallet.balance < items.total_amount) return setErr("Insufficient Balance")
             if (active === 1 && wallet.balance < items.total_amount) return setErr("Insufficient Balance")
             if ((deliveryType === 3 && !deliveryDate)) return setErr("Delivery, Payment Method and Store Required")
