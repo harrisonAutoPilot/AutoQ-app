@@ -85,7 +85,7 @@ export default styles = StyleSheet.create({
         borderWidth: 0,
         paddingLeft: 45,
         paddingRight: 45,
-        paddingTop: 12,
+         paddingTop: 12,
         paddingBottom: 12,
         backgroundColor: "#ffffff",
     },
@@ -95,7 +95,7 @@ export default styles = StyleSheet.create({
         borderWidth: 0,
         paddingLeft: 45,
         paddingRight: 45,
-        paddingTop: 12,
+         paddingTop: 12,
         paddingBottom: 12,
         backgroundColor: "rgba(124, 207, 36, 1)"
     },
@@ -113,18 +113,12 @@ export default styles = StyleSheet.create({
     btnCover: {
         flexDirection: "row",
         justifyContent: "space-between",
-        // paddingHorizontal: 35,
         width: wp('98%'),
-        marginLeft: wp('1%'),
         position: "absolute",
+        alignSelf:'center',
         padding: 20,
-        paddingLeft: 40,
-        paddingRight: 40,
         bottom: 0,
         backgroundColor: "rgba(238, 238, 238, 1)",
-        // top: Dimensions.get("window").height / 2.65,
-        top:hp('90%')
-
     },
     activeView: {
         backgroundColor: "#E9EBF9",

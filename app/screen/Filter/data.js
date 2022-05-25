@@ -42,31 +42,8 @@ const category = [
         type: "Multivitamins & Vitamins",
         value: "category",
     },
-    {
-        id: "15",
-        type: "Multivitamins & Vitamins",
-        value: "category",
-    },
-    {
-        id: "16",
-        type: "Multivitamins & Vitamins",
-        value: "category",
-    },
-    {
-        id: "17",
-        type: "Multivitamins & Vitamins",
-        value: "category",
-    },
-    {
-        id: "19",
-        type: "Multivitamins & Vitamins",
-        value: "category",
-    },
-    {
-        id: "20",
-        type: "Multivitamins & Vitamins",
-        value: "category",
-    }
+   
+  
 
 ];
 
