@@ -106,7 +106,7 @@ export default styles = StyleSheet.create({
     resetText: {
         fontSize: 12,
         fontFamily: "Urbanist-SemiBold",
-        lineHeight: 20,
+        // lineHeight: 20,
         color: "rgba(66, 66, 66, 1)",
         letterSpacing: 0.1,
     },
@@ -114,8 +114,7 @@ export default styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         // paddingHorizontal: 35,
-        width: wp('98%'),
-        marginLeft: wp('1%'),
+        width: wp('100%'),
         position: "absolute",
         padding: 20,
         paddingLeft: 40,
@@ -123,7 +122,6 @@ export default styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: "rgba(238, 238, 238, 1)",
         // top: Dimensions.get("window").height / 2.65,
-        top:hp('90%')
 
     },
     activeView: {
