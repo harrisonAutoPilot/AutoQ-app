@@ -21,13 +21,19 @@ const Step2 = (props) => {
     return (
        
 
-         
+        <ScrollView
+        //  indicatorStyle="white"
+        //  style={{flexGrow:1, justifyContent:'space-between'}}
+         contentContainerStyle={[
+             styles.scrollContentContainer
+         ]}
+     >
                 <View style={styles.cardd}>
                     <View style={styles.bioTitleCover}>
                         <Text style={styles.bioTitleText}>STORE</Text>
                     </View>
                         <TouchableWithoutFeedback onPress={dismissKeyboard}>
-                            <View>
+                            <View style={{justifyContent:'space-between'}}>
 
                                 <FormikValidator
                                     initialValues={registerState2}
@@ -37,13 +43,8 @@ const Step2 = (props) => {
                                     }}
                                 >
                                     {props => (
-                                         <ScrollView
-                                        //  indicatorStyle="white"
-                                        // style={{flexGrow:1}}
-                                        //  contentContainerStyle={[
-                                        //      styles.scrollContentContainer
-                                        //  ]}
-                                     >
+                                        <>
+                                        
                                      <View style={styles.smCover}>
                                          
                                         <View style={styles.fiedpadd}>
@@ -138,12 +139,13 @@ const Step2 = (props) => {
                                            
                                        
                                         </View>
-                                        <View style={styles.btnStep2Cover}>
-                                            <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
-                                            <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
-                                        </View>
-                                        </ScrollView>
                                         
+                                      
+                                        <View style={styles.btnStep2Cover}>
+                                        <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
+                                        <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
+                                    </View>
+                                    </>
                                     )}
 
 
@@ -151,9 +153,9 @@ const Step2 = (props) => {
                             </View>
 
                         </TouchableWithoutFeedback>
-
+                       
                 </View>
-
+                </ScrollView>
 
            
            

@@ -13,6 +13,11 @@ const Step3 = (props) => {
 
 
     return (
+        <ScrollView
+         contentContainerStyle={[
+             styles.scrollContentContainer
+         ]}
+     >
         <View style={styles.container}>
            
 
@@ -121,6 +126,7 @@ const Step3 = (props) => {
                
           
         </View>
+        </ScrollView>
     )
 };
 
