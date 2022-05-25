@@ -39,11 +39,13 @@ const Step2 = (props) => {
                                     {props => (
                                          <ScrollView
                                         //  indicatorStyle="white"
-                                         contentContainerStyle={[
-                                             styles.scrollContentContainer
-                                         ]}
+                                        // style={{flexGrow:1}}
+                                        //  contentContainerStyle={[
+                                        //      styles.scrollContentContainer
+                                        //  ]}
                                      >
                                      <View style={styles.smCover}>
+                                         
                                         <View style={styles.fiedpadd}>
                                                 <View style={[styles.registerInputHolder, props.touched.store_name && props.errors.store_name ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
@@ -134,6 +136,7 @@ const Step2 = (props) => {
                                             </View>
                                            
                                            
+                                       
                                         </View>
                                         <View style={styles.btnStep2Cover}>
                                             <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />

@@ -68,12 +68,16 @@ export default styles = StyleSheet.create({
         paddingBottom: 0,
         paddingTop: 5,
         maxHeight:200,
+        flex:1,
     },
     priceMainView1: {
         borderWidth: 1,
         borderColor: "rgba(224, 224, 224, 1)",
         paddingBottom: 10,
         paddingTop: 5,
+        paddingLeft:10,
+        paddingRight:30,
+        flex:1,
     },
     reset: {
         borderColor: "#FAF9F6",
@@ -100,7 +104,7 @@ export default styles = StyleSheet.create({
         shadowColor: '#52006A',
     },
     resetText: {
-        fontSize: 14,
+        fontSize: 12,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         color: "rgba(66, 66, 66, 1)",
@@ -118,7 +122,8 @@ export default styles = StyleSheet.create({
         paddingRight: 40,
         bottom: 0,
         backgroundColor: "rgba(238, 238, 238, 1)",
-        top: Dimensions.get("window").height / 1.25,
+        // top: Dimensions.get("window").height / 2.65,
+        top:hp('90%')
 
     },
     activeView: {

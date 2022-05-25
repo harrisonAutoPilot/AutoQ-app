@@ -216,7 +216,7 @@ export default styles = StyleSheet.create({
         paddingBottom: 20
     },
     smCover:{
-     flexGrow:1,
+    flexGrow:1,
      justifyContent:'space-between',
      width:"100%",
      paddingTop: 10,
@@ -233,7 +233,8 @@ export default styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 20,
         zIndex:90,
-         marginTop: Dimensions.get("window").height / 9,
+       
+         marginTop: Dimensions.get("window").height / 8,
         alignSelf:"center"
     },
     btnStep3Cover: {
@@ -998,7 +999,8 @@ export default styles = StyleSheet.create({
         // paddingHorizontal: 20,
         borderBottomWidth: 0.1,
         borderColor: '#f2f3f4',
-        
+        flexGrow:1,
+       
         
     },
     card1: {
@@ -1171,7 +1173,7 @@ export default styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     scrollContentContainer: {
-        flexGrow: 1,
+       
        
     },
     infoCover:{
