@@ -6,6 +6,9 @@ import styles from "./style";
 
 const List = (props) => {
     const item = props.item.product ? props.item.product : props.item;
+     // console.log('faceless :',props.output && props.output);
+   
+   
 
     return (
         <Animated.View style={ { transform: [{ scale: props.scale }] }}>
@@ -19,10 +22,13 @@ const List = (props) => {
                             <View style={styles.listTitleView22}>
                                <Text style={styles.listTitle}>{item.name}</Text>
                             </View>
+                           { props.output && props.output  != 0 ?
                             <View style={styles.crossCover}>
-                                <Image source={require("@Assets/image/cross2.png")} style={styles.smCrossImg} />
-                                <Text style={styles.listPercent}>15%</Text>
-                            </View>
+                            <Image source={require("@Assets/image/cross2.png")} style={styles.smCrossImg} />
+                            <Text style={styles.listPercent}>{props.output}</Text>
+                        </View>
+                        : null
+                           }
                     </View>
 
                     <View style={styles.priceOverview}>

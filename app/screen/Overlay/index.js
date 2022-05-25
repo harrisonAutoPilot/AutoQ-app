@@ -190,6 +190,13 @@ const Overlay = (props) => {
                                     </View>
                                     <View style={styles.modalTitleView}>
                                         <Text style={styles.modalTitle2}>{result.pack_size}</Text>
+                                        { props.output && props.output  != 0 ?
+                                        <View style={styles.crossCover}>
+                                        <Image source={require("@Assets/image/cross2.png")} style={styles.smCrossImg} />
+                                        <Text style={styles.listPercent}>{props.output}</Text>
+                        </View>
+                        : null
+                           }
                                     </View>
                                 </View>
 

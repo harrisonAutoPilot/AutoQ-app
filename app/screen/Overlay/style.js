@@ -28,7 +28,6 @@ export default styles = StyleSheet.create({
   scrollStyle:{
     borderRadius: 60,
     paddingBottom: 20
-  }
+  },
 
-    
   })

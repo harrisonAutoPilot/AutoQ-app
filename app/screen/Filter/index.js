@@ -116,13 +116,11 @@ const Filter = (props) => {
     }
 
     const filterData = () => {
-        // if (!active) return setErrMsg("Please select a pricing option")
        let filteredData = filterByPrice(priceId);
-    //    let filteredData3 = filterByType(typeId);
        let filteredData2 = filterByPack(packId, filteredData);
         let filteredData3 = filterByType(typeId, filteredData2);
-        props.navigation.navigate("Product", {item: filteredData2, display_name: props.route.params?.display_name})
-         console.log(filteredData3);
+        props.navigation.navigate("Product", {item: filteredData2,item2:filteredData3, display_name: props.route.params?.display_name})
+        //  console.log('faceless', filteredData3);
     };
 
     const filterByPack = (id, filterValue) => {

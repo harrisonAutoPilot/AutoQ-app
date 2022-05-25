@@ -125,15 +125,7 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.25,
         textTransform: "capitalize"
     },
-    listPercent: {
-        fontSize: 12,
-        fontFamily: "Urbanist-SemiBold",
-        lineHeight: 16,
-        color: "#D32F2F",
-        letterSpacing: 0.25,
-        textTransform: "capitalize",
-        marginLeft:5,
-    },
+    
     listTitleView: {
         marginLeft: 10,
         flexWrap: "wrap",
@@ -186,20 +178,30 @@ export default styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         position:'absolute',
-        right:wp('-4%'),
-        height:25,
+        right:wp('-5%'),
+        height:22,
         paddingLeft:10,
         paddingRight:10,
         borderWidth:1,
         borderColor:'rgba(211, 47, 47, 0.24)',
         borderRadius:30,
         alignItems:'center',
-       
+        marginRight:10 
     },
     smCrossImg:{
         width:13,
         height:13,
         resizeMode:'contain',
+        marginBottom:2,
+    },
+    listPercent: {
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 16,
+        color: "#D32F2F",
+        letterSpacing: 0.25,
+        textTransform: "capitalize",
+        marginLeft:5,
     },
     priceView: {
         marginTop: 10
