@@ -48,6 +48,7 @@
     "react-native-toast-message": "^2.1.1",
     "react-native-vector-icons": "^9.1.0",
     "react-native-version-check": "^3.4.2",
+    "react-native-virtualized-view": "^0.1.5",
     "react-redux": "^7.2.6",
     "recyclerlistview": "^3.0.5",
     "redux-persist": "^6.0.0",

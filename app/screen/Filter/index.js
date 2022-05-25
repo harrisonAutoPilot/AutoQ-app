@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StatusBar,  SafeAreaView, FlatList } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from "react-native-vector-icons/MaterialIcons";
+import { ScrollView } from 'react-native-virtualized-view';
 import { useSelector } from "react-redux";
 
 import styles from "./style";
@@ -187,7 +188,9 @@ const Filter = (props) => {
                         <Text style={styles.headerTitle2}>Filter By</Text>
                     </SafeAreaView>
                 </View>
-                <View style={styles.priceMainView}>
+                <ScrollView>
+                    <View style={{flex:1,paddingBottom:100}}>
+                <View style={styles.priceMainView1}>
                     <View style={styles.pricesView}>
                         <Text style={styles.headerTitle}>Categories</Text>
                         <TouchableOpacity onPress={() => setCategoryView(!categoryView)}>
@@ -198,10 +201,11 @@ const Filter = (props) => {
                         <FlatList
                             showsVerticalScrollIndicator={true}
                             data={category}
-                            keyExtractor={item => item.id}
+                            listKey={(item, index) => `_key${index.toString()}`}
+                            keyExtractor={(item, index) => `_key${index.toString()}`}
                             renderItem={ListView}
                             scrollEnabled={isScrollEnabled}
-                            columnWrapperStyle={styles.column}
+                            // columnWrapperStyle={styles.column}
                             numColumns={2}
                         />
                         : null}
@@ -209,24 +213,22 @@ const Filter = (props) => {
 
 
                 <View style={styles.priceMainView1}>
-                {errMsg ? <View style={styles.errMainView}>
-                <Text style={styles.failedResponseText}>{errMsg}</Text>
-            </View>
-                : null}
+              
                     <View style={styles.pricesView1}>
                         <Text style={styles.headerTitle}>Pricing</Text>
                     </View>
                     <FlatList
                         data={type}
+                         listKey={(id, index) => `_key${index.toString()}`}
+                        keyExtractor={(id, index) => `_key${index.toString()}`}
                         renderItem={renderItem}
-                        keyExtractor={item => item.id}
                         scrollEnabled={isScrollEnabled}
                     />
 
             </View>
 
 
-                <View style={styles.priceMainView}>
+                <View style={styles.priceMainView1}>
                     <View style={styles.pricesView}>
                         <Text style={styles.headerTitle}>Sorted By</Text>
                         <TouchableOpacity onPress={() => setPriceView(!priceView)}>
@@ -238,7 +240,8 @@ const Filter = (props) => {
                             <FlatList
                             showsVerticalScrollIndicator={false}
                             data={price}
-                            keyExtractor={item => item.id}
+                             listKey={(item, index) => `_key${index.toString()}`}
+                            keyExtractor={(item, index) => `_key${index.toString()}`}
                             renderItem={ListView}
                             columnWrapperStyle={styles.column}
                             numColumns={2}
@@ -247,7 +250,7 @@ const Filter = (props) => {
                         : null}
                 </View>
 
-                <View style={styles.priceMainView}>
+                <View style={styles.priceMainView1}>
                     <View style={styles.pricesView}>
                         <Text style={styles.headerTitle}>Pack Style</Text>
                         <TouchableOpacity onPress={() => setPackView(!packView)}>
@@ -258,14 +261,16 @@ const Filter = (props) => {
                         <FlatList
                             showsVerticalScrollIndicator={false}
                             data={pack}
-                            keyExtractor={item => item.id}
+                             listKey={(item, index) => `_key${index.toString()}`}
+                        keyExtractor={(item, index) => `_key${index.toString()}`}
                             renderItem={ListView}
                             columnWrapperStyle={styles.column}
                             numColumns={3}
                         />
                         : null}
                 </View>
-
+                </View>
+                </ScrollView>
                 <View style={styles.btnCover}>
                     <View>
                         <Btn title="Reset" style={[styles.reset, styles.elevation]} styles={styles.resetText} onPress={resetData} />
@@ -274,6 +279,7 @@ const Filter = (props) => {
                         <Btn title="Done" style={[styles.done, styles.elevation]} styles={styles.resetText} onPress={filterData} />
                     </View>
                 </View>
+               
             </View>
 
 
