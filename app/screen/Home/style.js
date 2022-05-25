@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
         textTransform: "capitalize",
         // height: 30,
         textAlign: "center",
-        flex: 1
+        flex: 1,
+        width: 50
     },
 
     bottomCover: {
@@ -475,6 +476,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
+        height: 50
     },
     decreaseIconCartView: {
         flexDirection: "row",

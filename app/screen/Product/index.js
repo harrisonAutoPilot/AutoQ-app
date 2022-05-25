@@ -49,6 +49,14 @@ const Products = (props) => {
         }
     }, [props.route.params?.item]);
 
+    // useEffect(() => {
+    //     if (props.route.params?.item2) {
+    //         setSearchArray(props.route.params.item2)
+    //         console.log(props.route.params.item2);
+    //     }
+    // }, [props.route.params?.item2]);
+
+
     const closeSheet = () => {
         setVisible(false)
         bottomSheet.current.close();

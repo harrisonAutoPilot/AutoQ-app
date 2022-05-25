@@ -170,6 +170,13 @@ export default styles = StyleSheet.create({
         backgroundColor: "#f3f4f5",
         paddingHorizontal: 5
     },
+    labelView1: {
+        position: "absolute",
+        top: -10,
+        left: 10,
+        backgroundColor: "#f3f4f5",
+        paddingHorizontal: 5
+    },
     label: {
         fontSize: 12,
         fontFamily: "Urbanist-Regular",
@@ -208,22 +215,25 @@ export default styles = StyleSheet.create({
         alignSelf: "center",
         paddingBottom: 20
     },
-
+    smCover:{
+     flexGrow:1,
+     justifyContent:'space-between',
+     width:"100%",
+     paddingTop: 10,
+    paddingBottom:20
+    },
     btnStep2Cover: {
         flexDirection: 'row',
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
-        //width: "100%",
-         width:wp('100%'),
-         bottom:hp('-2%'),
-        // position:'absolute',
-        // top:hp('55%'),
-        backgroundColor: '#f5f5f5',
+        width:wp('100%'),
+         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
         justifyContent: 'space-between',
         alignItems: "center",
         paddingHorizontal: 20,
-        marginTop: Dimensions.get("window").height / 9,
+        zIndex:90,
+         marginTop: Dimensions.get("window").height / 9,
         alignSelf:"center"
     },
     btnStep3Cover: {
@@ -231,8 +241,6 @@ export default styles = StyleSheet.create({
         borderTopColor: "#F5F5F5",
         borderTopWidth: 1,
         width:wp('100%'),
-        // position:'absolute',
-         bottom:hp('-4%'),
         backgroundColor: '#f5f5f5',
         paddingVertical: 20,
         justifyContent: 'space-between',
@@ -759,12 +767,14 @@ export default styles = StyleSheet.create({
         width: wp('100%'),
         paddingTop: 10,
         borderColor: '#f5f5f5',
+        flexDirection:'column',
         borderWidth: 1,
         flexGrow: 1,            // all the available vertical space will be occupied by it
         justifyContent: 'space-between' // will create the gutter between body and footer
     },
     bioTitleCover: {
         width: wp('100%'),
+        paddingLeft:20,
     },
     bioTitleText: {
         color: '#3858CF',
@@ -972,7 +982,24 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderBottomWidth: 0.1,
         borderColor: '#f2f3f4',
-        paddingTop: 10
+        marginTop: -15
+    },
+    fiedpadd:{
+        width: wp('100%'),
+        paddingHorizontal: 20,
+        marginTop:-10
+    },
+    fiedpad:{
+        width: wp('100%'),
+        paddingHorizontal: 20,
+    },
+    cardd: {
+        width: wp('100%'),
+        // paddingHorizontal: 20,
+        borderBottomWidth: 0.1,
+        borderColor: '#f2f3f4',
+        
+        
     },
     card1: {
         // width: wp('100%'),
@@ -1145,6 +1172,7 @@ export default styles = StyleSheet.create({
     },
     scrollContentContainer: {
         flexGrow: 1,
+       
     },
     infoCover:{
         width:wp('90%'),

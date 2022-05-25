@@ -19,15 +19,10 @@ const Step2 = (props) => {
     const { states } = useSelector((state) => state.state);
 
     return (
-        <ScrollView
-            indicatorStyle="white"
-            contentContainerStyle={[
-                styles.scrollContentContainer
-            ]}
-        >
+       
 
-            <View style={styles.bottomCover}>
-                <View style={styles.card}>
+         
+                <View style={styles.cardd}>
                     <View style={styles.bioTitleCover}>
                         <Text style={styles.bioTitleText}>STORE</Text>
                     </View>
@@ -42,8 +37,14 @@ const Step2 = (props) => {
                                     }}
                                 >
                                     {props => (
-                                        <View style={styles.bottomNextView}>
-                                            <View>
+                                         <ScrollView
+                                        //  indicatorStyle="white"
+                                         contentContainerStyle={[
+                                             styles.scrollContentContainer
+                                         ]}
+                                     >
+                                     <View style={styles.smCover}>
+                                        <View style={styles.fiedpadd}>
                                                 <View style={[styles.registerInputHolder, props.touched.store_name && props.errors.store_name ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
                                                         <Text style={styles.label}>STORE NAME</Text>
@@ -69,7 +70,7 @@ const Step2 = (props) => {
                                                     </View>) : null}
                                             </View>
 
-                                            <View>
+                                            <View style={styles.fiedpad}>
                                                 <View style={[styles.inputHolderTetArea, props.touched.address && props.errors.address ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
                                                         <Text style={styles.label}>STREET ADDRESS</Text>
@@ -96,7 +97,7 @@ const Step2 = (props) => {
                                                     </View>) : null}
                                             </View>
 
-                                            <View>
+                                            <View style={styles.fiedpad}>
                                                 <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.state_id && props.errors.state_id ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
                                                         <Text style={styles.label}>State</Text>
@@ -114,7 +115,7 @@ const Step2 = (props) => {
 
                                             </View>
 
-                                            <View >
+                                            <View style={styles.fiedpad}>
                                                 <View style={[styles.inputHolder2, styles.registerInputPinHolder, props.touched.lga_id && props.errors.lga_id ? styles.inputErrHolder : null]}>
                                                     <View style={styles.labelView}>
                                                         <Text style={styles.label}>LGA</Text>
@@ -131,14 +132,17 @@ const Step2 = (props) => {
                                                     </View>) : null}
 
                                             </View>
-
-                                            <View style={styles.btnStep2Cover}>
-                                                <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
-                                                <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
-                                            </View>
-
+                                           
+                                           
                                         </View>
+                                        <View style={styles.btnStep2Cover}>
+                                            <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
+                                            <BtnLg title="Next" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
+                                        </View>
+                                        </ScrollView>
+                                        
                                     )}
+
 
                                 </FormikValidator>
                             </View>
@@ -148,8 +152,9 @@ const Step2 = (props) => {
                 </View>
 
 
-            </View>
-        </ScrollView>
+           
+           
+       
     )
 };
 

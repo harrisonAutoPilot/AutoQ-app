@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl, Dimensions} from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
@@ -29,7 +29,7 @@ const Cart = (props) => {
     const { items, removeCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
 
     const browse = () => props.navigation.navigate("Catalogue");
-    const openCart = () =>  dispatch(listCart());
+    const openCart = () => dispatch(listCart());
     const redirectToSearch = () => props.navigation.navigate("Search");
 
     useEffect(() => {
@@ -40,11 +40,11 @@ const Cart = (props) => {
                     quantity: item.quantity,
                     cart_id: item.id,
                     total_amount: item.total_amount,
-                    product: {...item.product}
+                    product: { ...item.product }
                 }
             })
             setCopyCart(quantity);
-        }else if(items.carts && !items.carts.length){
+        } else if (items.carts && !items.carts.length) {
             setCopyCart(items.carts)
         }
 
@@ -113,7 +113,7 @@ const Cart = (props) => {
         const interval = setInterval(() => {
             setScrollText((scrollText) => !scrollText);
         }, 1000);
-        return () => { 
+        return () => {
             clearInterval(interval);
             dispatch(cleanup());
             setCopyCart([]);
@@ -163,7 +163,6 @@ const Cart = (props) => {
     const goBack = () => props.navigation.goBack();
 
     const increaseCart = (id, item, quantity) => {
-        if (item < quantity) {
             let filteredCart = copyCart.filter(quantity => {
 
                 if (quantity.id === id) {
@@ -180,11 +179,10 @@ const Cart = (props) => {
             var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
             setCopyCart(res)
             return res
-        }
     };
 
     const decreaseCart = (id, item, quantity) => {
-        if (item < quantity || item === quantity) {
+      
             let filteredCart = copyCart.filter(quantity => {
                 if (quantity.id === id && quantity.quantity > 1) {
                     quantity.quantity = quantity.quantity - 1
@@ -200,7 +198,6 @@ const Cart = (props) => {
             var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
             setCopyCart(res)
             return res
-        }
     };
 
     const calculateFinalAmount = () => {
@@ -223,28 +220,28 @@ const Cart = (props) => {
                     <View style={styles.descTextView}>
                         <Text style={styles.descText} numberOfLines={2}>{item.product.name}</Text>
                     </View>
-                            <View style={styles.increaseCartMainAmountView}>
+                    <View style={styles.increaseCartMainAmountView}>
 
-                                <View style={styles.cartAmountView}>
-                                    <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, item.quantity, item.product.quantity_available); }}>
-                                        <Icon name="minus" color="#757575" />
-                                    </TouchableOpacity>
-                                    <View style={styles.increaseText}>
-                                        <Text style={styles.productTitle} >{item.quantity}</Text>
-                                    </View>
-                                    <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, item.quantity, item.product.quantity_available); }}>
-                                        <Icon name="plus" color="#757575" />
-                                    </TouchableOpacity>
-                                </View>
+                        <View style={styles.cartAmountView}>
+                            <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, item.quantity, item.product.quantity_available); }}>
+                                <Icon name="minus" color="#757575" />
+                            </TouchableOpacity>
+                            <View style={styles.increaseText}>
+                                <Text style={styles.productTitle} >{item.quantity}</Text>
                             </View>
+                            <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, item.quantity, item.product.quantity_available); }}>
+                                <Icon name="plus" color="#757575" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
 
                 </View>
 
                 <View>
-   
-                            <View style={styles.priceCover}>
-                                <Text style={styles.priceText}>₦{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
-                            </View> 
+
+                    <View style={styles.priceCover}>
+                        <Text style={styles.priceText}>₦{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
+                    </View>
 
                     <View style={styles.iconCover}>
                         <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
@@ -268,24 +265,24 @@ const Cart = (props) => {
 
     const [layoutProvider] = useState(
         new LayoutProvider(
-          (index) => 0,
-          (type, dim) => {
-            dim.width = width
-            dim.height = 140
-          }
+            (index) => 0,
+            (type, dim) => {
+                dim.width = width
+                dim.height = 140
+            }
         )
-      )
+    )
 
     const rowRenderer = (type, data) => {
         return <ListView item={data} />;
     };
 
-   useEffect(() => {
-    setCopyCartAmount({})
-       if(items.carts){
-        setDataProvider((prevState) => prevState.cloneWithRows(copyCart))
-       }
-      }, [copyCart])
+    useEffect(() => {
+        setCopyCartAmount({})
+        if (items.carts) {
+            setDataProvider((prevState) => prevState.cloneWithRows(copyCart))
+        }
+    }, [copyCart])
 
     return (
         <View style={styles.view}>
@@ -314,19 +311,19 @@ const Cart = (props) => {
                 {loaded !== "success" && itemDeleted
                     ?
                     <CartPlaceholderComponent />
-                     :
+                    :
                     dataProvider && dataProvider.getSize() > 0 ?
 
-                    <RecyclerListView
-                        style={{ width: "100%"}}
-                        rowRenderer={rowRenderer}
-                        dataProvider={dataProvider}
-                        layoutProvider={layoutProvider}
-                        extendedState={copyCartAmount}
-                    /> 
-                     :
-                    <AddCartListEmptyBig browse={browse}/> 
-                   
+                        <RecyclerListView
+                            style={{ width: "100%" }}
+                            rowRenderer={rowRenderer}
+                            dataProvider={dataProvider}
+                            layoutProvider={layoutProvider}
+                            extendedState={copyCartAmount}
+                        />
+                        :
+                        <AddCartListEmptyBig browse={browse} />
+
                 }
 
 

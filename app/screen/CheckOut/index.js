@@ -26,6 +26,7 @@ const CheckOut = (props) => {
     const [deliveryDate, setDeliveryDate] = useState();
     const [deliveryPrice, setDeliveryPrice] = useState(0);
     const [deliveryTypeName, setDeliveryTypeName] = useState();
+    const [deliveryTypeStatus, setDeliveryTypeStatus] = useState(false);
 
     const { items } = useSelector((state) => state.cart);
     const [selected, setSelected] = useState({});
@@ -36,10 +37,10 @@ const CheckOut = (props) => {
     const { status, errors, options } = useSelector((state) => state.deliveryOptions);
 
     const Confirm = () => {
-        if ((active && selected.id && !options.length) || (active && selected.id && options.length && deliveryType)) {
+        if (active && selected.id && deliveryType) {
             if (active === 1 && wallet.balance < items.total_amount) return setErr("Insufficient Balance")
             if (active === 1 && wallet.balance < items.total_amount) return setErr("Insufficient Balance")
-            if ((deliveryType === 3 && !deliveryDate)) return setErr("Delivery, Payment Method and Store Required")
+            if ((deliveryTypeStatus && !deliveryDate)) return  setErr("Delivery Date is Required")
             props.navigation.navigate("ConfirmCheckOut", {
                 selected,
                 active,
@@ -54,9 +55,7 @@ const CheckOut = (props) => {
             });
         } else if (!deliveryType || !active || !selected.id) {
             setErr("Delivery, Payment Method and Store Required")
-        } else if (options.length && deliveryType && deliveryType === 3 && !deliveryDate) {
-            setErr("Delivery Date is Required")
-        }
+        } 
     };
 
     useEffect(() => {
@@ -170,6 +169,7 @@ const CheckOut = (props) => {
                                         price={setDeliveryPrice}
                                         date={deliveryDate} 
                                         name={setDeliveryTypeName}
+                                        status={setDeliveryTypeStatus}
                                         />
                             }
                         </View>

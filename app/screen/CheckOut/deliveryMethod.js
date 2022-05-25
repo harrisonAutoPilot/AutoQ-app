@@ -14,8 +14,9 @@ import styles from "./style";
     const [closeDrop, setCloseDrop] = useState(true);
     const [methodName, setMethodName] = useState("");
     const [showMethodOption, setShowMethodOption] = useState(false);
-    const [deliveryDays, setDeliveryDays] = useState([])
-    const [showMethod, setShowMethod] = useState(false)
+    const [deliveryDays, setDeliveryDays] = useState([]);
+    const [showMethod, setShowMethod] = useState(false);
+    const [label, setLabel] = useState("");
 
     const { status, errors, options } = useSelector((state) => state.deliveryOptions);
 
@@ -83,7 +84,7 @@ const IconCheck= () => {
         data={options}
         close={() => setCloseDrop(true)}
         maxHeight={110}
-        labelField="name"
+        labelField={label ? label : "name"}
         valueField="name"
         placeholder={'Delivery Option'}
         searchPlaceholder="Search..."
@@ -94,6 +95,11 @@ const IconCheck= () => {
           setMethod(e.id);
           if(e.days && e.days.length){
             setShowMethod(true)
+            props.status(true)
+            setLabel(e.id)
+          }else{
+            props.status(false)
+            setLabel("")
           }
           setIsFocus(false);
           setDeliveryDays(e.days)

@@ -21,27 +21,76 @@ const price = [
     }
 ];
 
+const category = [
+    {
+        id: "11",
+        type: "All",
+        value: "category"
+    },
+    {
+        id: "12",
+        type: "Antibiotics",
+        value: "category"
+    },
+    {
+        id: "13",
+        type: "Antidiabetics",
+        value: "category"
+    },
+    {
+        id: "14",
+        type: "Multivitamins & Vitamins",
+        value: "category",
+    },
+    {
+        id: "15",
+        type: "Multivitamins & Vitamins",
+        value: "category",
+    },
+    {
+        id: "16",
+        type: "Multivitamins & Vitamins",
+        value: "category",
+    },
+    {
+        id: "17",
+        type: "Multivitamins & Vitamins",
+        value: "category",
+    }
+];
 
 const type = [
     {
         id: "5",
-        type: "All Types",
+        type: "Pharmacy & Chemist",
         value: "type",
-        filter: ""
+        filter: "Pharmacy & Chemist"
+       
     },
     {
         id: "6",
-        type: "Tablet",
+        type: "Hospital 1",
         value: "type",
-        filter: "tablet"
+        filter: "Hospital 1"
+
+     
     },
     {
         id: "7",
-        type: "Syrup",
+        type: "Hospital 2",
         value: "type",
-        filter: "syrup"
+        filter: "Hospital 2"
+       
+    },
+    {
+        id: "18",
+        type: "Hospital 3",
+        value: "type",
+        filter: "Hospital 3"
+       
     },
 ];
+
 
 
 const pack = [
@@ -65,4 +114,4 @@ const pack = [
     },
 ];
 
-export { pack, type, price }
+export { pack, type, price,category }

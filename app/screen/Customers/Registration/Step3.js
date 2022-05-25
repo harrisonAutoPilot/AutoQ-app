@@ -14,14 +14,10 @@ const Step3 = (props) => {
 
     return (
         <View style={styles.container}>
-            <ScrollView
-                indicatorStyle="white"
-                contentContainerStyle={[
-                    styles.scrollContentContainer,
-                ]}>
+           
 
-                <View style={styles.bottomCover}>
-                    <View style={styles.card}>
+                <View >
+                    <View style={styles.cardd}>
                         <View style={styles.bioTitleCover}>
                             <Text style={styles.bioTitleText}>DOCUMENTATION</Text>
                         </View>
@@ -38,8 +34,13 @@ const Step3 = (props) => {
                                     >
                                         {props => (
                                             <View>
-
-                                                <View >
+                                                <ScrollView
+                                                                indicatorStyle="white"
+                                                                contentContainerStyle={[
+                                                                    styles.scrollContentContainer,
+                                                                ]}>
+                                                    <View style={styles.smCover}>
+                                              <View style={styles.fiedpad}>
                                                     <View style={[styles.registerInputHolder, props.touched.images && props.errors.images ? styles.inputErrHolder : null]}>
                                                         <View style={styles.labelView}>
                                                             <Text style={styles.label}>PHARMACIST LICENSE</Text>
@@ -68,7 +69,7 @@ const Step3 = (props) => {
                                                         </View>) : null}
                                                 </View>
 
-                                                <View >
+                                                <View style={styles.fiedpad}>
                                                     <View style={[styles.registerInputHolder, props.touched.images2 && props.errors.images2 ? styles.inputErrHolder : null]}>
                                                         <View style={styles.labelView}>
                                                             <Text style={styles.label}>STORE PHOTO</Text>
@@ -98,11 +99,12 @@ const Step3 = (props) => {
 
                                                 </View>
 
-                                                <View style={styles.btnStep3Cover}>
-                                                    <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
-                                                    <BtnLg title="Complete" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
-                                                </View>
-
+                                        </View> 
+                                             </ScrollView>
+                                             <View style={styles.btnStep3Cover}>
+                                                <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} />
+                                                <BtnLg title="Complete" onPress={props.handleSubmit} style={styles.submitStep2} stylea={styles.angleImg} styles={styles.preText1} />
+                                            </View>
                                             </View>
                                         )}
 
@@ -116,8 +118,8 @@ const Step3 = (props) => {
                     </View>
 
                 </View>
-
-            </ScrollView>
+               
+          
         </View>
     )
 };
