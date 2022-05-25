@@ -64,14 +64,14 @@ const type = [
         id: "5",
         type: "Pharmacy & Chemist",
         value: "type",
-        filter: "Pharmacy & Chemist"
+        filter: "0"
        
     },
     {
         id: "6",
         type: "Hospital 1",
         value: "type",
-        filter: "Hospital 1"
+        filter: "1"
 
      
     },
@@ -79,14 +79,14 @@ const type = [
         id: "7",
         type: "Hospital 2",
         value: "type",
-        filter: "Hospital 2"
+        filter: "2"
        
     },
     {
         id: "18",
         type: "Hospital 3",
         value: "type",
-        filter: "Hospital 3"
+        filter: "3"
        
     },
 ];

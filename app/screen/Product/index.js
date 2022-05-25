@@ -26,6 +26,7 @@ const Products = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
     const [visible, setVisible] = useState(false);
     const [searchArray, setSearchArray] = useState([]);
+    const [textArray, setTextArray] = useState([]);
     const bottomSheet = useRef();
 
     const { status, errors, searchedProducts } = useSelector((state) => state.product);
@@ -49,13 +50,17 @@ const Products = (props) => {
         }
     }, [props.route.params?.item]);
 
-    // useEffect(() => {
-    //     if (props.route.params?.item2) {
-    //         setSearchArray(props.route.params.item2)
-    //         console.log(props.route.params.item2);
-    //     }
-    // }, [props.route.params?.item2]);
+    useEffect(() => {
+      if (props.route.params?.item2){
+        console.log("hello harrison:", props.route.params?.item2);
+        setTextArray(props.route.params?.item2);
+        const output = Object.assign({}, ...textArray)
+        // console.log('faceless:',  output.filter);
+      
+      }
+    }, [props.route.params?.item2]);
 
+    const output = Object.assign({}, ...textArray)
 
     const closeSheet = () => {
         setVisible(false)
@@ -106,7 +111,7 @@ const Products = (props) => {
     };
 
 
-    const ListView = ({ item, index }) => {
+    const ListView = ({ item, index}) => {
         const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
         const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
 
@@ -114,6 +119,7 @@ const Products = (props) => {
             item={item}
             getItem={() => getItem(item.id)}
             scale={scale}
+            output ={output.filter && output.filter}
         />
     };
 
@@ -121,6 +127,7 @@ const Products = (props) => {
 
     return (
         <View style={styles.body}>
+    
             <Header title={props.route.params?.display_name} styleView={styles.body2} onPress={goBack} titleCover={styles.titleCover}>
                 <View style={styles.headerSubIconView}>
                     <TouchableOpacity onPress={redirectToSearch}>
@@ -163,6 +170,11 @@ const Products = (props) => {
                     : null}
 
             </View>
+            {textArray.map((dog, i) => {
+       <View key={i}>
+         <Text> dog.filter</Text>
+       </View>
+         })}
             <Animated.FlatList
                 onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
                 showsVerticalScrollIndicator={false}
@@ -187,6 +199,7 @@ const Products = (props) => {
                 onPress={closeSheet}
                 result={result}
                 isVisible={visible}
+                output ={output.filter && output.filter}
             />
 
         </View>
