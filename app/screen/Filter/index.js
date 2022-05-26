@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StatusBar,  SafeAreaView, FlatList } from
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from 'react-native-virtualized-view';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./style";
 import { pack, price, category,type } from "./data";
@@ -11,6 +11,8 @@ import { AuthBtn as Btn} from "@Component";
 import { searchProducts } from "@Request/Product";
 
 const Filter = (props) => {
+
+    const dispatch = useDispatch();
 
     const [priceView, setPriceView] = useState(false);
     const [packView, setPackView] = useState(false);
@@ -27,7 +29,7 @@ const Filter = (props) => {
     const [creditType, setCreditType] = useState("");
     
 
-    const { searchedProducts } = useSelector((state) => state.product);
+    const { searchedProducts, status } = useSelector((state) => state.product);
     const { options } = useSelector((state) => state.paymentOptions);
 
 
@@ -43,6 +45,7 @@ const Filter = (props) => {
         }else if(value === "credit"){
             setCreditOption(id)
             selectUserType(id)
+            dispatch(searchProducts({search: props.route.params?.category, type:"hospital", id}));
         }
 
     }
@@ -99,15 +102,7 @@ const Filter = (props) => {
 
     const filterByPrice = async (id) => {
         let filtered;
-        let searchedProduct
-
-        if(creditOption){
-            await dispatch(searchProducts({search: props.route.params?.category, type:"hospital", id: creditOption}));
-            console.log(searchedProducts)
-            searchedProduct = [...searchedProducts];
-        }else{
-            searchedProduct =  [...searchedProducts];
-        }
+        let searchedProduct = [...searchedProducts];
 
         switch (id) {
             case "1":
@@ -289,9 +284,11 @@ const Filter = (props) => {
                     <View>
                         <Btn title="Reset" style={[styles.reset, styles.elevation]} styles={styles.resetText} onPress={resetData} />
                     </View>
+                    {status === "success" &&
+
                     <View>
                         <Btn title="Done" style={[styles.done, styles.elevation]} styles={styles.resetText} onPress={filterData} />
-                    </View>
+                    </View>}
                 </View>
                
             </View>
