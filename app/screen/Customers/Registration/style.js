@@ -770,6 +770,18 @@ export default styles = StyleSheet.create({
         flexGrow: 1,            // all the available vertical space will be occupied by it
         justifyContent: 'space-between' // will create the gutter between body and footer
     },
+    bottomCover1: {
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        width: wp('100%'),
+        paddingTop: 10,
+        borderColor: '#f5f5f5',
+        flexDirection:'column',
+        paddingHorizontal:20,
+        borderWidth: 0,
+        flexGrow: 1,            // all the available vertical space will be occupied by it
+        justifyContent: 'space-between' // will create the gutter between body and footer
+    },
     formCover:{
         paddingHorizontal:20,
         width:wp('100%'),

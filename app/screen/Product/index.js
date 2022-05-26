@@ -81,7 +81,7 @@ const Products = (props) => {
 
     const goBack = () => props.navigation.navigate("Catalogue");
     const redirectToFilter = () => props.navigation.navigate("Filter", { display_name: props.route.params?.display_name });
-    const redirectToSearch = () => props.navigation.navigate("Search");
+    const redirectToSearch = () => props.navigation.navigate("Search", { display_name: props.route.params?.display_name });
 
     const toastConfig = {
         error: () => (
