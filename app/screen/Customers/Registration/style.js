@@ -216,11 +216,7 @@ export default styles = StyleSheet.create({
         paddingBottom: 20
     },
     smCover:{
-    // flexGrow:1,
-    //  justifyContent:'space-between',
      width:"100%",
-    
-    //  paddingBottom:100,
     paddingBottom:hp('10%')
     },
     btnStep2Cover: {
@@ -229,24 +225,14 @@ export default styles = StyleSheet.create({
         borderTopWidth: 1,
         width:wp('100%'),
         backgroundColor: '#f5f5f5',
-        // position:'absolute',
         paddingVertical: 20,
         justifyContent: 'space-between',
         alignItems: "center",
         paddingHorizontal: 20,
-        zIndex:90,
-       
-        //  marginTop: Dimensions.get("window").height / 8,
+         marginTop: Dimensions.get("window").height / 18,
         alignSelf:"center"
 
-        // flexDirection: "row",
-        // justifyContent: "space-between",
-        // width: wp('98%'),
-        // position: "absolute",
-        // alignSelf:'center',
-        // padding: 20,
         
-        // backgroundColor: "rgba(238, 238, 238, 1)",
     },
     btnStep3Cover: {
         flexDirection: 'row',
@@ -333,7 +319,6 @@ export default styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         width: "100%",
-        // flexWrap: "wrap",
         alignItems: Platform.OS === "android" ? "center" : null
     },
     showTextPin: {
@@ -373,8 +358,8 @@ export default styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         width: wp('100%'),
         // flex: 1,
-        flexGrow: 1,            // all the available vertical space will be occupied by it
-        justifyContent: 'space-between' // will create the gutter between body and footer
+        flexGrow: 1,           
+        justifyContent: 'space-between' 
     },
     topCover: {
         flexDirection: 'row',
@@ -996,6 +981,14 @@ export default styles = StyleSheet.create({
         borderColor: '#f2f3f4',
         marginTop: -15
     },
+    cardd: {
+        width: wp('100%'),
+        // paddingHorizontal: 20,
+        borderBottomWidth: 0.1,
+        borderColor: '#f2f3f4',
+        flexGrow:1,
+        justifyContent:'space-between'   
+    },
     fiedpadd:{
         width: wp('100%'),
         paddingHorizontal: 20,
@@ -1005,16 +998,7 @@ export default styles = StyleSheet.create({
         width: wp('100%'),
         paddingHorizontal: 20,
     },
-    cardd: {
-        width: wp('100%'),
-        // paddingHorizontal: 20,
-        borderBottomWidth: 0.1,
-        borderColor: '#f2f3f4',
-        flex:1,
-        justifyContent:'space-between'
-       
-        
-    },
+   
     card1: {
         // width: wp('100%'),
         // paddingHorizontal: 20,

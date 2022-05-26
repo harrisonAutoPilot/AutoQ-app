@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import styles from "./style";
 import { pack, price, category,type } from "./data";
 import { AuthBtn as Btn} from "@Component";
+import { searchProducts } from "@Request/Product";
 
 const Filter = (props) => {
 
@@ -22,7 +23,9 @@ const Filter = (props) => {
     const [active, setActive] = useState("5");
     const [categoryId, setCategoryId] = useState("");
     const [isScrollEnabled, setIsScrollEnabled] = useState(true);
-    const [creditOption, setCreditOption] = useState("");
+    const [creditOption, setCreditOption] = useState();
+    const [creditType, setCreditType] = useState("");
+    
 
     const { searchedProducts } = useSelector((state) => state.product);
     const { options } = useSelector((state) => state.paymentOptions);
@@ -94,10 +97,18 @@ const Filter = (props) => {
         </TouchableOpacity>
     );
 
-    const filterByPrice = (id) => {
+    const filterByPrice = async (id) => {
         let filtered;
-        let  searchedProduct = [...searchedProducts];
-        
+        let searchedProduct
+
+        if(creditOption){
+            await dispatch(searchProducts({search: props.route.params?.category, type:"hospital", id: creditOption}));
+            console.log(searchedProducts)
+            searchedProduct = [...searchedProducts];
+        }else{
+            searchedProduct =  [...searchedProducts];
+        }
+
         switch (id) {
             case "1":
                 filtered = searchedProduct

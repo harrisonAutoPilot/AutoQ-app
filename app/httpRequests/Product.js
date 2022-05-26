@@ -9,9 +9,10 @@ export const listProducts = createAsyncThunk("product/all",
     });
 
 export const searchProducts = createAsyncThunk("product/search",
-    async (search, thunkAPI) => {
+    async (searched, thunkAPI) => {
         const Axios = await AxiosBase();
-        return apiRequest(Axios.get(`api/v1/search_result?q=${search}`), thunkAPI)
+        const { search, type, id} = searched
+        return apiRequest(Axios.get(`api/v1/search_result?q=${search}&type=${type}&option=${id}`), thunkAPI)
     });
 
 export const searchProductsByItems = createAsyncThunk("product/type-head",

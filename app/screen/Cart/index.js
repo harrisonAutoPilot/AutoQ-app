@@ -163,41 +163,41 @@ const Cart = (props) => {
     const goBack = () => props.navigation.goBack();
 
     const increaseCart = (id, item, quantity) => {
-            let filteredCart = copyCart.filter(quantity => {
+        let filteredCart = copyCart.filter(quantity => {
 
-                if (quantity.id === id) {
-                    quantity.quantity = quantity.quantity + 1
-                    quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
-                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+            if (quantity.id === id) {
+                quantity.quantity = quantity.quantity + 1
+                quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
 
-                }
-            })
+            }
+        })
 
-            setCopyCartAmount(filteredCart[0])
-            let copiedcopyCartAmount = filteredCart
+        setCopyCartAmount(filteredCart[0])
+        let copiedcopyCartAmount = filteredCart
 
-            var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
-            setCopyCart(res)
-            return res
+        var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
+        setCopyCart(res)
+        return res
     };
 
     const decreaseCart = (id, item, quantity) => {
-      
-            let filteredCart = copyCart.filter(quantity => {
-                if (quantity.id === id && quantity.quantity > 1) {
-                    quantity.quantity = quantity.quantity - 1
-                    quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
-                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
 
-                }
-            })
+        let filteredCart = copyCart.filter(quantity => {
+            if (quantity.id === id && quantity.quantity > 1) {
+                quantity.quantity = quantity.quantity - 1
+                quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
+                return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
 
-            setCopyCartAmount(filteredCart[0])
+            }
+        })
 
-            let copiedcopyCartAmount = filteredCart
-            var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
-            setCopyCart(res)
-            return res
+        setCopyCartAmount(filteredCart[0])
+
+        let copiedcopyCartAmount = filteredCart
+        var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
+        setCopyCart(res)
+        return res
     };
 
     const calculateFinalAmount = () => {
@@ -240,7 +240,11 @@ const Cart = (props) => {
                 <View>
 
                     <View style={styles.priceCover}>
-                        <Text style={styles.priceText}>₦{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
+                        {item.total_amount.length > 5 ?
+                            <Text style={styles.priceTextSm}>{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
+                            :
+                            <Text style={styles.priceText}>₦{item.total_amount !== "" ? commafy(item.total_amount) : 0}</Text>
+                        }
                     </View>
 
                     <View style={styles.iconCover}>

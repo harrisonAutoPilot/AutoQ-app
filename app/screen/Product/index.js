@@ -35,7 +35,7 @@ const Products = (props) => {
 
 
     useEffect(() => {
-        dispatch(searchProducts(props.route.params?.category));
+        dispatch(searchProducts({search: props.route.params?.category}));
         dispatch(listCart());
         dispatch(getPaymentOptions());
         return () => dispatch(cleanup())
@@ -78,7 +78,7 @@ const Products = (props) => {
     const refreshView = useCallback(() => {
         setErr("");
         setRefreshing(true);
-        dispatch(searchProducts(props.route.params?.category));
+        dispatch(searchProducts({search: props.route.params?.category}));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 

@@ -78,7 +78,7 @@ const Search = (props) => {
 
     // Show the Products in the Categories
     const showMapCategory = (category) => {
-        dispatch(searchProducts(category));
+        dispatch(searchProducts({search: category}));
         setActive(category)
     }
     const closeSheet = () => {
@@ -100,7 +100,7 @@ const Search = (props) => {
     };
 
     const searchCategoryItem = () => {
-        dispatch(searchProducts(searchCategory.toLowerCase()))
+        dispatch(searchProducts({search: searchCategory.toLowerCase()}))
         setSearching(true)
         // setSearchCategoryArray(searchedProducts)
     };
@@ -127,7 +127,7 @@ const Search = (props) => {
 
     const refreshView = useCallback(() => {
         setRefreshing(true);
-        dispatch(searchProducts(category));
+        dispatch(searchProducts({search: category}));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
