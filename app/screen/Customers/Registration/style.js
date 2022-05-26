@@ -229,7 +229,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: "center",
         paddingHorizontal: 20,
-         marginTop: Dimensions.get("window").height / 9,
+         marginTop: Dimensions.get("window").height / 10,
         alignSelf:"center"
 
         
@@ -765,9 +765,14 @@ export default styles = StyleSheet.create({
         paddingTop: 10,
         borderColor: '#f5f5f5',
         flexDirection:'column',
+        paddingHorizontal:20,
         borderWidth: 1,
         flexGrow: 1,            // all the available vertical space will be occupied by it
         justifyContent: 'space-between' // will create the gutter between body and footer
+    },
+    formCover:{
+        paddingHorizontal:20,
+        width:wp('100%'),
     },
     bioTitleCover: {
         width: wp('100%'),
@@ -983,7 +988,7 @@ export default styles = StyleSheet.create({
     },
     cardd: {
         width: wp('100%'),
-        // paddingHorizontal: 20,
+         paddingHorizontal: 20,
         borderBottomWidth: 0.1,
         borderColor: '#f2f3f4',
         flexGrow:1,

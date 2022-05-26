@@ -87,7 +87,7 @@ const Step1 = (props) => {
             >
 
                 <View style={styles.bottomCover}>
-                    <View style={styles.card}>
+                    <View style={styles.card1}>
                         <View style={styles.bioTitleCover}>
                             <Text style={styles.bioTitleText}>BIO DATA</Text>
                         </View>
@@ -210,7 +210,7 @@ const Step1 = (props) => {
                                                         </View>) : null}
                                                 </View>
                                                 <View style={styles.card1}>
-                                                    <View style={styles.bioTitleCover}>
+                                                    <View >
                                                         <Text style={styles.bioTitleText}>USER TYPE</Text>
                                                     </View>
                                                     <View style={styles.flatCover}>

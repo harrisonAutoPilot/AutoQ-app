@@ -105,6 +105,8 @@ const Search = (props) => {
         // setSearchCategoryArray(searchedProducts)
     };
 
+    const redirectToFilter = () => props.navigation.navigate("Filter", { display_name: props.route.params?.display_name });
+
     useEffect(() => {
         if (searchProducts.length) {
             setSearchCategoryArray(searchedProducts);
@@ -222,7 +224,7 @@ const Search = (props) => {
                 <TouchableOpacity style={[!active ? styles.activeColor : null, styles.innerContainer]} onPress={() => setActive("")}>
                     <Text style={[styles.inputTitle, styles.color1]}>All Categories</Text>
                 </TouchableOpacity>
-
+            
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -231,6 +233,24 @@ const Search = (props) => {
                     ListEmptyComponent={<View />}
                     renderItem={ListView}
                 />
+                
+            </View>
+             <View style={styles.filterCover}>
+             <View style={styles.header}>
+                    <View style={styles.miniHeaderView}>
+                        <Icon name="grid" size={14} color="#616161" />
+                        <View style={styles.margin}>
+                            <Text style={[styles.inputTitle, styles.color]} numberOfLines={1}>All {props.route.params?.display_name}</Text>
+                        </View>
+                    </View>
+                    {searchedProducts.length ?
+                        <TouchableOpacity style={[styles.miniHeaderView2, styles.filterView]} onPress={redirectToFilter}>
+                            <Icon name="chevron-down" size={14} color="#212121" />
+                            <View style={styles.margin}>
+                                <Text style={styles.filterText}>Filter</Text>
+                            </View>
+                        </TouchableOpacity> : null}
+                </View>
             </View>
             {active === ""
                 ?
@@ -283,7 +303,7 @@ const Search = (props) => {
                     : null
             }
 
-
+             
         </View>
     )
 };

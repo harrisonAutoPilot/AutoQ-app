@@ -26,7 +26,7 @@ const Step2 = (props) => {
              styles.scrollContentContainer
          ]}
      >
-                <View style={styles.formCover}>
+                <View >
                     <View style={styles.bioTitleCover}>
                         <Text style={styles.bioTitleText}>STORE</Text>
                     </View>

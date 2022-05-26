@@ -22,11 +22,11 @@ const Step3 = (props) => {
            
 
                 <View >
-                    <View style={styles.cardd}>
+                    <View >
                         <View style={styles.bioTitleCover}>
                             <Text style={styles.bioTitleText}>DOCUMENTATION</Text>
                         </View>
-                        <View style={styles.formCover}>
+                        <View >
                             <TouchableWithoutFeedback onPress={dismissKeyboard}>
                                 <View>
 
