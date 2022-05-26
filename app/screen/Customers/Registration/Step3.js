@@ -40,11 +40,11 @@ const Step3 = (props) => {
                                         {props => (
                                             <View>
                                                 <ScrollView
-                                                                indicatorStyle="white"
-                                                                contentContainerStyle={[
-                                                                    styles.scrollContentContainer,
-                                                                ]}>
-                                                    <View style={styles.smCover}>
+                                                indicatorStyle="white"
+                                                contentContainerStyle={[
+                                                    styles.scrollContentContainer,
+                                                ]}>
+                                      <View style={styles.smCover}>
                                               <View style={styles.fiedpad}>
                                                     <View style={[styles.registerInputHolder, props.touched.images && props.errors.images ? styles.inputErrHolder : null]}>
                                                         <View style={styles.labelView}>

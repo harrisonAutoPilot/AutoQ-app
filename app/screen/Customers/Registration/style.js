@@ -229,7 +229,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: "center",
         paddingHorizontal: 20,
-         marginTop: Dimensions.get("window").height / 18,
+         marginTop: Dimensions.get("window").height / 9,
         alignSelf:"center"
 
         
