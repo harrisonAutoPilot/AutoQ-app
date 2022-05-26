@@ -133,5 +133,58 @@ export default styles = StyleSheet.create({
     requestText: {
         color: '#fff',
         fontSize: 12,
-    }
+    },
+    // THIS IS FOR THE FILTER
+    filterCover:{
+        width:wp('95%'),
+        paddingHorizontal: Platform.OS === "ios" ? 10:10,
+        paddingVertical: Platform.OS === "ios" ? 10: -5,
+        alignSelf:'center',
+    },
+    header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom: 13
+    },
+    miniHeaderView: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "65%"
+    },
+    miniHeaderView2: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "20%",
+        backgroundColor: "#FAFAFA"
+    },
+    margin: {
+        marginLeft: 4,
+        width: '90%'
+    },
+    filterView: {
+        borderRadius: 20,
+        borderColor: "#bfbfbf",
+        borderWidth: 1,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+    },
+    filterText: {
+        fontSize: 12,
+        fontFamily: "Urbanist-Medium",
+        lineHeight: 16,
+        color: "#424242",
+        letterSpacing: 0.2,
+    },
+    heartCover: {
+        position: 'absolute',
+        right: wp('5%'),
+        top: hp('2%')
+    },
+    headerSubIconView: {
+        flexDirection: "row",
+        marginLeft: -20,
+    },
+    headerSubLastIconView: {
+        paddingLeft: 15
+    },
 })
