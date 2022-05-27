@@ -53,16 +53,6 @@ const Products = (props) => {
         }
     }, [props.route.params?.item]);
 
-    useEffect(() => {
-      if (props.route.params?.item2){
-        setTextArray(props.route.params?.item2);
-        const output = Object.assign({}, ...textArray)
-        // console.log('faceless:',  output.filter);
-      
-      }
-    }, [props.route.params?.item2]);
-
-    const output = Object.assign({}, ...textArray)
 
     const closeSheet = () => {
         setVisible(false)
@@ -83,7 +73,7 @@ const Products = (props) => {
 
 
     const goBack = () => props.navigation.navigate("Catalogue");
-    const redirectToFilter = () => props.navigation.navigate("Filter", { display_name: props.route.params?.display_name });
+    const redirectToFilter = () => props.navigation.navigate("Filter", { display_name: props.route.params?.display_name, category: props.route.params?.category, name: "Product" });
     const redirectToSearch = () => props.navigation.navigate("Search");
 
     const toastConfig = {
@@ -100,7 +90,6 @@ const Products = (props) => {
 
     // Get the ID of the product to filter and show the Modal
     const getItem = (id) => {
-        console.log("koi")
         filterProduct(id);
         setVisible(true);
         bottomSheet.current?.present()
@@ -112,7 +101,6 @@ const Products = (props) => {
         return setResult(resultArray)
     };
 
-
     const ListView = ({ item, index}) => {
         const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
         const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
@@ -121,7 +109,7 @@ const Products = (props) => {
             item={item}
             getItem={() => getItem(item.id)}
             scale={scale}
-            output ={output.filter && output.filter}
+            creditType={props.route.params?.creditType ? props.route.params.creditType : ""}
         />
     };
 
@@ -172,11 +160,7 @@ const Products = (props) => {
                     : null}
 
             </View>
-            {textArray.map((dog, i) => {
-       <View key={i}>
-         <Text> dog.filter</Text>
-       </View>
-         })}
+         
             <Animated.FlatList
                 onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
                 showsVerticalScrollIndicator={false}
@@ -201,7 +185,6 @@ const Products = (props) => {
                 onPress={closeSheet}
                 result={result}
                 isVisible={visible}
-                output ={output.filter && output.filter}
             />
 
         </View>

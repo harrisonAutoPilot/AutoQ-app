@@ -17,6 +17,7 @@ import styles from "./style";
     const [deliveryDays, setDeliveryDays] = useState([]);
     const [showMethod, setShowMethod] = useState(false);
     const [label, setLabel] = useState("");
+    const [date, setDate] =  useState("");
 
     const { status, errors, options } = useSelector((state) => state.deliveryOptions);
 
@@ -59,7 +60,7 @@ const IconCheck= () => {
     <View>
     {method ?
           <View>
-            <Text style={styles.smDisplay}>Delivery Date: {props.date} </Text>
+            <Text style={styles.smDisplay}>Delivery Date: {date} </Text>
           </View>
     :
     <AntDesign
@@ -100,6 +101,7 @@ const IconCheck= () => {
           }else{
             props.status(false)
             setLabel("")
+            setDate("")
           }
           setIsFocus(false);
           setDeliveryDays(e.days)
@@ -121,6 +123,7 @@ const IconCheck= () => {
           props.onSelectDate(option)
           props.err("")
           setIsFocus(false);
+          setDate(option)
         }}
         closeOption={() => setShowMethodOption(false)}
         data={deliveryDays}

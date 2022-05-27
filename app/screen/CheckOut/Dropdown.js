@@ -11,8 +11,10 @@ import Modal from "react-native-modal";
 import FIcon from "react-native-vector-icons/MaterialIcons";
 import styles from "./styleDropdown";
 import { getDeliveryOptions } from "@Request/DeliveryOptions";
+import { listCart } from "@Request/Cart";
+import { useLinkProps } from '@react-navigation/native';
 
-const Dropdown = ({ label, onSelect, storeAddress }) => {
+const Dropdown = ({ label, onSelect, storeAddress, delivery }) => {
   const DropdownButton = useRef();
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(undefined);
@@ -22,6 +24,7 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
   const dispatch = useDispatch();
 
   const { stores } = useSelector((state) => state.store);
+
   const toggleDropdown = () => {
     visible ? setVisible(false) : openDropdown();
 
@@ -40,6 +43,9 @@ const Dropdown = ({ label, onSelect, storeAddress }) => {
     setVisible(false);
     setSelectId(item.id)
     dispatch(getDeliveryOptions(item.state_id))
+    dispatch(listCart(item.id))
+    delivery("")
+
   };
 
   const renderItem = ({ item }) => {

@@ -20,14 +20,15 @@ const RegularOptions = (props) => {
 
   const selectUserType = item => {
     setActive(item.id);
-    setOption(item.name);
+    setOption(item.id);
+    props.returnBack(item.id);
   };
 
   useEffect(() => {
     dispatch(getPaymentOptions())
   }, []);
 
-  const closeModal = (item) => {
+  const closeModal = () => {
     props.returnBack(option);
 
   }
@@ -37,7 +38,7 @@ const RegularOptions = (props) => {
 
 
     <TouchableOpacity
-      onPress={() => { selectUserType(item); setOption(item.id); setErrMsg("") }}
+      onPress={() => { selectUserType(item);  setErrMsg("") }}
       style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]}>
       <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
         <View >
@@ -123,14 +124,14 @@ const RegularOptions = (props) => {
               </View>
 
             </View>
-            <View style={styles.controlCover}>
+            {/* <View style={styles.controlCover}>
               <TouchableOpacity style={styles.cancelBtn} onPress={props.closeOption}>
                 <Text style={styles.cancelText}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.cancelBtn} onPress={closeModal}>
                 <Text style={styles.confirmText}>Confirm</Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         </View>
       </Pressable>

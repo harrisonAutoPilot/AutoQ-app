@@ -36,6 +36,8 @@ const CheckOut = (props) => {
 
     const { status, errors, options } = useSelector((state) => state.deliveryOptions);
 
+    console.log(options)
+
     const Confirm = () => {
         if (active && selected.id && deliveryType) {
             if (active === 1 && wallet.balance < items.total_amount) return setErr("Insufficient Balance")
@@ -68,6 +70,7 @@ const CheckOut = (props) => {
 
     const backToCart = () => {
         dispatch(delivery())
+        dispatch(listCart())
         props.navigation.navigate("Cart");
     }
 
@@ -145,7 +148,7 @@ const CheckOut = (props) => {
                             <Text style={styles.selectText}>Select Store to deliver products</Text>
                             <View style={styles.dropCover}>
                                 {stores.stores ?
-                                    <Dropdown label="" storeAddress="Select Store" data={data} onSelect={setSelected} />
+                                    <Dropdown label="" storeAddress="Select Store" data={data} onSelect={setSelected} delivery={setDeliveryType} />
                                     :
                                     <Text style={styles.itemDetails} >Loading...</Text>}
                             </View>
@@ -231,7 +234,7 @@ const CheckOut = (props) => {
                                     <Text style={styles.totalBorderText}>₦{items.total_amount !== undefined ? commafy(items.total_amount + deliveryPrice) : 0}</Text>
                                 </View>
 
-                                {status === "success" && (
+                                {status === "success" && items.carts && (
                                 <View style={[styles.addBtnCover]}>
                                     <Btn title="Continue" style={styles.addressBtn2} onPress={Confirm} />
                                 </View>

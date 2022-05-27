@@ -21,7 +21,9 @@ const Step1 = (props) => {
     const editable = props.active;
     const submit = props.submit
     const type = props.user_details?.user_type;
+    const credit = props?.user_details?.credit_option;
     const keys = props.keys;
+
 
     const { pendingStatus } = useSelector((state) => state.store);
 
@@ -31,6 +33,13 @@ const Step1 = (props) => {
 
         };
     }, [type]);
+
+    useEffect(() => {
+        if (credit?.name) {
+            setPayment(credit.name)
+
+        };
+    }, [credit]);
 
     const selectUserType = (id, name) => {
         setActive(id);
@@ -293,7 +302,9 @@ const Step1 = (props) => {
 
             </ScrollView>
 
+
             <PaymentOption
+                id={credit?.id ? {id:credit.id, name: credit.name}: undefined}
                  visibleRetrieve={showPaymentOption}
                  returnBack={(option, id) => {
                      setShowPaymentOption(false);
