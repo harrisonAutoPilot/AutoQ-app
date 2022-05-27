@@ -11,6 +11,7 @@ import ListItems from "@Screen/Product/ListView";
 import BottomSheet from "@Screen/Overlay";
 import ProductPlaceholderCard from "@Screen/Product/ProductPlaceholderCard";
 import Loader from "@Screen/Loader";
+import { getPaymentOptions } from "@Request/paymentOptions";
 
 const Search = (props) => {
     const dispatch = useDispatch();
@@ -32,9 +33,11 @@ const Search = (props) => {
     const { categories } = useSelector((state) => state.category);
     const { status, errors, searchedProducts } = useSelector((state) => state.product);
     const redirectToRequest = () => props.navigation.navigate("ProductRequest");
+    const [creditParams, setCreditParams]= useState("");
 
     useEffect(() => {
         dispatch(browseCategories());
+        dispatch(getPaymentOptions());
         const keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow',
             () => {
@@ -83,6 +86,7 @@ const Search = (props) => {
         setCategory(category)
         dispatch(searchProducts({ search: category }));
         setActive(category);
+        setCreditParams("")
         
     }
     const closeSheet = () => {
@@ -107,6 +111,7 @@ const Search = (props) => {
         if (props.route.params?.item) {
             setSearchArray(props.route.params.item);
             setActive(props.route.params?.category)
+            setCreditParams(props.route.params.creditType)
         }
     }, [props.route.params?.item]);
 
@@ -164,7 +169,7 @@ const Search = (props) => {
             onPress={() => itemsAddedToWishlist(item.id)}
             getItem={() => getItem(item.id)}
             scale={scale}
-            creditType={props.route.params?.creditType ? props.route.params.creditType : ""}
+            creditType={creditParams ? creditParams : ""}
         />
     };
 
@@ -256,7 +261,7 @@ const Search = (props) => {
                             <Text style={[styles.inputTitle, styles.color]} numberOfLines={1}></Text>
                         </View>
                     </View>
-                    {active && !searchArray.length && searchedProducts.length  ?
+                    {active && searchedProducts.length  && !searchCategory.length && !search.length ?
                         <TouchableOpacity style={[styles.miniHeaderView2, styles.filterView]} onPress={redirectToFilter}>
                             <Icon name="chevron-down" size={14} color="#212121" />
                             <View style={styles.margin}>
