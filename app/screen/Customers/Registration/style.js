@@ -58,7 +58,29 @@ export default styles = StyleSheet.create({
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         // borderRadius: 20,
-        width: "32%",
+        width: "31%",
+        height: 45,
+        borderBottomWidth: 0,
+        // borderColor:'#469D00'
+
+    },
+    activeSubHeaderCorrect: {
+        backgroundColor: "red",
+        flexDirection: 'row-reverse',
+        justifyContent: 'space-between',
+        // borderRadius: 20,
+        width: "31%",
+        height: 45,
+        borderBottomWidth: 0,
+        // borderColor:'#469D00'
+
+    },
+    activeSubHeaderR1: {
+        backgroundColor: "red",
+        flexDirection: 'row-reverse',
+        justifyContent: 'space-between',
+        // borderRadius: 20,
+        width: "31%",
         height: 45,
         borderBottomWidth: 0,
         // borderColor:'#469D00'
@@ -69,7 +91,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         // borderRadius: 20,
-        width: "32%",
+        width: "31%",
         height: 45,
         borderBottomWidth: 0,
 
@@ -83,7 +105,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         // borderRadius: 20,
         height: 45,
-        width: "32%"
+        width: "31%"
     },
     inActiveSubHeader2: {
         backgroundColor: "#E9EBF9",
@@ -91,7 +113,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         // borderRadius: 20,
         height: 45,
-        width: "32%"
+        width: "31%"
     },
     activeSubHeaderText: {
         fontSize: 14,
@@ -104,6 +126,17 @@ export default styles = StyleSheet.create({
         marginRight: 37,
         marginTop: 2,
     },
+    activeSubHeaderTextCorrect: {
+        fontSize: 14,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 20,
+        color: "#fff",
+        letterSpacing: 0.1,
+        fontWeight: "600",
+        textAlign: "center",
+        marginRight: 30,
+        marginTop: 2,
+    },
     inActiveSubHeaderText: {
         fontSize: 14,
         fontFamily: "Urbanist-Regular",
@@ -112,8 +145,12 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.1,
         fontWeight: "600",
         textAlign: "center",
-        marginRight: 37,
-        marginTop: 2,
+        marginRight: 31,
+        // marginTop: -10,
+    },
+    miniSubHeaderText:{
+        marginTop:3,
+        marginLeft:5,
     },
     allOrderText: {
         fontSize: 12,
@@ -696,13 +733,13 @@ export default styles = StyleSheet.create({
     innerCover2: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: wp('30%'),
+        width: wp('31%'),
         position: 'absolute',
     },
     innerCover2a: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: wp('30%'),
+        width: wp('28%'),
         position: 'absolute',
         backgroundColor: '#00319D',
         height: 45,
@@ -710,14 +747,14 @@ export default styles = StyleSheet.create({
     innerCover: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: wp('30%'),
+        width: wp('28%'),
         position: 'absolute',
         height: 45,
     },
     innerCover1a: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: wp('30%'),
+        width: wp('28%'),
         position: 'absolute',
         backgroundColor: '#00319D',
         height: 45,

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView, ScrollView, Linking } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
@@ -7,6 +7,7 @@ import FIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CommonActions, StackActions  } from '@react-navigation/native';
 
 import links from "./data";
+import prices from "./data2"
 import styles from "./style";
 import { logout } from "@Store/Auth";
 import { getCustomers } from "@Request/Customer";
@@ -14,6 +15,7 @@ import { getCustomers } from "@Request/Customer";
 const Drawer = (props) => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
+    const [showPriceList, setShowPriceList] = useState(false);
 
     useEffect(() => {
         dispatch(getCustomers());
@@ -45,6 +47,10 @@ const Drawer = (props) => {
         // );
 
     };
+
+    const DropView = ()=>{
+        setShowPriceList(true)
+    }
 
     const redirectToTP = () => {
         const URL = "https://remedialhealth.com/terms-of-service";
@@ -86,6 +92,16 @@ const Drawer = (props) => {
         </TouchableOpacity>
 
     )
+
+const PriceList = ({ item }) => (
+    <View style={styles.dropInner}>
+    <TouchableOpacity>
+    <View style={styles.dropItem}>
+          <Text style={styles.dropList}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
+    </View>
+)
 
     return (
         <View style={{ flex: 1 }}>
@@ -162,6 +178,40 @@ const Drawer = (props) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
+
+
+                        <TouchableOpacity style={styles.agentVieww} onPress={() => setShowPriceList(!showPriceList)}>
+                            <View style={styles.routeInnerView}>
+
+                                <View style={styles.routeTextView}>
+                                    <View style={styles.routeTextIconView}>
+                                    <Image source={require("@Assets/image/DownloadSimplee.png")} style={globalStyles.quesImg} />
+                                    </View>
+                                    <Text style={styles.routeText}>Download Pricelist</Text>
+                                </View>
+                               {
+                                   showPriceList ?
+                                   <View>
+                                   <Icon name="chevron-down" size={18} color="#9E9E9E" />
+                               </View>
+                               :
+                               <View>
+                               <Icon name="chevron-right" size={18} color="#9E9E9E" />
+                           </View>
+                               }
+                            </View>  
+                           
+                        </TouchableOpacity>
+
+
+                        {
+                            showPriceList ?
+                        <View style={styles.dropCover}>
+                          <FlatList data={prices} renderItem={PriceList} keyExtractor={item => item.id} vertical={true} />
+                        </View>
+                        :
+                        null
+                        }
 
 
                         <View style={styles.agentView}>
