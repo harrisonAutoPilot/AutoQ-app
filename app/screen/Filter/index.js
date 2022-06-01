@@ -120,7 +120,7 @@ const Filter = (props) => {
        let filteredData = filterByPrice(priceId);
        let filteredData2 = filterByPack(packId, filteredData);
         let filteredData3 = filterByType(typeId, filteredData2);
-        props.navigation.navigate("Product", {item: filteredData2,item2:filteredData3, display_name: props.route.params?.display_name})
+        props.navigation.navigate("Product", {item: filteredData2, item2:filteredData3, display_name: props.route.params?.display_name})
         //  console.log('faceless', filteredData3);
     };
 

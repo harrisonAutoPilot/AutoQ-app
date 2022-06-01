@@ -54,7 +54,7 @@ const Products = (props) => {
       if (props.route.params?.item2){
         setTextArray(props.route.params?.item2);
         const output = Object.assign({}, ...textArray)
-        // console.log('faceless:',  output.filter);
+       // console.log('faceless:',  output);
       
       }
     }, [props.route.params?.item2]);

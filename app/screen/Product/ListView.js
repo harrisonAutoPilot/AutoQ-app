@@ -6,7 +6,7 @@ import styles from "./style";
 
 const List = (props) => {
     const item = props.item.product ? props.item.product : props.item;
-     // console.log('faceless :',props.output && props.output);
+      console.log('faceless :',props.output && props.output);
    
    
 
