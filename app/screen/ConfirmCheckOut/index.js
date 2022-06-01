@@ -9,6 +9,7 @@ import { AuthBtn as Btn, COHeader as Header } from "@Component";
 import { cleanup, cleanErr, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import BottomSheet from "./ConfirmOrder";
+import { cleanup as delivery } from "@Store/DeliveryOptions";
 
 const ConfirmCheckOut = (props) => {
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const ConfirmCheckOut = (props) => {
     const [err, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
-    const { selected, active, amount, wallet } = props.route.params;
+    const { selected, active, amount, wallet, delivery_date, delivery_type, delivery_price, category, deliveryTypeName } = props.route.params;
     const bottomSheet = useRef();
 
     const backToCart = () => props.navigation.navigate("CheckOut");
@@ -33,7 +34,7 @@ const ConfirmCheckOut = (props) => {
 
 
     useEffect(() => {
-        if (orderDetail.order_group_id ) {
+        if (orderDetail.order_group_id) {
             const details = { orderGroup_id: orderDetail.order_group_id };
             dispatch(verifyOrder(details));
             bottomSheet.current.show();
@@ -51,7 +52,8 @@ const ConfirmCheckOut = (props) => {
             waitTime("", errors?.msg)
         } else if (verify === "success" && props.navigation.isFocused()) {
             dispatch(cleanup())
-            props.navigation.navigate("CheckoutSuccess", amount)
+            dispatch(delivery())
+            props.navigation.navigate("CheckoutSuccess", { amount, delivery_price })
         }
 
         if (verificationStatus === "failed" && props.navigation.isFocused()) {
@@ -69,7 +71,7 @@ const ConfirmCheckOut = (props) => {
 
     const waitTime = useCallback((suc, err) => {
         wait(1000).then(() => {
-            if (err) {  
+            if (err) {
                 setLoader(false);
                 setErr(err)
             }
@@ -96,7 +98,7 @@ const ConfirmCheckOut = (props) => {
 
 
     const submit = () => {
-        const details = { store_id: selected.id, payment_method_id: active };
+        const details = { store_id: selected.id, payment_method_id: active, delivery_date, delivery_type };
         setLoader(true)
         dispatch(placeOrder(details));
     };
@@ -154,6 +156,25 @@ const ConfirmCheckOut = (props) => {
                     </View>
 
                     <View style={styles.title2Cover}>
+                        <Text style={styles.titleText}>DELIVERY DETAILS</Text>
+                        <TouchableOpacity onPress={backToCart}>
+                            <View>
+                                <Text style={styles.changeText}>Change</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.selectContainer}>
+
+                        <View style={styles.dropCover}>
+                            <View>
+                                <Text style={styles.storeNameText}>{deliveryTypeName}</Text>
+                                <Text style={styles.storePhoneText}>{delivery_date}</Text>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={styles.title2Cover}>
                         <Text style={styles.titleText}>PAYMENT</Text>
                         <TouchableOpacity onPress={backToCart}>
                             <View>
@@ -166,7 +187,7 @@ const ConfirmCheckOut = (props) => {
                     <View style={styles.selectContainer}>
 
                         <View>
-                            <Text style={styles.storeNameText}>{wallet.length ? "Wallet" : "Delivery"}</Text>
+                            <Text style={styles.storeNameText}>{category}</Text>
                             <Text style={styles.storeAddressText}>Balance: ₦{wallet.length ? commafy(wallet) : 0}</Text>
                         </View>
                     </View>
@@ -184,12 +205,12 @@ const ConfirmCheckOut = (props) => {
                             </View>
                             <View style={styles.subtotalCover}>
                                 <Text style={styles.subText}>Delivery</Text>
-                                <Text style={styles.subText}>Free</Text>
+                                <Text style={styles.subText}>₦{delivery_price ? commafy(delivery_price) : 0}</Text>
                             </View>
 
                             <View style={styles.subtotalCoverDot}>
                                 <Text style={styles.subTextDark}>Total</Text>
-                                <Text style={styles.subTextDark}>₦{commafy(amount)}</Text>
+                                <Text style={styles.subTextDark}>₦{commafy(amount + delivery_price)}</Text>
                             </View>
 
                             <View style={[styles.addBtnCover]}>

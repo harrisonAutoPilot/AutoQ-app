@@ -106,19 +106,22 @@ export default styles = StyleSheet.create({
     resetText: {
         fontSize: 12,
         fontFamily: "Urbanist-SemiBold",
-        lineHeight: 20,
+        // lineHeight: 20,
         color: "rgba(66, 66, 66, 1)",
         letterSpacing: 0.1,
     },
     btnCover: {
         flexDirection: "row",
         justifyContent: "space-between",
-        width: wp('98%'),
+        // paddingHorizontal: 35,
+        width: wp('100%'),
         position: "absolute",
         alignSelf:'center',
         padding: 20,
         bottom: 0,
         backgroundColor: "rgba(238, 238, 238, 1)",
+        // top: Dimensions.get("window").height / 2.65,
+
     },
     activeView: {
         backgroundColor: "#E9EBF9",

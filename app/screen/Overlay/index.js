@@ -120,7 +120,8 @@ const Overlay = (props) => {
 
     const increaseCart = () => {
         setErr("")
-        if (result.quantity_available > cartAmount) return setCartAmount(cartAmount + 1)
+        // if (result.quantity_available > cartAmount) return 
+        setCartAmount(cartAmount + 1)
     };
 
     const toastConfig = {
@@ -205,7 +206,7 @@ const Overlay = (props) => {
                                         <Text style={styles.modalminiTitle}>Category: <Text style={styles.modalminiSecondTitle}>{result.category.display_name}</Text></Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Available: {result.quantity_available > 0 ? <Text style={{ color: "#469D00" }}>In Stock ({result.quantity_available})</Text> : <Text style={{ color: "red" }}>Out of Stock</Text>}</Text>
+                                        <Text style={styles.modalminiTitle}>Available:  <Text style={{ color: "#469D00" }}>In Stock</Text></Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
                                         <Text style={styles.modalminiTitle}>Price/Roll: <Text style={{ color: "#469D00" }}>&#8358;{commafy(result.price_per_pack)}</Text></Text>
@@ -217,7 +218,7 @@ const Overlay = (props) => {
                                         <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result.quantity_per_pack}</Text></Text>
                                     </View>
 
-                                    {result.quantity_available > 0 ?
+                                    {/* {result.quantity_available > 0 ? */}
 
                                         <View style={styles.increaseCartMainAmountView}>
                                             <View style={styles.cartAmountView}>
@@ -229,10 +230,10 @@ const Overlay = (props) => {
                                                         style={styles.label2}
                                                         value={cartAmount.toString()}
                                                         onChangeText={(val) => {
-                                                            if (result.quantity_available >= val) {
+                                                            // if (result.quantity_available >= val) {
                                                                 val = val.replaceAll(regex, "")
                                                                 setCartAmount(val.replace(/[^0-9]/g, ''))
-                                                            }
+                                                            // }
                                                         }
                                                         }
                                                         keyboardType="numeric"
@@ -243,16 +244,15 @@ const Overlay = (props) => {
                                                     <Icon name="plus" color="#212121" />
                                                 </TouchableOpacity>
                                             </View>
-                                            <View>
+                                            <View style={{width: "57%"}}>
                                                 <Text style={styles.amountText}>&#8358;{commafy(result.price_per_pack * cartAmount)}</Text>
                                             </View>
                                         </View>
-                                        : null}
+                                        {/* : null} */}
 
                                     <View style={styles.modalHeartIconView}>
 
-                                        {result.quantity_available > 0
-                                            ?
+                                        {
                                             !adding ?
                                                 <TouchableOpacity style={styles.modalBtnView} onPress={addItemsToCart}>
                                                     <Icon name="shopping-cart" size={16} color="#fff" />
@@ -269,7 +269,7 @@ const Overlay = (props) => {
                                                     </View>
 
                                                 </View>
-                                            : null}
+                                           }
                                     </View>
                                 </View>
 

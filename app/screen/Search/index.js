@@ -11,6 +11,7 @@ import ListItems from "@Screen/Product/ListView";
 import BottomSheet from "@Screen/Overlay";
 import ProductPlaceholderCard from "@Screen/Product/ProductPlaceholderCard";
 import Loader from "@Screen/Loader";
+import { getPaymentOptions } from "@Request/paymentOptions";
 
 const Search = (props) => {
     const dispatch = useDispatch();
@@ -28,13 +29,15 @@ const Search = (props) => {
     const [request, setRequest] = useState(false);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [searching, setSearching] = useState(false);
-
+    const [getCategory, setCategory]= useState("");
     const { categories } = useSelector((state) => state.category);
     const { status, errors, searchedProducts } = useSelector((state) => state.product);
     const redirectToRequest = () => props.navigation.navigate("ProductRequest");
+    const [creditParams, setCreditParams]= useState("");
 
     useEffect(() => {
         dispatch(browseCategories());
+        dispatch(getPaymentOptions());
         const keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow',
             () => {
@@ -76,10 +79,15 @@ const Search = (props) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
+
     // Show the Products in the Categories
     const showMapCategory = (category) => {
-        dispatch(searchProducts(category));
-        setActive(category)
+        setSearchArray([])
+        setCategory(category)
+        dispatch(searchProducts({ search: category }));
+        setActive(category);
+        setCreditParams("")
+        
     }
     const closeSheet = () => {
         setVisible(false)
@@ -99,13 +107,22 @@ const Search = (props) => {
         setSearchArray(searched)
     };
 
+    useEffect(() => {
+        if (props.route.params?.item) {
+            setSearchArray(props.route.params.item);
+            setActive(props.route.params?.category)
+            setCreditParams(props.route.params.creditType)
+        }
+    }, [props.route.params?.item]);
+
     const searchCategoryItem = () => {
-        dispatch(searchProducts(searchCategory.toLowerCase()))
+        dispatch(searchProducts({ search: searchCategory.toLowerCase() }))
         setSearching(true)
         // setSearchCategoryArray(searchedProducts)
     };
 
-    const redirectToFilter = () => props.navigation.navigate("Filter", { display_name: props.route.params?.display_name });
+    const redirectToFilter = () => {
+        props.navigation.navigate("Filter", { name:"Search", category: active })};
 
     useEffect(() => {
         if (searchProducts.length) {
@@ -129,14 +146,15 @@ const Search = (props) => {
 
     const refreshView = useCallback(() => {
         setRefreshing(true);
-        dispatch(searchProducts(category));
-        wait(3000).then(() => setRefreshing(false));
+        // console.log(getCategory, "ho", active)
+        // dispatch(searchProducts({ search: active }));
+        // wait(3000).then(() => setRefreshing(false));
     }, []);
 
     const ListView = ({ item }) => {
 
         return <View style={[styles.listContainer, active === item.name ? styles.activeColor : null]}>
-            <TouchableOpacity onPress={() => {showMapCategory(item.name); setSearch("")}}>
+            <TouchableOpacity onPress={() => { showMapCategory(item.name); setSearch("") }}>
                 <Text style={[styles.inputTitle, styles.color2]}>{item?.display_name?.trim()}</Text>
             </TouchableOpacity>
         </View>
@@ -151,6 +169,7 @@ const Search = (props) => {
             onPress={() => itemsAddedToWishlist(item.id)}
             getItem={() => getItem(item.id)}
             scale={scale}
+            creditType={creditParams ? creditParams : ""}
         />
     };
 
@@ -162,7 +181,6 @@ const Search = (props) => {
             item={item}
             onPress={() => itemsAddedToWishlist(item.id)}
             getItem={() => getItem(item.id)}
-
             scale={scale}
         />
     };
@@ -224,7 +242,7 @@ const Search = (props) => {
                 <TouchableOpacity style={[!active ? styles.activeColor : null, styles.innerContainer]} onPress={() => setActive("")}>
                     <Text style={[styles.inputTitle, styles.color1]}>All Categories</Text>
                 </TouchableOpacity>
-            
+
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -233,17 +251,17 @@ const Search = (props) => {
                     ListEmptyComponent={<View />}
                     renderItem={ListView}
                 />
-                
+
             </View>
-             <View style={styles.filterCover}>
-             <View style={styles.header}>
+            <View style={styles.filterCover}>
+                <View style={styles.header}>
                     <View style={styles.miniHeaderView}>
-                        <Icon name="grid" size={14} color="#616161" />
+                        {/* <Icon name="grid" size={14} color="#616161" /> */}
                         <View style={styles.margin}>
-                            <Text style={[styles.inputTitle, styles.color]} numberOfLines={1}>All {props.route.params?.display_name}</Text>
+                            <Text style={[styles.inputTitle, styles.color]} numberOfLines={1}></Text>
                         </View>
                     </View>
-                    {searchedProducts.length ?
+                    {active && searchedProducts.length  && !searchCategory.length && !search.length ?
                         <TouchableOpacity style={[styles.miniHeaderView2, styles.filterView]} onPress={redirectToFilter}>
                             <Icon name="chevron-down" size={14} color="#212121" />
                             <View style={styles.margin}>
@@ -256,15 +274,15 @@ const Search = (props) => {
                 ?
                 searching ?
 
-                <ProductPlaceholderCard />:
-                
-                <FlatList
-                    data={searchCategoryArray}
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={<View />}
-                    renderItem={ListView2}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
-                />
+                    <ProductPlaceholderCard /> :
+
+                    <FlatList
+                        data={searchCategoryArray}
+                        keyExtractor={item => item.id}
+                        ListEmptyComponent={<View />}
+                        renderItem={ListView2}
+                        ListFooterComponent={<View style={{ height: 50 }} />}
+                    />
                 : null}
 
             {(status === "pending" || status === "idle") && active !== "" ?
@@ -279,9 +297,9 @@ const Search = (props) => {
                     ListEmptyComponent={<View />}
                     renderItem={ListItem}
                     ListFooterComponent={<View style={{ height: 50 }} />}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
-                    }
+                    // refreshControl={
+                    //     <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+                    // }
                 />
             }
 
@@ -303,7 +321,7 @@ const Search = (props) => {
                     : null
             }
 
-             
+
         </View>
     )
 };

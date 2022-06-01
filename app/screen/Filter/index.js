@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StatusBar,  SafeAreaView, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, StatusBar, SafeAreaView, FlatList } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from 'react-native-virtualized-view';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./style";
-import { pack, price, category,type } from "./data";
-import { AuthBtn as Btn} from "@Component";
+import { pack, price, category, type } from "./data";
+import { AuthBtn as Btn } from "@Component";
+import { searchProducts } from "@Request/Product";
 
 const Filter = (props) => {
+
+    const dispatch = useDispatch();
 
     const [priceView, setPriceView] = useState(false);
     const [packView, setPackView] = useState(false);
@@ -22,20 +25,31 @@ const Filter = (props) => {
     const [active, setActive] = useState("5");
     const [categoryId, setCategoryId] = useState("");
     const [isScrollEnabled, setIsScrollEnabled] = useState(true);
+    const [creditOption, setCreditOption] = useState();
+    const [creditType, setCreditType] = useState("");
+    const [packValue, setPackValue] = useState("");
 
-    const { searchedProducts } = useSelector((state) => state.product);
 
-    const setItem = (id, value, filter) => {
+    const { searchedProducts, status } = useSelector((state) => state.product);
+    const { options } = useSelector((state) => state.paymentOptions);
+
+
+    const setItem = (id, value, increase, packVal) => {
         if (value === "price") {
             setPriceId(id);
-        }else if (value === "pack") {
+        } else if (value === "pack") {
             setPackId(id);
-        }else if (value === "category") {
+            setPackValue(packVal)
+        } else if (value === "category") {
             setCategoryId(id);
-        }else if (value === "type") {
+        } else if (value === "type") {
             setTypeId(id);
+        } else if (value === "credit") {
+            setCreditOption(id)
+            selectUserType(id);
+            setCreditType(increase)
+            dispatch(searchProducts({ search: props.route.params?.category, type: "hospital", id }));
         }
-
     }
 
     useEffect(() => {
@@ -44,13 +58,13 @@ const Filter = (props) => {
         }, 3000);
     }, []);
 
-    const selectUserType = id => {
+    const selectUserType = (id) => {
         setActive(id);
-        setTypeId(id)
+        setTypeId(id);
     };
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]} onPress={() => { selectUserType(item.id); setOption(item.id); setErrMsg("") }}>
+        <TouchableOpacity style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]} onPress={() => { setItem(item.id, "credit", item.price_increment); setOption(item.id); setErrMsg("") }}>
             <View style={active === item.id ? styles.optionIconView : styles.optionIconView2} >
                 {active === item.id ?
                     <View style={styles.activeCover}>
@@ -58,8 +72,8 @@ const Filter = (props) => {
                             <FIcon name="lens" size={12} color="#3858CF" style={styles.icon} />
                         </View>
                         <View style={styles.optionTextCover}>
-                            <Text style={styles.optionText}>{item.type}</Text>
-                           
+                            <Text style={styles.optionText}>Hospital {item.price_increment}%</Text>
+
                         </View>
 
                     </View>
@@ -67,7 +81,7 @@ const Filter = (props) => {
                     <View style={styles.activeCover}>
                         <View style={styles.iconCircle2} />
                         <View style={styles.optionTextCover}>
-                            <Text style={styles.optionText2}>{item.type}</Text>
+                            <Text style={styles.optionText2}>Hospital {item.price_increment}%</Text>
                         </View>
                     </View>
                 }
@@ -78,11 +92,8 @@ const Filter = (props) => {
     );
 
 
-
-
-
     const ListView = ({ item }) => (
-        <TouchableOpacity style={[styles.listView, item.id === priceId || item.id === typeId || item.id === packId || item.id === categoryId ? styles.activeView : null]} onPress={() => { setItem(item.id, item.value, item.filter); }} >
+        <TouchableOpacity style={[styles.listView, item.id === priceId || item.id === typeId || item.id === packId || item.id === categoryId ? styles.activeView : null]} onPress={() => { setItem(item.id, item.value, item.filter, item.type); }} >
             {item.id === priceId || item.id === typeId || item.id === packId || item.id === categoryId ?
                 <View style={styles.iconView}>
                     <Icon name="check" size={18} color="#00319D" />
@@ -93,17 +104,23 @@ const Filter = (props) => {
 
     const filterByPrice = (id) => {
         let filtered;
-        let  searchedProduct = [...searchedProducts];
-        
+        let searchedProduct = [...searchedProducts];
+
+
         switch (id) {
             case "1":
                 filtered = searchedProduct
                 break;
             case "2":
-                filtered = searchedProduct.sort((a, b) => { return b.price_per_pack - a.price_per_pack })
+                filtered = searchedProduct.sort((a, b) => { 
+                    return b.price_per_pack - a.price_per_pack 
+                }
+                )
                 break;
             case "3":
-                filtered = searchedProduct.sort((a, b) => { return a.price_per_pack - b.price_per_pack })
+                filtered = searchedProduct.sort((a, b) => {
+                    return a.price_per_pack - b.price_per_pack
+                })
                 break;
             case "4":
                 filtered = searchedProduct.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) })
@@ -117,66 +134,29 @@ const Filter = (props) => {
     }
 
     const filterData = () => {
-       let filteredData = filterByPrice(priceId);
-       let filteredData2 = filterByPack(packId, filteredData);
-        let filteredData3 = filterByType(typeId, filteredData2);
-        props.navigation.navigate("Product", {item: filteredData2, item2:filteredData3, display_name: props.route.params?.display_name})
-        //  console.log('faceless', filteredData3);
+        let filteredData = filterByPrice(priceId);
+        let filteredData2 = filterByPack(filteredData);
+        props.navigation.navigate(props.route.params?.name ? props.route.params.name : "Product", { item: filteredData2, display_name: props.route.params?.display_name, category: props.route.params?.category, creditType })
     };
 
-    const filterByPack = (id, filterValue) => {
+    const filterByPack = (filterValue) => {
         let filtered;
-        
-        switch (id) {
-            case "8":
-                filtered = filterValue
-                break;
-            case "9":
-                filtered = filterValue.filter(item => item.pack_style.toLowerCase() === "roll")
-                break;
-            case "10":
-                filtered = filterValue.filter(item => item.pack_style.toLowerCase() === "box")
-                break;
-            default:
-                filtered = filterValue
 
+        if (packValue) {
+            filtered = filterValue.filter(item => item.pack_style.toLowerCase() === packValue.toLowerCase())
+        } else {
+            filtered = filterValue
         }
         return filtered
 
-    }
-
-
-    const filterByType = (id, filterValue) => {
-        let filtered;
-        let  searchedType = [...type];
-        switch (id) {
-            case "5":
-                filtered = searchedType
-                break;
-            case "6":
-                filtered = searchedType.filter(item => item.type === "Hospital 1")
-                break;
-            case "7":
-                filtered = searchedType.filter(item => item.type === "Hospital 2")
-                break;
-            case "18":
-                filtered = searchedType.filter(item => item.type === "Hospital 3")
-                break;
-            default:
-                filtered = searchedType
-
-        }
-        return filtered
-
-    }
-
+    };
 
     const resetData = () => {
         setPriceId("");
         setTypeId("");
         setPackId("");
         setCategoryId("");
-        props.navigation.navigate("Product", {display_name: props.route.params?.display_name})
+        props.navigation.navigate(props.route.params?.name ? props.route.params.name : "Product", { display_name: props.route.params?.display_name })
     };
 
     return (
@@ -189,100 +169,100 @@ const Filter = (props) => {
                     </SafeAreaView>
                 </View>
                 <ScrollView>
-                    <View style={{flex:1,paddingBottom:100}}>
-                <View style={styles.priceMainView1}>
-                    <View style={styles.pricesView}>
-                        <Text style={styles.headerTitle}>Categories</Text>
-                        <TouchableOpacity onPress={() => setCategoryView(!categoryView)}>
-                            <Icon name="chevron-down" size={18} color="#9E9E9E" />
-                        </TouchableOpacity>
-                    </View>
-                    {categoryView ?
-                        <FlatList
-                            showsVerticalScrollIndicator={true}
-                            data={category}
-                            listKey={(item, index) => `_key${index.toString()}`}
-                            keyExtractor={(item, index) => `_key${index.toString()}`}
-                            renderItem={ListView}
-                            scrollEnabled={isScrollEnabled}
-                            // columnWrapperStyle={styles.column}
-                            numColumns={2}
-                        />
-                        : null}
-                </View>
+                    <View style={{ flex: 1, paddingBottom: 100 }}>
+                        {/* <View style={styles.priceMainView1}>
+                            <View style={styles.pricesView}>
+                                <Text style={styles.headerTitle}>Categories</Text>
+                                <TouchableOpacity onPress={() => setCategoryView(!categoryView)}>
+                                    <Icon name="chevron-down" size={18} color="#9E9E9E" />
+                                </TouchableOpacity>
+                            </View>
+                            {categoryView ?
+                                <FlatList
+                                    showsVerticalScrollIndicator={true}
+                                    data={category}
+                                    listKey={(item, index) => `_key${index.toString()}`}
+                                    keyExtractor={(item, index) => `_key${index.toString()}`}
+                                    renderItem={ListView}
+                                    scrollEnabled={isScrollEnabled}
+                                    columnWrapperStyle={styles.column}
+                                    numColumns={2}
+                                />
+                                : null}
+                        </View> */}
 
 
-                <View style={styles.priceMainView1}>
-              
-                    <View style={styles.pricesView1}>
-                        <Text style={styles.headerTitle}>Pricing</Text>
-                    </View>
-                    <FlatList
-                        data={type}
-                         listKey={(id, index) => `_key${index.toString()}`}
-                        keyExtractor={(id, index) => `_key${index.toString()}`}
-                        renderItem={renderItem}
-                        scrollEnabled={isScrollEnabled}
-                    />
+                        <View style={styles.priceMainView1}>
 
-            </View>
-
-
-                <View style={styles.priceMainView1}>
-                    <View style={styles.pricesView}>
-                        <Text style={styles.headerTitle}>Sorted By</Text>
-                        <TouchableOpacity onPress={() => setPriceView(!priceView)}>
-                            <Icon name="chevron-down" size={18} color="#9E9E9E" />
-                        </TouchableOpacity>
-                    </View>
-                    {priceView ?
-                        
+                            <View style={styles.pricesView1}>
+                                <Text style={styles.headerTitle}>Pricing</Text>
+                            </View>
                             <FlatList
-                            showsVerticalScrollIndicator={false}
-                            data={price}
-                             listKey={(item, index) => `_key${index.toString()}`}
-                            keyExtractor={(item, index) => `_key${index.toString()}`}
-                            renderItem={ListView}
-                            columnWrapperStyle={styles.column}
-                            numColumns={2}
-                        />
-                   
-                        : null}
-                </View>
+                                data={options}
+                                listKey={(id, index) => `_key${index.toString()}`}
+                                keyExtractor={(id, index) => `_key${index.toString()}`}
+                                renderItem={renderItem}
+                                scrollEnabled={isScrollEnabled}
+                            />
 
-                <View style={styles.priceMainView1}>
-                    <View style={styles.pricesView}>
-                        <Text style={styles.headerTitle}>Pack Style</Text>
-                        <TouchableOpacity onPress={() => setPackView(!packView)}>
-                            <Icon name="chevron-down" size={18} color="#9E9E9E" />
-                        </TouchableOpacity>
+                        </View>
+
+
+                        <View style={styles.priceMainView1}>
+                            <View style={styles.pricesView}>
+                                <Text style={styles.headerTitle}>Sorted By</Text>
+                                <TouchableOpacity onPress={() => setPriceView(!priceView)}>
+                                    <Icon name="chevron-down" size={18} color="#9E9E9E" />
+                                </TouchableOpacity>
+                            </View>
+                            {priceView ?
+
+                                <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    data={price}
+                                    listKey={(item, index) => `_key${index.toString()}`}
+                                    keyExtractor={(item, index) => `_key${index.toString()}`}
+                                    renderItem={ListView}
+                                    columnWrapperStyle={styles.column}
+                                    numColumns={2}
+                                />
+
+                                : null}
+                        </View>
+
+                        <View style={styles.priceMainView1}>
+                            <View style={styles.pricesView}>
+                                <Text style={styles.headerTitle}>Pack Style</Text>
+                                <TouchableOpacity onPress={() => setPackView(!packView)}>
+                                    <Icon name="chevron-down" size={18} color="#9E9E9E" />
+                                </TouchableOpacity>
+                            </View>
+                            {packView ?
+                                <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    data={pack}
+                                    listKey={(item, index) => `_key${index.toString()}`}
+                                    keyExtractor={(item, index) => `_key${index.toString()}`}
+                                    renderItem={ListView}
+                                    columnWrapperStyle={styles.column}
+                                    numColumns={3}
+                                />
+                                : null}
+                        </View>
                     </View>
-                    {packView ?
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            data={pack}
-                             listKey={(item, index) => `_key${index.toString()}`}
-                        keyExtractor={(item, index) => `_key${index.toString()}`}
-                            renderItem={ListView}
-                            columnWrapperStyle={styles.column}
-                            numColumns={3}
-                        />
-                        : null}
-                </View>
-                </View>
                 </ScrollView>
                 <View style={styles.btnCover}>
                     <View>
                         <Btn title="Reset" style={[styles.reset, styles.elevation]} styles={styles.resetText} onPress={resetData} />
                     </View>
-                    <View>
-                        <Btn title="Done" style={[styles.done, styles.elevation]} styles={styles.resetText} onPress={filterData} />
-                    </View>
+                    {status === "success" &&
+
+                        <View>
+                            <Btn title="Done" style={[styles.done, styles.elevation]} styles={styles.resetText} onPress={filterData} />
+                        </View>}
                 </View>
-               
+
             </View>
-
-
 
         </View>
     )

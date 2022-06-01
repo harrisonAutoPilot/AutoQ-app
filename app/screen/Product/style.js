@@ -178,7 +178,7 @@ export default styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         position:'absolute',
-        right:wp('-5%'),
+        right:wp('-9%'),
         height:22,
         paddingLeft:10,
         paddingRight:10,
@@ -186,7 +186,7 @@ export default styles = StyleSheet.create({
         borderColor:'rgba(211, 47, 47, 0.24)',
         borderRadius:30,
         alignItems:'center',
-        marginRight:10 
+        // marginRight:10 
     },
     smCrossImg:{
         width:13,

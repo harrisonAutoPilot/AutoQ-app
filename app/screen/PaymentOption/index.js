@@ -13,7 +13,6 @@ import styles from "./style";
 const PaymentOption = (props) => {
   const dispatch = useDispatch();
 
-
   const [showPaymentOption, setShowPaymentOption] = useState(false);
   const [option, setOption] = useState("");
   const [active, setActive] = useState("0");
@@ -32,44 +31,47 @@ const PaymentOption = (props) => {
     dispatch(getPaymentOptions())
   }, []);
 
+  useEffect(() => {
+    if (props.id) {
+      setActive(props.id.id);
+      setOption(props.id.name)
+    }
+  }, [props.id]);
 
 
-  const closeModal = (item) => {
+  const closeModal = () => {
     props.returnBack(option);
-
-  }
+  };
 
   const renderItem = ({ item }) => (
 
 
-    <TouchableOpacity onPress={() => { selectUserType(item); setOption(item.name,item.id); setErrMsg("") }} style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]}>
+    <TouchableOpacity onPress={() => { selectUserType(item); setErrMsg("") }} style={[styles.optionView, item.id === active ? styles.optionViewBetween1 : styles.optionViewBetween2]}>
       <View style={active === item.id ? styles.optionIconView : styles.optionIconView2}>
-          {active && active === item.id ?
-            <View style={styles.activeCover}>
-              <View style={styles.iconCircle}>
-                <FIcon name="lens" size={12} color="#3858CF" style={styles.icon} />
-
-              </View>
-              <View style={styles.optionTextCover}>
-                <Text style={styles.optionText}>{item.name}</Text>
-                <Text style={styles.optionText}>{item.price_increment}% price increment</Text>
-              </View>
+        {active && active === item.id ?
+          <View style={styles.activeCover}>
+            <View style={styles.iconCircle}>
+              <FIcon name="lens" size={12} color="#3858CF" style={styles.icon} />
 
             </View>
-            :
-            <View style={styles.activeCover}>
-              <View style={styles.iconCircle2} />
-              <View style={styles.optionTextCover}>
-                <Text style={styles.optionText2}>{item.name}</Text>
-                <Text style={styles.optionText2}>{item.price_increment}% price increment</Text>
-              </View>
+            <View style={styles.optionTextCover}>
+              <Text style={styles.optionText}>{item.name}</Text>
+              <Text style={styles.optionText}>{item.price_increment}% price increment</Text>
             </View>
-          }
+
+          </View>
+          :
+          <View style={styles.activeCover}>
+            <View style={styles.iconCircle2} />
+            <View style={styles.optionTextCover}>
+              <Text style={styles.optionText2}>{item.name}</Text>
+              <Text style={styles.optionText2}>{item.price_increment}% price increment</Text>
+            </View>
+          </View>
+        }
       </View>
 
     </TouchableOpacity>
-
-
   );
 
 
@@ -77,7 +79,6 @@ const PaymentOption = (props) => {
     <Modal
       isVisible={props.visibleRetrieve}
       onBackdropPress={closeModal}
-      onSwipeComplete={() => setPaymentOption(false)}
       swipeDirection="left"
       animationIn="slideInUp"
       animationInTiming={300}

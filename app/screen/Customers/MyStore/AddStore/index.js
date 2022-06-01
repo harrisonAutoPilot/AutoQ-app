@@ -120,15 +120,10 @@ const MyStore = (props) => {
 
 
     const submit = async (values) => {
-        if (!images.length || !images2.length ) {
-            refreshView2("All Fields are required")
-
-        } else {
             setLoader(true);
             const { name, address, state_id, lga_id } = values;
             const newValues = { name, address, images2, images, state_id, lga_id, user_id: props.route.params?.id };
             await dispatch(createStore(newValues));
-        }
     };
 
     const licenseImg = (id, props) => {

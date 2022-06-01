@@ -9,7 +9,7 @@ import { idle } from "@Store/Cart";
 
 const CheckoutSuccess = (props) => {
   const dispatch = useDispatch();
-  const amount = props.route.params
+  const {amount, delivery_price} = props.route.params
 
   const goBack = () => {
     props.navigation.navigate("CustomerOrder");
@@ -48,12 +48,12 @@ const CheckoutSuccess = (props) => {
             </View>
             <View style={styles.midItem}>
                <Text style={styles.itemText}>Delivery Fee:</Text>
-               <Text style={styles.itemText}>FREE</Text>
+               <Text style={styles.itemText}>₦{delivery_price ? commafy(delivery_price): 0}</Text>
             </View>
 
             <View style={styles.midItemColor}>
                <Text style={styles.itemTextColor}>Total:</Text>
-               <Text style={styles.itemTextColor}>₦{commafy(amount)}</Text>
+               <Text style={styles.itemTextColor}>₦{commafy(amount + delivery_price)}</Text>
             </View>
 
          </View>

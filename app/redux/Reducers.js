@@ -17,6 +17,7 @@ import stateReducer from "./State";
 import lgaReducer from "./Lga";
 import productRequestReducer from "./ProductRequest";
 import paymentOptionReducer from "./paymentOptions";
+import deliveryOptionReducer from "./DeliveryOptions";
 
 
 const persistConfig = {
@@ -45,5 +46,6 @@ export default combineReducers({
     state: stateReducer,
     lga: lgaReducer,
     productRequest: productRequestReducer,
-    paymentOptions: paymentOptionReducer
+    paymentOptions: paymentOptionReducer,
+    deliveryOptions: deliveryOptionReducer
 });

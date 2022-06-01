@@ -284,6 +284,7 @@ export default styles = StyleSheet.create({
     color: "#212121",
     fontFamily: "Urbanist-SemiBold",
     paddingTop: 3,
+    textTransform: "capitalize"
   },
   storeAddressText: {
     fontSize: 14,
