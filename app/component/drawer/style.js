@@ -181,5 +181,8 @@ export default styles = StyleSheet.create({
         lineHeight: 16,
         color: "#3858CF",
         letterSpacing: 0.1 
-    }
+    },
+    activityIcon: {
+        marginLeft: 15
+    },
 })

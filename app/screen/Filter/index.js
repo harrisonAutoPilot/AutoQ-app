@@ -9,6 +9,7 @@ import styles from "./style";
 import { pack, price, category, type } from "./data";
 import { AuthBtn as Btn } from "@Component";
 import { searchProducts } from "@Request/Product";
+import { cleanProducts } from "@Store/Product";
 
 const Filter = (props) => {
 
@@ -48,6 +49,7 @@ const Filter = (props) => {
             setCreditOption(id)
             selectUserType(id);
             setCreditType(increase)
+            dispatch(cleanProducts())
             dispatch(searchProducts({ search: props.route.params?.category, type: "hospital", id }));
         }
     }

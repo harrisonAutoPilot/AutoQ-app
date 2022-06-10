@@ -30,14 +30,6 @@ const DeliverMethod = props => {
     };
   }, [showMethod]);
 
-  const ChangeMethod = (days) => {
-    setIsFocus(false);
-    setCloseDrop(false);
-    setShowMethodOption(true);
-    setCloseDrop(false);
-    setDeliveryDays(days)
-
-  }
 
   const Render = (item) => {
     return (
@@ -45,9 +37,7 @@ const DeliverMethod = props => {
       <View style={styles.customItem} >
         <Text style={styles.placeholderStyle}>{item.name} (₦{item?.price})</Text>
         {item.days && item.days.length ?
-          // <TouchableOpacity onPress={() => ChangeMethod(item.days)}>
             <Text style={styles.changeText}>Pick Date</Text>
-          // </TouchableOpacity>
           : null}
       </View>
     )
