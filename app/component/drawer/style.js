@@ -166,5 +166,20 @@ export default styles = StyleSheet.create({
         height: "100%",
         paddingBottom: 50
     },
-
+    dropCover:{
+        paddingLeft:50,
+        marginTop:-35,
+        paddingBottom:10,
+    },
+    dropItem:{
+        padding:3,
+        paddingTop:4
+    },
+    dropList:{
+        fontSize: 12,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 16,
+        color: "#3858CF",
+        letterSpacing: 0.1 
+    }
 })

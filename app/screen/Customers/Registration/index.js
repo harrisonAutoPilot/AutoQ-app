@@ -132,76 +132,63 @@ const Registration = (props) => {
 
             <View style={styles.mainBody}>
                 <View style={styles.subHeader}>
-                    <View style={[activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
+                    {
+                        activeId === 1 ?
+                        <View style={[activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
                         <View style={{ flexDirection: 'row', zIndex: 90, justifyContent: 'center' }}>
-                            <Text style={{ color: '#fff', zIndex: 90, marginRight: 50, marginTop: 5 }}>STEP 1</Text>
+                            <Text style={{ color: '#fff', zIndex: 90, marginRight:25, marginTop: 2 }}>STEP 1</Text>
                             {activeId != 1 ?
                                 <View style={{ zIndex: 20, }}>
-                                    <Image source={require("@Assets/image/CheckCircle.png")} style={{ width: 20, height: 20, marginLeft: -40, marginTop: 2 }} />
+                                    <Image source={require("@Assets/image/CheckCircle.png")} style={{ width: 20, height: 20, marginRight: 12, marginTop: 2 }} />
 
                                 </View>
                                 : null}
                         </View>
-                        <View style={styles.innerCover2a}>
-                            <View />
-                            <Triangle
-                                type="rightAngle"
-                                base={75}
-                                height={190}
-                                mode={"bottom-right"}
-                                color="white"
-                            />
-                        </View>
-
+                        
                     </View>
-                    <View style={[activeId === 2 ? styles.activeSubHeader2 : styles.inActiveSubHeader, styles.miniSubHeader]} >
-                        <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>STEP 2</Text>
+                    :
+                    <View style={[styles.activeSubHeader, styles.miniSubHeader]} >
+                    <View style={{ flexDirection: 'row', zIndex: 90, justifyContent: 'center' }}>
+                        <Text style={{ color: '#fff', zIndex: 90, marginRight:5, marginTop: 2 }}>STEP 1</Text>
+                       
+                            <View style={{ zIndex: 20, }}>
+                                <Image source={require("@Assets/image/CheckCircle.png")} style={{ width: 20, height: 20, marginRight: 12, marginTop: 2 }} />
+
+                            </View>
+                           
+                    </View>
+                   
+
+                </View>
+                    }
+                    <View style={[activeId === 2 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
+                  {
+                      activeId === 2 ?
+                      <Text style={{ color: '#fff', zIndex: 90, marginRight:25, marginTop: 2 }}>STEP 2</Text>
+                      :
+                      <Text style={[activeId === 3 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>STEP 2</Text>
+                  }
                         <View style={[activeId === 3 ? styles.innerCover2a : styles.innerCover2, styles.miniSubHeader]}>
 
                         </View>
                         <View style={styles.innerCover2}>
 
-                            <Triangle
-                                type="rightAngle"
-                                base={20}
-                                height={60}
-                                mode={"top-left"}
-                                color="white"
-                            />
-
-                            <Triangle
-                                // style={styles.okk}
-                                type="rightAngle"
-                                base={50}
-                                height={190}
-                                mode={"bottom-right"}
-                                color="white"
-                            />
+                           
                             {activeId === 3 ?
                                 <View style={{ zIndex: 20, flexDirection: 'row', marginLeft: 30, position: 'absolute', marginTop: 10 }}>
-                                    <Text style={{ color: '#fff', zIndex: 20, marginTop: 5 }}>STEP 2</Text>
-                                    <Image source={require("@Assets/image/CheckCircle.png")} style={{ width: 20, height: 20, marginLeft: 5, marginTop: 3 }} />
+                                    <Text style={{ color: '#fff', zIndex: 20, marginTop: 2 }}>STEP 2</Text>
+                                    <Image source={require("@Assets/image/CheckCircle.png")} style={{ width: 20, height: 20, marginLeft: 5, marginTop: 2 }} />
 
                                 </View>
-                                : null}
+                                : null
+                                }
                         </View>
 
 
                     </View>
                     <View style={[activeId === 3 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
-                        <Text style={[activeId === 3 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>STEP 3</Text>
-                        <View style={styles.innerCover}>
-
-                            <Triangle
-                                type="rightAngle"
-                                base={20}
-                                height={100}
-                                mode={"top-left"}
-                                color="white"
-                            />
-                            <View></View>
-
-                        </View>
+                        <Text style={[activeId === 3 ? styles.activeSubHeaderTextCorrect : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>STEP 3</Text>
+                        
 
                     </View>
                 </View>
