@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, FlatList, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, ScrollView, Image, BackHandler } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./style";
@@ -36,8 +36,6 @@ const CheckOut = (props) => {
 
     const { status, errors, options } = useSelector((state) => state.deliveryOptions);
 
-    console.log(options)
-
     const Confirm = () => {
         if (active && selected.id && deliveryType) {
             if (active === 1 && wallet.balance < items.total_amount) return setErr("Insufficient Balance")
@@ -65,6 +63,12 @@ const CheckOut = (props) => {
         dispatch(listCart())
         dispatch(getWallet())
         dispatch(getStore())
+
+       BackHandler.addEventListener(
+            "hardwareBackPress",
+            backToCart
+          );
+          return () => BackHandler.removeEventListener("hardwareBackPress", backToCart);
     }, []);
 
 

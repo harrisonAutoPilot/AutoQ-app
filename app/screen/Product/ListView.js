@@ -9,7 +9,7 @@ const List = (props) => {
 
 
     return (
-        <Animated.View style={{ transform: [{ scale: props.scale }] }}>
+        <Animated.View style={props.scale ? { transform: [{ scale: props.scale }] }: null}>
             <TouchableOpacity style={styles.listContainer} onPress={props.getItem}>
                 <View style={styles.listContainerImageView}>
                     <Image source={{ uri: `${URL}${item?.product_images[0]?.url}` }} style={styles.image} resizeMode="contain" />

@@ -13,7 +13,7 @@ import List from "./ListView";
 import ProductPlaceholderCard from "./ProductPlaceholderCard";
 import { listCart } from "@Request/Cart";
 // import BrowseCardPlaceholder from "./browseCardPlaceholder";
-import { cleanup } from "@Store/Product";
+import { cleanup, cleanProducts } from "@Store/Product";
 import { getPaymentOptions } from "@Request/paymentOptions";
 
 const Products = (props) => {
@@ -30,16 +30,23 @@ const Products = (props) => {
     const [textArray, setTextArray] = useState([]);
     const bottomSheet = useRef();
 
-    const { status, errors, searchedProducts } = useSelector((state) => state.product);
+    const { status, errors, searchedProducts, searchProductsData } = useSelector((state) => state.product);
     const { items } = useSelector((state) => state.cart);
 
 
     useEffect(() => {
-        dispatch(searchProducts({search: props.route.params?.category}));
+        dispatch(searchProducts({search: props.route.params?.category, no:1}));
         dispatch(listCart());
         dispatch(getPaymentOptions());
-        return () => dispatch(cleanup())
+        return () => {
+            dispatch(cleanup())
+            dispatch(cleanProducts());
+        }
     }, []);
+
+    const loadMore = () => {
+        dispatch(searchProducts({ search: props.route.params?.category, no: searchProductsData?.current_page + 1 }));
+    }
 
     useEffect(() => {
         if (status === "failed" && props.navigation.isFocused()) {
@@ -67,7 +74,7 @@ const Products = (props) => {
     const refreshView = useCallback(() => {
         setErr("");
         setRefreshing(true);
-        dispatch(searchProducts({search: props.route.params?.category}));
+        dispatch(searchProducts({search: props.route.params?.category, no:1}));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
@@ -177,7 +184,12 @@ const Products = (props) => {
                 getItemLayout={(data, index) => (
                     { length: 100, offset: 100 * index, index }
                 )}
-                extraData={searchedProducts}
+                onEndReachedThreshold={0.5}
+                onEndReached={() => {
+                    if (searchProductsData?.current_page < searchProductsData?.last_page) {
+                        loadMore()
+                    }
+                }}
             />
 
             <BottomSheet

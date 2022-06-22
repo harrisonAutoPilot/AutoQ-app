@@ -9,7 +9,8 @@ export const productSlice = createSlice({
         status: "idle",
         errors: {},
         type_head: [],
-        loaded: "idle"
+        loaded: "idle",
+        searchProductsData: [],
     },
     reducers: {
         cleanup: (state) => {
@@ -18,7 +19,11 @@ export const productSlice = createSlice({
             state.loaded = "idle";
             state.products = []
             state.searchedProducts = []
-        }
+        },
+        cleanProducts: (state) => {
+            state.searchedProducts = []
+            state.searchProductsData = []
+        },
     },
     extraReducers: builder => {
         builder
@@ -43,12 +48,12 @@ export const productSlice = createSlice({
 
         builder
             .addCase(searchProducts.pending, state => {
-                state.status = "pending";
+                // state.status = "pending";
                 state.errors = {};
-                state.searchedProducts = [];
             })
             .addCase(searchProducts.fulfilled, (state, action) => {
-                state.searchedProducts = action.payload.data;
+                state.searchedProducts = [...state.searchedProducts, ...action.payload.data];
+                state.searchProductsData = action.payload;
                 state.status = "success";
                 state.errors = {};
             })
@@ -56,6 +61,7 @@ export const productSlice = createSlice({
                 state.status = "failed";
                 state.errors = payload;
                 state.searchedProducts = [];
+                state.searchProductsData = [];
             })
 
             builder
@@ -79,6 +85,6 @@ export const productSlice = createSlice({
 });
 
 
-export const { cleanup } = productSlice.actions
+export const { cleanup, cleanProducts } = productSlice.actions
 
 export default productSlice.reducer;

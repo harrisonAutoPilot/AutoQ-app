@@ -12,6 +12,7 @@ import BottomSheet from "@Screen/Overlay";
 import ProductPlaceholderCard from "@Screen/Product/ProductPlaceholderCard";
 import Loader from "@Screen/Loader";
 import { getPaymentOptions } from "@Request/paymentOptions";
+import { cleanup, cleanProducts } from "@Store/Product";
 
 const Search = (props) => {
     const dispatch = useDispatch();
@@ -30,10 +31,13 @@ const Search = (props) => {
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [searching, setSearching] = useState(false);
     const [getCategory, setCategory]= useState("");
-    const { categories } = useSelector((state) => state.category);
-    const { status, errors, searchedProducts } = useSelector((state) => state.product);
-    const redirectToRequest = () => props.navigation.navigate("ProductRequest");
+    const [searchName, setSearchName] = useState("");
     const [creditParams, setCreditParams]= useState("");
+
+    const { categories } = useSelector((state) => state.category);
+    const { status, errors, searchedProducts, searchProductsData } = useSelector((state) => state.product);
+
+    const redirectToRequest = () => props.navigation.navigate("ProductRequest");
 
     useEffect(() => {
         dispatch(browseCategories());
@@ -54,20 +58,19 @@ const Search = (props) => {
         return () => {
             keyboardDidHideListener.remove();
             keyboardDidShowListener.remove();
+            dispatch(cleanProducts());
         };
     }, []);
 
     useEffect(() => {
         if (search.length) {
             searchItem();
-            setRequest(true)
         } else if (!search.length) {
             setSearchArray([]);
             setRequest(false)
         }
         if (searchCategory.length) {
             searchCategoryItem();
-            setRequest(true)
         } else if (!searchCategory.length) {
             setSearching(false)
             setSearchCategoryArray([]);
@@ -82,9 +85,12 @@ const Search = (props) => {
 
     // Show the Products in the Categories
     const showMapCategory = (category) => {
+        dispatch(cleanProducts());
+        dispatch(cleanup())
         setSearchArray([])
         setCategory(category)
-        dispatch(searchProducts({ search: category }));
+        setSearchName(category);
+        dispatch(searchProducts({ search: category, no:1 }));
         setActive(category);
         setCreditParams("")
         
@@ -103,7 +109,7 @@ const Search = (props) => {
             }
             return null
         });
-
+        setRequest(true);
         setSearchArray(searched)
     };
 
@@ -116,7 +122,10 @@ const Search = (props) => {
     }, [props.route.params?.item]);
 
     const searchCategoryItem = () => {
-        dispatch(searchProducts({ search: searchCategory.toLowerCase() }))
+        setRequest(true);
+        setSearchName(searchCategory);
+        dispatch(cleanProducts());
+        dispatch(searchProducts({ search: searchCategory.toLowerCase(), no: 1 }))
         setSearching(true)
         // setSearchCategoryArray(searchedProducts)
     };
@@ -124,13 +133,20 @@ const Search = (props) => {
     const redirectToFilter = () => {
         props.navigation.navigate("Filter", { name:"Search", category: active })};
 
-    useEffect(() => {
-        if (searchProducts.length) {
-            setSearchCategoryArray(searchedProducts);
-            setSearching(false)
-        }
-
-    }, [searchedProducts])
+        useEffect(() => {
+            if (searchedProducts.length && searchCategory.length) {
+                function getUniqueListBy(arr, key) {
+                    return [...new Map(arr.map(item => [item[key], item])).values()]
+                }
+                const arr1 = getUniqueListBy(searchedProducts, 'id')
+                setSearchCategoryArray(arr1);
+                setSearching(false)
+            }
+            else {
+                setSearchCategoryArray([]);
+            }
+    
+        }, [searchedProducts])
 
     // Add Items to Wishlist
     const itemsAddedToWishlist = async (id) => {
@@ -146,9 +162,9 @@ const Search = (props) => {
 
     const refreshView = useCallback(() => {
         setRefreshing(true);
-        // console.log(getCategory, "ho", active)
-        // dispatch(searchProducts({ search: active }));
-        // wait(3000).then(() => setRefreshing(false));
+        dispatch(cleanProducts())
+        dispatch(searchProducts({ search: searchName, no:1 }));
+        wait(3000).then(() => setRefreshing(false));
     }, []);
 
     const ListView = ({ item }) => {
@@ -161,14 +177,14 @@ const Search = (props) => {
     };
 
     const ListItem = ({ item, index }) => {
-        const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
-        const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
+        // const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
+        // const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
 
         return <ListItems
             item={item}
             onPress={() => itemsAddedToWishlist(item.id)}
             getItem={() => getItem(item.id)}
-            scale={scale}
+            // scale={scale}
             creditType={creditParams ? creditParams : ""}
         />
     };
@@ -193,6 +209,16 @@ const Search = (props) => {
         bottomSheet.current?.present()
     };
 
+    const loadMore = () => {
+        dispatch(searchProducts({ search: searchName, no: searchProductsData?.current_page + 1 }));
+    };
+
+    const cleanAllCategory = () => {
+        setActive("");
+        setSearchCategory("");
+        dispatch(cleanProducts());
+        dispatch(cleanup)
+    }
 
     const cancelSearch = () => props.navigation.goBack();
 
@@ -239,7 +265,7 @@ const Search = (props) => {
             </View>
 
             <View style={styles.categoryColumn}>
-                <TouchableOpacity style={[!active ? styles.activeColor : null, styles.innerContainer]} onPress={() => setActive("")}>
+                <TouchableOpacity style={[!active ? styles.activeColor : null, styles.innerContainer]} onPress={cleanAllCategory}>
                     <Text style={[styles.inputTitle, styles.color1]}>All Categories</Text>
                 </TouchableOpacity>
 
@@ -289,17 +315,20 @@ const Search = (props) => {
                 <ProductPlaceholderCard />
                 :
 
-                <Animated.FlatList
-                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+                <FlatList
+                    // onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
                     showsVerticalScrollIndicator={false}
                     data={active ? !searchArray.length ? searchedProducts : searchArray : []}
                     keyExtractor={item => item.id}
                     ListEmptyComponent={<View />}
                     renderItem={ListItem}
                     ListFooterComponent={<View style={{ height: 50 }} />}
-                    // refreshControl={
-                    //     <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
-                    // }
+                    onEndReachedThreshold={0.5}
+                    onEndReached={() => {
+                        if (searchProductsData?.current_page < searchProductsData?.last_page) {
+                            loadMore()
+                        }
+                    }}
                 />
             }
 

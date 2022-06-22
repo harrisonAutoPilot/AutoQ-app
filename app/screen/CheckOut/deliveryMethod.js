@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View,TouchableOpacity, Text} from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from "react-redux";
@@ -7,76 +7,66 @@ import { useSelector } from "react-redux";
 import RegularOptions from './RegularOptions';
 import styles from "./style";
 
-  const DeliverMethod = props => {
-    const [value, setValue] = useState(0);
-    const [isFocus, setIsFocus] = useState(false);
-    const [method, setMethod] = useState('0');
-    const [closeDrop, setCloseDrop] = useState(true);
-    const [methodName, setMethodName] = useState("");
-    const [showMethodOption, setShowMethodOption] = useState(false);
-    const [deliveryDays, setDeliveryDays] = useState([]);
-    const [showMethod, setShowMethod] = useState(false);
-    const [label, setLabel] = useState("");
-    const [date, setDate] =  useState("");
+const DeliverMethod = props => {
+  const [value, setValue] = useState(0);
+  const [isFocus, setIsFocus] = useState(false);
+  const [method, setMethod] = useState('0');
+  const [closeDrop, setCloseDrop] = useState(true);
+  const [methodName, setMethodName] = useState("");
+  const [showMethodOption, setShowMethodOption] = useState(false);
+  const [deliveryDays, setDeliveryDays] = useState([]);
+  const [showMethod, setShowMethod] = useState(false);
+  const [label, setLabel] = useState("");
+  const [date, setDate] = useState("");
 
-    const { status, errors, options } = useSelector((state) => state.deliveryOptions);
+  const { status, errors, options } = useSelector((state) => state.deliveryOptions);
 
-    useEffect(() => {
-      if (showMethod) {
-        setShowMethodOption(true);
-        setCloseDrop(true);
-        console.log("hello FacelessMe", method);
-        setShowMethod(false)
-      };
-    }, [showMethod]);
-  
-    const ChangeMethod = (days) => {
-      setIsFocus(false);
-      setCloseDrop(false);
+  useEffect(() => {
+    if (showMethod) {
       setShowMethodOption(true);
-      setCloseDrop(false);
-      setDeliveryDays(days)
-  
-    }
+      setCloseDrop(true);
+      console.log("hello FacelessMe", method);
+      setShowMethod(false)
+    };
+  }, [showMethod]);
+
 
   const Render = (item) => {
     return (
 
       <View style={styles.customItem} >
-        <Text style={styles.placeholderStyle}>{item.name} (₦{item?.price })</Text>
+        <Text style={styles.placeholderStyle}>{item.name} (₦{item?.price})</Text>
         {item.days && item.days.length ?
-            <TouchableOpacity onPress={() => ChangeMethod(item.days)}>
-              <Text style={styles.changeText}>Pick Date</Text>
-            </TouchableOpacity>
-           : null}
+            <Text style={styles.changeText}>Pick Date</Text>
+          : null}
       </View>
     )
   }
-  
 
 
-const IconCheck= () => {
-  return (
-    <View>
-    {method ?
+
+  const IconCheck = () => {
+    return (
+      <View>
+        {method ?
           <View>
             <Text style={styles.smDisplay}>Delivery Date: {date} </Text>
           </View>
-    :
-    <AntDesign
-    style={styles.iconNew}
-    color={isFocus ? 'blue' : 'black'}
-    name="bike-fast"
-    size={20}
-  />
+          :
+          <AntDesign
+            style={styles.iconNew}
+            color={isFocus ? 'blue' : 'black'}
+            name="bike-fast"
+            size={20}
+          />
+        }
+      </View>
+    )
   }
-  </View>
-  )
-}
 
-    return (
-      <View>
-    <Dropdown
+  return (
+    <View>
+      <Dropdown
         style={[styles.dropStyle, isFocus && { borderColor: 'blue' }]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
@@ -94,11 +84,11 @@ const IconCheck= () => {
         onBlur={() => setIsFocus(false)}
         onChange={e => {
           setMethod(e.id);
-          if(e.days && e.days.length){
+          if (e.days && e.days.length) {
             setShowMethod(true)
             props.status(true)
             setLabel(e.id)
-          }else{
+          } else {
             props.status(false)
             setLabel("")
             setDate("")
@@ -128,9 +118,9 @@ const IconCheck= () => {
         closeOption={() => setShowMethodOption(false)}
         data={deliveryDays}
       />
-      </View>
-    );
-  };
+    </View>
+  );
+};
 
-  export default DeliverMethod;
+export default DeliverMethod;
 

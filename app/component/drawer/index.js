@@ -1,44 +1,62 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView, ScrollView, Linking } from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView, ScrollView, Linking, ActivityIndicator } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector, useDispatch } from "react-redux";
 import FIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { CommonActions, StackActions  } from '@react-navigation/native';
+import { CommonActions, StackActions } from '@react-navigation/native';
 
 import links from "./data";
-import prices from "./data2"
 import styles from "./style";
 import { logout } from "@Store/Auth";
 import { getCustomers } from "@Request/Customer";
+import { priceList } from "@Request/PriceList";
+import { getPaymentOptions } from "@Request/paymentOptions";
 
 const Drawer = (props) => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
     const [showPriceList, setShowPriceList] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
 
+    // USESELECTOR
+    const { priceStatus } = useSelector((state) => state.priceList);
+    const { customers } = useSelector((state) => state.customer);
+    const { options } = useSelector((state) => state.paymentOptions);
+
+    // USEEFFECT
     useEffect(() => {
         dispatch(getCustomers());
     }, []);
+
+    useEffect(() => {
+        if (priceStatus === "pending") {
+            setShowLoader(true);
+        } else {
+            setShowLoader(false);
+        }
+
+    }, [priceStatus])
 
     const logUserOut = () => {
         props.navigation.closeDrawer();
         dispatch(logout());
 
-    }
+    };
+
+    // NAVIGATION
     const pendingOrders = () => props.navigation.navigate("PendingOrder");
     const productRequest = () => props.navigation.navigate("ProductRequest");
 
-    const { customers } = useSelector((state) => state.customer);
 
     const redirectToScreen = (route) => {
         props.navigation.closeDrawer();
-        if(route === "CustomersDashboard"){
-            props.navigation.navigate(route, {id: "pending"})
-        }else {
+        if (route === "CustomersDashboard") {
+            props.navigation.navigate(route, { id: "pending" })
+        } else {
             props.navigation.navigate(route)
         }
-     
+
         // props.navigation.dispatch(
         //     CommonActions.reset({
         //         index: 0,
@@ -48,10 +66,11 @@ const Drawer = (props) => {
 
     };
 
-    const DropView = ()=>{
-        setShowPriceList(true)
-    }
 
+    const getCreditOptions = () => {
+        setShowPriceList(!showPriceList);
+        dispatch(getPaymentOptions())
+    }
     const redirectToTP = () => {
         const URL = "https://remedialhealth.com/terms-of-service";
         Linking.openURL(URL)
@@ -72,6 +91,11 @@ const Drawer = (props) => {
             .catch(() => {
                 Alert.alert('An error occurred');
             });
+    };
+
+    const getPriceList = (id) => {
+        setShowPriceList(!showPriceList);
+        dispatch(priceList(id));
     }
 
 
@@ -79,7 +103,7 @@ const Drawer = (props) => {
         <TouchableOpacity onPress={() => redirectToScreen(item.route)} style={styles.routeInnerView}>
             <View style={styles.routeTextView}>
                 <View style={styles.routeTextIconView}>
-                <Image source={require("@Assets/image/folder-notch-open-fill.png")} style={globalStyles.quesImg} />
+                    <Image source={require("@Assets/image/folder-notch-open-fill.png")} style={globalStyles.quesImg} />
                 </View>
                 <Text style={styles.routeText}>{item.name}</Text>
                 <View style={styles.firstInnerHeader}>
@@ -93,15 +117,25 @@ const Drawer = (props) => {
 
     )
 
-const PriceList = ({ item }) => (
-    <View style={styles.dropInner}>
-    <TouchableOpacity>
-    <View style={styles.dropItem}>
-          <Text style={styles.dropList}>{item.name}</Text>
-      </View>
-    </TouchableOpacity>
-    </View>
-)
+    const PriceList = ({ item }) => (
+        <View style={styles.dropInner}>
+            <TouchableOpacity onPress={() => getPriceList(item.id)}>
+                <View style={styles.dropItem}>
+                    <Text style={styles.dropList}>Hospital {item.price_increment}%</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    ); 
+
+    const Pharmacy = () => (
+        <View style={styles.dropInner}>
+            <TouchableOpacity onPress={getPriceList}>
+                <View style={styles.dropItem}>
+                    <Text style={styles.dropList}>Pharmacy/Chemist</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    ); 
 
     return (
         <View style={{ flex: 1 }}>
@@ -115,7 +149,7 @@ const PriceList = ({ item }) => (
                         end={{ x: 1, y: 1 }}
                     >
                         <View style={styles.agentImgView}>
-                            <Image style={styles.agentImg} source={{uri: `${URL}${user?.picture_url}`}} />
+                            <Image style={styles.agentImg} source={{ uri: `${URL}${user?.picture_url}` }} />
                         </View>
 
                     </LinearGradient>
@@ -145,7 +179,7 @@ const PriceList = ({ item }) => (
                         </View>
 
                         {/* <TouchableOpacity style={styles.agentView} onPress={myAgent}> */}
-                        <TouchableOpacity style={styles.agentView} onPress={() => {props.navigation.navigate("CustomerOrder");}} >
+                        <TouchableOpacity style={styles.agentView} onPress={() => { props.navigation.navigate("CustomerOrder"); }} >
                             <View style={styles.agentInnerView}>
                                 <Text style={styles.headerTitle}>Orders</Text>
                             </View>
@@ -154,7 +188,7 @@ const PriceList = ({ item }) => (
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                    <Image source={require("@Assets/image/archive-box-fill.png")} style={globalStyles.quesImg} />
+                                        <Image source={require("@Assets/image/archive-box-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Customer Orders</Text>
                                 </View>
@@ -169,7 +203,7 @@ const PriceList = ({ item }) => (
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                    <Image source={require("@Assets/image/arrows-counter-clockwise-fill.png")} style={globalStyles.quesImg} />
+                                        <Image source={require("@Assets/image/arrows-counter-clockwise-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Incomplete Orders</Text>
                                 </View>
@@ -180,37 +214,63 @@ const PriceList = ({ item }) => (
                         </TouchableOpacity>
 
 
-                        <TouchableOpacity style={styles.agentVieww} onPress={() => setShowPriceList(!showPriceList)}>
+                        {!showLoader ? 
+                        <TouchableOpacity style={styles.agentVieww} onPress={getCreditOptions}>
                             <View style={styles.routeInnerView}>
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                    <Image source={require("@Assets/image/DownloadSimplee.png")} style={globalStyles.quesImg} />
+                                        <Image source={require("@Assets/image/DownloadSimplee.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Download Pricelist</Text>
                                 </View>
-                               {
-                                   showPriceList ?
-                                   <View>
-                                   <Icon name="chevron-down" size={18} color="#9E9E9E" />
-                               </View>
-                               :
-                               <View>
-                               <Icon name="chevron-right" size={18} color="#9E9E9E" />
-                           </View>
-                               }
-                            </View>  
-                           
+                                {
+                                    showPriceList ?
+                                        <View>
+                                            <Icon name="chevron-down" size={18} color="#9E9E9E" />
+                                        </View>
+                                        :
+                                        <View>
+                                            <Icon name="chevron-right" size={18} color="#9E9E9E" />
+                                        </View>
+                                }
+                            </View>
+
                         </TouchableOpacity>
+                            :
+                            <View style={styles.agentVieww}>
+                                <View style={styles.routeInnerView}>
+
+                                    <View style={styles.routeTextView}>
+                                        <View style={styles.routeTextIconView}>
+                                            <Image source={require("@Assets/image/DownloadSimplee.png")} style={globalStyles.quesImg} />
+                                        </View>
+                                        <Text style={styles.routeText}>Download Pricelist</Text>
+
+                                        <View style={styles.activityIcon}>
+                                            <ActivityIndicator size="small" color="green" />
+                                        </View>
+                                    </View>
+
+                                </View>
+
+                            </View>
+                        }
 
 
                         {
                             showPriceList ?
-                        <View style={styles.dropCover}>
-                          <FlatList data={prices} renderItem={PriceList} keyExtractor={item => item.id} vertical={true} />
-                        </View>
-                        :
-                        null
+                             options.length ?
+                                <View style={styles.dropCover}>
+                                    <Pharmacy />
+                                    <FlatList data={options} renderItem={PriceList} keyExtractor={item => item.id} vertical={true} />
+                                </View>
+                                :
+                                <View style={styles.dropCover}>
+                                     <ActivityIndicator size="small" color="green" />
+                                    </View>
+                                :
+                                null
                         }
 
 
@@ -222,7 +282,7 @@ const PriceList = ({ item }) => (
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                    <Image source={require("@Assets/image/chats-fill.png")} style={globalStyles.quesImg} />
+                                        <Image source={require("@Assets/image/chats-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Customer Support</Text>
                                 </View>
@@ -248,7 +308,7 @@ const PriceList = ({ item }) => (
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                    <FIcon name="comment-edit-outline" size={18} color="#00319D" />
+                                        <FIcon name="comment-edit-outline" size={18} color="#00319D" />
                                     </View>
                                     <Text style={styles.routeText}>Product Request</Text>
                                 </View>
@@ -266,7 +326,7 @@ const PriceList = ({ item }) => (
 
                                 <View style={styles.routeTextView}>
                                     <View style={styles.routeTextIconView}>
-                                    <Image source={require("@Assets/image/file-text-fill.png")} style={globalStyles.quesImg} />
+                                        <Image source={require("@Assets/image/file-text-fill.png")} style={globalStyles.quesImg} />
                                     </View>
                                     <Text style={styles.routeText}>Terms of Use &amp; Privacy Policy</Text>
                                 </View>

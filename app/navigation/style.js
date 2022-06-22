@@ -1,4 +1,8 @@
 import { StyleSheet, Platform } from "react-native";
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 export default styles = StyleSheet.create({
     tabLable: {
@@ -15,7 +19,7 @@ export default styles = StyleSheet.create({
         alignItems: "center",
         // marginBottom: 5
     },
-    tabLableTop:{
+    tabLableTop: {
         position: "absolute",
         top: Platform.OS === "android" ? -8 : -9,
         borderTopColor: "#3858CF",
@@ -24,7 +28,22 @@ export default styles = StyleSheet.create({
         left: -22,
         alignItems: "center"
     },
- 
+    toast:{
+        fontSize: 12,
+        fontFamily: "Urbanist-Medium",
+        letterSpacing: 0.2,
+        color: "#fff"
+    },
+
+    toastView: {
+        position: "absolute",
+        top: 20,
+        padding: 16,
+        borderRadius: 6,
+        width: wp('80%'),
+        alignSelf: 'center',
+        elevation: 2
+    },
 
 
 })
