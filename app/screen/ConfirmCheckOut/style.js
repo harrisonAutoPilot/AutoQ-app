@@ -353,7 +353,8 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     width: wp('100%'),
     alignItems: "center",
-    paddingTop: 20
+    paddingTop: 20,
+    marginTop:20,
 
   },
   backCover: {
