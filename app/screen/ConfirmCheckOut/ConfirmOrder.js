@@ -38,7 +38,7 @@ const Overlay = (props) => {
                     <TouchableOpacity onPress={props.close} style={styles.backCover}>
                         <Image source={require("@Assets/image/leading-iconn.png")} style={globalStyles.backImg} />
                     </TouchableOpacity>
-                    <Text style={styles.modalTitle}>Confirm Withdrawal</Text>
+                    <Text style={styles.modalTitle}>Confirm Order</Text>
                 </View>
 
                 <ScrollView>
