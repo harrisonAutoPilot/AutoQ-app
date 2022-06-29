@@ -13,6 +13,7 @@ import Login from "@Screen/Login";
 import CustomerOrderDetails from "@Screen/CustomerOrderDetails";
 import DrawerNavigator from "./Drawer";
 import Deals from "@Screen/Deals";
+import ForgotPin from "@Screen/ForgotPin";
 import Notification from "@Screen/Notification";
 import NotificationDetail from "@Screen/NotificationDetail";
 import TrackOrder from "@Screen/TrackOrder";
@@ -117,6 +118,7 @@ const LoginStackNavigator = () => {
     return (
         <LoginStack.Group>
             <LoginStack.Screen name="Login" component={Login} />
+            <LoginStack.Screen name="ForgotPin" component={ForgotPin} />
         </LoginStack.Group>
     )
 }
