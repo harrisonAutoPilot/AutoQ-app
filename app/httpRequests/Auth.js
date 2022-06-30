@@ -37,7 +37,7 @@ export const activateAccount = createAsyncThunk("auth/activate_account",
 export const forgotPin = createAsyncThunk("auth/forgot_pin",
     async (user, thunkAPI) => {
         const Axios = await AxiosBase();
-        return apiRequest(Axios.post('api/v1/forgot_pin', user),
+        return apiRequest(Axios.post('api/v1/users/pin/reset', user),
             thunkAPI)
     });
 

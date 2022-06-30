@@ -98,7 +98,9 @@ const Login = (props) => {
         await dispatch(login(data));
     };
 
-    const redirectToForgotPin = () => setShowRetrieve(true);
+    const redirectToForgotPin = () => {
+        props.navigation.navigate('ForgotPin')
+    };
 
     return (
         <View style={styles.mainBody}>
