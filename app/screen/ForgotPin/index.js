@@ -99,10 +99,7 @@ const ForgotPin = (props) => {
 
     };
   
-    const redirectToForgotPin = () => props.navigation.navigate("ForgotPin");
-    const redirectToPreRegister = () => props.navigation.navigate("PreRegister");
     const redirectToPreviousScreen = () => props.navigation.goBack();
-    const showPin = () => setPinVisibility(!pinVisibility);
     const dismissKeyboard = () => Keyboard.dismiss();
 
     return (
@@ -190,12 +187,7 @@ const ForgotPin = (props) => {
             <View style={styles.loginImgView}>
                 <ImageBackground source={require("@Assets/image/login.png")} style={styles.loginImg}>
                     <View style={styles.createNewAccountView}>
-                        {/* <View>
-                            <Text style={styles.createAccountlabel}>Don't have an account yet?</Text>
-                        </View> */}
-                        {/* <TouchableOpacity onPress={redirectToPreRegister}>
-                            <Text style={styles.createNewAccountText}> CREATE NOW</Text>
-                        </TouchableOpacity> */}
+                      
                     </View>
                 </ImageBackground>
 
