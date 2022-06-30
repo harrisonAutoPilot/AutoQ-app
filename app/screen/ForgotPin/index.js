@@ -4,71 +4,107 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import styles from "./style";
-import { Btn, FormikValidator, InputField, NavHeader } from "@Component";
-import { login } from "@Request/auth";
-import { cleanup } from "@Store/auth";
-import { loginSchema } from "@Helper/schema";
+import { AuthBtn as Btn, FormikValidator, InputField, NavHeader,SuccessMsgViewTwo  } from "@Component/index";
+ import { forgotPin } from "@Request/Auth";
+import { cleanup} from "@Store/Auth";
+import { forgotSchema } from "@Helper/Schema";
+
 import Loader from "@Screen/Loader";
 
 
-const Login = (props) => {
+const ForgotPin = (props) => {
     const dispatch = useDispatch();
-
+    const [successMsg, setSuccessMsg] = useState("");
     const [errMsg, setErrMsg] = useState("");
+    const [values, setValues] = useState("");
     const [pinVisibility, setPinVisibility] = useState(true);
     const [loader, setLoader] = useState(false);
 
-    const { status, errors, attemptHeader} = useSelector((state) => state.auth);
+    const { status, errors, reset, update, attemptHeader} = useSelector((state) => state.auth);
 
-   const loginState = {
+   const forgotState = {
         phone: "",
-        password: ""
+      
     };
 
     useEffect(() => {
         return () => dispatch(cleanup())
     }, []);
 
-    const toastConfig = {
-
-        error: () =>
-        (
-            <View style={[globalStyles.errMainView3]}>
-                <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
-            </View>
-        )
-    };
-
-
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
-    const waitTime = useCallback((msg) => {
+    const waitTime = useCallback((err, suc) => {
         wait(1000).then(() => {
             setLoader(false);
-            setErrMsg(msg);
-            Toast.show({
-                type: 'error',
-                visibilityTime: 5000,
-                autoHide: true,
-                position: 'top',
-                topOffset: 0
-            })
+            setErrMsg(err);
+            setSuccessMsg(suc);
+            if (suc) {
+                Toast.show({
+                    type: 'tomatoToast',
+                    visibilityTime: 5000,
+                    autoHide: true,
+                    position: 'top',
+                    topOffset: 0
+                })
+            } else {
+                Toast.show({
+                    type: 'error',
+                    visibilityTime: 5000,
+                    autoHide: true,
+                    position: 'top',
+                    topOffset: 0
+                })
+            }
+
         });
 
+        wait(4000).then(() => { dispatch(cleanup()) })
     }, []);
 
-    useEffect(() => {
-        if (status === "failed" && props.navigation.isFocused()) {
-            waitTime(errors?.msg);
-        }
-    }, [errors]);
 
-    const submit = async (data) => {
-        setErrMsg("");
-        setLoader(true)
-        await dispatch(login(data));
+    const toastConfig = {
+        error: () => (
+            <View style={[globalStyles.errMainView, styles.inputOuterView]}>
+                <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
+            </View>
+        ),
+
+        tomatoToast: () => (
+            <SuccessMsgViewTwo title={successMsg} />
+        )
+    };
+
+
+ 
+
+
+
+    useEffect((props) => {
+        if (update === "failed" && status) {
+            waitTime(errors?.msg, "");
+        } else if (update === "success" && status) {
+            setValues("");
+            waitTime("", "Reset PIN sent to your email");
+           
+        } else {
+            setSuccessMsg("");
+            setErrMsg("");
+        }
+    }, [update]);
+
+
+
+
+
+    const submit = async (values) => {
+        const { phone } = values;
+        const newValues = {phone};
+        setLoader(true);
+        await dispatch(forgotPin(newValues));
+        
+
     };
   
     const redirectToForgotPin = () => props.navigation.navigate("ForgotPin");
@@ -87,8 +123,8 @@ const Login = (props) => {
                     <Image source={require("@Assets/image/rh_logo.png")} style={globalStyles.logoImg} />
                 </View>
 
-                <View>
-                    <Text style={globalStyles.onboardTitle2}>Login to your Account</Text>
+                <View style={styles.forgotCover}>
+                    <Text style={styles.recoverText}>Recover my PIN</Text>
                 </View>
 
                 <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -97,16 +133,10 @@ const Login = (props) => {
                         {errMsg ? <Toast config={toastConfig} /> : null}
                         </View>
                         <FormikValidator
-                            initialValues={loginState}
-                            validationSchema={loginSchema}
-                            onSubmit={(values, actions) => {
+                            initialValues={forgotState}
+                            validationSchema={forgotSchema}
+                            onSubmit={(values) => {
                                 submit(values)
-                                actions.resetForm({
-                                    values: {
-                                     password: '',
-                                     phone:values.phone
-                                    },
-                                  });
                             }}>
                             {props => (
                                 <View>
@@ -117,7 +147,7 @@ const Login = (props) => {
                                             </View>
 
                                             <InputField
-                                                value={props.values.phone}
+                                                // value={props.values.phone}
                                                 onBlur={props.handleBlur('phone')}
                                                 placeholder="234809XXXXXXX"
                                                 placeholderTextColor="#757575"
@@ -126,7 +156,10 @@ const Login = (props) => {
                                                     props.setFieldValue('phone', val)
                                                     props.setFieldTouched('phone', true, false);
                                                     setErrMsg("")
+                                                    setValues(val)
                                                 }}
+                                                // onChangeText={(phone) => setValues(phone)}
+                                                value={values}
                                                 style={styles.label2}
                                                 autoFocus={true}
                                                 maxLength={13}
@@ -139,48 +172,13 @@ const Login = (props) => {
                                             </View>) : null}
                                     </View>
 
-                                    <View>
-                                        <View style={[styles.inputHolder, styles.inputPinHolder, props.touched.password && props.errors.password ? styles.inputErrHolder : null]}>
-                                            <View style={styles.labelView}>
-                                                <Text style={styles.label}>4 DIGIT PIN</Text>
-                                            </View>
-                                            <View style={styles.pinInputView}>
-                                                <InputField
-                                                    value={props.values.password}
-                                                    onBlur={props.handleBlur('password')}
-                                                    placeholder="****"
-                                                    placeholderTextColor="#757575"
-                                                    keyboardType="number-pad"
-                                                    secureTextEntry={pinVisibility}
-                                                    onChangeText={(val) => {
-                                                        props.setFieldValue('password', val)
-                                                        props.setFieldTouched('password', true, false);
-                                                        setErrMsg("")
-                                                    }}
-                                                    style={styles.label2}
-                                                    testID="password"
-
-                                                />
-                                                {pinVisibility ?
-                                                    <TouchableOpacity onPress={showPin}>
-                                                        <Text style={styles.showTextPin}>SHOW</Text>
-                                                    </TouchableOpacity> :
-                                                    <TouchableOpacity onPress={showPin}>
-                                                        <Text style={styles.showTextPin}>HIDE</Text>
-                                                    </TouchableOpacity>}
-                                            </View>
-
-                                        </View>
-                                        {props.touched.password && props.errors.password ? (
-                                            <View style={styles.errView}>
-                                                <Text style={styles.errText}>{props.errors.password}</Text>
-                                            </View>) : null}
-                                    </View>
+                                  
 
                                     <View style={styles.signedView} />
-
+                                    {errMsg ? <Toast config={toastConfig} /> : null}
+                                   {successMsg ? <Toast config={toastConfig} /> : null}
                                     <View style={styles.btnCover}>
-                                        <Btn title="Log In" onPress={props.handleSubmit} style={styles.submit}  testID="LoginID"/>
+                                        <Btn title="Send SMS Verification" onPress={props.handleSubmit} style={styles.submit}  testID="LoginID"/>
                                     </View>
                                 </View>
                             )}
@@ -223,4 +221,4 @@ const Login = (props) => {
     )
 };
 
-export default Login;
+export default ForgotPin;

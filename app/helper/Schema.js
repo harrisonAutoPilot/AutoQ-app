@@ -10,6 +10,12 @@ const loginSchema = yup.object({
 
 });
 
+const forgotSchema = yup.object({
+    phone: yup.number().required("Phone Number is required").test('len', 'Phone Number should be exactly 13 digits and exactly your registered account', val => {if(val) return val.toString().length === 13}),
+    
+
+});
+
 const changePinSchema = yup.object({
     current_password: yup.number().required("Current Pin is required").test('len', 'Pin should be exactly 4 digits', val => {if(val) return val.toString().length === 4}),
     new_password: yup.number().required("Pin is required").test('len', 'Pin should be exactly 4 digits', val => {if(val) return val.toString().length === 4}),
@@ -55,4 +61,4 @@ const productSchema = yup.object({
 });
 
 
-export {searchSchema, loginSchema, changePinSchema, registerSchema, profileSchema, addStoreSchema, addStoreSchema2, addStoreSchemaImg, productSchema}
+export {searchSchema, loginSchema,forgotSchema, changePinSchema, registerSchema, profileSchema, addStoreSchema, addStoreSchema2, addStoreSchemaImg, productSchema}

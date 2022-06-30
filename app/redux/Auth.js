@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, getUser, updateUserPassword, updateUserDetails, updateUserImage} from "@Request/Auth";
+import { login, getUser, updateUserPassword,forgotPin, updateUserDetails, updateUserImage} from "@Request/Auth";
+// import { forgotPin } from "../httpRequests/Auth";
 
 export const authSlice = createSlice({
     name: "auth",
@@ -11,6 +12,7 @@ export const authSlice = createSlice({
         signedIn: false,
         signedInData: null,
         userVerified: false,
+        reset:"idle",
         pin: "idle",
         isLoading: "idle",
         update:  "idle",
@@ -77,7 +79,7 @@ export const authSlice = createSlice({
                 signedIn = true
             })
 
-            builder
+        builder
             .addCase(updateUserPassword.pending, state => {
                 state.update = "pending";
                 state.errors = {};
@@ -87,6 +89,20 @@ export const authSlice = createSlice({
                 state.errors = {};
             })
             .addCase(updateUserPassword.rejected, (state, { payload }) => {
+                state.update = "failed";
+                state.errors = payload;
+            })
+
+        builder
+            .addCase(forgotPin.pending, state => {
+                state.update = "pending";
+                state.errors = {};
+            })
+            .addCase(forgotPin.fulfilled, (state) => {
+                state.update = "success";
+                state.errors = {};
+            })
+            .addCase(forgotPin.rejected, (state, { payload }) => {
                 state.update = "failed";
                 state.errors = payload;
             })

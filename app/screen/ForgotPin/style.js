@@ -264,6 +264,19 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
 
     },
+    forgotCover:{
+        width:wp('100%'),
+        alignSelf:'center',
+        alignItems:'center'
+    },
+    recoverText:{
+        color: "#212121",
+        fontSize: 22,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 28,
+        letterSpacing: 0.2,
+        textAlign: "center"   
+    }
 });
 
 export default styles
