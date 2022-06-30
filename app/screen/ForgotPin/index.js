@@ -23,8 +23,7 @@ const ForgotPin = (props) => {
     const { status, errors, reset, update, attemptHeader} = useSelector((state) => state.auth);
 
    const forgotState = {
-        phone: "",
-      
+        phone: "", 
     };
 
     useEffect(() => {
@@ -76,11 +75,6 @@ const ForgotPin = (props) => {
         )
     };
 
-
- 
-
-
-
     useEffect((props) => {
         if (update === "failed" && status) {
             waitTime(errors?.msg, "");
@@ -93,10 +87,6 @@ const ForgotPin = (props) => {
             setErrMsg("");
         }
     }, [update]);
-
-
-
-
 
     const submit = async (values) => {
         const { phone } = values;
