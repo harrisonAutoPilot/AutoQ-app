@@ -25,7 +25,9 @@ const Overlay = (props) => {
     const ModalView = () => (
         <View>
             <BottomSheet draggable={false} ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.20} radius={50} styles={styles.addStoreBottomSheet}>
-                <View style={globalStyles.dragIcon}><FIcon name="minus" color="gray" size={35} /></View>
+                <View style={globalStyles.dragIcon}>
+                    <FIcon name="minus" color="gray" size={35} />
+                    </View>
 
                 <View style={globalStyles.errInCoverNew2}>
                     {props.err ? <View style={[globalStyles.errMainView, globalStyles.marginTop, { marginHorizontal: 20 }]}>
