@@ -20,7 +20,7 @@ const ForgotPin = (props) => {
     const [pinVisibility, setPinVisibility] = useState(true);
     const [loader, setLoader] = useState(false);
 
-    const { status, errors, reset, update, attemptHeader} = useSelector((state) => state.auth);
+    const { status, errors, update, attemptHeader} = useSelector((state) => state.auth);
 
    const forgotState = {
         phone: "",
@@ -77,10 +77,6 @@ const ForgotPin = (props) => {
     };
 
 
- 
-
-
-
     useEffect((props) => {
         if (update === "failed" && status) {
             waitTime(errors?.msg, "");
@@ -93,10 +89,6 @@ const ForgotPin = (props) => {
             setErrMsg("");
         }
     }, [update]);
-
-
-
-
 
     const submit = async (values) => {
         const { phone } = values;
@@ -158,7 +150,6 @@ const ForgotPin = (props) => {
                                                     setErrMsg("")
                                                     setValues(val)
                                                 }}
-                                                // onChangeText={(phone) => setValues(phone)}
                                                 value={values}
                                                 style={styles.label2}
                                                 autoFocus={true}
@@ -186,12 +177,7 @@ const ForgotPin = (props) => {
                         </FormikValidator>
 
                         <View style={styles.forgotPswdView}>
-                            {/* <View>
-                                <Icon name="help-circle" color="#757575" size={16} />
-                            </View> */}
-                            {/* <TouchableOpacity style={styles.forgotPswdTitleView} onPress={redirectToForgotPin}>
-                                <Text style={styles.forgotPswTitle}>Forgot your PIN?</Text>
-                            </TouchableOpacity> */}
+                          
                         </View>
                     </View>
 
@@ -204,12 +190,12 @@ const ForgotPin = (props) => {
             <View style={styles.loginImgView}>
                 <ImageBackground source={require("@Assets/image/login.png")} style={styles.loginImg}>
                     <View style={styles.createNewAccountView}>
-                        <View>
+                        {/* <View>
                             <Text style={styles.createAccountlabel}>Don't have an account yet?</Text>
-                        </View>
-                        <TouchableOpacity onPress={redirectToPreRegister}>
+                        </View> */}
+                        {/* <TouchableOpacity onPress={redirectToPreRegister}>
                             <Text style={styles.createNewAccountText}> CREATE NOW</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </ImageBackground>
 
