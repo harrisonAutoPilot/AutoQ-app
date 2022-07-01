@@ -7,7 +7,6 @@ import { AuthBtn as Btn, FormikValidator, InputField, NavHeader,SuccessMsgViewTw
  import { forgotPin } from "@Request/Auth";
 import { cleanup} from "@Store/Auth";
 import { forgotSchema } from "@Helper/Schema";
-
 import Loader from "@Screen/Loader";
 
 
@@ -21,7 +20,6 @@ const ForgotPin = (props) => {
 
    const forgotState = {
         phone: "",
-      
     };
 
     useEffect(() => {
@@ -79,7 +77,6 @@ const ForgotPin = (props) => {
             waitTime(errors?.msg, "");
         } else if (update === "success") {
             waitTime("", "Reset PIN sent to your email");
-
         } else {
             setSuccessMsg("");
             setErrMsg("");
