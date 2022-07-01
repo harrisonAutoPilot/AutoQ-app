@@ -55,7 +55,6 @@ export default Profile = () => {
         wait(1000).then(() => {
             setLoader(false);
            
-         
             if (suc) {
                 setSuccessMsg(suc);
                 Toast.show({
