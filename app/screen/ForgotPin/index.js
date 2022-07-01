@@ -20,7 +20,7 @@ const ForgotPin = (props) => {
     const [pinVisibility, setPinVisibility] = useState(true);
     const [loader, setLoader] = useState(false);
 
-    const { status, errors, update, attemptHeader} = useSelector((state) => state.auth);
+    const { status, errors, update} = useSelector((state) => state.auth);
 
    const forgotState = {
         phone: "", 
@@ -79,7 +79,7 @@ const ForgotPin = (props) => {
         if (update === "failed" && status) {
             waitTime(errors?.msg, "");
         } else if (update === "success" && status) {
-            setValues("");
+            // setValues("");
             waitTime("", "Reset PIN sent to your email");
            
         } else {
@@ -93,6 +93,7 @@ const ForgotPin = (props) => {
         const newValues = {phone};
         setLoader(true);
         await dispatch(forgotPin(newValues));
+       
         
 
     };
@@ -103,7 +104,7 @@ const ForgotPin = (props) => {
     return (
         <View style={globalStyles.mainBody}>
             
-            <NavHeader styleView={globalStyles.mainViewBackground} mainView={globalStyles.mainView} onPress={redirectToPreviousScreen} screen={"login"} attempt={attemptHeader} />
+            <NavHeader styleView={globalStyles.mainViewBackground} mainView={globalStyles.mainView} onPress={redirectToPreviousScreen} screen={"forgotPin"}/>
             <View style={globalStyles.subBody}>
 
                 <View style={globalStyles.logoImgView}>
@@ -122,9 +123,10 @@ const ForgotPin = (props) => {
                         <FormikValidator
                             initialValues={forgotState}
                             validationSchema={forgotSchema}
-                            onSubmit={(values) => {
+                            onSubmit = {(values, { resetForm }) =>  {
                                 submit(values)
-                            }}>
+                                 resetForm();
+                          }}>
                             {props => (
                                 <View>
                                     <View>
@@ -134,18 +136,20 @@ const ForgotPin = (props) => {
                                             </View>
 
                                             <InputField
-                                                // value={props.values.phone}
+                                            
+                                                 value={props.values.phone}
                                                 onBlur={props.handleBlur('phone')}
                                                 placeholder="234809XXXXXXX"
+                                                
                                                 placeholderTextColor="#757575"
                                                 keyboardType="number-pad"
                                                 onChangeText={(val) => {
                                                     props.setFieldValue('phone', val)
                                                     props.setFieldTouched('phone', true, false);
                                                     setErrMsg("")
-                                                    setValues(val)
+                                                    // setValues(val)
                                                 }}
-                                                value={values}
+                                                // value={values}
                                                 style={styles.label2}
                                                 autoFocus={true}
                                                 maxLength={13}
