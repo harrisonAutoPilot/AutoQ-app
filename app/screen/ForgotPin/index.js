@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useCallback,  } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, ImageBackground } from "react-native";
+import { View, Text, Image, Keyboard, TouchableWithoutFeedback, ImageBackground } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
-
 import styles from "./style";
 import { AuthBtn as Btn, FormikValidator, InputField, NavHeader, SuccessMsgViewTwo  } from "@Component/index";
  import { forgotPin } from "@Request/Auth";
 import { cleanup} from "@Store/Auth";
 import { forgotSchema } from "@Helper/Schema";
-
 import Loader from "@Screen/Loader";
 
 
@@ -16,14 +14,12 @@ const ForgotPin = (props) => {
     const dispatch = useDispatch();
     const [successMsg, setSuccessMsg] = useState("");
     const [errMsg, setErrMsg] = useState("");
-    const [values, setValues] = useState("");
-    const [pinVisibility, setPinVisibility] = useState(true);
     const [loader, setLoader] = useState(false);
 
-    const { status, errors, update} = useSelector((state) => state.auth);
+    const { errors, update} = useSelector((state) => state.auth);
 
    const forgotState = {
-        phone: "", 
+        phone: "",
     };
 
     useEffect(() => {
@@ -75,13 +71,12 @@ const ForgotPin = (props) => {
         )
     };
 
-    useEffect((props) => {
-        if (update === "failed" && status) {
+
+    useEffect(() => {
+        if (update === "failed") {
             waitTime(errors?.msg, "");
-        } else if (update === "success" && status) {
-            // setValues("");
+        } else if (update === "success") {
             waitTime("", "Reset PIN sent to your email");
-           
         } else {
             setSuccessMsg("");
             setErrMsg("");
@@ -117,6 +112,7 @@ const ForgotPin = (props) => {
                     <View>
                          <View style={styles.errCover}>
                         {errMsg ? <Toast config={toastConfig} /> : null}
+                        {successMsg ? <Toast config={toastConfig} /> : null}
                         </View>
                         <FormikValidator
                             initialValues={forgotState}
@@ -134,7 +130,6 @@ const ForgotPin = (props) => {
                                             </View>
 
                                             <InputField
-                                            
                                                  value={props.values.phone}
                                                 onBlur={props.handleBlur('phone')}
                                                 placeholder="234809XXXXXXX"
@@ -145,9 +140,7 @@ const ForgotPin = (props) => {
                                                     props.setFieldValue('phone', val)
                                                     props.setFieldTouched('phone', true, false);
                                                     setErrMsg("")
-                                                    // setValues(val)
                                                 }}
-                                                // value={values}
                                                 style={styles.label2}
                                                 autoFocus={true}
                                                 maxLength={13}
@@ -161,8 +154,6 @@ const ForgotPin = (props) => {
                                     </View>
 
                                     <View style={styles.signedView} />
-                                    {errMsg ? <Toast config={toastConfig} /> : null}
-                                   {successMsg ? <Toast config={toastConfig} /> : null}
                                     <View style={styles.btnCover}>
                                         <Btn title="Send SMS Verification" onPress={props.handleSubmit} style={styles.submit}  testID="LoginID"/>
                                     </View>

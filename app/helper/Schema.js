@@ -24,20 +24,20 @@ const changePinSchema = yup.object({
 
 const registerSchema = yup.object({
     phone: yup.number().required("Phone Number is required").test('len', 'Phone Number should be exactly 13 digits', val => {if(val) return val.toString().length === 13}),
-    firstname: yup.string().required("First Name is required").trim(),
-    surname: yup.string().required("Surname is required"),
-    email: yup.string().required("Email is required").email(),
+    firstname: yup.string().trim().required("First Name is required"),
+    surname: yup.string().trim().required("Surname is required"),
+    email: yup.string().trim().required("Email is required").email(),
 
 });
 
 const profileSchema = yup.object({
-    firstname: yup.string().required("First Name is required"),
-    surname: yup.string().required("Surname is required")
+    firstname: yup.string().trim().required("First Name is required"),
+    surname: yup.string().trim().required("Surname is required")
 });
 
 const addStoreSchema = yup.object({
-    name:yup.string().required("Store name is required"),
-    address: yup.string().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
+    name:yup.string().trim().required("Store name is required"),
+    address: yup.string().trim().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
     state_id: yup.string().required("State is required"),
     lga_id: yup.string().required("LGA is required"),
     // images: yup.array().required("License Image is required").min(1, "License Image is required"),
@@ -45,8 +45,8 @@ const addStoreSchema = yup.object({
 });
 
 const addStoreSchema2 = yup.object({
-    store_name:yup.string().required("Store name is required"),
-    address: yup.string().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
+    store_name:yup.string().trim().required("Store name is required"),
+    address: yup.string().trim().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
     state_id: yup.string().required("State is required"),
     lga_id: yup.string().required("LGA is required")
 });
