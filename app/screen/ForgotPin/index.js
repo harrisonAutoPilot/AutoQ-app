@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import styles from "./style";
-import { AuthBtn as Btn, FormikValidator, InputField, NavHeader,SuccessMsgViewTwo  } from "@Component/index";
+import { AuthBtn as Btn, FormikValidator, InputField, NavHeader, SuccessMsgViewTwo  } from "@Component/index";
  import { forgotPin } from "@Request/Auth";
 import { cleanup} from "@Store/Auth";
 import { forgotSchema } from "@Helper/Schema";
@@ -94,8 +94,6 @@ const ForgotPin = (props) => {
         setLoader(true);
         await dispatch(forgotPin(newValues));
        
-        
-
     };
   
     const redirectToPreviousScreen = () => props.navigation.goBack();
@@ -162,8 +160,6 @@ const ForgotPin = (props) => {
                                             </View>) : null}
                                     </View>
 
-                                  
-
                                     <View style={styles.signedView} />
                                     {errMsg ? <Toast config={toastConfig} /> : null}
                                    {successMsg ? <Toast config={toastConfig} /> : null}
@@ -191,9 +187,7 @@ const ForgotPin = (props) => {
                     <View style={styles.createNewAccountView}>
                                           </View>
                 </ImageBackground>
-
             </View>
-
             <Loader isVisible={loader} />
 
         </View>
