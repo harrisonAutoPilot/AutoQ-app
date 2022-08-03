@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
       marginTop: Dimensions.get("window").height / 30,
       marginBottom: Dimensions.get("window").height / 30,
       borderRadius: 5,
-      maxHeight: 150
+      minHeight: 150
 
       // flexWrap: "nowrap",
       // flexGrow: 1

@@ -70,7 +70,21 @@ const styles = StyleSheet.create({
         // height: 30,
         textAlign: "center",
         flex: 1,
-        width: 50
+        width: 50,
+        // paddingTop:Platform.OS === "android" ? 7 : -25,
+    },
+    labelCart: {
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        // lineHeight: 22,
+        color: "#616161",
+        letterSpacing: 0.1,
+        textTransform: "capitalize",
+        // height: 30,
+        textAlign: "center",
+        flex: 1,
+        width: 50,
+        paddingTop:Platform.OS === "android" ? 8 : -5,
     },
 
     bottomCover: {
@@ -489,7 +503,8 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         color: "#469D00",
         letterSpacing: 0.3,
-        textAlign: "right"
+        textAlign: "right",
+       
     },
     increase: {
         paddingHorizontal: 11,

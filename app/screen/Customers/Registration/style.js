@@ -281,7 +281,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: "center",
         paddingHorizontal: 20,
-        marginTop: Dimensions.get("window").height / 2.6,
+        marginTop: Platform.OS === "android" ? Dimensions.get("window").height / 2.6 : Dimensions.get("window").height / 2.9,
         alignSelf:"center"
     },
 
@@ -1018,6 +1018,7 @@ export default styles = StyleSheet.create({
         marginTop: 3,
         marginBottom: 5,
         paddingLeft: 40,
+        
     },
     flag: {
         marginTop: 21,
@@ -1027,6 +1028,7 @@ export default styles = StyleSheet.create({
     nigImg: {
         width: 20,
         height: 20,
+        marginTop:2,
     },
     card: {
         width: wp('100%'),
@@ -1125,7 +1127,7 @@ export default styles = StyleSheet.create({
     },
     optionMiniTextView: {
         justifyContent: "center",
-        paddingTop: 4,
+        paddingTop: 6.8,
 
     },
     iconCircle: {
@@ -1199,7 +1201,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#E9EBF9',
         padding: 5,
         borderRadius: 50,
-        marginTop: -40,
+        marginTop: Platform.OS === "android" ? -40 : -20,
         justifyContent: 'center',
         width: 90,
         left: wp('58%'),

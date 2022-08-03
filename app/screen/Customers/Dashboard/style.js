@@ -344,6 +344,7 @@ export default styles = StyleSheet.create({
         height: 25,
         marginLeft: 20,
         marginRight: 10,
+      
     },
     statusText: {
         color: '#469D00',
@@ -366,7 +367,8 @@ export default styles = StyleSheet.create({
         lineHeight: 20,
         letterSpacing: 0.25,
         fontWeight: "400",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom:Platform.OS === "android" ? 3 : 5,
 
     },
     exchangeCover: {

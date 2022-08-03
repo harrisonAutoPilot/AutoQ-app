@@ -227,7 +227,7 @@ const Overlay = (props) => {
                                                 </TouchableOpacity>
                                                 <View style={styles.increaseText}>
                                                     <BottomSheetTextInput
-                                                        style={styles.label2}
+                                                        style={styles.labelCart}
                                                         value={cartAmount.toString()}
                                                         onChangeText={(val) => {
                                                             // if (result.quantity_available >= val) {
