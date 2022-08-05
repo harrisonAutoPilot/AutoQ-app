@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { View, Text, TouchableOpacity, ScrollView, } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Platform, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
-
+import DashedLine from 'react-native-dashed-line';
 import styles from "./style";
 import { placeOrder, verifyOrder, verifyCode, getCustomerPendingOrders } from "@Request/CustomerOrder";
 import { AuthBtn as Btn, COHeader as Header } from "@Component";
@@ -208,10 +208,22 @@ const ConfirmCheckOut = (props) => {
                                 <Text style={styles.subText}>₦{delivery_price ? commafy(delivery_price) : 0}</Text>
                             </View>
 
+                           {
+                            Platform.OS === "android" ?
                             <View style={styles.subtotalCoverDot}>
                                 <Text style={styles.subTextDark}>Total</Text>
                                 <Text style={styles.subTextDark}>₦{commafy(amount + delivery_price)}</Text>
                             </View>
+                        :
+                        <>
+                         <DashedLine style={styles.dashStyle} dashLength={3} dashThickness={1} dashGap={2}  dashColor='#BDBDBD' />
+                         <View style={styles.subtotalCoverDot1}>
+                            <Text style={styles.subTextDark}>Total</Text>
+                            <Text style={styles.subTextDark}>₦{commafy(amount + delivery_price)}</Text>
+                        </View>
+                        </>
+                        
+                           }
 
                             <View style={[styles.addBtnCover]}>
                                 <Btn title="Confirm Check Out" style={styles.addressBtn2} onPress={submit} />

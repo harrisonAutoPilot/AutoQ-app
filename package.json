@@ -26,6 +26,7 @@
     "react": "17.0.2",
     "react-native": "0.67.2",
     "react-native-config": "^1.4.5",
+    "react-native-dashed-line": "^1.1.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-element-dropdown": "^1.8.0",
     "react-native-gesture-bottom-sheet": "^1.1.0",

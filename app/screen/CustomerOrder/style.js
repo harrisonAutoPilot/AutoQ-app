@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         letterSpacing: 0.25,
         fontWeight: "400",
+        marginBottom:Platform.OS === "android" ? 1 : 5,
 
     },
     btnText: {

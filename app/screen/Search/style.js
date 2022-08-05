@@ -50,14 +50,15 @@ export default styles = StyleSheet.create({
         fontWeight: "400"
     },
     inputF: {
-        paddingTop: 10,
+        // paddingTop: 10,
         fontSize: 14,
         fontFamily: "Urbanist-Regular",
         lineHeight: 20,
         color: "#9E9E9E",
         letterSpacing: 0.25,
         fontWeight: "400",
-        width: "80%"
+        width: "80%",
+        paddingBottom:Platform.OS === "android" ? 10 :5,
 
     },
     inputTitle: {

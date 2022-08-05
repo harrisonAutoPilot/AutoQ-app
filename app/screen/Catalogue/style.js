@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
@@ -157,8 +157,10 @@ export default styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: "Urbanist-Medium",
         lineHeight: 20,
+        height:Platform.OS === "android" ? 50 : 20,
         letterSpacing: 0.25,
         fontWeight: "400",
+        paddingBottom:Platform.OS === "android" ? 11 : 5,
 
     },
 

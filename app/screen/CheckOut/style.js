@@ -164,7 +164,7 @@ export default styles = StyleSheet.create({
 
   },
   totalBorderCover: {
-    borderStyle: "dashed",
+    borderStyle: Platform.OS === "android" ? "dashed" : "solid",
     borderTopWidth: 1,
     borderColor: '#BDBDBD',
     marginTop: 12,
@@ -174,6 +174,27 @@ export default styles = StyleSheet.create({
     marginBottom: 20,
     paddingRight: 2,
     width: wp('87%'),
+
+  },
+  totalBorderCover1: {
+    borderColor: '#BDBDBD',
+    
+    marginTop: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 10,
+    marginBottom: 20,
+    paddingRight: 2,
+    width: wp('87%'),
+
+  },
+  dashStyle:{
+    alignSelf:'center',
+    width:"98%",
+    marginRight:10,
+    marginTop:20,
+
+
 
   },
   totalBorderText: {
