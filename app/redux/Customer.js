@@ -75,6 +75,7 @@ export const customerSlice = createSlice({
                 state.errors = {};
             })
             .addCase(registerCustomer.fulfilled, (state, action) => {
+                // console.log(action)
                 state.update = "success";
                 state.errors = {};
             })

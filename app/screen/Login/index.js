@@ -40,12 +40,14 @@ const Login = (props) => {
                 setKeyboardVisible(true); // or some other action
             }
         );
+        
         const keyboardDidHideListener = Keyboard.addListener(
             'keyboardDidHide',
             () => {
                 setKeyboardVisible(false); // or some other action
             }
         );
+
         return () => {
             dispatch(cleanup())
             keyboardDidHideListener.remove();

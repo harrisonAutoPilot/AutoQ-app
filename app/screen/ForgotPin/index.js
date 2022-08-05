@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import styles from "./style";
 import { AuthBtn as Btn, FormikValidator, InputField, NavHeader, SuccessMsgViewTwo  } from "@Component/index";
- import { forgotPin } from "@Request/Auth";
+import { forgotPin } from "@Request/Auth";
 import { cleanup} from "@Store/Auth";
 import { forgotSchema } from "@Helper/Schema";
 import Loader from "@Screen/Loader";
@@ -52,7 +52,6 @@ const ForgotPin = (props) => {
                     topOffset: 0
                 })
             }
-
         });
 
         wait(4000).then(() => { dispatch(cleanup()) })
@@ -70,7 +69,6 @@ const ForgotPin = (props) => {
             <SuccessMsgViewTwo title={successMsg} />
         )
     };
-
 
     useEffect(() => {
         if (update === "failed") {
