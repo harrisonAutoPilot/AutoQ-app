@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, FlatList, ScrollView, Image, BackHandler } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, ScrollView, Image, BackHandler, Platform } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-
+import DashedLine from 'react-native-dashed-line';
 import styles from "./style";
 import { AuthBtn as Btn, COHeader as Header } from "@Component";
 import FIcon from "react-native-vector-icons/MaterialIcons";
@@ -228,15 +228,30 @@ const CheckOut = (props) => {
                                     <Text style={styles.subText}>Subtotal</Text>
                                     <Text style={styles.subText}>₦{items.total_amount !== undefined ? commafy(items.total_amount) : 0}</Text>
                                 </View>
+                                
                                 <View style={styles.totalCover}>
                                     <Text style={styles.totalText}>Delivery Fee</Text>
                                     <Text style={styles.totalText}>₦{deliveryPrice ? commafy(deliveryPrice): 0}</Text>
                                 </View>
-
+                            {
+                                Platform.OS === "android" ?
                                 <View style={styles.totalBorderCover}>
                                     <Text style={styles.totalBorderText}>Total</Text>
                                     <Text style={styles.totalBorderText}>₦{items.total_amount !== undefined ? commafy(items.total_amount + deliveryPrice) : 0}</Text>
                                 </View>
+
+                                :
+                                <>
+   <DashedLine style={styles.dashStyle} dashLength={3} dashThickness={1} dashGap={2}  dashColor='#BDBDBD' />
+                                <View style={styles.totalBorderCover1}>
+                              
+                                    <Text style={styles.totalBorderText}>Total</Text>
+                                    <Text style={styles.totalBorderText}>₦{items.total_amount !== undefined ? commafy(items.total_amount + deliveryPrice) : 0}</Text>
+                                </View>
+                            
+                                </>
+                            }
+                                  
 
                                 {status === "success" && items.carts && (
                                 <View style={[styles.addBtnCover]}>

@@ -157,6 +157,21 @@ export default styles = StyleSheet.create({
     paddingRight: 10,
 
   },
+  subtotalCoverDot1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: wp('90%'),
+    paddingTop: 5,
+    borderTopColor: '#BDBDBD',
+    marginTop: 10,
+    paddingRight: 10,
+  },
+  dashStyle:{
+    alignSelf:'center',
+    width:"98%",
+    marginRight:10,
+    marginTop:20,
+  },
   totalCover: {
     flexDirection: 'row',
     justifyContent: 'space-between',
