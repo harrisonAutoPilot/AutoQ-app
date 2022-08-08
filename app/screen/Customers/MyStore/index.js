@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList,} from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList, Platform,} from "react-native";
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useSelector, useDispatch } from "react-redux";
 import EmptyStore from "@Component/Empty/emptyStore"
 import { COHeader as Header } from "@Component";
+import DashedLine from 'react-native-dashed-line';
 import styles from './style';
 import { getUserStore} from "@Request/Store";
 // import { cleanup } from "@Store/Stores";
@@ -67,13 +68,28 @@ const MyStore = (props) => {
             <Header title="Stores" onPress={goBack} styleView={styles.body} />
 
             <View style={styles.addContainer}>
-
+              
+                { Platform.OS === "android" ?
                 <TouchableOpacity style={styles.storeBtn} onPress={addStore}>
                     <View style={styles.addTextCover}>
                         <Text style={styles.addStoreTextPlus}>+</Text>
                         <Text style={styles.addStoreText}>Add new store</Text>
                     </View>
                 </TouchableOpacity>
+
+                :
+                <TouchableOpacity style={styles.storeBtn1} onPress={addStore}>
+                        <DashedLine style={styles.dashStyleUp} dashLength={3} dashThickness={1} dashGap={2} dashColor='#469D00' />
+                        <DashedLine style={styles.dashStyleL} axis='vertical' dashLength={3} dashThickness={1} dashGap={2} dashColor='#469D00' />
+                       <View style={styles.addTextCover}>
+                           <Text style={styles.addStoreTextPlus}>+</Text>
+                           <Text style={styles.addStoreText}>Add new store</Text>
+                       </View>
+                       <DashedLine style={styles.dashStyleR} axis='vertical' dashLength={3} dashThickness={1} dashGap={2} dashColor='#469D00' />
+                       <DashedLine style={styles.dashStyleDw} dashLength={3} dashThickness={1} dashGap={2} dashColor='#469D00' />
+                   </TouchableOpacity>
+                 
+                   }
 
             </View>
             {status === "pending"  || status === "idle" ? <StorePlaceholder />

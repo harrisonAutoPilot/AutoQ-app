@@ -70,8 +70,12 @@ resizeMode:'contain',
     paddingVertical: 30,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    shadowOffset: { width: 10, height: 10 },
     elevation: 10,
-    shadowColor: "rgba(0, 49, 157, 1)",
+    shadowOpacity: 0.1,
+    // borderWidth:1,
+    borderStyle:"solid",
+     shadowColor: 'black',
     shadowRadius: 16,
     paddingHorizontal: 19
   },
@@ -274,6 +278,16 @@ borderRadius:10,
     justifyContent: 'center',
     borderRadius: 10,
   },
+  storeBtn1: {
+    width: wp('92%'),
+    height: 72,
+    // borderWidth: 1,
+    // borderColor: '#469D00',
+    // borderStyle: 'dashed',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+  },
   storeCard: {
     width: wp('93%'),
     height: 110,
@@ -288,6 +302,36 @@ borderRadius:10,
     // marginTop: 10,
     flexDirection: 'row',
 
+  },
+
+  dashStyleUp:{
+    alignSelf:'center',
+    width:"99%",
+   top:hp('-0%'),
+    position:'absolute'
+  },
+  dashStyleDw:{
+    alignSelf:'center',
+    width:"99%",
+    top:hp('8.9%'),
+    position:'absolute'
+  },
+  dashStyleL:{
+    alignSelf:'center',
+    width:20,
+    height:77,
+    top:hp('0%'),
+    position:'absolute',
+    left:wp('0%'),
+   
+  },
+  dashStyleR:{
+    alignSelf:'center',
+    width:20,
+    height:77,
+    top:hp('0%'),
+    position:'absolute',
+    right:wp('-5%'),
   },
   innerCover: {
     borderWidth: 0,

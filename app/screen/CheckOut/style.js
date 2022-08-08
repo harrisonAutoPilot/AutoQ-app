@@ -193,9 +193,6 @@ export default styles = StyleSheet.create({
     width:"98%",
     marginRight:10,
     marginTop:20,
-
-
-
   },
   totalBorderText: {
     fontSize: 16,

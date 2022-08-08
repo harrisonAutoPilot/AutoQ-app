@@ -255,7 +255,7 @@ const Filter = (props) => {
                 </ScrollView>
                 <View style={styles.btnCover}>
                     <View>
-                        <Btn title="Reset" style={[styles.reset, styles.elevation]} styles={styles.resetText} onPress={resetData} />
+                        <Btn title="Reset" style={[styles.reset]} styles={styles.resetText} onPress={resetData} />
                     </View>
                     {status === "success" &&
 

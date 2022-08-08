@@ -43,17 +43,24 @@ export default styles = StyleSheet.create({
     width: wp('100%'),
     height: hp('18.5%'),
     paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#EEEEEE",
+    borderBottomWidth: 0,
+    borderBottomColor: "#000",
     elevation: 0.5,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    // shadowOffset: { width: 2, height: 2},
+  
+    //  shadowOpacity: 0.2,
   },
   cover: {
-    width: wp('90%'),
+    width: wp('100%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderBottomWidth:1,
+    borderBottomColor:'#eeeeee',
+    paddingHorizontal:20,
+    marginTop:-10,
   },
   imgCover: {
     justifyContent: "center",
@@ -215,7 +222,12 @@ export default styles = StyleSheet.create({
     borderStyle: 'solid',
     backgroundColor: "#fff",
     elevation: 20,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
+    shadowOffset: { width: 10, height: 10 },
+    // elevation: 10,
+    shadowColor: 'black',
+    shadowRadius: 16,
+    shadowOpacity: 0.1,
   },
   bottomCover: {
     height: hp('90%'),
@@ -231,7 +243,7 @@ export default styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderColor: '#e0e0eb',
-    marginTop: 10,
+    paddingVertical:20,
     paddingBottom: 10
   },
   orderText: {
@@ -267,7 +279,9 @@ export default styles = StyleSheet.create({
   subtotalCover: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingVertical:10,
     width: wp('90%'),
+    marginTop:10,
     paddingTop: 0,
 
   },
@@ -280,7 +294,8 @@ export default styles = StyleSheet.create({
   },
   addBtnCover: {
     marginBottom: 30,
-    marginTop: 12
+    marginTop: 20,
+
   },
 
   addressBtn2: {
