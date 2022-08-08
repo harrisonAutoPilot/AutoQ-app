@@ -438,7 +438,7 @@ export default styles = StyleSheet.create({
     },
     statusContainer: {
         width: wp('90%'),
-
+        shadowOffset: { width: 5, height: 5 },
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 15,
@@ -446,6 +446,7 @@ export default styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 5,
         elevation: 10,
+        shadowOpacity: 0.1,
         shadowColor: "rgba(0, 49, 157, 1)",
 
     },
@@ -634,7 +635,7 @@ export default styles = StyleSheet.create({
     },
     scrollStyle: {
         // position: 'relative',
-        paddingBottom: 65,
+        paddingBottom:Platform.OS === "android" ?  65 : 0,
         // height: hp('100%'),
         //   marginBottom:-100
         // top: hp('-3%'),

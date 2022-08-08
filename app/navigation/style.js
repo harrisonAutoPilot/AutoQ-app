@@ -11,11 +11,23 @@ export default styles = StyleSheet.create({
         lineHeight: 16,
         letterSpacing: 0.2,
         fontWeight: "400",
-        paddingBottom: 15,
+        marginBottom: 15,
+        // paddingBottom:20,
+
+
+    },
+    tabLableIOS: {
+        fontSize: 12,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 16,
+        letterSpacing: 0.2,
+        fontWeight: "400",
+        paddingBottom:10,
+
 
     },
     iconStyle: {
-        paddingTop: 10,
+        paddingTop: 5,
         alignItems: "center",
         // marginBottom: 5
     },
@@ -34,7 +46,9 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.2,
         color: "#fff"
     },
-
+    innerTabView:{
+        // paddingBottom:10,
+    },
     toastView: {
         position: "absolute",
         top: 20,

@@ -19,12 +19,12 @@ export default TabHomeNavigator = () => {
         <Tab.Navigator screenOptions={{
             tabBarHideOnKeyboard: true,
             headerShown: false,
-            tabBarLabelStyle: Platform.OS === "android" ? styles.tabLable : null,
+            tabBarLabelStyle: Platform.OS === "android" ? styles.tabLable : styles.tabLableIOS,
             tabBarActiveTintColor: "#3858CF",
             tabBarInactiveTintColor: "#9E9E9E",
             tabBarActiveBackgroundColor: "rgba(233, 235, 249, 0.5)",
             tabBarInactiveBackgroundColor: "#fff",
-            tabBarStyle: [{ height: Platform.OS === "android" ? 70 : 80, display: "flex" }, null]
+            tabBarStyle: [{ height: Platform.OS === "android" ? 70 : 95, display: "flex",marginBottom:Platform.OS === "android" ? -0 : -20 }, null]
 
         }}>
             <Tab.Screen name="HomeScreen" component={Home} options={{
