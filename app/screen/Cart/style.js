@@ -58,7 +58,7 @@ export default styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth:1,
-    borderBottomColor:'#eeeeee',
+    borderBottomColor:'#bfbfbf',
     paddingHorizontal:20,
     marginTop:-10,
   },

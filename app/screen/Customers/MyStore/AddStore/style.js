@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     // paddingTop: 5,
     paddingBottom: 5,
     paddingHorizontal: 10,
-    marginTop: Dimensions.get("window").height / 20,
+    marginTop: Dimensions.get("window").height / 18,
     borderRadius: 5,
   },
   scrollStyle: {
@@ -455,7 +455,22 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     // height:Platform.OS === "android" ? 47 : 47,
     paddingVertical: Platform.OS === "ios" ? 10 : 10,
-    marginTop: 5,
+    marginTop:Platform.OS === "android" ?  5 : 1,
+    width: "70%",
+    paddingLeft: 5,
+
+  },
+  innerLabel1: {
+    fontSize: 16,
+    fontFamily: "Urbanist-Regular",
+    // lineHeight: 24,
+    color: "rgba(33, 33, 33, 1)",
+    letterSpacing: 0.3,
+    fontWeight: "400",
+    // height:Platform.OS === "android" ? 47 : 47,
+    paddingVertical: Platform.OS === "ios" ? 10 : 10,
+    marginTop:Platform.OS === "android" ?  5 : 1,
+    paddingBottom:15,
     width: "70%",
     paddingLeft: 5,
 

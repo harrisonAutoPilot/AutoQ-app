@@ -57,6 +57,8 @@ export const updateUserPassword = createAsyncThunk("auth/password/update",
 
 export const updateUserImage = createAsyncThunk("auth/image/update",
     async (user, thunkAPI) => {
-        const Axios = await AxiosBase();
+        const Axios = await AxiosBase();agents/{agent}/image/upload
         return apiRequest(Axios.post(`api/v1/users/upload-image/${user.id}`, user), thunkAPI)
+        // return apiRequest(Axios.post(`api/v1/users/upload-image/${user.id}`, user), thunkAPI)
+
     });

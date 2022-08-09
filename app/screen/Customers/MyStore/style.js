@@ -273,7 +273,7 @@ borderRadius:10,
     height: 72,
     borderWidth: 1,
     borderColor: '#469D00',
-    borderStyle: 'dashed',
+    borderStyle: Platform.OS === "android" ? 'dashed' : "solid",
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
@@ -313,7 +313,7 @@ borderRadius:10,
   dashStyleDw:{
     alignSelf:'center',
     width:"99%",
-    top:hp('8.9%'),
+    top:hp('8.6%'),
     position:'absolute'
   },
   dashStyleL:{
@@ -347,6 +347,8 @@ borderRadius:10,
   },
   addTextCover: {
     flexDirection: 'row',
+    justifyContent:'center',
+    alignItems:'center'
 
   },
   addStoreTextPlus: {
@@ -357,7 +359,7 @@ borderRadius:10,
     fontWeight: "200",
     letterSpacing: 0.1,
     marginRight: 5,
-    marginTop: 3,
+    marginTop: 6,
 
   },
   addStoreText: {
