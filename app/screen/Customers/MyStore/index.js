@@ -69,7 +69,7 @@ const MyStore = (props) => {
 
             <View style={styles.addContainer}>
               
-                { Platform.OS === "android" ?
+                {/* { Platform.OS === "android" ? */}
                 <TouchableOpacity style={styles.storeBtn} onPress={addStore}>
                     <View style={styles.addTextCover}>
                         <Text style={styles.addStoreTextPlus}>+</Text>
@@ -77,8 +77,8 @@ const MyStore = (props) => {
                     </View>
                 </TouchableOpacity>
 
-                :
-                <TouchableOpacity style={styles.storeBtn1} onPress={addStore}>
+                {/* : */}
+                {/* <TouchableOpacity style={styles.storeBtn1} onPress={addStore}>
                         <DashedLine style={styles.dashStyleUp} dashLength={3} dashThickness={1} dashGap={2} dashColor='#469D00' />
                         <DashedLine style={styles.dashStyleL} axis='vertical' dashLength={3} dashThickness={1} dashGap={2} dashColor='#469D00' />
                        <View style={styles.addTextCover}>
@@ -89,7 +89,7 @@ const MyStore = (props) => {
                        <DashedLine style={styles.dashStyleDw} dashLength={3} dashThickness={1} dashGap={2} dashColor='#469D00' />
                    </TouchableOpacity>
                  
-                   }
+                   } */}
 
             </View>
             {status === "pending"  || status === "idle" ? <StorePlaceholder />

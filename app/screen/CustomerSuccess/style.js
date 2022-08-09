@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         borderWidth: 0,
         borderRadius: 10,
-        borderStyle: 'dashed',
+        borderStyle: Platform.OS === "android" ? 'dashed' : 'solid',
         borderColor: 'rgba(255, 255, 255, 0.4)',
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
         padding: 10,
