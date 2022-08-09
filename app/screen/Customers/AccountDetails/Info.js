@@ -132,12 +132,12 @@ const CustomerInfo = (props) => {
                             </View>
                         </View>
                     </View>
-                    <View style={styles.cardCover} >
+                    <View style={styles.cardCover1} >
+                       
+                        <View style={styles.inputMainHolder}>
                         <View style={styles.bioTitleCover}>
                             <Text style={styles.bioText}>BIO DATA</Text>
                         </View>
-                        <View style={styles.inputMainHolder}>
-
                             <TouchableWithoutFeedback onPress={dismissKeyboard}>
                                 <FormikValidator
                                     initialValues={profileState}
@@ -231,14 +231,14 @@ const CustomerInfo = (props) => {
                                             </View>
 
                                             <View style={styles.inbtwStore} />
-
-                                            <View style={styles.cardCover} >
-                                                <View style={styles.bioTitleCover}>
+                                            <View style={styles.bioTitleCover}>
                                                     <Text style={styles.bioText}>STORE DETAILS</Text>
                                                 </View>
+                                            <View style={styles.cardCover} >
+                                               
                                                 <View>
                                                     <View style={{ marginHorizontal: 20 }}>
-                                                        <View style={[styles.inputHolder]}>
+                                                        <View style={[styles.inputHolder2]}>
                                                             <View style={styles.labelView}>
                                                                 <Text style={styles.label}>USER TYPE</Text>
                                                             </View>

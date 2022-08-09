@@ -190,7 +190,7 @@ const MyStore = (props) => {
                                                 </View>
 
                                                 <InputField
-                                                    style={styles.innerLabel}
+                                                    style={styles.innerLabel1}
                                                     value={props.values.name}
                                                     onBlur={props.handleBlur('name')}
                                                     placeholder="Benicu"
@@ -273,7 +273,7 @@ const MyStore = (props) => {
                                                 </View>
 
                                                 <InputField
-                                                    style={styles.innerLabel}
+                                                    style={styles.innerLabel1}
                                                     placeholder="img.jpg"
                                                     placeholderTextColor="#757575"
                                                     value={storePhotoOne}
@@ -304,7 +304,7 @@ const MyStore = (props) => {
                                                 </View>
 
                                                 <InputField
-                                                    style={styles.innerLabel}
+                                                    style={styles.innerLabel1}
                                                     value={storePhotoTwo}
                                                     placeholder="img.jpg"
                                                     placeholderTextColor="#757575"

@@ -102,6 +102,14 @@ export default styles = StyleSheet.create({
         marginTop: Dimensions.get("window").height / 45,
         borderRadius: 5
     },
+    inputHolder2: {
+        borderWidth: 1,
+        borderColor: "#BDBDBD",
+        paddingVertical: Platform.OS === "ios" ? 20 : 4,
+        paddingHorizontal: 10,
+        marginTop: -20,
+        borderRadius: 5
+    },
     inputMainHolder: {
         backgroundColor: '#ffffff',
         width: wp('100%'),
@@ -109,8 +117,15 @@ export default styles = StyleSheet.create({
     },
     labelView: {
         position: "absolute",
-        top: -8,
+        top:-8,
         left: 10,
+        backgroundColor: "#fff",
+        paddingHorizontal: 5
+    },
+    labelView1: {
+        position: "absolute",
+        top:Platform.OS === "android" ?  -8 : -15,
+        left: 5,
         backgroundColor: "#fff",
         paddingHorizontal: 5
     },
@@ -152,7 +167,7 @@ export default styles = StyleSheet.create({
         color: "#adadad",
         letterSpacing: 0.3,
         fontWeight: "400",
-        marginTop: 3,
+        marginTop: -3,
         marginBottom: 5,
         width: "70%",
         paddingLeft: 5,
@@ -172,7 +187,7 @@ export default styles = StyleSheet.create({
         paddingVertical: 30,
         alignItems: "center",
         paddingHorizontal: 20,
-        marginTop: 20
+        marginTop:Platform.OS === "android" ? 15 : 60,
     },
     btnCover2: {
         top: hp("54%")
@@ -242,7 +257,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         width: wp('100%'),
         flex: 1,
-        height: "100%"
+        // height: "100%"
 
     },
     topCover: {
@@ -398,24 +413,47 @@ export default styles = StyleSheet.create({
         marginRight: 5,
         marginLeft: 2,
     },
+    cardCover1: {
+        borderTopWidth: 2,
+        borderColor: "rgba(238, 238, 238, 1)",
+        width: wp('100%'),
+        marginTop:20,
+        elevation: 4,
+        borderTopWidth:1,
+        borderTopColor:"#eeeeee",
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 15,
+        paddingTop: 20,
+        marginTop:Platform.OS === "android" ?  4 : 20,
+        shadowColor: '#ffffff',
+        shadowRadius: 4,
+        shadowOpacity: 0.5,
+        shadowOffset: { width: 5, height: 5 },
+    },
+
     cardCover: {
         borderTopWidth: 2,
         borderColor: "rgba(238, 238, 238, 1)",
         width: wp('100%'),
+        marginTop:20,
         elevation: 2,
+        borderTopWidth:0,
+        borderTopColor:"#eeeeee",
         backgroundColor: '#fff',
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 15,
         paddingTop: 20,
-        marginTop: 4,
+        marginTop:Platform.OS === "android" ?  4 : 20,
         shadowColor: '#ffffff',
         shadowRadius: 4,
-        shadowOffset: { height: 4, width: 0 },
+        shadowOffset: { height: 5, width: 5 },
         shadowOpacity: 0.5,
     },
-
     cardCoverOrder: {
         width: wp('100%'),
         elevation: 2,
@@ -444,7 +482,7 @@ export default styles = StyleSheet.create({
         padding: 15,
         backgroundColor: '#fff',
         borderRadius: 10,
-        marginBottom: 5,
+        marginBottom:Platform.OS === "android" ? 10 :  20,
         elevation: 10,
         shadowOpacity: 0.1,
         shadowColor: "rgba(0, 49, 157, 1)",
@@ -512,8 +550,10 @@ export default styles = StyleSheet.create({
     bioTitleCover: {
         justifyContent: 'flex-start',
         flexDirection: 'row',
+        paddingTop:Platform.OS === "android" ? 2 : 10,
         width: wp('88%'),
-        marginBottom: 5
+        marginBottom: 5,
+        paddingLeft:35,
     },
     bioText: {
         color: '#3858CF',
@@ -635,7 +675,7 @@ export default styles = StyleSheet.create({
     },
     scrollStyle: {
         // position: 'relative',
-        paddingBottom:Platform.OS === "android" ?  65 : 0,
+        paddingBottom:Platform.OS === "android" ?  65 : 10,
         // height: hp('100%'),
         //   marginBottom:-100
         // top: hp('-3%'),
