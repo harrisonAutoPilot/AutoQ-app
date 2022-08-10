@@ -183,7 +183,7 @@ export default styles = StyleSheet.create({
     },
     btnCover: {
         width: "100%",
-        backgroundColor: '#FAFAFA',
+        // backgroundColor: '#FAFAFA',
         paddingVertical: 30,
         alignItems: "center",
         paddingHorizontal: 20,
