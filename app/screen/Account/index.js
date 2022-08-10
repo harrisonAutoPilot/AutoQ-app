@@ -45,8 +45,7 @@ const AccountSettings = (props) => {
                         <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PIN SETTINGS</Text>
                     </TouchableOpacity>
                 </View>
-              
-               
+                     
             </View>
             {activeId === 1 ? <Profile /> : <Pin/>}  
            
