@@ -110,7 +110,7 @@ const Login = (props) => {
                     <LinearGradient colors={['#B1FF5C', 'transparent']} style={{ backgroundColor: 'transparent', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, }} />
                 </ImageBackground>
                 <View style={styles.blueCover}>
-                    <Image style={styles.agentImg} source={require("@Assets/image/blueImg.png")} />
+                    <Image style={styles.blueImg} source={require("@Assets/image/blueImg.png")} />
                     <View style={styles.innerCover}>
                         <Image source={require("@Assets/image/rh_logo_splashscreen.png")} style={styles.logoImg} />
 

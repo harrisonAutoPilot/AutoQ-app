@@ -13,24 +13,14 @@ import Catalogue from "@Screen/Catalogue";
 import Wallet from "@Screen/Wallet";
 import CustomersDashboard from "@Screen/Customers/Dashboard";
 
+const {height, width} = Dimensions.get('screen')
 const Tab = createBottomTabNavigator();
 
 export default TabHomeNavigator = () => {
-    // const [deviceSize, setDeviceSize] = useState("");
-    let deviceJSON ={}
-    deviceJSON.deviceName = DeviceInfo.useDeviceName()
-    const deviceSize= deviceJSON.deviceName.result && deviceJSON.deviceName.result
+  
 
 
 
-
-    useEffect(() => {
-        
-        console.log("query system odinaka", deviceSize);
-
-    }, []);
-
-    
 
 
 
@@ -43,14 +33,8 @@ export default TabHomeNavigator = () => {
             tabBarInactiveTintColor: "#9E9E9E",
             tabBarActiveBackgroundColor: "rgba(233, 235, 249, 0.5)",
             tabBarInactiveBackgroundColor: "#fff",
-            // tabBarStyle: [{ height: Platform.OS === "android" ? 70 : 75, display: "flex",marginBottom:Platform.OS === "android" ? -0 : 3 , position:'relative'},
-            tabBarStyle: [{ height: Platform.OS === "ios" && 
-            deviceSize === "iPhone 11" || deviceSize === "iPhone 12" ||
-            deviceSize === "iPhone 12 Pro" || deviceSize === "iPhone 12 Pro Max" ||
-            deviceSize === "iPhone 12 mini"|| deviceSize === "iPhone 13" || 
-            deviceSize === "iPhone 13 Pro" || deviceSize === "iPhone 13 Pro Max" || deviceSize === "iPhone 13 mini" ||
-            deviceSize === "iPhone 11 Pro" || deviceSize === "iPhone 11 Pro Max" ? 90
-            : deviceSize === "iPhone 8" || deviceSize === "iPhone 8 Plus"? 70 : 75,  display: "flex",marginBottom:Platform.OS === "android" ? -0 : 3 }, null]
+             tabBarStyle: [{ height: Platform.OS === "android" ? 70 : height / 9.4 , display: "flex",marginBottom:Platform.OS === "android" ? -0 : 3 , position:'relative'},]
+            
 
         }}>
             <Tab.Screen name="HomeScreen" component={Home} options={{

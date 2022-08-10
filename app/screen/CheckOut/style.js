@@ -263,7 +263,7 @@ export default styles = StyleSheet.create({
     marginTop: 0,
   },
   optionViewCover: {
-    width: wp('90.7%'),
+    width: wp('92%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -1,8 +1,9 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, Dimensions } from "react-native";
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+const {height, width} = Dimensions.get("screen")
 
 export default styles = StyleSheet.create({
     tabLable: {
@@ -23,6 +24,9 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.2,
         fontWeight: "400",
         paddingBottom:10,
+        alignSelf:'center'
+       
+      
 
 
     },
@@ -33,7 +37,7 @@ export default styles = StyleSheet.create({
     },
     tabLableTop: {
         position: "absolute",
-        top: Platform.OS === "android" ? -8 : -9,
+        top: Platform.OS === "android" ? -8 : height / 103 - 17,
         borderTopColor: "#3858CF",
         borderTopWidth: 4,
         width: 60,
@@ -48,6 +52,7 @@ export default styles = StyleSheet.create({
     },
     innerTabView:{
         // paddingBottom:10,
+        // width:"25%"
     },
     toastView: {
         position: "absolute",

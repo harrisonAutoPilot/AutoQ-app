@@ -15,7 +15,7 @@ export default styles = StyleSheet.create({
         height: Platform.OS === "ios" ? null: 60,
         paddingLeft: 20,
         justifyContent: "center",
-        paddingBottom: Platform.OS === "ios" ? 20 : 0
+        paddingBottom: Platform.OS === "ios" ? 10 : 0
     },
     headerTitle: {
         fontSize: 16,
@@ -30,6 +30,7 @@ export default styles = StyleSheet.create({
         lineHeight: 24,
         color: "#fff",
         letterSpacing: 0.1,
+        marginTop:10,
     },
     pricesView: {
         marginTop: 12,
@@ -204,7 +205,7 @@ export default styles = StyleSheet.create({
     },
     optionText: {
         fontFamily: "Urbanist-Medium",
-        fontSize: 14,
+        fontSize: 16,
         lineHeight: 24,
         letterSpacing: 0.3,
         color: "#3858CF",

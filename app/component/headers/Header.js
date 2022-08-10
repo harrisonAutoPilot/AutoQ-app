@@ -26,7 +26,7 @@ const Header = (props) => {
                     <SafeAreaView>
                         <View style={[ styles.headerIconView, props.bottom]}>
                             <TouchableOpacity style={styles.headerSubIconMenuView} onPress={props.drawer}>
-                                <Icon name="menu" color="#fff" size={24} />
+                                <Icon name="menu" color="#fff" size={28} />
                             </TouchableOpacity>
                             {props.title ?
                                 <View style={styles.browseView}>
@@ -36,7 +36,7 @@ const Header = (props) => {
                             <View style={styles.headerSubIconView}>
                                 <TouchableOpacity onPress={props.notify}>
                                     <View>
-                                        <FIcon name="bell" color="#fff" size={24} />
+                                        <FIcon name="bell" color="#fff" size={26} />
                                     </View>
                                     {notification?.notifications?.length ?
                                     <View style={styles.badgeN}>
@@ -46,7 +46,7 @@ const Header = (props) => {
                                 </TouchableOpacity >
                                 <TouchableOpacity onPress={props.cart}>
                                     <View style={styles.headerSubLastIconView}>
-                                        <Icon name="md-cart-outline" color="#fff" size={24} />
+                                        <Icon name="md-cart-outline" color="#fff" size={26} />
                                     </View>
                                     {items?.carts?.length ?
                                     <View style={styles.badge}>
