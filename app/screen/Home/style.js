@@ -91,26 +91,24 @@ const styles = StyleSheet.create({
 
     bottomCover: {
         width: wp('100%'),
-        height: hp('59%'),
+        height: hp('50%'),
         borderTopRightRadius: 35,
         borderTopLeftRadius: 35,
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop:10,
-        top: hp('-16%'),
+        top: hp('-12%'),
        
     },
     scrollContentContainer:{
-        // height: "115%",
-        // paddingBottom: 300,
-        // height: height -300,
-
+   
+        height:height / 1.9,
     },
     cardCover: {
-        padding: 10,
+        // padding: 10,
         flexDirection: 'row',
         flexWrap: "wrap",
-        justifyContent: "center"
+        justifyContent: "center",
+     
     },
     cardOne: {
         width: wp('40%'),

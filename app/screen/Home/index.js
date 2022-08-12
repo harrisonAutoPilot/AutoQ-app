@@ -59,7 +59,8 @@ const Home = (props) => {
            
            <View style={styles.bottomCover}>
            <ScrollView
-                indicatorStyle="white"
+            
+                showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContentContainer}>
                <View style={styles.smCover}>
                 <View style={styles.sectorCover}>
