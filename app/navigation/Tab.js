@@ -10,7 +10,7 @@ import Catalogue from "@Screen/Catalogue";
 import Wallet from "@Screen/Wallet";
 import CustomersDashboard from "@Screen/Customers/Dashboard";
 
-const {height, width} = Dimensions.get('screen')
+const { height } = Dimensions.get('screen')
 const Tab = createBottomTabNavigator();
 
 export default TabHomeNavigator = () => {
