@@ -23,8 +23,11 @@ export default styles = StyleSheet.create({
         lineHeight: 16,
         letterSpacing: 0.2,
         fontWeight: "400",
-        paddingBottom:10,
-        alignSelf:'center'
+        // paddingBottom:10,
+        alignSelf:'center',
+        //remember
+        position:'absolute',
+        paddingTop:80,
     },
 tabBarStyle:{
     height: Platform.OS === "android" ? 70 : IosHeight / 8.3,
@@ -34,7 +37,7 @@ tabBarStyle:{
 },
 tabLableTop: {
     position: "absolute",
-    top: Platform.OS === "android" ? -8 : -10,
+    top: Platform.OS === "android" ? -8 : -18,
     borderTopColor: "#3858CF",
     borderTopWidth: 4,
     width: 60,
@@ -42,7 +45,8 @@ tabLableTop: {
     alignItems: "center"
 },
     iconStyle: {
-        paddingTop: 5,
+        paddingTop:Platform.OS === "android" ?  5 :  1,
+        paddingBottom:Platform.OS === "android" ? 5 :10,
         alignItems: "center",
         // marginBottom: 5
     },

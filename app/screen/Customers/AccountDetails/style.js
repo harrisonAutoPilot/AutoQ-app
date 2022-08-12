@@ -293,7 +293,7 @@ export default styles = StyleSheet.create({
         // height:hp('30%'),
         paddingTop: 10,
         marginBottom: 30,
-        maxHeight: screenHeight -20,
+        maxHeight: screenHeight -30,
     },
     bottomCoverOrder: {
         alignItems: 'center',
@@ -676,7 +676,7 @@ export default styles = StyleSheet.create({
     scrollStyle: {
         // position: 'relative',
         paddingBottom:Platform.OS === "android" ?  65 : 10,
-          height: screenHeight + 40,
+          height: screenHeight + 90,
         //   marginBottom:-100
         // top: hp('-3%'),
     },
