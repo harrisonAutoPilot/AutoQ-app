@@ -676,9 +676,10 @@ export default styles = StyleSheet.create({
     scrollStyle: {
         // position: 'relative',
         paddingBottom:Platform.OS === "android" ?  65 : 10,
-          height: screenHeight + 90,
+          height:hp("115%")
         //   marginBottom:-100
         // top: hp('-3%'),
+      
     },
 
     // this is for the customer order infor
