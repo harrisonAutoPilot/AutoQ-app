@@ -7,8 +7,14 @@ import {
 const styles = StyleSheet.create({
 
     mainBody: {
-        paddingTop: 10,
+         paddingTop: 5,
         backgroundColor: "#00319D",
+        // paddingTop:10,
+       
+    },
+    header:{
+        // marginTop:10,
+        // paddingTop:10,
     },
     headerTitle: {
         color: "#fff",
@@ -28,9 +34,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         paddingRight: 16,
+        paddingTop:Platform.OS === "android" ? 1 : 5,
         paddingBottom: 16
     },
     headerSubIconMenuView: {
+        paddingTop:Platform.OS === "android" ? 1 : 5,
         paddingLeft: 16
     },
     headerSubLastIconView: {

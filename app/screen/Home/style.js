@@ -3,12 +3,14 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+const {height, width} = Dimensions.get("window")
 
 const styles = StyleSheet.create({
     topCover: {
         width: wp('100%'),
-        height: hp('40%'),
+        height: hp('50%'),
         backgroundColor: '#00319D',
+       paddingTop:5,
     },
     agentFaceCover: {
         width: wp('100%'),
@@ -89,18 +91,19 @@ const styles = StyleSheet.create({
 
     bottomCover: {
         width: wp('100%'),
-        height: hp('60%'),
+        height: hp('59%'),
         borderTopRightRadius: 35,
         borderTopLeftRadius: 35,
         alignItems: 'center',
         backgroundColor: '#fff',
         marginTop:10,
-        top: hp('-9%'),
+        top: hp('-16%'),
        
     },
     scrollContentContainer:{
-        height: "115%",
+        // height: "115%",
         // paddingBottom: 300,
+        // height: height -300,
 
     },
     cardCover: {
@@ -176,6 +179,7 @@ const styles = StyleSheet.create({
     },
     cardDownInner: {
         marginTop: 30,
+       width:100,
         // width: 90
     },
 

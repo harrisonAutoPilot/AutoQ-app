@@ -1,8 +1,9 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, Dimensions } from "react-native";
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+const {height, width} = Dimensions.get("screen")
 
 export default styles = StyleSheet.create({
     tabLable: {
@@ -13,8 +14,6 @@ export default styles = StyleSheet.create({
         fontWeight: "400",
         marginBottom: 15,
         // paddingBottom:20,
-
-
     },
     tabLableIOS: {
         fontSize: 12,
@@ -23,7 +22,7 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.2,
         fontWeight: "400",
         paddingBottom:10,
-
+        alignSelf:'center'
 
     },
     iconStyle: {
@@ -33,13 +32,20 @@ export default styles = StyleSheet.create({
     },
     tabLableTop: {
         position: "absolute",
-        top: Platform.OS === "android" ? -8 : -9,
+        top: Platform.OS === "android" ? -8 : height / 103 - 17,
         borderTopColor: "#3858CF",
         borderTopWidth: 4,
         width: 60,
         left: -22,
         alignItems: "center"
     },
+    // testTop: {
+    //     borderTopColor: "#3858CF",
+    //     borderTopWidth: 4,
+    //     width: "10%",
+    //     alignItems: "center",
+    //     marginTop: -2
+    // },
     toast:{
         fontSize: 12,
         fontFamily: "Urbanist-Medium",
@@ -48,6 +54,7 @@ export default styles = StyleSheet.create({
     },
     innerTabView:{
         // paddingBottom:10,
+        // width:"25%"
     },
     toastView: {
         position: "absolute",

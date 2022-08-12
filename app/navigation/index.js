@@ -91,15 +91,15 @@ const RootNavigator = () => {
     };
 
     return (
+ 
         <NavigationContainer>
-
             <RootNavigation />
-
             {text ?
                 <View style={[styles.toastView, { backgroundColor: color }]} >
                     <Text style={styles.toast}>{text}</Text>
                 </View> : null}
         </NavigationContainer>
+       
     )
 }
 

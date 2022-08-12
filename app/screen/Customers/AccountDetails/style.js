@@ -183,7 +183,7 @@ export default styles = StyleSheet.create({
     },
     btnCover: {
         width: "100%",
-        backgroundColor: '#FAFAFA',
+        // backgroundColor: '#FAFAFA',
         paddingVertical: 30,
         alignItems: "center",
         paddingHorizontal: 20,
@@ -293,7 +293,7 @@ export default styles = StyleSheet.create({
         // height:hp('30%'),
         paddingTop: 10,
         marginBottom: 30,
-        maxHeight: screenHeight,
+        maxHeight: screenHeight -20,
     },
     bottomCoverOrder: {
         alignItems: 'center',
@@ -676,7 +676,7 @@ export default styles = StyleSheet.create({
     scrollStyle: {
         // position: 'relative',
         paddingBottom:Platform.OS === "android" ?  65 : 10,
-        // height: hp('100%'),
+         height: screenHeight,
         //   marginBottom:-100
         // top: hp('-3%'),
     },

@@ -71,7 +71,7 @@ const Filter = (props) => {
                 {active === item.id ?
                     <View style={styles.activeCover}>
                         <View style={styles.iconCircle} >
-                            <FIcon name="lens" size={12} color="#3858CF" style={styles.icon} />
+                            <FIcon name="lens" size={14} color="#3858CF" style={styles.icon} />
                         </View>
                         <View style={styles.optionTextCover}>
                             <Text style={styles.optionText}>Hospital {item.price_increment}%</Text>

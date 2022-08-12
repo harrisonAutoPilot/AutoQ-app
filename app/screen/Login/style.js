@@ -3,6 +3,7 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+const {height, width} = Dimensions.get("screen");
 
 export default loginStyles = StyleSheet.create({
     mainBody: {
@@ -10,19 +11,20 @@ export default loginStyles = StyleSheet.create({
     },
     agentCover: {
         width: wp('100%'),
+        height:400,
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
     agentImg: {
-        width: 300,
+        width: width - 120,
         height: 400,
         resizeMode: 'contain',
         right: wp('-2%'),
     },
     blueImg: {
-        width: 300,
+        width: width - 120,
         height: 400,
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         right: wp('-2%'),
     },
     cover: {
@@ -31,6 +33,7 @@ export default loginStyles = StyleSheet.create({
 
     },
     blueCover: {
+        width: wp('100%'),
         position: 'absolute',
         top: 0,
         left: -50,
@@ -75,7 +78,7 @@ export default loginStyles = StyleSheet.create({
         borderTopLeftRadius: 35,
         alignItems: 'center',
         backgroundColor: '#fff',
-        top: hp('-13%')
+        top:hp('-13%')
     },
     keyboardUp: {
         top: hp('-25%'),

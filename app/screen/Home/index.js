@@ -46,6 +46,7 @@ const Home = (props) => {
     return (
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
+               
                 <Header drawer={openDrawer} notify={openNotification} cart={openCart} />
                 <View style={styles.agentFaceCover}>
                     <Image style={styles.agentImg} source={{uri: `${URL}${user?.picture_url}`}}/>
