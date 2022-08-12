@@ -3,7 +3,7 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-const screenHeight = Dimensions.get('window').height
+const screenHeight = Dimensions.get('screen').height
 
 export default styles = StyleSheet.create({
     mainHeader: {
@@ -676,7 +676,7 @@ export default styles = StyleSheet.create({
     scrollStyle: {
         // position: 'relative',
         paddingBottom:Platform.OS === "android" ?  65 : 10,
-         height: screenHeight,
+          height: screenHeight + 40,
         //   marginBottom:-100
         // top: hp('-3%'),
     },

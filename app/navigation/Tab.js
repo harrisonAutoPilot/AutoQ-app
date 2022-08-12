@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator,useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
+import { useSafeArea } from 'react-native-safe-area-context'
 import FIcon from "react-native-vector-icons/Foundation"
 import IonIcon from "react-native-vector-icons/Ionicons"
-import { Platform, View, Dimensions} from "react-native"
+import { Platform, View, Dimensions,StatusBar} from "react-native"
 import DeviceInfo from 'react-native-device-info';
 import { getUniqueId, getManufacturer } from 'react-native-device-info';
-
 import styles from "./style";
 import Home from "@Screen/Home";
 import Catalogue from "@Screen/Catalogue";
 import Wallet from "@Screen/Wallet";
 import CustomersDashboard from "@Screen/Customers/Dashboard";
-
-const {height, width} = Dimensions.get('screen')
+//  const {height, width} = Dimensions.get('screen')
+ // const tabBarHeight = useBottomTabBarHeight();
+//  const screenHeight = Dimensions.get('screen').height;
+ const windowHeight = Dimensions.get('window').height;
+// const navbarHeight = screenHeight - windowHeight + 24;
 const Tab = createBottomTabNavigator();
+
 
 export default TabHomeNavigator = () => {
   
@@ -26,6 +30,7 @@ export default TabHomeNavigator = () => {
 
     return (
         <Tab.Navigator screenOptions={{
+            
             tabBarHideOnKeyboard: true,
             headerShown: false,
             tabBarLabelStyle: Platform.OS === "android" ? styles.tabLable : styles.tabLableIOS,
@@ -33,11 +38,13 @@ export default TabHomeNavigator = () => {
             tabBarInactiveTintColor: "#9E9E9E",
             tabBarActiveBackgroundColor: "rgba(233, 235, 249, 0.5)",
             tabBarInactiveBackgroundColor: "#fff",
-             tabBarStyle: [{ height: Platform.OS === "android" ? 70 : height / 9.4 , display: "flex",marginBottom:Platform.OS === "android" ? -0 : 3 , position:'relative'},]
+            //  tabBarStyle: [{ height: Platform.OS === "android" ? 70 : height / 9.4 , display: "flex",marginBottom:Platform.OS === "android" ? -0 : 3 , position:'relative'},]
+            tabBarStyle: [styles.tabBarStyle]
             
 
         }}>
             <Tab.Screen name="HomeScreen" component={Home} options={{
+                
                 tabBarLabel: 'Home',
                 tabBarIcon: ({ color, focused }) => {
 
