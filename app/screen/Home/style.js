@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     },
     scrollContentContainer:{
    
-        height:height / 1.9,
+        height:height / 1.7,
     },
     cardCover: {
         // padding: 10,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     sectorCover: {
         width: wp('100%'),
         padding: 20,
-        paddingLeft: 30,
+        paddingLeft:width / 10
     },
     titleCover: {
         fontSize: 18,
