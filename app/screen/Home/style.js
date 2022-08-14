@@ -3,25 +3,24 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-const {height, width} = Dimensions.get("window")
+const {height, width} = Dimensions.get("screen")
 
 const styles = StyleSheet.create({
     topCover: {
         width: wp('100%'),
-        height: hp('50%'),
         backgroundColor: '#00319D',
-       paddingTop:5,
+        paddingTop: 5,
+        marginBottom: '9%'
     },
     agentFaceCover: {
         width: wp('100%'),
         flexDirection: 'row',
         justifyContent: 'center',
-
-
+        marginTop: '3%',
     },
     agentImg: {
-        width: 80,
-        height: 80,
+        width: 64,
+        height: 64,
         resizeMode: 'cover',
         alignItems: 'center',
         borderRadius: 40
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
     welcomeCover: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 20,
+        marginTop: '4%',
 
     },
     sunImg: {
@@ -46,10 +45,9 @@ const styles = StyleSheet.create({
     welcomeText: {
         fontSize: 22,
         fontFamily: "Urbanist-SemiBold",
-        lineHeight: 22,
+        lineHeight: 28,
         color: "#fff",
         letterSpacing: 0.2,
-        fontWeight: "400",
         marginLeft: 5,
     },
     scrollStyle:{
@@ -58,9 +56,7 @@ const styles = StyleSheet.create({
         marginTop:10,
     },
     smCover:{
-        width: wp('100%'),
-        height: hp('70%'),
-        
+        width: wp('100%')   
     },
     label2: {
         fontSize: 14,
@@ -91,17 +87,13 @@ const styles = StyleSheet.create({
 
     bottomCover: {
         width: wp('100%'),
-        height: hp('50%'),
         borderTopRightRadius: 35,
         borderTopLeftRadius: 35,
         alignItems: 'center',
         backgroundColor: '#fff',
-        top: hp('-12%'),
+        flexGrow: 1,
+        flex: 1,
        
-    },
-    scrollContentContainer:{
-   
-        height:height / 1.7,
     },
     cardCover: {
         // padding: 10,
@@ -111,45 +103,41 @@ const styles = StyleSheet.create({
      
     },
     cardOne: {
-        width: wp('40%'),
-        height: 150,
+        width: wp('43%'),
+        height: 170,
         backgroundColor: '#778BEB',
         borderRadius: 15,
-        marginRight: 10,
-        marginLeft: 10,
+        marginHorizontal: 8,
         marginBottom: 20,
         paddingVertical: 20,
         paddingHorizontal: 16
     },
     cardTwo: {
-        width: wp('40%'),
-        height: 150,
+        width: wp('43%'),
+        height: 170,
         backgroundColor: '#079992',
         borderRadius: 15,
-        marginRight: 10,
-        marginLeft: 10,
+        marginHorizontal: 8,
         marginBottom: 20,
         paddingVertical: 20,
         paddingHorizontal: 16
     },
     cardThree: {
-        width: wp('40%'),
-        height: 150,
+        width: wp('43%'),
+        height: 170,
         backgroundColor: '#F19066',
         borderRadius: 15,
-        marginRight: 10,
-        marginLeft: 10,
+        marginHorizontal: 8,
         marginBottom: 20,
         // paddingVertical: 20,
         // paddingHorizontal: 16
     },
     cardFour: {
-        width: wp('40%'),
-        height: 150,
+        width: wp('43%'),
+        height: 170,
         backgroundColor: '#C44569',
         borderRadius: 15,
-        marginRight: 10,
-        marginLeft: 10,
+        marginHorizontal: 8,
         marginBottom: 20,
         paddingVertical: 20,
         paddingHorizontal: 16
@@ -165,7 +153,6 @@ const styles = StyleSheet.create({
         lineHeight: 36,
         color: "#fff",
         letterSpacing: 0.2,
-        fontWeight: "900",
     },
     cardSmText: {
         fontSize: 14,
@@ -173,11 +160,10 @@ const styles = StyleSheet.create({
         lineHeight: 24,
         color: "#fff",
         letterSpacing: 0.2,
-        fontWeight: "600",
     },
     cardDownInner: {
-        marginTop: 30,
-       width:100,
+        marginTop: 45,
+        width:100,
         // width: 90
     },
 
@@ -253,7 +239,7 @@ const styles = StyleSheet.create({
     },
     miniMainBody: {
         height: "100%",
-        flexGrow: 1
+        backgroundColor: '#00319D',
     },
     miniSecondHeadingTitle: {
         fontSize: 12,

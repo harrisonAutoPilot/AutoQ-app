@@ -52,9 +52,9 @@ const Step1 = (props) => {
 
     const RenderItem = ({ item }) => {
         return (
-            <TouchableOpacity 
-            style={[styles.optionView, active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id} 
-            onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
+            <TouchableOpacity
+                style={[styles.optionView, active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionViewBetween1 : styles.optionViewBetween2]} key={item.id}
+                onPress={() => { selectUserType(item.id, item.title.toLowerCase()); }}>
                 <View style={active === item.id || userType?.toLowerCase() === item.title.toLowerCase() ? styles.optionIconView : styles.optionIconView2}>
                     {userType?.toLowerCase() === item.title.toLowerCase() || active === item.id ?
                         <View style={styles.iconCircle} >
@@ -89,10 +89,13 @@ const Step1 = (props) => {
             contentContainerStyle={[
                 styles.scrollContentContainer
             ]}
-            horizontal={false} showsVerticalScrollIndicator={false}
+            horizontal={false} 
+            showsVerticalScrollIndicator={false}
+            bounces={false}
         >
             <ScrollView
                 horizontal={true}
+                bounces={false}
             >
 
                 <View style={styles.bottomCover1}>
@@ -304,13 +307,13 @@ const Step1 = (props) => {
 
 
             <PaymentOption
-                id={credit?.id ? {id:credit.id, name: credit.name}: undefined}
-                 visibleRetrieve={showPaymentOption}
-                 returnBack={(option, id) => {
-                     setShowPaymentOption(false);
-                     setPayment(option) 
-                     setPaymentId(id) 
-                 }}
+                id={credit?.id ? { id: credit.id, name: credit.name } : undefined}
+                visibleRetrieve={showPaymentOption}
+                returnBack={(option, id) => {
+                    setShowPaymentOption(false);
+                    setPayment(option)
+                    setPaymentId(id)
+                }}
                 closeOption={() => setShowPaymentOption(false)}
                 onInputChanged={() => setPayment(payment)}
             />

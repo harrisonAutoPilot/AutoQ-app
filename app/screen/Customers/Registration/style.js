@@ -246,11 +246,11 @@ export default styles = StyleSheet.create({
         height: "20%",
         width: "120%",
         backgroundColor: '#f5f5f5',
-        paddingTop: 20,
+        paddingTop: 30,
         alignItems: "center",
         paddingHorizontal: 40,
         alignSelf: "center",
-        paddingBottom: 20
+        paddingBottom: 30
     },
     smCover:{
      width:"100%",

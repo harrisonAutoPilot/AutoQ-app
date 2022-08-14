@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl, Dimensions, SafeAreaView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
@@ -290,6 +290,7 @@ const Cart = (props) => {
     }, [copyCart])
 
     return (
+
         <View style={styles.view}>
             <Header onPress={goBack} title="Cart" styleView={styles.body2} >
                 <View style={styles.headerSubIconView}>
@@ -331,45 +332,47 @@ const Cart = (props) => {
 
                 }
 
+                <SafeAreaView>
+                    {items.total_amount && loaded === "success" && copyCart && copyCart.length ?
+                        <View style={styles.bottomDownCover}>
 
-                {items.total_amount && loaded === "success" && copyCart && copyCart.length ?
-                    <View style={styles.bottomDownCover}>
+                            <View style={styles.orderCover}>
 
-                        <View style={styles.orderCover}>
-
-                            <Text style={styles.orderText}>ORDER SUMMARY</Text>
-                            {(items.carts.length > 3) ?
-                                <View style={[styles.scrollTextCover, { display: scrollText ? 'none' : 'flex' }
-                                ]} >
-                                    <Text
-                                        style={styles.textStyle}>
-                                        Scroll down to view more Items
-                                    </Text>
-                                </View>
-                                : null}
+                                <Text style={styles.orderText}>ORDER SUMMARY</Text>
+                                {(items.carts.length > 3) ?
+                                    <View style={[styles.scrollTextCover, { display: scrollText ? 'none' : 'flex' }
+                                    ]} >
+                                        <Text
+                                            style={styles.textStyle}>
+                                            Scroll down to view more Items
+                                        </Text>
+                                    </View>
+                                    : null}
 
 
-                        </View>
-                        <View style={styles.subtotalCover}>
-                            <Text style={styles.subText}>Subtotal</Text>
-                            <Text style={styles.subText}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
-                        </View>
-                        <View style={styles.totalCover}>
-                            <Text style={styles.totalText2}>Total</Text>
+                            </View>
+                            <View style={styles.subtotalCover}>
+                                <Text style={styles.subText}>Subtotal</Text>
+                                <Text style={styles.subText}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
+                            </View>
+                            <View style={styles.totalCover}>
+                                <Text style={styles.totalText2}>Total</Text>
 
-                            <Text style={styles.totalText2}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
+                                <Text style={styles.totalText2}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
 
-                        </View>
+                            </View>
 
-                        <View style={styles.addBtnCover}>
-                            <Btn title="Proceed to Check out" style={styles.addressBtn2} onPress={redirectToCheckOut} />
-                        </View>
-                    </View> : <BottomPlaceholder />}
+                            <View style={styles.addBtnCover}>
+                                <Btn title="Proceed to Check out" style={styles.addressBtn2} onPress={redirectToCheckOut} />
+                            </View>
+                        </View> : <BottomPlaceholder />}
+                </SafeAreaView>
 
             </View>
             <Loader isVisible={loader} />
 
         </View>
+
     )
 };
 

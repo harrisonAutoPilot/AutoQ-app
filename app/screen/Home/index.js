@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAgent } from "@Request/Agent";
 import styles from './style';
 import { Header } from "@Component";
-import { getCustomers} from "@Request/Customer";
+import { getCustomers } from "@Request/Customer";
 
 const Home = (props) => {
     const dispatch = useDispatch();
@@ -46,76 +46,76 @@ const Home = (props) => {
     return (
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
-               
+
                 <Header drawer={openDrawer} notify={openNotification} cart={openCart} />
+                
                 <View style={styles.agentFaceCover}>
-                    <Image style={styles.agentImg} source={{uri: `${URL}${user?.picture_url}`}}/>
+                    <Image style={styles.agentImg} source={{ uri: `${URL}${user?.picture_url}` }} />
                 </View>
                 <View style={styles.welcomeCover}>
                     <Image style={styles.sunImg} source={dayTimeImage} />
                     <Text style={styles.welcomeText}>{dayTime} {user.name?.split(" ")[0]}</Text>
                 </View>
             </View>
-           
-           <View style={styles.bottomCover}>
-           <ScrollView
-            
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContentContainer}>
-               <View style={styles.smCover}>
-                <View style={styles.sectorCover}>
-                    <Text style={styles.titleCover}>Agent Dashboard</Text>
-                </View>
-                <View style={styles.cardCover} >
-                    <TouchableOpacity style={styles.cardOne} onPress={redirectToPendingCustomers}>
-                        <View style={styles.cardTopInner}>
-                            <Image style={styles.sunImg} source={require("@Assets/image/ArrowsClockwise.png")} />
-                            <Text style={styles.cardBgText}>{agent.users_count}</Text>
-                        </View>
-                        <View style={styles.cardDownInner}>
-                            <Text style={styles.cardSmText}>New &#38; Pending Registration</Text>
-                        </View>
 
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardTwo} onPress={redirectToCustomerOrder}>
-                        <View style={styles.cardTopInner}>
-                            <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
-                            <Text style={styles.cardBgText}>{agent.orders_count}</Text>
+            <View style={styles.bottomCover}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View style={styles.smCover}>
+                        <View style={styles.sectorCover}>
+                            <Text style={styles.titleCover}>Agent Dashboard</Text>
                         </View>
-                        <View style={styles.cardDownInner}>
-                            <Text style={styles.cardSmText}>All {"\n"}Orders</Text>
-                        </View>
+                        <View style={styles.cardCover} >
+                            <TouchableOpacity style={styles.cardOne} onPress={redirectToPendingCustomers}>
+                                <View style={styles.cardTopInner}>
+                                    <Image style={styles.sunImg} source={require("@Assets/image/ArrowsClockwise.png")} />
+                                    <Text style={styles.cardBgText}>{agent.users_count}</Text>
+                                </View>
+                                <View style={styles.cardDownInner}>
+                                    <Text style={styles.cardSmText}>New &#38; Pending Registration</Text>
+                                </View>
 
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardThree} >
-                    <Image style={styles.burnImg} source={require("@Assets/image/cardFrame.png")} />
-                    <View style={styles.suninner}>
-                        <View style={styles.cardTopInner}>
-                            <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
-                            <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
-                        </View>
-                        <View style={styles.cardDownInner}>
-                            <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>
-                        </View>
-                        </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.cardTwo} onPress={redirectToCustomerOrder}>
+                                <View style={styles.cardTopInner}>
+                                    <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
+                                    <Text style={styles.cardBgText}>{agent.orders_count}</Text>
+                                </View>
+                                <View style={styles.cardDownInner}>
+                                    <Text style={styles.cardSmText}>All {"\n"}Orders</Text>
+                                </View>
 
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardFour} onPress={redirectToInactiveCustomers}>
-                        <View style={styles.cardTopInner}>
-                            <Image style={styles.sunImg} source={require("@Assets/image/UsersThree.png")} />
-                            <Text style={styles.cardBgText}>{customers?.inactive?.count}</Text>
-                        </View>
-                        <View style={styles.cardDownInner}>
-                            <Text style={styles.cardSmText}>Inactive {"\n"}Customers</Text>
-                        </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.cardThree} >
+                                <Image style={styles.burnImg} source={require("@Assets/image/cardFrame.png")} />
+                                <View style={styles.suninner}>
+                                    <View style={styles.cardTopInner}>
+                                        <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
+                                        <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
+                                    </View>
+                                    <View style={styles.cardDownInner}>
+                                        <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>
+                                    </View>
+                                </View>
 
-                    </TouchableOpacity>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.cardFour} onPress={redirectToInactiveCustomers}>
+                                <View style={styles.cardTopInner}>
+                                    <Image style={styles.sunImg} source={require("@Assets/image/UsersThree.png")} />
+                                    <Text style={styles.cardBgText}>{customers?.inactive?.count}</Text>
+                                </View>
+                                <View style={styles.cardDownInner}>
+                                    <Text style={styles.cardSmText}>Inactive {"\n"}Customers</Text>
+                                </View>
 
-                </View>
-                </View>
+                            </TouchableOpacity>
+
+                        </View>
+                    </View>
                 </ScrollView>
             </View>
-            
+
         </View>
     )
 };

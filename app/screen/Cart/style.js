@@ -41,26 +41,19 @@ export default styles = StyleSheet.create({
   },
   midCard: {
     width: wp('100%'),
-    height: hp('18.5%'),
     paddingHorizontal: 20,
-    borderBottomWidth: 0,
-    borderBottomColor: "#000",
-    elevation: 0.5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#fafafa",
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    // shadowOffset: { width: 2, height: 2},
-  
-    //  shadowOpacity: 0.2,
+    paddingVertical: 20
   },
   cover: {
     width: wp('100%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth:1,
-    borderBottomColor:'#bfbfbf',
     paddingHorizontal:20,
-    marginTop:-10,
   },
   imgCover: {
     justifyContent: "center",
@@ -231,8 +224,6 @@ export default styles = StyleSheet.create({
   },
   bottomCover: {
     height: hp('90%'),
-    borderWidth: 0,
-    borderStyle: 'solid',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: "#fff"

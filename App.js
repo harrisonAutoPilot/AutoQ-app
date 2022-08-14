@@ -8,11 +8,6 @@ import NetInfo from "@react-native-community/netinfo";
 
 import store from "@Store/Store";
 import Network from "@Screen/Network";
-import { LogBox } from 'react-native';
-
-// LogBox.ignoreLogs([
-//   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
-// ]);
 
 let persistor = persistStore(store);
 
@@ -22,8 +17,8 @@ const App = () => {
 
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-        const offline = !(state.isConnected && state.isInternetReachable);
-        setOfflineStatus(offline);
+      const offline = !(state.isConnected && (state.isInternetReachable || state.isInternetReachable === null ));
+      setOfflineStatus(offline);
     });
     return () => removeNetInfoSubscription();
 }, []);

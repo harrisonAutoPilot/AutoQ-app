@@ -33,11 +33,10 @@ export default styles = StyleSheet.create({
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
         backgroundColor: '#fff',
-
     },
     view: {
         flex: 1,
-         backgroundColor: "#fff",
+        backgroundColor: "#fff"
     },
     subHeader: {
         // borderTopLeftRadius: 20,
@@ -113,7 +112,7 @@ export default styles = StyleSheet.create({
     inputMainHolder: {
         backgroundColor: '#ffffff',
         width: wp('100%'),
-        paddingBottom: 20
+        // paddingBottom: 20
     },
     labelView: {
         position: "absolute",
@@ -183,7 +182,7 @@ export default styles = StyleSheet.create({
     },
     btnCover: {
         width: "100%",
-        // backgroundColor: '#FAFAFA',
+        backgroundColor: '#fafafa',
         paddingVertical: 30,
         alignItems: "center",
         paddingHorizontal: 20,
@@ -254,7 +253,7 @@ export default styles = StyleSheet.create({
 
     // For the new profile page
     container: {
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         width: wp('100%'),
         flex: 1,
         // height: "100%"
@@ -290,9 +289,7 @@ export default styles = StyleSheet.create({
     bottomCover: {
         alignItems: 'center',
         backgroundColor: '#fff',
-        // height:hp('30%'),
         paddingTop: 10,
-        // maxHeight: screenHeight -30,
     },
     bottomCoverOrder: {
         alignItems: 'center',
@@ -431,6 +428,7 @@ export default styles = StyleSheet.create({
         shadowRadius: 4,
         shadowOpacity: 0.5,
         shadowOffset: { width: 5, height: 5 },
+        
     },
 
     cardCover: {
@@ -672,15 +670,6 @@ export default styles = StyleSheet.create({
         resizeMode: 'contain',
         marginLeft: 10,
     },
-    scrollStyle: {
-        // position: 'relative',
-        paddingBottom:Platform.OS === "android" ?  65 : 10,
-        //   height:screenHeight + 100
-        //   marginBottom:-100
-        // top: hp('-3%'),
-      
-    },
-
     // this is for the customer order infor
     cardTop: {
         width: wp('90%'),

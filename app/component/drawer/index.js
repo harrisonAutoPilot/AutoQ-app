@@ -339,6 +339,7 @@ const Drawer = (props) => {
                 </ScrollView>
             </ScrollView>
 
+{/* <SafeAreaView> */}
             <View style={styles.logout}>
                 <TouchableOpacity style={styles.logoutInnerView} onPress={logUserOut}>
                     <Text style={styles.logoutText}>SIGN OUT</Text>
@@ -347,6 +348,7 @@ const Drawer = (props) => {
                     </View>
                 </TouchableOpacity>
             </View>
+            {/* </SafeAreaView> */}
         </View>
     )
 };

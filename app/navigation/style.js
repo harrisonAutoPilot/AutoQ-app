@@ -4,8 +4,6 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-const IosHeight = Dimensions.get('screen').height;
-
 export default styles = StyleSheet.create({
     tabLable: {
         fontSize: 12,
@@ -19,36 +17,22 @@ export default styles = StyleSheet.create({
     tabLableIOS: {
         fontSize: 12,
         fontFamily: "Urbanist-Regular",
-        lineHeight: 16,
         letterSpacing: 0.2,
-        fontWeight: "400",
-        // paddingBottom:10,
-        alignSelf:'center',
-        //remember
-        position:'absolute',
-        paddingTop:80,
+        alignSelf: 'center',
+        paddingBottom: 13,
     },
-tabBarStyle:{
-    height: Platform.OS === "android" ? 70 : IosHeight / 8.3,
-     display: "flex",
-     marginBottom:Platform.OS === "android" ? -0 : 1 ,
-    position:'relative'
-},
-tabLableTop: {
-    position: "absolute",
-    top: Platform.OS === "android" ? -8 : -18,
-    borderTopColor: "#3858CF",
-    borderTopWidth: 4,
-    width: 60,
-    left: -22,
-    alignItems: "center"
-},
+    tabBarStyle: {
+        height: "10.2%",     
+    },
     iconStyle: {
-        paddingTop:Platform.OS === "android" ?  5 :  1,
-        paddingBottom:Platform.OS === "android" ? 5 :10,
         alignItems: "center",
     },
-
+    item:{
+        borderTopColor: "#3858CF",
+        borderTopWidth: 4,
+        alignItems: "center",
+        marginTop: -2,
+    },
     toast: {
         fontSize: 12,
         fontFamily: "Urbanist-Medium",
