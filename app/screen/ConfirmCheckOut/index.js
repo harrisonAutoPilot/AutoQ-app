@@ -23,7 +23,6 @@ const ConfirmCheckOut = (props) => {
     const backToCart = () => props.navigation.navigate("CheckOut");
     const closeBottomSheet = () => {
         dispatch(cleanup());
-        // dispatch(getCustomerPendingOrders());
         props.navigation.navigate("PendingOrder");
     }
     const { update, errors, orderDetail, verify, verificationStatus } = useSelector((state) => state.order);

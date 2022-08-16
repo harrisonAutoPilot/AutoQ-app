@@ -97,7 +97,7 @@ const CheckOut = (props) => {
                         </View>
                     }
                 </View>
-                <View style={active === item.id ? styles.optionTextView : styles.optionTextView2} >
+                <View style={styles.optionTextView } >
                     <Text style={styles.optionText}>{item.display_name}</Text>
                     <View style={styles.optionMiniTextView}>
                         <Text style={styles.itemDetails}>{item.id == "1" ? ` Balance: ₦${wallet.balance ? commafy(wallet.balance) : 0}`

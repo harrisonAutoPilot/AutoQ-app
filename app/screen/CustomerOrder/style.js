@@ -8,7 +8,7 @@ import {
 const styles = StyleSheet.create({
     main: {
         backgroundColor: '#ffffff',
-        flex: 1,
+        flexGrow: 1,
     },
     headerTitle: {
         position: 'absolute',
@@ -104,21 +104,18 @@ const styles = StyleSheet.create({
     },
 
     bottomCover: {
-        // position: 'absolute',
-        // top: hp('23%'),
         padding: 1,
         paddingLeft: 12,
         width: wp('96%'),
-        height: hp('71%'),
         borderRadius: 3,
-        borderWidth: 0,
-        borderStyle: 'solid',
-        borderColor: '#e6e6e6',
         flexWrap: 'wrap',
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 15
+        marginTop: 15,
+        flexGrow: 1,
+        flex: 1
+    
     },
     bottomCover2: {
         // position: 'absolute',

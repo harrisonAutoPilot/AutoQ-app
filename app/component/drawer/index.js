@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector, useDispatch } from "react-redux";
 import FIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { CommonActions, StackActions } from '@react-navigation/native';
 
 import links from "./data";
 import styles from "./style";

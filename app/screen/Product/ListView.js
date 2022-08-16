@@ -30,7 +30,7 @@ const List = (props) => {
 
                     <View style={styles.priceOverview}>
                         <View style={styles.priceView}>
-                            <Text style={styles.priceText}>&#8358;{item.price_per_pack ? commafy(item.price_per_pack) : 0}<Text style={styles.priceRoll}></Text></Text>
+                            <Text style={item.stock_count > 0 ? styles.priceText : styles.outOfStockPriceText}>&#8358;{item.price_per_pack ? commafy(item.price_per_pack) : 0}<Text style={styles.priceRoll}></Text></Text>
                         </View>
                         {/* <TouchableOpacity style={styles.priceView2} onPress={props.getItem}>
                             <Icon name="plus" color="#3858CF" size={16} style={styles.icon}/>

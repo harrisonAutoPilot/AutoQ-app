@@ -1,18 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList, BackHandler } from "react-native";
+import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from 'react-native-vector-icons/MaterialIcons';
-import Toast from 'react-native-toast-message';
 
 import Modal from "@Screen/CustomerOrder/SortBy";
 import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
-import { getCustomerPendingOrders, verifyOrder, verifyCode  } from "@Request/CustomerOrder";
+import { getCustomerPendingOrders } from "@Request/CustomerOrder";
 import { cleanup } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
-import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
-import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
 
 
 const PendingOrder = (props) => {
@@ -21,53 +18,27 @@ const PendingOrder = (props) => {
     const [result, setResult] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [err, setErr] = useState("");
-    const [loader, setLoader] = useState(false);
-    const [successMsg, setSuccessMsg] = useState("");
-    const [amount, setAmount] = useState("");
-    const [phone, setPhone] = useState("")
-    const [id, setId] = useState("")
+
     const flatListRef = useRef()
-    const bottomSheet = useRef();
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
-    const { errors, pendingOrders, update, loaded, verify, verificationStatus } = useSelector((state) => state.order);   
+    const { pendingOrders, loaded, pendingOrdersCurrentPage } = useSelector((state) => state.order);  
     
-      const handleBackButton = () => {
-        if (props.navigation.isFocused()) {
-            props.navigation.navigate("Home");
-          return true;
-        }
-      };
     
       useEffect(() => {
-        dispatch(getCustomerPendingOrders());
-        BackHandler.addEventListener("hardwareBackPress", handleBackButton);
+        dispatch(cleanup())
+        dispatch(getCustomerPendingOrders(1));
         return () => {
           dispatch(cleanup())
-          BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
         }
       }, []);
 
-    const toastConfig = {
-        error: () => (
-            <View style={[{ marginHorizontal: 20 }, globalStyles.errMainView2, globalStyles.marginTop]}>
-                <Text style={globalStyles.failedResponseText}>{err}</Text>
-            </View>
-        ),
-    };
 
     const redirectToSort = () => {
         setShowModal(true)
     };
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         dispatch(getCustomerPendingOrders());
-    //         return () => dispatch(cleanup());
-    //     }, [])
-    // );
 
     useEffect(() => {
         if (search.length > 0) {
@@ -75,33 +46,9 @@ const PendingOrder = (props) => {
         }
     }, [search.length]);
 
-    useEffect(() => {
-        if (update === "failed" && props.navigation.isFocused()) {
-            waitTime("", errors?.msg)
-        } else if (update === "success" && props.navigation.isFocused()) {
-            waitTime("Order Placed Successfully")
-        }
-
-        if (verify === "failed" && props.navigation.isFocused()) {
-            waitTime("", errors?.msg)
-        } else if (verify === "success" && props.navigation.isFocused()) {
-            setLoader(false)
-            dispatch(cleanup());
-            dispatch(getCustomerPendingOrders())
-            props.navigation.navigate("CheckoutSuccess", amount)
-        }
-
-        if (verificationStatus === "failed" && props.navigation.isFocused()) {
-            waitTime("", errors?.msg)
-        } else if (verificationStatus === "success" && props.navigation.isFocused()) {
-            setSuccessMsg("Verification code sent");
-            bottomSheet.current.show();
-        }
-
-    }, [errors]);
 
     const filterOrder = () => {
-        let searched = pendingOrders.orders.filter(val => {
+        let searched = pendingOrders.filter(val => {
             if (val.ref_no !== null && val.ref_no.toLowerCase().includes(search.toLowerCase())) {
                 return val
             }
@@ -111,7 +58,7 @@ const PendingOrder = (props) => {
 
     const sortOrder = (id) => {
         setShowModal(false);
-        let order = [...pendingOrders.orders];
+        let order = [...pendingOrders];
         let searched;
 
         switch (id) {
@@ -134,53 +81,27 @@ const PendingOrder = (props) => {
         }
     };
 
-    const verifyToken = (a, b, c, d) => {
-        const code = {code:parseInt(`${a}${b}${c}${d}`)}
-        setLoader(true);
-        dispatch(verifyCode(code));
-    };
-
-    const resendToken = (id) => {
-        const details = { orderGroup_id: id};
-        setLoader(true);
-        dispatch(verifyOrder(details));
-    };
-
-
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
-    const waitTime = useCallback((msg) => {
-        wait(1000).then(() => {
-            setLoader(false);
-            setErr(msg)
-            Toast.show({
-                type: 'error',
-                visibilityTime: 5000,
-                autoHide: true,
-                position: 'top',
-                topOffset: 0
-            })
-        });
-        wait(4000).then(() => {
-            dispatch(cleanup());
-        })
-    }, []);
-
     const refreshView = useCallback(() => {
         setRefreshing(true);
-        dispatch(getCustomerPendingOrders());
+        dispatch(cleanup())
+        dispatch(getCustomerPendingOrders(1));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
     const dismissKeyboard = () => Keyboard.dismiss();
     const goToCat = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
-    const details = (item) => props.navigation.navigate("OrderDetails", { item });
+    const details = (item) => props.navigation.navigate("IncompleteOrderDetails", { item });
+
+    const loadMore = () => {
+        dispatch(getCustomerPendingOrders(pendingOrdersCurrentPage?.current_page + 1));
+    }
 
     const ListView = ({ item }) => (
-        <View >
-            <View style={[styles.card, styles.elevation]}>
+            <TouchableOpacity style={[styles.card, styles.elevation]} onPress={() => details(item)}>
                 <View style={styles.cardUpCover}>
                     <View style={styles.cardUpTop}>
                         <Text style={styles.upTextOne}>Order No: {item.ref_no}</Text>
@@ -205,18 +126,16 @@ const PendingOrder = (props) => {
                         <Text style={styles.statusText2}>Incomplete</Text>
                     </View>
 
-                    {item.ref_no !== null ?
+                    {/* {item.ref_no !== null ?
                         <TouchableOpacity style={styles.reorderCover} onPress={() => {resendToken(item.id); setPhone(item?.user?.phone); setId(item.id); setAmount(item.total_amount)}}>
-                            <Text style={styles.reOrderText}>Re-Send Code</Text>
+                            <Text style={styles.reOrderText}>Refresh</Text>
                             <Image source={require("@Assets/image/refresh.png")} style={styles.refreshImg} />
                         </TouchableOpacity>
-                        : null}
+                        : null} */}
 
                 </View>
 
-            </View>
-
-        </View>
+            </TouchableOpacity>
 
     )
 
@@ -239,7 +158,7 @@ const PendingOrder = (props) => {
 
                         <View style={styles.exchangeCover}>
                             <Text style={styles.allOrderText}>Incomplete  Orders</Text>
-                            {pendingOrders.orders?.length ?
+                            {pendingOrders.length ?
                             <TouchableOpacity style={styles.exchangeClickk} onPress={ redirectToSort }>
                             <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
                                 <Text style={styles.exchangeText}>Sort by</Text>
@@ -250,26 +169,27 @@ const PendingOrder = (props) => {
 
                 </TouchableWithoutFeedback>
 
-            {err ? <Toast config={toastConfig} /> : null}
-
             <View style={styles.bottomCover}>
                 {loaded === "idle" || loaded === "pending" ?
                     <CustomerPlaceholderCard />
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={!result.length ? pendingOrders.orders : result}
+                        data={!result.length ? pendingOrders : result}
                         renderItem={ListView}
                         ListEmptyComponent={EmptyPlaceHolder}
                         keyExtractor={item => item.id}
                         ref={flatListRef}
+                        initialNumToRender={5}
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
                         }
-                        initialNumToRender={3}
-                        getItemLayout={(data, index) => (
-                            { length: 100, offset: 100 * index, index }
-                        )}
+                        onEndReachedThreshold={0.5}
+                        onEndReached={() => {
+                            if (pendingOrdersCurrentPage?.current_page < pendingOrdersCurrentPage?.last_page) {
+                                loadMore()
+                            }
+                        }}
                     />
                 }
             </View>
@@ -279,16 +199,6 @@ const PendingOrder = (props) => {
                 onSwipeComplete={() => setShowModal(false)}
                 close={() => setShowModal(!showModal)}
                 onSwipeComplete1={() => setShowModal(false)}
-            />
-
-            <Loader isVisible={loader} />
-            <BottomSheet
-                bottomSheet={bottomSheet}
-                submit = {verifyToken}
-                err ={err}
-                success={successMsg}
-                resendToken={() => resendToken(id)}
-                phone= {phone}
             />
 
         </View>

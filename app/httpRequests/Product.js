@@ -11,7 +11,7 @@ export const listProducts = createAsyncThunk("product/all",
 export const searchProducts = createAsyncThunk("product/search",
     async (searched, thunkAPI) => {
         const Axios = await AxiosBase();
-        const { search, type, id, no} = searched
+        const { search, type, id, no } = searched
         return apiRequest(Axios.get(`api/v1/search_result?q=${search}&type=${type}&option=${id}&page=${no}`), thunkAPI)
     });
 
@@ -19,4 +19,10 @@ export const searchProductsByItems = createAsyncThunk("product/type-head",
     async (search, thunkAPI) => {
         const Axios = await AxiosBase();
         return apiRequest(Axios.get(`api/v1/search_products_typeahead?q=${search}`), thunkAPI)
+    });
+
+export const productNotification = createAsyncThunk("product/notification",
+    async (id, thunkAPI) => {
+        const Axios = await AxiosBase();
+        return apiRequest(Axios.get(`api/v1/products/${id}/notify`), thunkAPI)
     });

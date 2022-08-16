@@ -166,9 +166,7 @@ export default styles = StyleSheet.create({
     showTextPin: {
         color: "#9E9E9E",
         fontSize: 11,
-        // marginTop: Platform.OS === "android" ? 16 : 5,
         fontFamily: "Urbanist-Regular",
-        // lineHeight: 16,
         letterSpacing: 0.2,
         fontWeight: "400"
     },
@@ -179,7 +177,13 @@ export default styles = StyleSheet.create({
     },
     inputOuterView: {
         marginHorizontal: 20,
-        marginTop:"-7%"
+       
+
+    },
+    inputOuterView2: {
+        marginHorizontal: 20,
+        position: "absolute",
+        top: -70,
 
     },
     sucToastCover: {
@@ -215,6 +219,7 @@ export default styles = StyleSheet.create({
         height: 64,
         borderRadius: 100,
         resizeMode: 'cover',
+        transform: [{rotate: "-90deg"}]
     },
     imgCover: {
         width: 67,
@@ -324,7 +329,7 @@ export default styles = StyleSheet.create({
         marginTop: 20,
     },
     scrollContentContainer:{
-        height: "115%",
+        // height: "115%",
         // paddingBottom: 300,
 
     }

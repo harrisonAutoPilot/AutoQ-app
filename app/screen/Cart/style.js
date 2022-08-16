@@ -16,8 +16,12 @@ export default styles = StyleSheet.create({
   },
 
   mainBody: {
-    // zIndex:9000,
-    backgroundColor: "#fff"
+    position: "absolute",
+    top: 20,
+    backgroundColor: "#fff",
+    left: 0,
+    right: 0,
+    width: "100%"
   },
   body: {
     backgroundColor: "#fff",
@@ -43,11 +47,11 @@ export default styles = StyleSheet.create({
     width: wp('100%'),
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#fafafa",
+    borderBottomColor: "#cdcdcd",
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 20
+    height: 140
   },
   cover: {
     width: wp('100%'),
@@ -85,7 +89,7 @@ export default styles = StyleSheet.create({
     letterSpacing: 0.2
   },
   descTextView:{
-    height: "38%",
+    // height: "38%",
     paddingTop: 5
   },
   descTextViewP:{

@@ -33,6 +33,7 @@ import AddStore from "@Screen/Customers/MyStore/AddStore";
 import StoreDetails from "@Screen/Customers/MyStore/StoreDetails";
 import RegConfirm from "@Screen/Customers/Registration/RegConfirm";
 import SoftUpdate from "@Screen/SoftUpdate";
+import InCompleteOrderDetails from "@Screen/IncompleteOrderDetails";
 
 
 const Stack = createNativeStackNavigator();
@@ -75,6 +76,10 @@ const RootStackNavigator = () => {
             <RootStack.Group>
                 <RootStack.Screen name="OrderDetails" component={CustomerOrderDetails} />
                 <RootStack.Screen name="TrackOrder" component={TrackOrder} />
+            </RootStack.Group>
+
+            <RootStack.Group>
+                <RootStack.Screen name="IncompleteOrderDetails" component={InCompleteOrderDetails} />
             </RootStack.Group>
 
             <RootStack.Group>
@@ -137,14 +142,14 @@ const StackNavigator = () => {
 
     useEffect(() => {
 
-        VersionCheck.needUpdate()
-            .then(async res => {
-                if (res?.isNeeded) {
-                    setVersionState(true)
-                } else {
-                    setVersionState(false)
-                }
-            });
+        // VersionCheck.needUpdate()
+        //     .then(async res => {
+        //         if (res?.isNeeded) {
+        //             setVersionState(true)
+        //         } else {
+        //             setVersionState(false)
+        //         }
+        //     });
 
         wait(1000).then(() => setTimer(true));
 
@@ -159,6 +164,8 @@ const StackNavigator = () => {
     useEffect(() => {
         if (isAuthenticated) {
             dispatch(getUser());
+        }else{
+            dispatch(logout());
         }
     }, [isAuthenticated]);
 

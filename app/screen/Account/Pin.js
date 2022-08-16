@@ -16,14 +16,12 @@ export default Pin = () => {
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [pinVisibility, setPinVisibility] = useState(true);
-    const [status, setStatus] = useState(false);
     const [loader, setLoader] = useState(false);
 
     const { errors, update, user } = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(cleanup());
-        setStatus(true)
     }, []);
 
     const dismissKeyboard = () => Keyboard.dismiss();
@@ -70,7 +68,7 @@ export default Pin = () => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyles.errMainView, styles.inputOuterView]}>
+            <View style={[globalStyles.errMainView, styles.inputOuterView2]}>
                 <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
             </View>
         ),
@@ -82,9 +80,9 @@ export default Pin = () => {
 
 
     useEffect(() => {
-        if (update === "failed" && status) {
+        if (update === "failed" ) {
             waitTime(errors?.msg, "");
-        } else if (update === "success" && status) {
+        } else if (update === "success") {
             waitTime("", "PIN Updated");
         } else {
             setSuccessMsg("");

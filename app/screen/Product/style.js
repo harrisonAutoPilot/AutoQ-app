@@ -221,6 +221,13 @@ export default styles = StyleSheet.create({
         color: "#469D00",
         letterSpacing: 0.1
     },
+    outOfStockPriceText:{
+        fontSize: 16,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 24,
+        color: "#eee",
+        letterSpacing: 0.1,
+    },
     priceRoll: {
         textTransform: "capitalize"
     },

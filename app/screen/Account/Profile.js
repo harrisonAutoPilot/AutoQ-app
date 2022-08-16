@@ -11,10 +11,13 @@ import Loader from "@Screen/Loader";
 import { SuccessMsgViewTwo } from "@Component";
 
 export default Profile = () => {
-    const [loader, setLoader] = useState(false);
+
     const dispatch = useDispatch();
+
+    const [loader, setLoader] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+
     const { user, update, errors } = useSelector((state) => state.auth);
 
     const updateProfilePic = () => {
@@ -24,6 +27,7 @@ export default Profile = () => {
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
+                
             },
             includeBase64: true,
             title: "Select Photo",

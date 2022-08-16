@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
         height: 64,
         resizeMode: 'cover',
         alignItems: 'center',
-        borderRadius: 40
+        borderRadius: 40,
+        transform:[{rotate: "-90deg"}]
     },
     welcomeCover: {
         flexDirection: 'row',
@@ -51,7 +52,6 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     scrollStyle:{
-        //  height: hp('86.5%'),
         backgroundColor: '#fff',
         marginTop:10,
     },
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 29.75,
         paddingTop: 25.5,
         paddingBottom: 20,
-        marginTop: 5
+        marginTop: 5,
     },
     modalPadding: {
         paddingHorizontal: 29.75,
@@ -536,7 +536,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignContent: "center",
         width: "100%",
-        justifyContent: "center"
+        justifyContent: "center", 
+        marginVertical: 20,
     },
     modalBtn: {
         backgroundColor: "rgba(124, 207, 36, 1)",
@@ -719,7 +720,7 @@ const styles = StyleSheet.create({
     },
     addStoreBottomSheet: {
         borderRadius: 50,
-          overflow: "hidden"
+        overflow: "hidden"
     },
 
   //THIS IS FOR THE HOSPITAL TYPE CHECK
@@ -753,7 +754,23 @@ listPercent: {
     textTransform: "capitalize",
     marginLeft:5,
 },
-    
+notifyMeBtn:{
+    marginTop: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    backgroundColor: "#3858CF",
+    borderRadius: 100,
+    marginBottom: 20
+},
+notifyMeBtn2:{
+    marginTop: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    backgroundColor: "#cdcdcd",
+    borderRadius: 100,
+    marginBottom: 20
+}
+
 });
 
 export default styles

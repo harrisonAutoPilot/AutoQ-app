@@ -14,7 +14,8 @@ export const orderSlice = createSlice({
         verificationStatus:"idle",
         pendingOrders: [],
         trackOrderStatus: "idle",
-        trackOrderList: []
+        trackOrderList: [],
+        pendingOrdersCurrentPage: {}
     },
     reducers:{
         cleanup: (state) => {
@@ -24,7 +25,7 @@ export const orderSlice = createSlice({
             state.orderDetail = {},
             state.verify = "idle",
             state.verificationStatus = "idle",
-            // state.pendingOrders = [],
+            state.pendingOrders = [],
             state.trackOrderList= [],
             state.trackOrderStatus = "idle"
         },
@@ -33,7 +34,13 @@ export const orderSlice = createSlice({
         },
         cleanVerify: (state) => {
             state.verificationStatus = "idle"
-        }
+        },
+        cleanfailedOrder: (state) => {
+            state.errors = {}
+            // state.update = "idle",
+            state.verify = "idle"
+            state.verificationStatus = "idle"
+        },
     },
     extraReducers: builder => {
         builder
@@ -56,11 +63,11 @@ export const orderSlice = createSlice({
             builder
             .addCase(getCustomerPendingOrders.pending, state => {
                 state.errors = {};
-                state.pendingOrders = [];
                 state.loaded = "pending"
             })
             .addCase(getCustomerPendingOrders.fulfilled, (state, action) => {
-                state.pendingOrders = action.payload;
+                state.pendingOrders = [...state.pendingOrders, ...action.payload.orders.data];
+                state.pendingOrdersCurrentPage = action.payload.orders
                 state.errors = {};
                 state.loaded = "success";
             })
@@ -157,6 +164,6 @@ export const orderSlice = createSlice({
 
 });
 
-export const { cleanup, cleanErr, cleanVerify } = orderSlice.actions
+export const { cleanup, cleanErr, cleanVerify, cleanfailedOrder } = orderSlice.actions
 
 export default orderSlice.reducer;

@@ -1,26 +1,60 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { View, Text, Image, ScrollView, FlatList, } from "react-native";
 import styles from "./style";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
 import { AuthBtn, COHeader as Header } from "@Component/index";
-import { reOrder } from "@Request/CustomerOrder";
-import { cleanup } from "@Store/CustomerOrder";
+import { cleanup, cleanfailedOrder, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
+import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
+import { getCustomerPendingOrders, verifyOrder, verifyCode } from "@Request/CustomerOrder";
 
-const CustomerOrderDetails = (props) => {
+const InCompleteOrderDetails = (props) => {
 
    const dispatch = useDispatch();
    const [err, setErr] = useState("");
    const [loader, setLoader] = useState(false);
-   let no = 0;
-   const orders = props.route.params.item;
-   const { errors, update } = useSelector((state) => state.order);
-   console.log(orders)
+   const [successMsg, setSuccessMsg] = useState("");
+   const [phone, setPhone] = useState("");
+   const [id, setId] = useState("");
+   const [amount, setAmount] = useState("");
 
-   const wait = (timeout) => {
-      return new Promise(resolve => setTimeout(resolve, timeout));
+   const bottomSheet = useRef();
+   const orders = props.route.params.item;
+
+   const { errors, verify, verificationStatus } = useSelector((state) => state.order);
+
+   const verifyToken = (a, b, c, d) => {
+      const code = { code: parseInt(`${a}${b}${c}${d}`) }
+      setLoader(true);
+      dispatch(verifyCode(code));
+   };
+
+   const resendToken = (id) => {
+      const details = { orderGroup_id: id };
+      setLoader(true);
+      dispatch(verifyOrder(details));
+   };
+
+   const sendToken = (id, phone, total_amount) => {
+      resendToken(id);
+      setPhone(phone);
+      setId(id);
+      setAmount(total_amount)
+   }
+
+   const closeBottomSheet = () => {
+      dispatch(cleanVerify());
+      bottomSheet.current.close();
+   }
+
+   const toastConfig = {
+      error: () => (
+         <View style={[{ marginHorizontal: 20 }, globalStyles.errMainView2, globalStyles.marginTop]}>
+            <Text style={globalStyles.failedResponseText}>{err}</Text>
+         </View>
+      ),
    };
 
    const waitTime = useCallback((msg) => {
@@ -36,37 +70,34 @@ const CustomerOrderDetails = (props) => {
          })
       });
       wait(4000).then(() => {
-         dispatch(cleanup());
+         dispatch(cleanfailedOrder());
       })
    }, []);
 
-   const toastConfig = {
-      error: () => (
-         <View style={[{ marginHorizontal: 20 }, globalStyles.errMainView2, globalStyles.marginTop]}>
-            <Text style={globalStyles.failedResponseText}>{err}</Text>
-         </View>
-      ),
-   };
-
    useEffect(() => {
-      if (update === "failed" && props.navigation.isFocused()) {
-         waitTime(errors?.msg);
-      } else if (update === "success" && props.navigation.isFocused()) {
-         props.navigation.navigate("Cart")
-      } else {
-         setErr("")
+
+      if (verify === "failed" && props.navigation.isFocused()) {
+         waitTime("", errors?.msg)
+      } else if (verify === "success" && props.navigation.isFocused()) {
+         setLoader(false)
+         dispatch(cleanup());
+         dispatch(getCustomerPendingOrders(1))
+         props.navigation.navigate("CheckoutSuccess", amount)
       }
-   }, [update]);
+
+      if (verificationStatus === "failed" && props.navigation.isFocused()) {
+         waitTime("", errors?.msg)
+      } else if (verificationStatus === "success" && props.navigation.isFocused()) {
+         setSuccessMsg("Verification code sent");
+         bottomSheet.current.show();
+         setLoader(false)
+      }
+
+   }, [errors]);
 
 
    const goBack = () => props.navigation.goBack();
-   const trackOrder = () => props.navigation.navigate("TrackOrder", { id: props.route.params.item.id });
 
-   const reOrders = () => {
-      const details = { order_group_id: orders.id };
-      setLoader(true)
-      dispatch(reOrder(details));
-   };
 
    const ListView = ({ item, index }) => (
       <View style={styles.cardMidCover}>
@@ -88,7 +119,7 @@ const CustomerOrderDetails = (props) => {
 
    return (
       <View style={styles.main}>
-         <Header styleView={styles.body} title="Order Details" onPress={goBack} />
+         <Header styleView={styles.body} title="Incomplete Order Details" onPress={goBack} />
          <ScrollView containerStyle={styles.bottomCover} showsVerticalScrollIndicator={false} horizontal={false}>
             <ScrollView horizontal={true}>
                <View style={styles.mainContainer}>
@@ -110,7 +141,7 @@ const CustomerOrderDetails = (props) => {
                               <Text style={styles.statusTextC}>{orders.status_text}</Text>
                            </View>
                            :
-                           orders?.status_text?.toLowerCase() === "being processed"  || orders?.status_text?.toLowerCase() === "pending" ?
+                           orders?.status_text?.toLowerCase() === "being processed" || orders?.status_text?.toLowerCase() === "pending" ?
 
                               <View style={styles.StatusCoverB}>
                                  <Text style={styles.statusText2}>{orders.status_text}</Text>
@@ -149,11 +180,6 @@ const CustomerOrderDetails = (props) => {
                            <Text style={styles.addTextTwo}>{orders?.store?.address}</Text>
                         </View>
                      </View>
-
-                     <View style={styles.addBtnCover}>
-                        <AuthBtn title="Track Order" style={styles.addressBtn} onPress={trackOrder} styles={styles.btnText} />
-                     </View>
-
                   </View>
 
                   <View style={[styles.midCard, styles.elevation]}>
@@ -187,20 +213,29 @@ const CustomerOrderDetails = (props) => {
                      </View>
                   </View>
 
-                  {orders?.orders.length ?
-                     <View style={[styles.orderBtn]}>
-                        <View style={[styles.addBtnCover]}>
-                           <AuthBtn title="Re-Order" style={styles.addressBtn2} onPress={reOrders} styles={styles.btnText2} />
-                        </View>
+                  <View style={[styles.orderBtn]}>
+                     <View style={[styles.addBtnCover]}>
+                        <AuthBtn title="Re-Send Code" style={styles.addressBtn2} styles={styles.btnText2} onPress={() => sendToken(orders.id, orders?.user?.phone, orders.total_amount)} />
                      </View>
-                     : null}
+                  </View>
 
                </View>
             </ScrollView>
          </ScrollView>
+
          <Loader isVisible={loader} />
+
+         <BottomSheet
+            bottomSheet={bottomSheet}
+            submit={verifyToken}
+            err={err}
+            success={successMsg}
+            resendToken={() => resendToken(id)}
+            phone={phone}
+            close={closeBottomSheet}
+         />
       </View>
    )
 };
 
-export default CustomerOrderDetails;
+export default InCompleteOrderDetails;
