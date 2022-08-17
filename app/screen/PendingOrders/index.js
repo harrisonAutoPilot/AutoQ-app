@@ -18,6 +18,7 @@ const PendingOrder = (props) => {
     const [result, setResult] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [trackLoaded, setTrackLoaded] = useState(false);
 
     const flatListRef = useRef()
 
@@ -27,7 +28,6 @@ const PendingOrder = (props) => {
     
     
       useEffect(() => {
-        dispatch(cleanup())
         dispatch(getCustomerPendingOrders(1));
         return () => {
           dispatch(cleanup())
@@ -97,6 +97,7 @@ const PendingOrder = (props) => {
     const details = (item) => props.navigation.navigate("IncompleteOrderDetails", { item });
 
     const loadMore = () => {
+        setTrackLoaded(true)
         dispatch(getCustomerPendingOrders(pendingOrdersCurrentPage?.current_page + 1));
     }
 
@@ -170,7 +171,7 @@ const PendingOrder = (props) => {
                 </TouchableWithoutFeedback>
 
             <View style={styles.bottomCover}>
-                {loaded === "idle" || loaded === "pending" ?
+                {(loaded === "idle" || loaded === "pending") && !trackLoaded  ?
                     <CustomerPlaceholderCard />
                     :
                     <FlatList

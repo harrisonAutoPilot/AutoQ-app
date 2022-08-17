@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         width: wp('100%'),
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: '3%',
+        // marginTop: '3%',
     },
     agentImg: {
         width: 64,
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     sunImg: {
         width: 20,
         height: 20,
+        alignSelf: "center"
     },
     burnImg:{
         width: wp('40%'),

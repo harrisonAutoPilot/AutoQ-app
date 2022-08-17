@@ -6,6 +6,7 @@ import styles from "./style";
 import { AuthBtn as Btn, Success } from "@Component";
 import { cleanup} from "@Store/CustomerOrder";
 import { idle } from "@Store/Cart";
+import { getCustomerOrders, getCustomerPendingOrders } from "@Request/CustomerOrder";
 
 const CheckoutSuccess = (props) => {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ const CheckoutSuccess = (props) => {
     props.navigation.navigate("CustomerOrder");
     dispatch(cleanup())
     dispatch(idle())
+    dispatch(getCustomerOrders())
+    dispatch(getCustomerPendingOrders(1))
   }
 
 
@@ -29,7 +32,9 @@ const CheckoutSuccess = (props) => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButton);
     return () => {
       dispatch(cleanup());
-      dispatch(idle())
+      dispatch(idle());
+      dispatch(getCustomerOrders());
+      dispatch(getCustomerPendingOrders(1));
       BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
     }
   }, []);
@@ -44,7 +49,7 @@ const CheckoutSuccess = (props) => {
       <View style={styles.midCover}>
             <View style={styles.midItem}>
                <Text style={styles.itemText}>Subtotal:</Text>
-               <Text style={styles.itemText}>₦{commafy(amount)}</Text>
+               <Text style={styles.itemText}>{amount ? commafy(amount - delivery_price) : 0}</Text>
             </View>
             <View style={styles.midItem}>
                <Text style={styles.itemText}>Delivery Fee:</Text>
@@ -53,7 +58,7 @@ const CheckoutSuccess = (props) => {
 
             <View style={styles.midItemColor}>
                <Text style={styles.itemTextColor}>Total:</Text>
-               <Text style={styles.itemTextColor}>₦{commafy(amount + delivery_price)}</Text>
+               <Text style={styles.itemTextColor}>₦{commafy(amount)}</Text>
             </View>
 
          </View>

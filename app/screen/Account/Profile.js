@@ -220,7 +220,7 @@ export default Profile = () => {
                         </View>
                     </View> */}
                 </View>
-                {/* Added this line to know if its reflecting */}
+                
             </ScrollView>
             <Loader isVisible={loader} />
         </View>

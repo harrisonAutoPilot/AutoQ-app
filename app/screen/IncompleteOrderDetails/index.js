@@ -16,14 +16,15 @@ const InCompleteOrderDetails = (props) => {
    const [err, setErr] = useState("");
    const [loader, setLoader] = useState(false);
    const [successMsg, setSuccessMsg] = useState("");
-   const [phone, setPhone] = useState("");
-   const [id, setId] = useState("");
-   const [amount, setAmount] = useState("");
 
    const bottomSheet = useRef();
    const orders = props.route.params.item;
 
    const { errors, verify, verificationStatus } = useSelector((state) => state.order);
+
+   const wait = (timeout) => {
+      return new Promise(resolve => setTimeout(resolve, timeout));
+  };
 
    const verifyToken = (a, b, c, d) => {
       const code = { code: parseInt(`${a}${b}${c}${d}`) }
@@ -31,18 +32,11 @@ const InCompleteOrderDetails = (props) => {
       dispatch(verifyCode(code));
    };
 
-   const resendToken = (id) => {
-      const details = { orderGroup_id: id };
+   const resendToken = () => {
+      const details = { orderGroup_id: orders.id };
       setLoader(true);
       dispatch(verifyOrder(details));
    };
-
-   const sendToken = (id, phone, total_amount) => {
-      resendToken(id);
-      setPhone(phone);
-      setId(id);
-      setAmount(total_amount)
-   }
 
    const closeBottomSheet = () => {
       dispatch(cleanVerify());
@@ -78,11 +72,12 @@ const InCompleteOrderDetails = (props) => {
 
       if (verify === "failed" && props.navigation.isFocused()) {
          waitTime("", errors?.msg)
-      } else if (verify === "success" && props.navigation.isFocused()) {
-         setLoader(false)
+      } else if (verify === "success") {
+         setLoader(false);
+         bottomSheet.current.close();
          dispatch(cleanup());
          dispatch(getCustomerPendingOrders(1))
-         props.navigation.navigate("CheckoutSuccess", amount)
+         props.navigation.navigate("CheckoutSuccess", { amount: orders.total_amount, delivery_price: orders?.delivery_type?.price  })
       }
 
       if (verificationStatus === "failed" && props.navigation.isFocused()) {
@@ -93,7 +88,7 @@ const InCompleteOrderDetails = (props) => {
          setLoader(false)
       }
 
-   }, [errors]);
+   }, [errors, verify, verificationStatus]);
 
 
    const goBack = () => props.navigation.goBack();
@@ -201,11 +196,11 @@ const InCompleteOrderDetails = (props) => {
                   <View style={[styles.midCard2, styles.elevation]}>
                      <View style={styles.cardUpTop}>
                         <Text style={[styles.upTextThree, styles.weight]}>SubTotal</Text>
-                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount) : 0}</Text>
+                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount - orders?.delivery_type?.price) : 0}</Text>
                      </View>
                      <View style={styles.cardUpTop}>
                         <Text style={[styles.upTextThree, styles.weight]}>Delivery Fee</Text>
-                        <Text style={[styles.upTextThree, styles.weight]}>Free</Text>
+                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders?.delivery_type?.price ? commafy(orders?.delivery_type?.price) : 0}</Text>
                      </View>
                      <View style={styles.cardUpTop}>
                         <Text style={[styles.upTextThree, styles.weight]}>Total</Text>
@@ -215,7 +210,7 @@ const InCompleteOrderDetails = (props) => {
 
                   <View style={[styles.orderBtn]}>
                      <View style={[styles.addBtnCover]}>
-                        <AuthBtn title="Re-Send Code" style={styles.addressBtn2} styles={styles.btnText2} onPress={() => sendToken(orders.id, orders?.user?.phone, orders.total_amount)} />
+                        <AuthBtn title="Re-Send Code" style={styles.addressBtn2} styles={styles.btnText2} onPress={resendToken} />
                      </View>
                   </View>
 
@@ -230,8 +225,8 @@ const InCompleteOrderDetails = (props) => {
             submit={verifyToken}
             err={err}
             success={successMsg}
-            resendToken={() => resendToken(id)}
-            phone={phone}
+            resendToken={() => resendToken(orders.id)}
+            phone={orders?.user?.phone}
             close={closeBottomSheet}
          />
       </View>

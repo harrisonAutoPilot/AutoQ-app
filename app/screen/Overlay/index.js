@@ -213,7 +213,7 @@ const Overlay = (props) => {
                 style={[styles.addStoreBottomSheet]}
                 animationConfigs={animationConfigs}
                 backdropComponent={CustomBackdrop}
-                keyboardBehavior="interactive"
+                keyboardBehavior={Platform.OS === "ios"  ? "fillParent" : "fullscreen"}
                 keyboardBlurBehavior="restore"
                 enablePanDownToClose
                 draggable={true}
@@ -230,7 +230,9 @@ const Overlay = (props) => {
                     {errMsg ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
                 </View>
-                <BottomSheetScrollView contentContainerStyle={styles.scrollStyle} >
+                <BottomSheetScrollView contentContainerStyle={styles.scrollStyle} 
+                 bounces={false}
+                >
 
                     <View>
                         {result?.id ?
@@ -286,7 +288,7 @@ const Overlay = (props) => {
                                                             value={cartAmount.toString()}
                                                             onChangeText={(val) => {
                                                                 val = val.replaceAll(regex, "")
-                                                                if (result.stock_count >= val) {
+                                                                if (val <= parseInt(result.stock_count) ) {
                                                                     setCartAmount(val.replace(/[^0-9]/g, ''))
                                                                 }
                                                             }

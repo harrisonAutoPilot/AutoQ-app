@@ -283,7 +283,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignItems: "center",
     backgroundColor: "#fafafa",
-    // marginRight: wp('12%'),
   },
   addBtnText: {
     color: '#000000',

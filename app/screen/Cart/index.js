@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
 
-
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";

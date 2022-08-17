@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, TouchableOpacity} from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 
 import styles from "./style";
 import Profile from "./Profile";
@@ -14,6 +15,13 @@ const AccountSettings = (props) => {
     const goBack = () => props.navigation.goBack()
 
     const showActive = (id) => setActiveId(id)
+    
+    useFocusEffect(
+        useCallback(() => {
+          setActiveId(1)
+        }, [])
+      );
+   
 
     return (
         <View style={styles.view}>

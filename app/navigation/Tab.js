@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FIcon from "react-native-vector-icons/Foundation"
 import IonIcon from "react-native-vector-icons/Ionicons"
-import { Platform, View} from "react-native"
+import { Platform } from "react-native"
 
 import styles from "./style";
 import Home from "@Screen/Home";

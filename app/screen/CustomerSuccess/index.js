@@ -15,9 +15,9 @@ const CustomerSuccess = (props) => {
   const details = props.route.params?.details
 
   const goBack = () => {
-    dispatch(getCustomerOrders());
     dispatch(cleanup());
-  dispatch(getCustomers());
+    dispatch(getCustomerOrders());
+    dispatch(getCustomers());
     props.navigation.navigate("CustomersDashboard")
   };
 

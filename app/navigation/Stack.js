@@ -142,14 +142,14 @@ const StackNavigator = () => {
 
     useEffect(() => {
 
-        // VersionCheck.needUpdate()
-        //     .then(async res => {
-        //         if (res?.isNeeded) {
-        //             setVersionState(true)
-        //         } else {
-        //             setVersionState(false)
-        //         }
-        //     });
+        VersionCheck.needUpdate()
+            .then(async res => {
+                if (res?.isNeeded) {
+                    setVersionState(true)
+                } else {
+                    setVersionState(false)
+                }
+            });
 
         wait(1000).then(() => setTimer(true));
 

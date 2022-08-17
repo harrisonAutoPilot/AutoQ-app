@@ -106,8 +106,9 @@ export default Pin = () => {
                     <FormikValidator
                         initialValues={changePinState}
                         validationSchema={changePinSchema}
-                        onSubmit={(values) => {
+                        onSubmit={(values,{resetForm}) => {
                             submit(values)
+                            resetForm()
                         }}>
                         {props => (
                             <View>

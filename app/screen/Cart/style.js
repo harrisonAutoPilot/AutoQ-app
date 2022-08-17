@@ -41,7 +41,8 @@ export default styles = StyleSheet.create({
   },
   view: {
     flexGrow: 1,
-    height:hp('100%')
+    height:'100%',
+    backgroundColor: "#fff"
   },
   midCard: {
     width: wp('100%'),
@@ -214,7 +215,7 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 12
   },
   bottomDownCover: {
-    width: wp('100%'),
+    width: '100%',
     borderWidth: 0,
     borderStyle: 'solid',
     backgroundColor: "#fff",
@@ -225,9 +226,10 @@ export default styles = StyleSheet.create({
     shadowColor: 'black',
     shadowRadius: 16,
     shadowOpacity: 0.1,
+    paddingBottom: 20
   },
   bottomCover: {
-    height: hp('90%'),
+    height: '93%',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: "#fff"

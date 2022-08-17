@@ -66,7 +66,25 @@ export const orderSlice = createSlice({
                 state.loaded = "pending"
             })
             .addCase(getCustomerPendingOrders.fulfilled, (state, action) => {
-                state.pendingOrders = [...state.pendingOrders, ...action.payload.orders.data];
+                const reducerWithDictionary = (arrayOne, arrayTwo) => {
+                    const reducedArray = []
+                    const dictionary = {}
+                  
+                    arrayOne.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    arrayTwo.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    return reducedArray
+                  }
+                state.pendingOrders = reducerWithDictionary(state.pendingOrders, action.payload.orders.data);
                 state.pendingOrdersCurrentPage = action.payload.orders
                 state.errors = {};
                 state.loaded = "success";

@@ -57,7 +57,25 @@ export const productSlice = createSlice({
                 state.errors = {};
             })
             .addCase(searchProducts.fulfilled, (state, action) => {
-                state.searchedProducts = [...state.searchedProducts, ...action.payload.data];
+                const reducerWithDictionary = (arrayOne, arrayTwo) => {
+                    const reducedArray = []
+                    const dictionary = {}
+                  
+                    arrayOne.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    arrayTwo.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    return reducedArray
+                  }
+                state.searchedProducts = reducerWithDictionary(state.searchedProducts, action.payload.data);
                 state.searchProductsData = action.payload;
                 state.status = "success";
                 state.errors = {};

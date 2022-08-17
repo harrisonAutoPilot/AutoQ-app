@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList, Dimensions } from "react-native";
+import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
@@ -9,7 +9,6 @@ import CatelogueCardPlaceholder from "./CatelogueCardPlaceholder";
 import { InputField, Header } from "@Component";
 import { browseCategories } from "@Request/Category";
 import styles from "./style";
-import { cleanup } from "@Store/Category";
 
 const ViewTypes = {
     HALF_LEFT: 1,
