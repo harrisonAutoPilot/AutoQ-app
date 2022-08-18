@@ -6,7 +6,7 @@ import Toast from 'react-native-toast-message';
 
 import { AuthBtn, COHeader as Header } from "@Component/index";
 import { reOrder } from "@Request/CustomerOrder";
-import { cleanup } from "@Store/CustomerOrder";
+import { cleanReOrder } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 
 const CustomerOrderDetails = (props) => {
@@ -14,10 +14,9 @@ const CustomerOrderDetails = (props) => {
    const dispatch = useDispatch();
    const [err, setErr] = useState("");
    const [loader, setLoader] = useState(false);
-   let no = 0;
+ 
    const orders = props.route.params.item;
    const { errors, update } = useSelector((state) => state.order);
-   console.log(orders)
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -36,7 +35,7 @@ const CustomerOrderDetails = (props) => {
          })
       });
       wait(4000).then(() => {
-         dispatch(cleanup());
+         dispatch(cleanReOrder());
       })
    }, []);
 
@@ -49,9 +48,11 @@ const CustomerOrderDetails = (props) => {
    };
 
    useEffect(() => {
-      if (update === "failed" && props.navigation.isFocused()) {
+      if (update === "failed") {
          waitTime(errors?.msg);
-      } else if (update === "success" && props.navigation.isFocused()) {
+      } else if (update === "success") {
+         setLoader(false)
+         dispatch(cleanReOrder());
          props.navigation.navigate("Cart")
       } else {
          setErr("")

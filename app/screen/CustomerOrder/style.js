@@ -10,6 +10,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         flexGrow: 1,
     },
+    main2: {
+        backgroundColor: '#ffffff',
+        flexGrow: 1,
+        flex: 1
+    },
     headerTitle: {
         position: 'absolute',
         top: hp('2%'),

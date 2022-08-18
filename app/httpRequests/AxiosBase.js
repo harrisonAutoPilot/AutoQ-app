@@ -14,7 +14,7 @@ const axiosbase = async () => {
         Accept: 'application/json',
         'Authorization': `Bearer ${credentials?.password}`,
       },
-      timeout: 2000
+      timeout: 200000
     });
   } catch (error) {
     console.log(error);

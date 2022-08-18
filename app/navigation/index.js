@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import FileViewer from "react-native-file-viewer";
 import RNFS from "react-native-fs";
 import { useSelector, useDispatch } from "react-redux";
-import { PermissionsAndroid, View, Text } from "react-native";
+import { PermissionsAndroid, View, Text, SafeAreaView } from "react-native";
 
 import { cleanup } from "@Store/PriceList"
 import styles from "./style";
@@ -92,9 +92,10 @@ const RootNavigator = () => {
         <NavigationContainer>
             <RootNavigation />
             {text ?
+            <SafeAreaView>
                 <View style={[styles.toastView, { backgroundColor: color }]} >
                     <Text style={styles.toast}>{text}</Text>
-                </View> : null}
+                </View></SafeAreaView> : null}
         </NavigationContainer>
        
     )

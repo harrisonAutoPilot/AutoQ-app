@@ -21,13 +21,22 @@ export const orderSlice = createSlice({
         cleanup: (state) => {
             state.errors = {}
             // state.status = "idle",
-            state.update = "idle",
-            state.orderDetail = {},
-            state.verify = "idle",
-            state.verificationStatus = "idle",
-            state.pendingOrders = [],
-            state.trackOrderList= [],
+            state.update = "idle"
+            state.orderDetail = {}
+            state.verify = "idle"
+            state.verificationStatus = "idle"
+            state.pendingOrders = []
+            state.trackOrderList= []
             state.trackOrderStatus = "idle"
+        },
+        cleanReOrder: (state) => {
+            state.errors = {}
+            state.update = "idle"
+            state.orderDetail = {}
+            state.trackOrderList= []
+            state.trackOrderStatus = "idle"
+            state.verify = "idle"
+            state.verificationStatus = "idle"
         },
         cleanErr: (state) => {
             state.errors = {}
@@ -182,6 +191,6 @@ export const orderSlice = createSlice({
 
 });
 
-export const { cleanup, cleanErr, cleanVerify, cleanfailedOrder } = orderSlice.actions
+export const { cleanup, cleanErr, cleanVerify, cleanfailedOrder, cleanReOrder } = orderSlice.actions
 
 export default orderSlice.reducer;
