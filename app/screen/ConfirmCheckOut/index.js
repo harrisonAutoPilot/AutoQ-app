@@ -11,6 +11,7 @@ import { cleanup, cleanErr, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import BottomSheet from "./ConfirmOrder";
 import { cleanup as delivery } from "@Store/DeliveryOptions";
+import { listCart } from "@Request/Cart";
 
 const ConfirmCheckOut = (props) => {
     const dispatch = useDispatch();
@@ -21,13 +22,17 @@ const ConfirmCheckOut = (props) => {
     const { selected, active, amount, wallet, delivery_date, delivery_type, delivery_price, category, deliveryTypeName } = props.route.params;
     const bottomSheet = useRef();
 
-    const backToCart = () => props.navigation.navigate("CheckOut");
+    const { update, errors, orderDetail, verify, verificationStatus } = useSelector((state) => state.order);
+
+    const backToCart = () => {
+        props.navigation.navigate("CheckOut");  
+    }
+
     const closeBottomSheet = () => {
         bottomSheet.current.close();
         dispatch(getCustomerPendingOrders(1));
         props.navigation.navigate("PendingOrder");
     }
-    const { update, errors, orderDetail, verify, verificationStatus } = useSelector((state) => state.order);
 
     useEffect(() => {
         return () => {
@@ -41,8 +46,11 @@ const ConfirmCheckOut = (props) => {
     useEffect(() => {
         if (orderDetail.order_group_id) {
             const details = { orderGroup_id: orderDetail.order_group_id };
+            setLoader(false)
             dispatch(verifyOrder(details));
-            bottomSheet.current.show();
+            Platform.OS === "android" ? 
+            bottomSheet.current.show()
+            : null
         }
     }, [orderDetail.order_group_id])
 
@@ -51,6 +59,7 @@ const ConfirmCheckOut = (props) => {
             waitTime("", errors?.msg)
         } else if (update === "success" && props.navigation.isFocused()) {
             waitTime("Order Placed Successfully", "")
+            
         }
 
         if (verify === "failed" && props.navigation.isFocused()) {
@@ -65,10 +74,11 @@ const ConfirmCheckOut = (props) => {
         if (verificationStatus === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
         } else if (verificationStatus === "success" && props.navigation.isFocused()) {
+            Platform.OS === "ios" ? bottomSheet.current.show(): null
             waitSuccessTime()
         }
 
-    }, [errors]);
+    }, [errors, verificationStatus, verify]);
 
 
     const wait = (timeout) => {
@@ -80,6 +90,8 @@ const ConfirmCheckOut = (props) => {
             if (err) {
                 setLoader(false);
                 setErr(err)
+            }else if (suc){
+                dispatch(listCart())
             }
         });
 
@@ -230,10 +242,15 @@ const ConfirmCheckOut = (props) => {
                                 </>
 
                         }
-
+                        {/* { !loader ?  */}
                         <View style={[styles.addBtnCover]}>
                             <Btn title="Confirm Check Out" style={styles.addressBtn2} onPress={submit} />
                         </View>
+                        {/* // :
+                        // <View style={[styles.addBtnCover]}>
+                        //     <Btn title="Confirming ..." style={styles.addressBtn2} />
+                        // </View>
+                        // } */}
 
 
                     </View>

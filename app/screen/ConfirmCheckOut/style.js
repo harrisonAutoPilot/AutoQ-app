@@ -434,14 +434,14 @@ export default styles = StyleSheet.create({
   pinView: {
     borderWidth: 1,
     borderColor: "#a1a1a1",
-    paddingLeft: 12,
+    // paddingLeft: 12,
     // paddingRight:12,
     paddingVertical: Platform.OS === "android" ? 8 : 8,
     borderRadius: 3,
     alignItems: "center",
     justifyContent: "center",
     alignContent: "center",
-    width: 58
+    width: "18%"
   },
   pinHolder: {
     flexDirection: "row",
@@ -457,6 +457,7 @@ export default styles = StyleSheet.create({
     fontFamily: "Urbanist-Medium",
     lineHeight: 16,
     color: "#424242",
+    paddingVertical: Platform.OS== "ios" ? 20 : 0,
   },
   scrollview: {
     paddingBottom: 50

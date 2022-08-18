@@ -24,7 +24,15 @@ const Overlay = (props) => {
 
     const ModalView = () => (
         <View>
-            <BottomSheet draggable={false} ref={props.bottomSheet} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.20} radius={50} styles={styles.addStoreBottomSheet}>
+            <BottomSheet 
+            draggable={false} 
+            ref={props.bottomSheet} 
+            sheetBackgroundColor={'#ffffff'} 
+            height={Dimensions.get("window").height / 1.20} 
+            radius={50} 
+            styles={styles.addStoreBottomSheet}
+            
+            >
                 <View style={globalStyles.dragIcon}>
                     <FIcon name="minus" color="gray" size={35} />
                     </View>
@@ -64,7 +72,6 @@ const Overlay = (props) => {
                                 <View style={styles.pinHolder}>
                                     <View style={styles.pinView}>
                                         <TextInput
-
                                             style={styles.inputF}
                                             ref={inputOneRef}
                                             placeholder="-"

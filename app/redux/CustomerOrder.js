@@ -117,6 +117,7 @@ export const orderSlice = createSlice({
 
             })
             .addCase(placeOrder.rejected, (state, { payload }) => {
+        
                 state.update = "failed";
                 state.errors = payload;
                 state.orderDetail = {}
@@ -128,11 +129,13 @@ export const orderSlice = createSlice({
                 state.verificationStatus = "pending"
             })
             .addCase(verifyOrder.fulfilled, (state, action) => {
+                console.log(action.payload, "verify suc")
                 state.verificationStatus = "success"
                 state.errors = {}; 
 
             })
             .addCase(verifyOrder.rejected, (state, { payload }) => {
+                console.log(payload, "verify fail")
                 state.verificationStatus = "failed"
                 state.errors = payload;
             })
