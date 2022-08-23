@@ -4,6 +4,11 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 export default styles = StyleSheet.create({
+  confirmCheckout: {
+    flexGrow: 1,
+    height: "100%",
+    backgroundColor: "#fff"
+  },
   mainHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -15,7 +20,6 @@ export default styles = StyleSheet.create({
   },
   body: {
     backgroundColor: "#00319D",
-    marginBottom: 10,
     paddingBottom: 5
   },
   cover: {
@@ -32,23 +36,11 @@ export default styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: wp('100%'),
     paddingHorizontal: 16,
-    paddingTop: 2,
-    paddingBottom: 2,
-    // marginTop: 5,
-    marginBottom: 7,
-
+    paddingTop: 12,
+    paddingBottom: 9,
+    backgroundColor: "#eee"
   },
-  title2Cover: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: wp('100%'),
-    paddingHorizontal: 16,
-    paddingTop: 2,
-    paddingBottom: 2,
-    marginTop: 10,
-    marginBottom: 7,
 
-  },
   selectContainer: {
     width: wp('100%'),
     paddingLeft: 16,
@@ -87,14 +79,13 @@ export default styles = StyleSheet.create({
     marginTop: 2,
     paddingHorizontal: 16,
     width: wp('100%'),
-    height: hp('60%'),
     borderWidth: 0,
     borderStyle: 'solid',
     backgroundColor: '#ffffff',
+    paddingBottom: 30
   },
   bottomCover: {
     width: wp('100%'),
-    height: hp('100%'),
     alignItems: 'center',
   },
   orderCover: {
@@ -166,11 +157,11 @@ export default styles = StyleSheet.create({
     marginTop: 10,
     paddingRight: 10,
   },
-  dashStyle:{
-    alignSelf:'center',
-    width:"98%",
-    marginRight:10,
-    marginTop:20,
+  dashStyle: {
+    alignSelf: 'center',
+    width: "98%",
+    marginRight: 10,
+    marginTop: 20,
   },
   totalCover: {
     flexDirection: 'row',
@@ -185,14 +176,14 @@ export default styles = StyleSheet.create({
   },
 
   addBtnCover2: {
-   position: "absolute",
-   bottom: 0,
-   paddingVertical: 20,
-   borderTopColor: "#EEEEEE",
-   borderTopWidth: 1,
-   backgroundColor: "#f5f5f5",
-   width: "100%",
-   paddingHorizontal: 30
+    position: "absolute",
+    bottom: 0,
+    paddingVertical: 20,
+    borderTopColor: "#EEEEEE",
+    borderTopWidth: 1,
+    backgroundColor: "#f5f5f5",
+    width: "100%",
+    paddingHorizontal: 30
   },
 
   addressBtn2: {
@@ -369,7 +360,7 @@ export default styles = StyleSheet.create({
     width: wp('100%'),
     alignItems: "center",
     paddingTop: 20,
-    marginTop:20,
+    marginTop: 20,
 
   },
   backCover: {
@@ -443,14 +434,14 @@ export default styles = StyleSheet.create({
   pinView: {
     borderWidth: 1,
     borderColor: "#a1a1a1",
-    paddingLeft: 12,
+    // paddingLeft: 12,
     // paddingRight:12,
     paddingVertical: Platform.OS === "android" ? 8 : 8,
     borderRadius: 3,
     alignItems: "center",
     justifyContent: "center",
     alignContent: "center",
-    width: 58
+    width: "18%"
   },
   pinHolder: {
     flexDirection: "row",
@@ -466,5 +457,9 @@ export default styles = StyleSheet.create({
     fontFamily: "Urbanist-Medium",
     lineHeight: 16,
     color: "#424242",
+    paddingVertical: Platform.OS== "ios" ? 20 : 0,
+  },
+  scrollview: {
+    paddingBottom: 50
   }
 })

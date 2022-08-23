@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "rh_logo_splashscreen_2_100x100.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "rh_logo_splashscreen_200x200.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "rh_logo_splashscreen_1_300x300.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

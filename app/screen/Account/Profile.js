@@ -14,20 +14,13 @@ import ConfirmDelete from "./ConfirmDelete";
 import { SuccessMsgViewTwo } from "@Component";
 
 export default Profile = () => {
-    const [loader, setLoader] = useState(false);
+
     const dispatch = useDispatch();
+
+    const [loader, setLoader] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const { user, update,deleteAccount, errors } = useSelector((state) => state.auth);
-    const [isOnBlueToggleSwitch, SetIsOnBlueToggleSwitch] = useState(true)
-    const [showConfirm, setShowConfirm] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [reset, setReset] = useState(false);
-
-
-    const onToggle = (isOn) => {
-        console.log("Changed to " + isOn);
-    }
+    const { user, update, errors } = useSelector((state) => state.auth);
 
     const updateProfilePic = () => {
         setErrMsg("");
@@ -36,6 +29,7 @@ export default Profile = () => {
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
+                
             },
             includeBase64: true,
             title: "Select Photo",
@@ -225,17 +219,32 @@ export default Profile = () => {
                             <Text style={styles.locText}>{user?.email}</Text>
                         </View>
                     </View>
-                    
-            <TouchableOpacity onPress={() => setShowConfirm(true)}>
-                <View style={styles.deleteCover}>
-                    <Icon name="trash-2" color="#D32F2F" size={16} />
-                    <Text style={styles.deleteText}>Delete Account</Text>
+
+                    {/* <View style={styles.bankCaption}>
+                        <Text style={styles.captionText}>Bank Details</Text>
+                    </View>
+                    <View style={styles.downCover}>
+                        <View style={styles.cardCover}>
+                            <View style={styles.locCover}>
+
+                                <Text style={styles.locTextTitle}>Bank:</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.locText}>Wema Bank</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.cardCover}>
+                            <View style={styles.locCoverNew}>
+                                <Text style={styles.locTextTitle}>Account Number:</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.locText}>0045678900</Text>
+                            </View>
+                        </View>
+                    </View> */}
                 </View>
-            </TouchableOpacity>
-                   
-                </View>
-                
-               
+                {/* Added this line to know if its reflecting */}
             </ScrollView>
           
             

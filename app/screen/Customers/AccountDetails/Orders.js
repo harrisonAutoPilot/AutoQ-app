@@ -5,11 +5,10 @@ import Toast from 'react-native-toast-message';
 
 import { EmptyPlaceHolder } from "@Component";
 import { reOrder } from "@Request/CustomerOrder";
-import { cleanup } from "@Store/CustomerOrder";
+import { cleanReOrder } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
 import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard"
-// import MyOrderPlaceholder from "./MyOrderPlaceholder";
 
 const Order = (props) => {
     const dispatch = useDispatch();
@@ -31,6 +30,8 @@ const Order = (props) => {
         if (update === "failed") {
             waitTime(errors?.msg);
         } else if (update === "success") {
+            setLoader(false)
+            dispatch(cleanReOrder())
             props.cart()
         } else {
             setErr("")
@@ -54,7 +55,7 @@ const Order = (props) => {
             })
         });
         wait(4000).then(() => {
-            dispatch(cleanup());
+            dispatch(cleanReOrder());
         })
     }, []);
 
@@ -115,7 +116,7 @@ const Order = (props) => {
     )
 
     return (
-        <View style={styles.main}>
+        <View style={styles.main2}>
             {err ? <Toast config={toastConfig} /> : null}
 
 

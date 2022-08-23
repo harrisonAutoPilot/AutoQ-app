@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl, Dimensions, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, SafeAreaView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
-import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
+
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
@@ -23,7 +23,6 @@ const Cart = (props) => {
     const [copyCartAmount, setCopyCartAmount] = useState({});
     const [copyCart, setCopyCart] = useState([]);
     const [scrollText, setScrollText] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
     const [itemDeleted] = useState(false);
 
     const { items, removeCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
@@ -101,13 +100,6 @@ const Cart = (props) => {
         })
     }, []);
 
-
-    const refreshCartView = useCallback(() => {
-        setRefreshing(true);
-        dispatch(listCart());
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-
     useEffect(() => {
         dispatch(listCart());
         const interval = setInterval(() => {
@@ -123,7 +115,7 @@ const Cart = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyles.errMainView, { marginBottom: 10 }]}>
+            <View style={[globalStyles.errMainView, { marginBottom: 10}]}>
                 <Text style={globalStyles.failedResponseText}>{err}</Text>
             </View>
         ),
@@ -162,9 +154,9 @@ const Cart = (props) => {
 
     const goBack = () => props.navigation.goBack();
 
-    const increaseCart = (id, item, quantity) => {
+    const increaseCart = ({id, quantity, product:{stock_count}}) => {
+        if (quantity < stock_count) {
         let filteredCart = copyCart.filter(quantity => {
-
             if (quantity.id === id) {
                 quantity.quantity = quantity.quantity + 1
                 quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
@@ -179,9 +171,10 @@ const Cart = (props) => {
         var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
         setCopyCart(res)
         return res
+    }
     };
 
-    const decreaseCart = (id, item, quantity) => {
+    const decreaseCart = ({id}) => {
 
         let filteredCart = copyCart.filter(quantity => {
             if (quantity.id === id && quantity.quantity > 1) {
@@ -223,13 +216,13 @@ const Cart = (props) => {
                     <View style={styles.increaseCartMainAmountView}>
 
                         <View style={styles.cartAmountView}>
-                            <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item.id, item.quantity, item.product.quantity_available); }}>
+                            <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item); }}>
                                 <Icon name="minus" color="#757575" />
                             </TouchableOpacity>
                             <View style={styles.increaseText}>
                                 <Text style={styles.productTitle} >{item.quantity}</Text>
                             </View>
-                            <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item.id, item.quantity, item.product.quantity_available); }}>
+                            <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item); }}>
                                 <Icon name="plus" color="#757575" />
                             </TouchableOpacity>
                         </View>
@@ -307,13 +300,10 @@ const Cart = (props) => {
                     </TouchableOpacity>
                 </View>
             </Header>
-
-            <View style={styles.mainBody}>
-                {err ? <Toast config={toastConfig} /> : null}
-                {successMsg ? <Toast config={toastConfig} /> : null}
-            </View>
+            
 
             <View style={styles.bottomCover}>
+            
                 {loaded !== "success" && itemDeleted
                     ?
                     <CartPlaceholderComponent />
@@ -331,6 +321,10 @@ const Cart = (props) => {
                         <AddCartListEmptyBig browse={browse} />
 
                 }
+                <View style={styles.mainBody}>
+                {err ? <Toast config={toastConfig} /> : null}
+                {successMsg ? <Toast config={toastConfig} /> : null}
+            </View>
 
                 <SafeAreaView>
                     {items.total_amount && loaded === "success" && copyCart && copyCart.length ?
@@ -370,6 +364,7 @@ const Cart = (props) => {
 
             </View>
             <Loader isVisible={loader} />
+            
 
         </View>
 

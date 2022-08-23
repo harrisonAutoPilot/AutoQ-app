@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { listProducts, searchProducts, searchProductsByItems } from "@Request/Product"
+import { listProducts, searchProducts, searchProductsByItems, productNotification } from "@Request/Product"
 
 export const productSlice = createSlice({
     name: "product",
@@ -11,6 +11,8 @@ export const productSlice = createSlice({
         type_head: [],
         loaded: "idle",
         searchProductsData: [],
+        notify: {},
+        notifyStatus: "idle"
     },
     reducers: {
         cleanup: (state) => {
@@ -23,6 +25,10 @@ export const productSlice = createSlice({
         cleanProducts: (state) => {
             state.searchedProducts = []
             state.searchProductsData = []
+        },
+        cleanNotification: (state) => {
+            state.notify = {}
+            state.notifyStatus = "idle"
         },
     },
     extraReducers: builder => {
@@ -48,11 +54,28 @@ export const productSlice = createSlice({
 
         builder
             .addCase(searchProducts.pending, state => {
-                // state.status = "pending";
                 state.errors = {};
             })
             .addCase(searchProducts.fulfilled, (state, action) => {
-                state.searchedProducts = [...state.searchedProducts, ...action.payload.data];
+                const reducerWithDictionary = (arrayOne, arrayTwo) => {
+                    const reducedArray = []
+                    const dictionary = {}
+                  
+                    arrayOne.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    arrayTwo.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    return reducedArray
+                  }
+                state.searchedProducts = reducerWithDictionary(state.searchedProducts, action.payload.data);
                 state.searchProductsData = action.payload;
                 state.status = "success";
                 state.errors = {};
@@ -81,10 +104,25 @@ export const productSlice = createSlice({
                 state.type_head = [];
             })
 
+            builder
+            .addCase(productNotification.pending, state => {
+                state.notifyStatus = "pending";
+                state.errors = {};
+                state.notify = {};
+            })
+            .addCase(productNotification.fulfilled, (state, action) => {
+                state.notify = action.payload;
+                state.notifyStatus = "success";
+            })
+            .addCase(productNotification.rejected, (state, { payload }) => {
+                state.notifyStatus = "failed";
+                state.errors = payload;
+            })
+
     }
 });
 
 
-export const { cleanup, cleanProducts } = productSlice.actions
+export const { cleanup, cleanProducts, cleanNotification } = productSlice.actions
 
 export default productSlice.reducer;

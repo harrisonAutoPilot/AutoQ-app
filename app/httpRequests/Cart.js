@@ -15,7 +15,7 @@ export const addToCart = createAsyncThunk("cart/add",
     });
 
 export const updateCart = createAsyncThunk("cart/update",
-    async (items,thunkAPI) => {
+    async (items, thunkAPI) => {
         const Axios = await AxiosBase();
         return apiRequest(Axios.post(`api/v1/bulk_cart`, items), thunkAPI)
     });

@@ -263,15 +263,15 @@ export default styles = StyleSheet.create({
     marginTop: 0,
   },
   optionViewCover: {
-    width: wp('92%'),
+    width: wp('90.6%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 20,
-    borderWidth: 1,
-    borderColor: "rgba(70, 157, 0, 0.5);",
     backgroundColor: "rgba(70, 157, 0, 0.05)",
     borderRadius: 4,
+    borderWidth: 1,
+    borderColor: "green"
   },
   optionViewCover2: {
     width: wp('90%'),
@@ -296,11 +296,6 @@ export default styles = StyleSheet.create({
     marginLeft: 16,
     width: "85%",
   },
-  optionTextView2: {
-    marginLeft: 16,
-    width: "85%",
-
-  },
   optionText: {
     fontFamily: "Urbanist-Regular",
     fontSize: 14,
@@ -311,8 +306,10 @@ export default styles = StyleSheet.create({
     textTransform: "capitalize"
   },
   optionMiniTextView: {
-    justifyContent: "center",
+    justifyContent: "space-between",
     paddingTop: 4,
+    flexDirection: "row",
+    paddingRight: 15
 
   },
   iconCircle: {

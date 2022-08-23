@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import RNFetchBlob from 'rn-fetch-blob'
+import FileViewer from "react-native-file-viewer";
+import RNFS from "react-native-fs";
 import { useSelector, useDispatch } from "react-redux";
-import { PermissionsAndroid, View, Text } from "react-native";
+import { PermissionsAndroid, View, Text, SafeAreaView } from "react-native";
 
 import { cleanup } from "@Store/PriceList"
 import styles from "./style";
@@ -17,8 +18,6 @@ const RootNavigator = () => {
 
     useEffect(() => {
         if (priceStatus === "pending") {
-
-            // background color should be light blue
             setColor("#3858CF")
             setText("You will be notified when the download starts");
             removeText("")
@@ -47,57 +46,56 @@ const RootNavigator = () => {
         wait(5000).then(() => setText(""));
     }, []);
 
-    const download = async () => {
+    const fileDownload = async () => {
+        const localFile = `${RNFS.TemporaryDirectoryPath}/RemedialHealth_Pricelist.pdf`
+        ;
+        const options = {
+          fromUrl: list.path,
+          toFile: localFile,
+        };
         try {
+          await RNFS.downloadFile(options).promise
+          await FileViewer.open(localFile);
+        } catch (e) {
+          console.log(e)
+        }
+      };
+
+      const download = async () => {
+        try {
+          if (Platform.OS === "android") {
             const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-                {
-                    title: "Access to Storage",
-                    message: "Download Price List"
-                }
+              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+              {
+                title: "Access to Storage",
+                message: "Download Price List"
+              }
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                // background color should be light green
-                setColor("rgba(124, 207, 36, 1)")
-                setText('Downloading Price List')
-                removeText("")
-
-                const { config, fs: { dirs } } = RNFetchBlob
-                let DownloadDir = dirs.DownloadDir
-                let options = {
-                    fileCache: true,
-                    addAndroidDownloads: {
-                        useDownloadManager: true,
-                        notification: true,
-                        path: `${DownloadDir}/RemedialHealth_Pricelist${new Date().getTime()}.pdf`,
-                        mediaScannable: true,
-                        mime: 'application/pdf',
-                    }
-                }
-                config(options).fetch('GET', list.path).then((res) => {
-                    // do some magic here
-                })
+              fileDownload()
             } else {
-                // background color should be light red
-                setColor("rgba(211, 47, 47, 1)")
-                setText('Download cancelled')
-                removeText()
-                console.log("Permission denied");
+              setColor("rgba(211, 47, 47, 1)")
+              removeText();
+              setText('Permission denied')
             }
+          } else{
+            fileDownload()
+          }
         } catch (err) {
-            console.warn(err);
+          console.warn(err);
         }
-
-    };
+    
+      };
 
     return (
  
         <NavigationContainer>
             <RootNavigation />
             {text ?
+            <SafeAreaView>
                 <View style={[styles.toastView, { backgroundColor: color }]} >
                     <Text style={styles.toast}>{text}</Text>
-                </View> : null}
+                </View></SafeAreaView> : null}
         </NavigationContainer>
        
     )

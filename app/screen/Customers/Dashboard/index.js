@@ -18,15 +18,6 @@ const CustomersDashboard = (props) => {
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         dispatch(getCustomers());
-    //         return () => dispatch(cleanup())
-            
-    //     }, [])
-
-    // );
-    
 
     useEffect(() => {
         if (search.length) {

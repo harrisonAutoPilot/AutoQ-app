@@ -14,26 +14,42 @@ export const orderSlice = createSlice({
         verificationStatus:"idle",
         pendingOrders: [],
         trackOrderStatus: "idle",
-        trackOrderList: []
+        trackOrderList: [],
+        pendingOrdersCurrentPage: {}
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
             // state.status = "idle",
-            state.update = "idle",
-            state.orderDetail = {},
-            state.verify = "idle",
-            state.verificationStatus = "idle",
-            // state.pendingOrders = [],
-            state.trackOrderList= [],
+            state.update = "idle"
+            state.orderDetail = {}
+            state.verify = "idle"
+            state.verificationStatus = "idle"
+            state.pendingOrders = []
+            state.trackOrderList= []
             state.trackOrderStatus = "idle"
+        },
+        cleanReOrder: (state) => {
+            state.errors = {}
+            state.update = "idle"
+            state.orderDetail = {}
+            state.trackOrderList= []
+            state.trackOrderStatus = "idle"
+            state.verify = "idle"
+            state.verificationStatus = "idle"
         },
         cleanErr: (state) => {
             state.errors = {}
         },
         cleanVerify: (state) => {
             state.verificationStatus = "idle"
-        }
+        },
+        cleanfailedOrder: (state) => {
+            state.errors = {}
+            // state.update = "idle",
+            state.verify = "idle"
+            state.verificationStatus = "idle"
+        },
     },
     extraReducers: builder => {
         builder
@@ -56,11 +72,29 @@ export const orderSlice = createSlice({
             builder
             .addCase(getCustomerPendingOrders.pending, state => {
                 state.errors = {};
-                state.pendingOrders = [];
                 state.loaded = "pending"
             })
             .addCase(getCustomerPendingOrders.fulfilled, (state, action) => {
-                state.pendingOrders = action.payload;
+                const reducerWithDictionary = (arrayOne, arrayTwo) => {
+                    const reducedArray = []
+                    const dictionary = {}
+                  
+                    arrayOne.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    arrayTwo.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    return reducedArray
+                  }
+                state.pendingOrders = reducerWithDictionary(state.pendingOrders, action.payload.orders.data);
+                state.pendingOrdersCurrentPage = action.payload.orders
                 state.errors = {};
                 state.loaded = "success";
             })
@@ -83,6 +117,7 @@ export const orderSlice = createSlice({
 
             })
             .addCase(placeOrder.rejected, (state, { payload }) => {
+        
                 state.update = "failed";
                 state.errors = payload;
                 state.orderDetail = {}
@@ -94,11 +129,13 @@ export const orderSlice = createSlice({
                 state.verificationStatus = "pending"
             })
             .addCase(verifyOrder.fulfilled, (state, action) => {
+                console.log(action.payload, "verify suc")
                 state.verificationStatus = "success"
                 state.errors = {}; 
 
             })
             .addCase(verifyOrder.rejected, (state, { payload }) => {
+                console.log(payload, "verify fail")
                 state.verificationStatus = "failed"
                 state.errors = payload;
             })
@@ -157,6 +194,6 @@ export const orderSlice = createSlice({
 
 });
 
-export const { cleanup, cleanErr, cleanVerify } = orderSlice.actions
+export const { cleanup, cleanErr, cleanVerify, cleanfailedOrder, cleanReOrder } = orderSlice.actions
 
 export default orderSlice.reducer;

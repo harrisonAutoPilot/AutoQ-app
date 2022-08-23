@@ -1,37 +1,27 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, TouchableOpacity} from "react-native";
-import { useDispatch } from "react-redux";
-import { useFocusEffect , CommonActions} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import styles from "./style";
-import {COHeader as Header} from "@Component";
 import Profile from "./Profile";
 import Pin from "./Pin"
-import { cleanup } from "@Store/Auth";
+
+import { COHeader as Header} from "@Component";
 
 const AccountSettings = (props) => {
 
-    const dispatch = useDispatch();
     const [activeId, setActiveId] = useState(1);
-    const goBack = () => {
-        const navigateAction = CommonActions.reset({
-            index: 1,
-            routes: [
-                { name: 'Home' }
-              ],
-          })
-          props.navigation.dispatch(navigateAction);
-    }
-
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(cleanup())
     
-           return () => dispatch(cleanup());
-         }, [])
-       );
+    const goBack = () => props.navigation.goBack()
 
     const showActive = (id) => setActiveId(id)
+    
+    useFocusEffect(
+        useCallback(() => {
+          setActiveId(1)
+        }, [])
+      );
+   
 
     return (
         <View style={styles.view}>

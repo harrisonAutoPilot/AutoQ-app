@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { View, Text, TouchableOpacity, Image, Platform, Dimensions, Animated } from "react-native";
+import { View, Text, TouchableOpacity, Image, Platform, Animated } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
@@ -13,22 +13,35 @@ import {
 import styles from '@Screen/Home/style';
 import { addToCart } from "@Request/Cart";
 import FIcon from "react-native-vector-icons/FontAwesome5";
-import { SuccessMsgViewTwo } from "@Component";
+import { SuccessMsgViewTwo, AuthBtn as Btn, } from "@Component";
 import { cleanup } from "@Store/Cart";
 import SmallCard from './SmallCard';
 import { listCart } from "@Request/Cart";
-import { searchProducts } from "@Request/Product";
+import { productNotification } from "@Request/Product";
+import { cleanNotification } from "@Store/Product";
 
 const Overlay = (props) => {
     const dispatch = useDispatch();
+
     const result = props.result;
+
+    const regex = new RegExp("^0+(?!$)", 'g');
+
     const [cartAmount, setCartAmount] = useState(1);
     const [errMsg, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [adding, setAdding] = useState(false);
+    const [notifying, setNotfying] = useState(false);
+
     const { addCart, errors } = useSelector((state) => state.cart);
+    const { notifyStatus, notify } = useSelector((state) => state.product);
 
+    const getProductNotification = () => {
+        setNotfying(true)
+        dispatch(productNotification(result.id))
+    }
 
+    // Bottom Sheet SnapPoints
     const snapPoints = useMemo(() => ["50%", "85%"], []);
     const handleSheetChanges = useCallback((index) => {
         console.log('handleSheetChanges', index);
@@ -40,7 +53,6 @@ const Overlay = (props) => {
     });
 
     const CustomBackdrop = ({ animatedIndex, style }) => {
-        // animated variables
         const containerAnimatedStyle = useAnimatedStyle(() => ({
             opacity: interpolate(
                 animatedIndex.value,
@@ -66,12 +78,12 @@ const Overlay = (props) => {
     };
 
 
+    // UseEffects
     useEffect(() => {
         if (addCart === "failed") {
             refreshView(errors?.msg ? errors?.msg : "An error occurred", "")
             setSuccessMsg("");
         } else if (addCart === "success") {
-            // dispatch(searchProducts(props.route?.params?.category));
             setErr("");
             refreshView("", "Added to Cart");
         } else {
@@ -79,6 +91,19 @@ const Overlay = (props) => {
             setSuccessMsg("");
         }
     }, [addCart]);
+
+    useEffect(() => {
+        if (notifyStatus === "failed") {
+            refreshNotifyView(errors?.msg ? errors?.msg : "An error occurred", "")
+            setSuccessMsg("");
+        } else if (notifyStatus === "success") {
+            setErr("");
+            refreshNotifyView("", notify.msg);
+        } else {
+            setErr("");
+            setSuccessMsg("");
+        }
+    }, [notifyStatus]);
 
     useEffect(() => {
         setCartAmount(1);
@@ -118,10 +143,49 @@ const Overlay = (props) => {
         wait(3000).then(() => { dispatch(cleanup()); })
     }, []);
 
+    const refreshNotifyView = useCallback((msg, suc) => {
+        wait(300).then(() => {
+            setSuccessMsg(suc);
+            setErr(msg);
+            setNotfying(false)
+            if (suc) {
+                Toast.show({
+                    type: 'tomatoToast',
+                    visibilityTime: 5000,
+                    autoHide: true,
+                    position: 'top',
+                    topOffset: Platform.OS === "ios" ? 90 : 50
+                })
+
+            } else {
+                Toast.show({
+                    type: 'error',
+                    visibilityTime: 5000,
+                    autoHide: true,
+                    position: 'top',
+                    topOffset: 0
+                })
+            }
+        })
+
+        wait(3000).then(() => { dispatch(cleanNotification()); })
+    }, []);
+
     const increaseCart = () => {
         setErr("")
-        // if (result.quantity_available > cartAmount) return 
-        setCartAmount(cartAmount + 1)
+        if (result.stock_count > cartAmount)
+            return setCartAmount(cartAmount + 1)
+    };
+
+    const decreaseCart = () => {
+        setErr("")
+        if (cartAmount > 1) return setCartAmount(cartAmount - 1);
+    };
+
+    const addItemsToCart = () => {
+        setAdding(true)
+        const cartDetails = { quantity: cartAmount, product_id: result.id }
+        dispatch(addToCart(cartDetails));
     };
 
     const toastConfig = {
@@ -137,17 +201,6 @@ const Overlay = (props) => {
         )
     };
 
-    const decreaseCart = () => {
-        setErr("")
-        if (cartAmount > 1) return setCartAmount(cartAmount - 1);
-    };
-
-    const addItemsToCart = () => {
-        setAdding(true)
-        const cartDetails = { quantity: cartAmount, product_id: result.id }
-        dispatch(addToCart(cartDetails));
-    };
-    const regex = new RegExp("^0+(?!$)", 'g');
 
     const ModalView = () => (
         <BottomSheetModalProvider>
@@ -160,7 +213,7 @@ const Overlay = (props) => {
                 style={[styles.addStoreBottomSheet]}
                 animationConfigs={animationConfigs}
                 backdropComponent={CustomBackdrop}
-                keyboardBehavior="interactive"
+                keyboardBehavior={Platform.OS === "ios"  ? "fillParent" : "fullscreen"}
                 keyboardBlurBehavior="restore"
                 enablePanDownToClose
                 draggable={true}
@@ -177,11 +230,13 @@ const Overlay = (props) => {
                     {errMsg ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
                 </View>
-                <BottomSheetScrollView contentContainerStyle={styles.scrollStyle} >
+                <BottomSheetScrollView contentContainerStyle={styles.scrollStyle} 
+                 bounces={false}
+                >
 
-                    <View >
+                    <View>
                         {result?.id ?
-                            <View  >
+                            <View >
                                 <View style={styles.topModalView}>
                                     <View style={styles.topModalImageView}>
                                         <SmallCard img={result.product_images} />
@@ -191,22 +246,22 @@ const Overlay = (props) => {
                                     </View>
                                     <View style={styles.modalTitleView}>
                                         <Text style={styles.modalTitle2}>{result.pack_size}</Text>
-                                        { props.output && props.output  != 0 ?
-                                        <View style={styles.crossCover}>
-                                        <Image source={require("@Assets/image/cross2.png")} style={styles.smCrossImg} />
-                                        <Text style={styles.listPercent}>{props.output}</Text>
-                        </View>
-                        : null
-                           }
+                                        {props.output && props.output != 0 ?
+                                            <View style={styles.crossCover}>
+                                                <Image source={require("@Assets/image/cross2.png")} style={styles.smCrossImg} />
+                                                <Text style={styles.listPercent}>{props.output}</Text>
+                                            </View>
+                                            : null
+                                        }
                                     </View>
                                 </View>
 
-                                <View style={styles.modalMiniBody} showsVerticalScrollIndicator={true}>
+                                <View style={styles.modalMiniBody}>
                                     <View style={styles.modalminiSecondView}>
                                         <Text style={styles.modalminiTitle}>Category: <Text style={styles.modalminiSecondTitle}>{result.category.display_name}</Text></Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Available:  <Text style={{ color: "#469D00" }}>In Stock</Text></Text>
+                                        <Text style={styles.modalminiTitle}>Available: {result.stock_count > 0 ? <Text style={{ color: "#469D00" }}>In Stock ({commafy(result.stock_count)})</Text> : <Text style={{ color: "red" }}>Out of Stock</Text>}</Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
                                         <Text style={styles.modalminiTitle}>Price/Roll: <Text style={{ color: "#469D00" }}>&#8358;{commafy(result.price_per_pack)}</Text></Text>
@@ -218,59 +273,76 @@ const Overlay = (props) => {
                                         <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result.quantity_per_pack}</Text></Text>
                                     </View>
 
-                                    {/* {result.quantity_available > 0 ? */}
+                                    {result.stock_count > 0 ?
 
-                                        <View style={styles.increaseCartMainAmountView}>
-                                            <View style={styles.cartAmountView}>
-                                                <TouchableOpacity style={styles.increase} onPress={decreaseCart}>
-                                                    <Icon name="minus" color="#212121" />
-                                                </TouchableOpacity>
-                                                <View style={styles.increaseText}>
-                                                    <BottomSheetTextInput
-                                                        style={styles.labelCart}
-                                                        value={cartAmount.toString()}
-                                                        onChangeText={(val) => {
-                                                            // if (result.quantity_available >= val) {
+                                        <View>
+
+                                            <View style={styles.increaseCartMainAmountView}>
+                                                <View style={styles.cartAmountView}>
+                                                    <TouchableOpacity style={styles.increase} onPress={decreaseCart}>
+                                                        <Icon name="minus" color="#212121" />
+                                                    </TouchableOpacity>
+                                                    <View style={styles.increaseText}>
+                                                        <BottomSheetTextInput
+                                                            style={styles.labelCart}
+                                                            value={cartAmount.toString()}
+                                                            onChangeText={(val) => {
                                                                 val = val.replaceAll(regex, "")
-                                                                setCartAmount(val.replace(/[^0-9]/g, ''))
-                                                            // }
-                                                        }
-                                                        }
-                                                        keyboardType="numeric"
-                                                    />
-                                                    {/* <Text style={styles.productTitle}>{cartAmount}</Text> */}
+                                                                if (val <= parseInt(result.stock_count) ) {
+                                                                    setCartAmount(val.replace(/[^0-9]/g, ''))
+                                                                }
+                                                            }
+                                                            }
+                                                            keyboardType="numeric"
+                                                        />
+                                                    </View>
+                                                    <TouchableOpacity style={styles.decrease} onPress={increaseCart}>
+                                                        <Icon name="plus" color="#212121" />
+                                                    </TouchableOpacity>
                                                 </View>
-                                                <TouchableOpacity style={styles.decrease} onPress={increaseCart}>
-                                                    <Icon name="plus" color="#212121" />
-                                                </TouchableOpacity>
+                                                <View style={{ width: "57%" }}>
+                                                    <Text style={styles.amountText}>&#8358;{commafy(result.price_per_pack * cartAmount)}</Text>
+                                                </View>
                                             </View>
-                                            <View style={{width: "57%"}}>
-                                                <Text style={styles.amountText}>&#8358;{commafy(result.price_per_pack * cartAmount)}</Text>
+
+
+                                            <View style={styles.modalHeartIconView}>
+
+                                                {
+                                                    !adding ?
+                                                        <TouchableOpacity style={styles.modalBtnView} onPress={addItemsToCart}>
+                                                            <Icon name="shopping-cart" size={16} color="#fff" />
+                                                            <View style={styles.modalBtnOverlay} >
+                                                                <Text style={styles.modalBtnText}>Add to Cart</Text>
+                                                            </View>
+
+                                                        </TouchableOpacity>
+                                                        :
+                                                        <View style={styles.modalBtnView} >
+                                                            <Icon name="shopping-cart" size={16} color="#fff" />
+                                                            <View style={styles.modalBtnOverlay} >
+                                                                <Text style={styles.modalBtnText}>Loading</Text>
+                                                            </View>
+
+                                                        </View>
+                                                }
                                             </View>
                                         </View>
-                                        {/* : null} */}
+                                        :
+                                        result.has_notified ?
+                                        <Btn title="Notification Sent" style={styles.notifyMeBtn2} />
+                                    :
 
-                                    <View style={styles.modalHeartIconView}>
-
-                                        {
-                                            !adding ?
-                                                <TouchableOpacity style={styles.modalBtnView} onPress={addItemsToCart}>
-                                                    <Icon name="shopping-cart" size={16} color="#fff" />
-                                                    <View style={styles.modalBtnOverlay} >
-                                                        <Text style={styles.modalBtnText}>Add to Cart</Text>
-                                                    </View>
-
-                                                </TouchableOpacity>
-                                                :
-                                                <View style={styles.modalBtnView} >
-                                                    <Icon name="shopping-cart" size={16} color="#fff" />
-                                                    <View style={styles.modalBtnOverlay} >
-                                                        <Text style={styles.modalBtnText}>Loading</Text>
-                                                    </View>
-
+                                        notifying ?
+                                            <View style={styles.modalBtnView} >
+                                                <View style={styles.modalBtnOverlay} >
+                                                    <Text style={styles.modalBtnText}>Sending ...</Text>
                                                 </View>
-                                           }
-                                    </View>
+
+                                            </View> :
+
+                                            <Btn title="Notify Me" style={styles.notifyMeBtn} onPress={getProductNotification} />
+                                    }
                                 </View>
 
                             </View>

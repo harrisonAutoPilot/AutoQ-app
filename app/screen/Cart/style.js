@@ -16,8 +16,12 @@ export default styles = StyleSheet.create({
   },
 
   mainBody: {
-    // zIndex:9000,
-    backgroundColor: "#fff"
+    position: "absolute",
+    top: 20,
+    backgroundColor: "#fff",
+    left: 0,
+    right: 0,
+    width: "100%"
   },
   body: {
     backgroundColor: "#fff",
@@ -37,17 +41,18 @@ export default styles = StyleSheet.create({
   },
   view: {
     flexGrow: 1,
-    height:hp('100%')
+    height:'100%',
+    backgroundColor: "#fff"
   },
   midCard: {
     width: wp('100%'),
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#fafafa",
+    borderBottomColor: "#cdcdcd",
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 20
+    height: 140
   },
   cover: {
     width: wp('100%'),
@@ -85,7 +90,7 @@ export default styles = StyleSheet.create({
     letterSpacing: 0.2
   },
   descTextView:{
-    height: "38%",
+    // height: "38%",
     paddingTop: 5
   },
   descTextViewP:{
@@ -210,7 +215,7 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 12
   },
   bottomDownCover: {
-    width: wp('100%'),
+    width: '100%',
     borderWidth: 0,
     borderStyle: 'solid',
     backgroundColor: "#fff",
@@ -221,9 +226,10 @@ export default styles = StyleSheet.create({
     shadowColor: 'black',
     shadowRadius: 16,
     shadowOpacity: 0.1,
+    paddingBottom: 20
   },
   bottomCover: {
-    height: hp('90%'),
+    height: '93%',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: "#fff"

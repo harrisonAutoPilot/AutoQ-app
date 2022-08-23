@@ -89,7 +89,6 @@ export const authSlice = createSlice({
             })
             .addCase(updateUserPassword.fulfilled, (state) => {
                 state.update = "success";
-                state.errors = {};
             })
             .addCase(updateUserPassword.rejected, (state, { payload }) => {
                 state.update = "failed";
@@ -147,11 +146,12 @@ export const authSlice = createSlice({
                 state.signedIn = false
             })
             .addCase(updateUserImage.fulfilled, (state, {payload}) => {
+                console.log(payload, "you")
                 state.update = "success";
                 state.errors = {};
             })
             .addCase(updateUserImage.rejected, (state, { payload }) => {
-
+                console.log(payload, "jo")
                 state.update = "failed";
                 state.errors = payload;
             })
