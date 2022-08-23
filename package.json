@@ -58,11 +58,7 @@
     "recyclerlistview": "^3.0.5",
     "redux-persist": "^6.0.0",
     "redux-persist-sensitive-storage": "^1.0.0",
-<<<<<<< HEAD
     "rn-fetch-blob": "^0.12.0",
-    "toggle-switch-react-native": "^3.3.0",
-=======
->>>>>>> c2a24e12d97c2baa2b4cb1fb043360ae9461201c
     "yup": "^0.32.11"
   },
   "devDependencies": {
