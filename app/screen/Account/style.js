@@ -296,6 +296,10 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         width: 100,
     },
+    locCoverD: {
+        flexDirection: 'row',
+        width: 180,
+    },
     locTextTitle: {
         color: "#616161",
         fontSize: 14,
@@ -332,7 +336,43 @@ export default styles = StyleSheet.create({
         // height: "115%",
         // paddingBottom: 300,
 
-    }
-
+    },
+    // This is for the toggle
+    thumbOnStyle:{
+       backgroundColor:'#fff',
+    
+    },
+    labelCover:{
+    width:wp('90%'),
+    alignSelf:'center',
+   padding:3,
+    },
+    thumbOffStyle:{
+    backgroundColor:'#fff',
+    
+        },
+        deleteCover:{
+            flexDirection:'row',
+            padding:20,
+            marginTop:40,
+            borderWidth:0,
+            borderColor:'#bfbfbf',
+            borderRadius:10,
+             justifyContent:'center',
+            alignItems:'center',
+            width:wp('80%'),
+            alignSelf:"center"
+        },
+        deleteText:{
+            color: '#D32F2F',
+            fontSize: 14,
+            fontFamily: "Urbanist-semiBold",
+            lineHeight: 20,
+            fontWeight: "600",
+            letterSpacing: 0.2,
+            textAlign: "center",
+            marginLeft:5,
+            marginTop:-1, 
+        },
 
 })

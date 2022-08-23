@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, getUser, updateUserPassword,forgotPin, updateUserDetails, updateUserImage} from "@Request/Auth";
+import { login, getUser, updateUserPassword,forgotPin, updateUserDetails,deleteUserAccount, updateUserImage} from "@Request/Auth";
 // import { forgotPin } from "../httpRequests/Auth";
 
 export const authSlice = createSlice({
@@ -8,6 +8,7 @@ export const authSlice = createSlice({
         isAuthenticated: false,
         user: {},
         status: "idle",
+        deleteAccount: "idle",
         errors: {},
         signedIn: false,
         signedInData: null,
@@ -23,6 +24,7 @@ export const authSlice = createSlice({
             state.errors = {}
             state.status = "idle",
             state.update = "idle"
+            state.deleteAccount ="idle"
         },
         logout(state) {
             state.status = "idle",
@@ -33,6 +35,7 @@ export const authSlice = createSlice({
             state.errors = {},
             state.userVerified = false,
             state.pin = "idle",
+            state.deleteAccount = "idle",
             state.userStatus = "idle"
         }
     },
@@ -118,6 +121,21 @@ export const authSlice = createSlice({
             })
             .addCase(updateUserDetails.rejected, (state, { payload }) => {
                 state.update = "failed";
+                state.errors = payload;
+            })
+
+            builder
+            .addCase(deleteUserAccount.pending, state => {
+                state.deleteAccount = "pending";
+                state.errors = {};
+                state.signedIn = false
+            })
+            .addCase(deleteUserAccount.fulfilled, (state, {payload}) => {
+                state.deleteAccount = "success";
+                state.errors = {};
+            })
+            .addCase(deleteUserAccount.rejected, (state, { payload }) => {
+                state.deleteAccount = "failed";
                 state.errors = payload;
             })
 
