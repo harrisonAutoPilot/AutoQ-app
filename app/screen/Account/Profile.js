@@ -3,11 +3,14 @@ import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
-
+import ToggleSwitch from 'toggle-switch-react-native'
 import styles from "./style";
-import { updateUserImage, getUser } from "@Request/Auth";
+import { updateUserImage, getUser,deleteUserAccount } from "@Request/Auth";
+import Icon from 'react-native-vector-icons/Feather';
 import { cleanup } from "@Store/Auth";
+import { logout } from "@Store/Auth";
 import Loader from "@Screen/Loader";
+import ConfirmDelete from "./ConfirmDelete";
 import { SuccessMsgViewTwo } from "@Component";
 
 export default Profile = () => {
@@ -15,7 +18,16 @@ export default Profile = () => {
     const dispatch = useDispatch();
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const { user, update, errors } = useSelector((state) => state.auth);
+    const { user, update,deleteAccount, errors } = useSelector((state) => state.auth);
+    const [isOnBlueToggleSwitch, SetIsOnBlueToggleSwitch] = useState(true)
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [reset, setReset] = useState(false);
+
+
+    const onToggle = (isOn) => {
+        console.log("Changed to " + isOn);
+    }
 
     const updateProfilePic = () => {
         setErrMsg("");
@@ -121,6 +133,28 @@ export default Profile = () => {
         )
     };
 
+     // THIS IS TO DELETE ACCOUNT
+ const deleteMyAccount = () => {
+    setShowConfirm(false)
+     setLoader(true);
+     const id = { id: user.id }
+     dispatch(deleteUserAccount(id))
+    
+}
+
+    useEffect(() => {
+        if (deleteAccount === "failed") {
+            setSuccessMsg("");
+            waitTime(errors?.msg);
+        } else if (deleteAccount === "success") {
+            dispatch(logout());
+        } else {
+            setSuccessMsg("");
+            setErrMsg("");
+        }
+    }, [deleteAccount]);
+
+
 
     return (
         <View style={styles.container}>
@@ -191,34 +225,28 @@ export default Profile = () => {
                             <Text style={styles.locText}>{user?.email}</Text>
                         </View>
                     </View>
-
-                    {/* <View style={styles.bankCaption}>
-                        <Text style={styles.captionText}>Bank Details</Text>
-                    </View>
-                    <View style={styles.downCover}>
-                        <View style={styles.cardCover}>
-                            <View style={styles.locCover}>
-
-                                <Text style={styles.locTextTitle}>Bank:</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.locText}>Wema Bank</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.cardCover}>
-                            <View style={styles.locCoverNew}>
-                                <Text style={styles.locTextTitle}>Account Number:</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.locText}>0045678900</Text>
-                            </View>
-                        </View>
-                    </View> */}
+                    
+            <TouchableOpacity onPress={() => setShowConfirm(true)}>
+                <View style={styles.deleteCover}>
+                    <Icon name="trash-2" color="#D32F2F" size={16} />
+                    <Text style={styles.deleteText}>Delete Account</Text>
                 </View>
-                {/* Added this line to know if its reflecting */}
+            </TouchableOpacity>
+                   
+                </View>
+                
+               
             </ScrollView>
+          
+            
+           
+
             <Loader isVisible={loader} />
+            <ConfirmDelete
+                visibleConfirm={showConfirm}
+                returnBack={() => setShowConfirm(false)}
+                deleteAccount={deleteMyAccount}
+            />
         </View>
     )
 };
