@@ -102,13 +102,14 @@ export default Profile = () => {
             })
 
         });
+        wait(4000).then(() => { dispatch(cleanup()) })
     }, []);
 
     useEffect(() => {
         if (update === "failed") {
             waitTime(errors?.msg, "");
         } else if (update === "success") {
-            waitTime("", "Profile Image Updated");
+            waitTime2("Profile Image Updated");
         } else {
             setSuccessMsg("");
             setErrMsg("");
@@ -132,7 +133,7 @@ export default Profile = () => {
  const deleteMyAccount = () => {
     setShowConfirm(false)
      setLoader(true);
-     const id = { id: user.id }
+     const id = { id: "test" }
      dispatch(deleteUserAccount(id))
     
 }
@@ -140,7 +141,11 @@ export default Profile = () => {
     useEffect(() => {
         if (deleteAccount === "failed") {
             setSuccessMsg("");
+            console.log("obidient",errors?.msg);
             waitTime(errors?.msg);
+            if (errors?.msg === "" || "underfined"){
+                 waitTime("", "Sorry something went wrong") 
+            } 
         } else if (deleteAccount === "success") {
             dispatch(logout());
         } else {
@@ -153,8 +158,10 @@ export default Profile = () => {
 
     return (
         <View style={styles.container}>
-            {errMsg ? <Toast config={toastConfig} /> : null}
+   
+        
             {successMsg ? <Toast config={toastConfig} /> : null}
+      
             <View style={styles.topCover}>
                 <View style={styles.imgCover}>
                     <Image source={{uri: `${URL}${user?.picture_url}`}} style={styles.img} />
@@ -171,6 +178,7 @@ export default Profile = () => {
 
             </View>
             <View style={styles.bottomCover}>
+            {errMsg ? <Toast config={toastConfig} /> : null}
             <ScrollView
                 indicatorStyle="white"
                 contentContainerStyle={styles.scrollContentContainer}>

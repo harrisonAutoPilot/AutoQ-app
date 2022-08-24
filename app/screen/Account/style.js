@@ -180,6 +180,12 @@ export default styles = StyleSheet.create({
        
 
     },
+    inputOuterViewRed: {
+        marginHorizontal: 20,
+        backgroundColor:'red'
+       
+
+    },
     inputOuterView2: {
         marginHorizontal: 20,
         position: "absolute",
@@ -364,15 +370,13 @@ export default styles = StyleSheet.create({
         },
         deleteCover:{
             flexDirection:'row',
-            // padding:20,
+            padding:20,
             marginTop:40,
             borderWidth:0,
             borderColor:'#bfbfbf',
             borderRadius:10,
-             justifyContent:'center',
+            justifyContent:'center',
             alignItems:'center',
-            width:wp('80%'),
-            height:50,
             alignSelf:"center",
            
         },

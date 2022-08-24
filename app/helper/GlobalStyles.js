@@ -363,6 +363,20 @@ export default globalStyles = StyleSheet.create({
         top: -70,
 
     },
+    phoneNoVerifySuccessViewRed: {
+        backgroundColor: "rgba(67, 160, 71, 1)",
+        borderRadius: 8,
+        paddingVertical: 18,
+        flexDirection: "row",
+        paddingHorizontal: 15,
+        alignItems: "center",
+        width: "90%",
+        elevation: 5,
+        marginLeft: 20,
+        position: "absolute",
+        top: -70,
+
+    },
     phoneNoVerifySuccessVieww: {
         backgroundColor: "rgba(67, 160, 71, 1)",
         borderRadius: 8,
