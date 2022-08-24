@@ -59,7 +59,7 @@ export default Profile = () => {
        const deleteMyAccount = () => {
         setShowConfirm(false)
         setLoader(true);
-        dispatch(deleteUserAccount("user.id"))
+        dispatch(deleteUserAccount(user.id))
     }
 
     const wait = (timeout) => {
