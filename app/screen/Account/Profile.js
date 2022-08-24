@@ -133,7 +133,7 @@ export default Profile = () => {
  const deleteMyAccount = () => {
     setShowConfirm(false)
      setLoader(true);
-     const id = { id: "test" }
+     const id = { id: "" }
      dispatch(deleteUserAccount(id))
     
 }
@@ -144,8 +144,10 @@ export default Profile = () => {
             console.log("obidient",errors?.msg);
             waitTime(errors?.msg);
             if (errors?.msg === "" || "underfined"){
-                 waitTime("", "Sorry something went wrong") 
-            } 
+                 waitTime("", "Sorry something went wrong")
+               
+            }
+            
         } else if (deleteAccount === "success") {
             dispatch(logout());
         } else {
@@ -159,7 +161,7 @@ export default Profile = () => {
     return (
         <View style={styles.container}>
    
-        
+            {errMsg ? <Toast config={toastConfig} /> : null}
             {successMsg ? <Toast config={toastConfig} /> : null}
       
             <View style={styles.topCover}>
@@ -178,7 +180,6 @@ export default Profile = () => {
 
             </View>
             <View style={styles.bottomCover}>
-            {errMsg ? <Toast config={toastConfig} /> : null}
             <ScrollView
                 indicatorStyle="white"
                 contentContainerStyle={styles.scrollContentContainer}>
