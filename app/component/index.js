@@ -8,7 +8,8 @@ import COHeader from "./headers/COHeader";
 import EmptyPlaceHolder from "./placeholders/EmptyPlaceHolder";
 import WalletCard from "./WalletCard";
 import AddCartListEmptyBig from "./placeholders/AddCartListEmptyBig";
-import SuccessMsgViewTwo from "./toast/successMsgViewTwo";
+import SuccessMsgViewTwo from "./toast/successMsgViewError";
+import ErrorMsg from "./toast/errorMsgView";
 import Success from "./success/index"
 import NavHeader from "./headers/NavLightHeader";
 import EmptyOrder from "./Empty/emptyOrder";
@@ -17,4 +18,4 @@ import EmptyFinance from "./Empty/emptyFinance"
 import EmptyCustomer from "./Empty/emptyCustomer"
 
 export { FormikValidator, InputField, AuthBtn, Header, COHeader, 
-    EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder, EmptyStore, SuccessMsgViewTwo, Success, NavHeader, BtnLg, BtnPre};
+    EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder, EmptyStore,SuccessMsgViewTwo, ErrorMsg, Success, NavHeader, BtnLg, BtnPre};

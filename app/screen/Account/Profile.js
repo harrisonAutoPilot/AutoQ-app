@@ -23,6 +23,7 @@ export default Profile = () => {
 
     const { user, update, deleteAccount, errors } = useSelector((state) => state.auth);
 
+    // UPDATE PROFILE IMG
     const updateProfilePic = () => {
         setErrMsg("");
 
@@ -53,6 +54,13 @@ export default Profile = () => {
         });
 
     };
+
+       // DISABLE ACCOUNT
+       const deleteMyAccount = () => {
+        setShowConfirm(false)
+        setLoader(true);
+        dispatch(deleteUserAccount(user.id))
+    }
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -102,21 +110,8 @@ export default Profile = () => {
             })
 
         });
-
-        wait(4000).then(() => { dispatch(cleanup()) })
+      
     }, []);
-
-    useEffect(() => {
-        if (update === "failed") {
-            waitTime(errors?.msg, "");
-        } else if (update === "success") {
-            waitTime("", "Profile Image Updated");
-        } else {
-            setSuccessMsg("");
-            setErrMsg("");
-        }
-    }, [update]);
-
 
     const toastConfig = {
         error: () => (
@@ -129,33 +124,30 @@ export default Profile = () => {
         )
     };
 
-    // THIS IS TO DELETE ACCOUNT
-    const deleteMyAccount = () => {
-        setShowConfirm(false)
-        setLoader(true);
-        const id = { id: user.id }
-        dispatch(deleteUserAccount(user.id))
-
-    }
+    useEffect(() => {
+        if (update === "failed") {
+            waitTime(errors?.msg, "");
+        } else if (update === "success") {
+            waitTime("", "Profile Image Updated");
+        }
+    }, [update]);
 
     useEffect(() => {
         if (deleteAccount === "failed") {
             setSuccessMsg("");
-            waitTime2("failed");
+            waitTime(errors?.msg, "");
         } else if (deleteAccount === "success") {
             dispatch(logout());
-        } else {
-            setSuccessMsg("");
-            setErrMsg("");
         }
+          
     }, [deleteAccount]);
-
-
 
     return (
         <View style={styles.container}>
-            {errMsg ? <Toast config={toastConfig} /> : null}
+        
             {successMsg ? <Toast config={toastConfig} /> : null}
+            {errMsg ? <Toast config={toastConfig} /> : null}
+
             <View style={styles.topCover}>
                 <View style={styles.imgCover}>
                     <Image source={{ uri: `${URL}${user?.picture_url}` }} style={styles.img} />
@@ -172,11 +164,11 @@ export default Profile = () => {
 
             </View>
             <View style={styles.bottomCover}>
+          
             <ScrollView
                 indicatorStyle="white"
                 contentContainerStyle={styles.scrollContentContainer}>
                
-
                     <View style={styles.cardCover}>
                         <View style={styles.locCover}>
                             <View style={styles.locImgCover}>

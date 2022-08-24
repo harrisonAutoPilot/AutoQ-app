@@ -171,12 +171,12 @@ export default globalStyles = StyleSheet.create({
     failedResponseText: {
         color: "#fff",
         fontSize: 12,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 16,
         letterSpacing: 0.2,
-        fontWeight: "700",
         textAlign: "center",
         paddingTop: 3,
+        width: "100%"
     },
     failedResponseView: {
         marginTop: 10,
@@ -350,6 +350,20 @@ export default globalStyles = StyleSheet.create({
         alignItems: "center",
     },
     phoneNoVerifySuccessView2: {
+        backgroundColor: "rgba(67, 160, 71, 1)",
+        borderRadius: 8,
+        paddingVertical: 18,
+        flexDirection: "row",
+        paddingHorizontal: 15,
+        alignItems: "center",
+        width: "90%",
+        elevation: 5,
+        marginLeft: 20,
+        position: "absolute",
+        top: -70,
+
+    },
+    phoneNoVerifySuccessViewRed: {
         backgroundColor: "rgba(67, 160, 71, 1)",
         borderRadius: 8,
         paddingVertical: 18,

@@ -180,6 +180,12 @@ export default styles = StyleSheet.create({
 
 
     },
+    inputOuterViewRed: {
+        marginHorizontal: 20,
+        backgroundColor:'red'
+       
+
+    },
     inputOuterView2: {
         marginHorizontal: 20,
         position: "absolute",
@@ -219,7 +225,7 @@ export default styles = StyleSheet.create({
         height: 64,
         borderRadius: 100,
         resizeMode: 'cover',
-        transform: [{ rotate: "-90deg" }]
+        // transform: [{ rotate: "-90deg" }]
     },
     imgCover: {
         width: 67,
@@ -362,30 +368,26 @@ export default styles = StyleSheet.create({
         backgroundColor: '#fff',
 
     },
-    deleteCover: {
-        flexDirection: 'row',
-        // padding:20,
-        marginTop: 40,
-        borderWidth: 0,
-        borderColor: '#bfbfbf',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: wp('80%'),
-        height: 50,
-        alignSelf: "center",
-
+    deleteCover:{
+        flexDirection:'row',
+        padding:20,
+        marginTop:40,
+        borderWidth:0,
+        borderColor:'#bfbfbf',
+        borderRadius:10,
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:"center",
+       
     },
-    deleteText: {
+    deleteText:{
         color: '#D32F2F',
         fontSize: 14,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
-        fontWeight: "600",
         letterSpacing: 0.2,
         textAlign: "center",
-        marginLeft: 5,
-        marginTop: -1,
+        marginLeft:5,
     },
 
 })

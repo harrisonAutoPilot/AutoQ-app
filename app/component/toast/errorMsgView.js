@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import globalStyles from "@Helper/GlobalStyles";
 
-const SuccessMsg = (props) => {
+const ErrorMsg = (props) => {
     return (
         <View style={[globalStyles.phoneNoVerifySuccessView2, props.styles]}>
             <View style={globalStyles.phoneNoVerifySuccessIconView}>
@@ -16,4 +16,4 @@ const SuccessMsg = (props) => {
     )
 };
 
-export default SuccessMsg
+export default ErrorMsg

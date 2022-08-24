@@ -13,7 +13,6 @@ const apiRequest = async (asyncFn, thunkAPI, route) => {
       }
       return data
    } catch (error) {
-      console.log(error.response)
       if (error?.response?.status == 500){
       return thunkAPI.rejectWithValue({ msg: "Internal Error", status: 500 })
       }

@@ -51,7 +51,7 @@ export const updateUserDetails = createAsyncThunk("auth/user/update",
     export const deleteUserAccount = createAsyncThunk("auth/user/delete",
     async (id, thunkAPI) => {
         const Axios = await AxiosBase();
-        return apiRequest(Axios.patch(`api/v1/users/${id}/disable`, user),
+        return apiRequest(Axios.patch(`api/v1/users/${id}/disable`),
             thunkAPI)
     });
     
