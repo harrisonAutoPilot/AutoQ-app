@@ -48,7 +48,7 @@ export default styles = StyleSheet.create({
         height: 43,
         borderRadius: 26,
         resizeMode: "cover",
-        transform:[{rotate: "-90deg"}]
+        // transform:[{rotate: "-90deg"}]
     },
     agentImgView: {
         width: 50,

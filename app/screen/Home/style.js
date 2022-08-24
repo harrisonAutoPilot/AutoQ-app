@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         alignItems: 'center',
         borderRadius: 40,
-        transform:[{rotate: "-90deg"}]
+        // transform:[{rotate: "-90deg"}]
     },
     welcomeCover: {
         flexDirection: 'row',

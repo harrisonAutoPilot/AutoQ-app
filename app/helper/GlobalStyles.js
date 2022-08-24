@@ -171,12 +171,12 @@ export default globalStyles = StyleSheet.create({
     failedResponseText: {
         color: "#fff",
         fontSize: 12,
-        fontFamily: "Urbanist-Regular",
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 16,
         letterSpacing: 0.2,
-        fontWeight: "700",
         textAlign: "center",
         paddingTop: 3,
+        width: "100%"
     },
     failedResponseView: {
         marginTop: 10,
