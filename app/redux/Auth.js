@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, getUser, updateUserPassword,forgotPin, updateUserDetails,deleteUserAccount, updateUserImage} from "@Request/Auth";
-// import { forgotPin } from "../httpRequests/Auth";
+import { login, getUser, updateUserPassword,forgotPin, updateUserDetails, deleteUserAccount, updateUserImage } from "@Request/Auth";
+
 
 export const authSlice = createSlice({
     name: "auth",

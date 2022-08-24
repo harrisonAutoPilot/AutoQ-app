@@ -3,11 +3,11 @@ import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
-import styles from "./style";
-import { updateUserImage, getUser,deleteUserAccount } from "@Request/Auth";
 import Icon from 'react-native-vector-icons/Feather';
-import { cleanup } from "@Store/Auth";
-import { logout } from "@Store/Auth";
+
+import styles from "./style";
+import { updateUserImage, getUser, deleteUserAccount } from "@Request/Auth";
+import { cleanup, logout } from "@Store/Auth";
 import Loader from "@Screen/Loader";
 import ConfirmDelete from "./ConfirmDelete";
 import { SuccessMsgViewTwo } from "@Component";
@@ -19,9 +19,10 @@ export default Profile = () => {
     const [loader, setLoader] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const { user, update,deleteAccount, errors } = useSelector((state) => state.auth);
     const [showConfirm, setShowConfirm] = useState(false);
     const [reset, setReset] = useState(false);
+
+    const { user, update, deleteAccount, errors } = useSelector((state) => state.auth);
 
     const updateProfilePic = () => {
         setErrMsg("");
@@ -30,11 +31,11 @@ export default Profile = () => {
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
-                
+
             },
             includeBase64: true,
             title: "Select Photo",
-           
+
         };
 
         launchImageLibrary(options, (response) => {
@@ -47,7 +48,7 @@ export default Profile = () => {
             } else {
                 setLoader(true);
                 const img = `data:image/jpg;base64,${response.assets[0].base64}`;
-                const datas = { picture: {path: img}, id: user.id }
+                const datas = { picture: { path: img }, id: user.id }
                 dispatch(updateUserImage(datas))
             }
         });
@@ -61,7 +62,7 @@ export default Profile = () => {
     const waitTime = useCallback((err, suc) => {
         wait(1000).then(() => {
             setLoader(false);
-           
+
             if (suc) {
                 setSuccessMsg(suc);
                 Toast.show({
@@ -128,14 +129,14 @@ export default Profile = () => {
         )
     };
 
-     // THIS IS TO DELETE ACCOUNT
- const deleteMyAccount = () => {
-    setShowConfirm(false)
-     setLoader(true);
-     const id = { id: user.id }
-     dispatch(deleteUserAccount(id))
-    
-}
+    // THIS IS TO DELETE ACCOUNT
+    const deleteMyAccount = () => {
+        setShowConfirm(false)
+        setLoader(true);
+        const id = { id: user.id }
+        dispatch(deleteUserAccount(id))
+
+    }
 
     useEffect(() => {
         if (deleteAccount === "failed") {
@@ -157,7 +158,7 @@ export default Profile = () => {
             {successMsg ? <Toast config={toastConfig} /> : null}
             <View style={styles.topCover}>
                 <View style={styles.imgCover}>
-                    <Image source={{uri: `${URL}${user?.picture_url}`}} style={styles.img} />
+                    <Image source={{ uri: `${URL}${user?.picture_url}` }} style={styles.img} />
                     <View style={styles.cameraCover}>
                         <TouchableOpacity onPress={updateProfilePic}>
                             <Image source={require("@Assets/image/camera.png")} style={styles.camImg} />
@@ -221,22 +222,21 @@ export default Profile = () => {
                         </View>
                     </View>
 
-               
-                     <TouchableOpacity onPress={() => setShowConfirm(true)}>
-                    <View style={styles.deleteCover}>
-                        <Icon name="trash-2" color="#D32F2F" size={16} />
-                        <Text style={styles.deleteText}>Delete Account</Text>
-                    </View>
-                </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => setShowConfirm(true)}>
+                        <View style={styles.deleteCover}>
+                            <Icon name="trash-2" color="#D32F2F" size={16} />
+                            <Text style={styles.deleteText}>Delete Account</Text>
+                        </View>
+                    </TouchableOpacity>
+                    
                 </View>
 
-               
+
             </ScrollView>
-          
-            
-           
 
             <Loader isVisible={loader} />
+
             <ConfirmDelete
                 visibleConfirm={showConfirm}
                 returnBack={() => setShowConfirm(false)}
