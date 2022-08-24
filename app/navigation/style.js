@@ -41,7 +41,7 @@ export default styles = StyleSheet.create({
     },
     toastView: {
         position: "absolute",
-        top: 20,
+        top: Platform.OS === "android"  ? 20 : 40,
         padding: 16,
         borderRadius: 6,
         width: wp('80%'),

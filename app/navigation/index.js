@@ -12,7 +12,7 @@ import RootNavigation from "./Stack";
 const RootNavigator = () => {
 
     const dispatch = useDispatch();
-    const { priceStatus, list } = useSelector((state) => state.priceList);
+    const { priceStatus, list, errors } = useSelector((state) => state.priceList);
     const [text, setText] = useState("");
     const [color, setColor] = useState("");
 
@@ -27,6 +27,7 @@ const RootNavigator = () => {
         }
         else if (priceStatus === "failed") {
             // background color should be light red
+            console.log("hi", errors)
             setColor("rgba(211, 47, 47, 1)")
             setText("Price List download failed")
             removeText("")
@@ -92,10 +93,10 @@ const RootNavigator = () => {
         <NavigationContainer>
             <RootNavigation />
             {text ?
-            <SafeAreaView>
+           
                 <View style={[styles.toastView, { backgroundColor: color }]} >
                     <Text style={styles.toast}>{text}</Text>
-                </View></SafeAreaView> : null}
+                </View> : null}
         </NavigationContainer>
        
     )

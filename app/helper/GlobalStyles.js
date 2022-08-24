@@ -176,7 +176,7 @@ export default globalStyles = StyleSheet.create({
         letterSpacing: 0.2,
         textAlign: "center",
         paddingTop: 3,
-        width: "100%"
+        width: "80%"
     },
     failedResponseView: {
         marginTop: 10,
