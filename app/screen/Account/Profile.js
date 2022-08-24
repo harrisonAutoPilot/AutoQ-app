@@ -170,11 +170,11 @@ export default Profile = () => {
                 </View>
 
             </View>
-
+            <View style={styles.bottomCover}>
             <ScrollView
                 indicatorStyle="white"
                 contentContainerStyle={styles.scrollContentContainer}>
-                <View style={styles.bottomCover}>
+               
 
                     <View style={styles.cardCover}>
                         <View style={styles.locCover}>
@@ -209,7 +209,7 @@ export default Profile = () => {
                             <Text style={styles.locText}>+{user?.phone}</Text>
                         </View>
                     </View>
-                    <View style={styles.cardCover}>
+                    <View style={styles.cardCover1}>
                         <View style={styles.locCover}>
                             <View style={styles.locImgCover}>
                                 <Image source={require("@Assets/image/agentEmail.png")} style={styles.locImg} />
@@ -220,19 +220,18 @@ export default Profile = () => {
                             <Text style={styles.locText}>{user?.email}</Text>
                         </View>
                     </View>
-
-               
-                     <TouchableOpacity onPress={() => setShowConfirm(true)}>
-                    <View style={styles.deleteCover}>
+                    
+                    <View >
+                    <TouchableOpacity style={styles.deleteCover} onPress={() => setShowConfirm(true)}>
                         <Icon name="trash-2" color="#D32F2F" size={16} />
                         <Text style={styles.deleteText}>Delete Account</Text>
-                    </View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
-
+              
+                
                
             </ScrollView>
-          
+            </View>
             
            
 

@@ -267,7 +267,8 @@ export default styles = StyleSheet.create({
     },
     bottomCover: {
         alignItems: 'center',
-        height: "100%"
+         height: hp('58%'),
+         flexGrow:1,
         // backgroundColor:'#DCDCDC'
     },
     cardCover: {
@@ -279,6 +280,16 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 20,
         marginBottom: 7,
+    },
+    cardCover1: {
+        flexDirection: "row",
+        width: wp('90%'),
+        elevation: 0.2,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        justifyContent: 'space-between',
+        padding: 20,
+        marginBottom:15,
     },
     locImgCover: {
         width: 25,
@@ -353,7 +364,7 @@ export default styles = StyleSheet.create({
         },
         deleteCover:{
             flexDirection:'row',
-            padding:20,
+            // padding:20,
             marginTop:40,
             borderWidth:0,
             borderColor:'#bfbfbf',
@@ -361,12 +372,14 @@ export default styles = StyleSheet.create({
              justifyContent:'center',
             alignItems:'center',
             width:wp('80%'),
-            alignSelf:"center"
+            height:50,
+            alignSelf:"center",
+           
         },
         deleteText:{
             color: '#D32F2F',
             fontSize: 14,
-            fontFamily: "Urbanist-semiBold",
+            fontFamily: "Urbanist-SemiBold",
             lineHeight: 20,
             fontWeight: "600",
             letterSpacing: 0.2,
