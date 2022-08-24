@@ -177,13 +177,13 @@ export default styles = StyleSheet.create({
     },
     inputOuterView: {
         marginHorizontal: 20,
-       
+
 
     },
     inputOuterView2: {
         marginHorizontal: 20,
         position: "absolute",
-        top: -70,
+        top: -54,
 
     },
     sucToastCover: {
@@ -219,7 +219,7 @@ export default styles = StyleSheet.create({
         height: 64,
         borderRadius: 100,
         resizeMode: 'cover',
-        transform: [{rotate: "-90deg"}]
+        transform: [{ rotate: "-90deg" }]
     },
     imgCover: {
         width: 67,
@@ -267,7 +267,8 @@ export default styles = StyleSheet.create({
     },
     bottomCover: {
         alignItems: 'center',
-        height: "100%"
+        height: hp('58%'),
+        flexGrow: 1,
         // backgroundColor:'#DCDCDC'
     },
     cardCover: {
@@ -279,6 +280,16 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 20,
         marginBottom: 7,
+    },
+    cardCover1: {
+        flexDirection: "row",
+        width: wp('90%'),
+        elevation: 0.2,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        justifyContent: 'space-between',
+        padding: 20,
+        marginBottom: 15,
     },
     locImgCover: {
         width: 25,
@@ -332,47 +343,49 @@ export default styles = StyleSheet.create({
     downCover: {
         marginTop: 20,
     },
-    scrollContentContainer:{
+    scrollContentContainer: {
         // height: "115%",
         // paddingBottom: 300,
 
     },
     // This is for the toggle
-    thumbOnStyle:{
-       backgroundColor:'#fff',
-    
+    thumbOnStyle: {
+        backgroundColor: '#fff',
+
     },
-    labelCover:{
-    width:wp('90%'),
-    alignSelf:'center',
-   padding:3,
+    labelCover: {
+        width: wp('90%'),
+        alignSelf: 'center',
+        padding: 3,
     },
-    thumbOffStyle:{
-    backgroundColor:'#fff',
-    
-        },
-        deleteCover:{
-            flexDirection:'row',
-            padding:20,
-            marginTop:40,
-            borderWidth:0,
-            borderColor:'#bfbfbf',
-            borderRadius:10,
-             justifyContent:'center',
-            alignItems:'center',
-            width:wp('80%'),
-            alignSelf:"center"
-        },
-        deleteText:{
-            color: '#D32F2F',
-            fontSize: 14,
-            fontFamily: "Urbanist-semiBold",
-            lineHeight: 20,
-            fontWeight: "600",
-            letterSpacing: 0.2,
-            textAlign: "center",
-            marginLeft:5,
-            marginTop:-1, 
-        },
+    thumbOffStyle: {
+        backgroundColor: '#fff',
+
+    },
+    deleteCover: {
+        flexDirection: 'row',
+        // padding:20,
+        marginTop: 40,
+        borderWidth: 0,
+        borderColor: '#bfbfbf',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: wp('80%'),
+        height: 50,
+        alignSelf: "center",
+
+    },
+    deleteText: {
+        color: '#D32F2F',
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 20,
+        fontWeight: "600",
+        letterSpacing: 0.2,
+        textAlign: "center",
+        marginLeft: 5,
+        marginTop: -1,
+    },
 
 })

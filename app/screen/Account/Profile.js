@@ -20,7 +20,6 @@ export default Profile = () => {
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [showConfirm, setShowConfirm] = useState(false);
-    const [reset, setReset] = useState(false);
 
     const { user, update, deleteAccount, errors } = useSelector((state) => state.auth);
 
@@ -103,6 +102,8 @@ export default Profile = () => {
             })
 
         });
+
+        wait(4000).then(() => { dispatch(cleanup()) })
     }, []);
 
     useEffect(() => {
@@ -119,11 +120,10 @@ export default Profile = () => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyles.errMainView, styles.inputOuterView]}>
+            <View style={[globalStyles.errMainView, styles.inputOuterView2]}>
                 <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
             </View>
         ),
-
         tomatoToast: () => (
             <SuccessMsgViewTwo title={successMsg} />
         )
@@ -134,14 +134,14 @@ export default Profile = () => {
         setShowConfirm(false)
         setLoader(true);
         const id = { id: user.id }
-        dispatch(deleteUserAccount(id))
+        dispatch(deleteUserAccount(user.id))
 
     }
 
     useEffect(() => {
         if (deleteAccount === "failed") {
             setSuccessMsg("");
-            waitTime(errors?.msg);
+            waitTime2("failed");
         } else if (deleteAccount === "success") {
             dispatch(logout());
         } else {
@@ -171,11 +171,11 @@ export default Profile = () => {
                 </View>
 
             </View>
-
+            <View style={styles.bottomCover}>
             <ScrollView
                 indicatorStyle="white"
                 contentContainerStyle={styles.scrollContentContainer}>
-                <View style={styles.bottomCover}>
+               
 
                     <View style={styles.cardCover}>
                         <View style={styles.locCover}>
@@ -210,7 +210,7 @@ export default Profile = () => {
                             <Text style={styles.locText}>+{user?.phone}</Text>
                         </View>
                     </View>
-                    <View style={styles.cardCover}>
+                    <View style={styles.cardCover1}>
                         <View style={styles.locCover}>
                             <View style={styles.locImgCover}>
                                 <Image source={require("@Assets/image/agentEmail.png")} style={styles.locImg} />
@@ -222,18 +222,17 @@ export default Profile = () => {
                         </View>
                     </View>
 
-
-                    <TouchableOpacity onPress={() => setShowConfirm(true)}>
-                        <View style={styles.deleteCover}>
-                            <Icon name="trash-2" color="#D32F2F" size={16} />
-                            <Text style={styles.deleteText}>Delete Account</Text>
-                        </View>
+                    <View >
+                    <TouchableOpacity style={styles.deleteCover} onPress={() => setShowConfirm(true)}>
+                        <Icon name="trash-2" color="#D32F2F" size={16} />
+                        <Text style={styles.deleteText}>Delete Account</Text>
                     </TouchableOpacity>
-                    
+
+
                 </View>
-
-
+              
             </ScrollView>
+            </View>
 
             <Loader isVisible={loader} />
 

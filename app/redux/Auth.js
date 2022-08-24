@@ -135,6 +135,7 @@ export const authSlice = createSlice({
                 state.errors = {};
             })
             .addCase(deleteUserAccount.rejected, (state, { payload }) => {
+                console.log(payload)
                 state.deleteAccount = "failed";
                 state.errors = payload;
             })
