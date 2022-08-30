@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from "react-redux";
@@ -8,34 +8,32 @@ import RegularOptions from './RegularOptions';
 import styles from "./style";
 
 const DeliverMethod = props => {
-  const [value, setValue] = useState(0);
+  
   const [isFocus, setIsFocus] = useState(false);
   const [method, setMethod] = useState('0');
   const [closeDrop, setCloseDrop] = useState(true);
-  const [methodName, setMethodName] = useState("");
   const [showMethodOption, setShowMethodOption] = useState(false);
   const [deliveryDays, setDeliveryDays] = useState([]);
   const [showMethod, setShowMethod] = useState(false);
   const [label, setLabel] = useState("");
   const [date, setDate] = useState("");
 
-  const { status, errors, options } = useSelector((state) => state.deliveryOptions);
+  const { options } = useSelector((state) => state.deliveryOptions);
 
   useEffect(() => {
     if (showMethod) {
       setShowMethodOption(true);
       setCloseDrop(true);
-      console.log("hello FacelessMe", method);
       setShowMethod(false)
     };
   }, [showMethod]);
 
 
   const Render = (item) => {
-    return (
 
+    return (
       <View style={styles.customItem} >
-        <Text style={styles.placeholderStyle}>{item.name} (₦{item?.price})</Text>
+        <Text style={styles.placeholderStyle}>{item.name}</Text>
         {item.days && item.days.length ?
             <Text style={styles.changeText}>Pick Date</Text>
           : null}
@@ -43,6 +41,9 @@ const DeliverMethod = props => {
     )
   }
 
+  const calculateDelivery = (percent) => {
+    return (percent / 100) * props.fees
+  }
 
 
   const IconCheck = () => {
@@ -79,7 +80,6 @@ const DeliverMethod = props => {
         valueField="name"
         placeholder={'Delivery Option'}
         searchPlaceholder="Search..."
-        value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={e => {
@@ -99,7 +99,7 @@ const DeliverMethod = props => {
           props.name(e.name)
           props.err("")
           props?.onSelectDate("")
-          props.price(parseInt(e.price))
+          props.price(e.flat_fee_exists ? parseInt(e.price) : calculateDelivery(e.percentage))
         }}
         renderItem={(item) => Render(item)}
         renderLeftIcon={() => IconCheck()}

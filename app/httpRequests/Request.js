@@ -13,16 +13,11 @@ const apiRequest = async (asyncFn, thunkAPI, route) => {
       }
       return data
    } catch (error) {
-      console.log(error.response)
       if (error?.response?.status == 500){
       return thunkAPI.rejectWithValue({ msg: "Internal Error", status: 500 })
       }
       else{
-      return thunkAPI.rejectWithValue({ msg: 
-         error?.response?.data?.error ? 
-         error?.response?.data?.error : 
-         error?.response?.data?.phone_number_verification,
-         status: error?.response?.status });
+      return thunkAPI.rejectWithValue({ msg: error?.response?.data?.error, status: error?.response?.status });
       }
    }
 };

@@ -21,7 +21,9 @@ export default Pin = () => {
     const { errors, update, user } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        dispatch(cleanup());
+        return () => {
+            dispatch(cleanup());
+        }
     }, []);
 
     const dismissKeyboard = () => Keyboard.dismiss();
@@ -86,7 +88,6 @@ export default Pin = () => {
             waitTime("", "PIN Updated");
         } else {
             setSuccessMsg("");
-            setErrMsg("");
         }
     }, [update]);
 

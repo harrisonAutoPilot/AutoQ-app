@@ -12,6 +12,7 @@ import Loader from "@Screen/Loader";
 import ConfirmDelete from "./ConfirmDelete";
 import { SuccessMsgViewTwo } from "@Component";
 
+
 export default Profile = () => {
 
     const dispatch = useDispatch();
@@ -22,6 +23,12 @@ export default Profile = () => {
     const [showConfirm, setShowConfirm] = useState(false);
 
     const { user, update, deleteAccount, errors } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        return () => {
+            dispatch(cleanup())   
+        }
+    }, []);
 
     // UPDATE PROFILE IMG
     const updateProfilePic = () => {
@@ -129,6 +136,8 @@ export default Profile = () => {
             waitTime(errors?.msg, "");
         } else if (update === "success") {
             waitTime("", "Profile Image Updated");
+        }else{
+            setSuccessMsg("")
         }
     }, [update]);
 

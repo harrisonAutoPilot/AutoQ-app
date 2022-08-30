@@ -88,7 +88,7 @@ const Login = (props) => {
         if (status === "failed" && props.navigation.isFocused()) {
             waitTime(errors?.msg);
         }
-    }, [errors]);
+    }, [status]);
 
     const dismissKeyboard = () => Keyboard.dismiss();
 
@@ -98,6 +98,7 @@ const Login = (props) => {
         setErrMsg("");
         setLoader(true)
         await dispatch(login(data));
+
     };
 
     const redirectToForgotPin = () => {
