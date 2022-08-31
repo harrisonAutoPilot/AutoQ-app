@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Modal,Image, Linking} from "react-native";
+import { View, Text, Modal,Image, Linking, Platform } from "react-native";
 import styles from "./style";
 
 import { AuthBtn } from "@Component";
@@ -8,7 +8,8 @@ import { AuthBtn } from "@Component";
 const SoftUpdate = () => {
 
   const redirectToPlaystore = () => {
-    const URL = "https://play.google.com/store/apps/details?id=com.rhmagent";
+    const URL = Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=com.rhmagent" : "https://apps.apple.com/us/app/remedial-agent/id1640313629";
+    
     Linking.openURL(URL)
       .then(() => {
         console.log('Link Opened');
