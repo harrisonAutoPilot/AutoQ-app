@@ -1,14 +1,18 @@
 import React, { useCallback, useState } from "react";
 import { View, Text, TouchableOpacity} from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
+import { useDispatch } from "react-redux";
 
 import styles from "./style";
 import Profile from "./Profile";
-import Pin from "./Pin"
+import Pin from "./Pin";
+import { cleanup } from "@Store/Auth";
 
 import { COHeader as Header} from "@Component";
 
 const AccountSettings = (props) => {
+
+    const dispatch = useDispatch();
 
     const [activeId, setActiveId] = useState(1);
     
@@ -18,9 +22,12 @@ const AccountSettings = (props) => {
     
     useFocusEffect(
         useCallback(() => {
-          setActiveId(1)
-        }, [])
-      );
+           return () => {
+            dispatch(cleanup())
+            setActiveId(1)
+           }
+         }, [])
+       );
    
 
     return (

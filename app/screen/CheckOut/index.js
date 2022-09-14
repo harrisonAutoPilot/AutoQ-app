@@ -177,6 +177,7 @@ const CheckOut = (props) => {
                                         date={deliveryDate} 
                                         name={setDeliveryTypeName}
                                         status={setDeliveryTypeStatus}
+                                        fees={items.total_amount}
                                         />
                             }
                         </View>

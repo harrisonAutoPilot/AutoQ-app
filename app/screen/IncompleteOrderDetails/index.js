@@ -196,11 +196,11 @@ const InCompleteOrderDetails = (props) => {
                   <View style={[styles.midCard2, styles.elevation]}>
                      <View style={styles.cardUpTop}>
                         <Text style={[styles.upTextThree, styles.weight]}>SubTotal</Text>
-                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount - orders?.delivery_type?.price) : 0}</Text>
+                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount - orders?.delivery_type?.pivot?.delivery_price) : 0}</Text>
                      </View>
                      <View style={styles.cardUpTop}>
                         <Text style={[styles.upTextThree, styles.weight]}>Delivery Fee</Text>
-                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders?.delivery_type?.price ? commafy(orders?.delivery_type?.price) : 0}</Text>
+                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders?.delivery_type?.pivot?.delivery_price ? commafy(orders?.delivery_type?.pivot?.delivery_price) : 0}</Text>
                      </View>
                      <View style={styles.cardUpTop}>
                         <Text style={[styles.upTextThree, styles.weight]}>Total</Text>

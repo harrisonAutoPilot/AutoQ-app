@@ -10,33 +10,27 @@ export const authSlice = createSlice({
         status: "idle",
         deleteAccount: "idle",
         errors: {},
-        signedIn: false,
-        signedInData: null,
-        userVerified: false,
         reset:"idle",
         pin: "idle",
         isLoading: "idle",
         update:  "idle",
-        userStatus: "idle",
+        loggedIn: false
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
-            state.status = "idle",
+            state.status = "idle"
             state.update = "idle"
             state.deleteAccount ="idle"
         },
         logout(state) {
-            state.status = "idle",
-            state.isAuthenticated = false,
-            state.user = {},
-            state.signedIn = false,
-            state.signedInData = null,
-            state.errors = {},
-            state.userVerified = false,
-            state.pin = "idle",
-            state.deleteAccount = "idle",
-            state.userStatus = "idle"
+            state.status = "idle"
+            state.isAuthenticated = false
+            state.user = {}
+            state.errors = {}
+            state.pin = "idle"
+            state.deleteAccount = "idle"
+            state.loggedIn = false
         }
     },
     extraReducers: builder => {
@@ -61,25 +55,17 @@ export const authSlice = createSlice({
                 state.status = "pending",
                 state.errors = {},
                 state.user = {};
-                state.userVerified = false,
-                state.userStatus =  "pending";
-                signedIn = true
             })
             .addCase(getUser.fulfilled, (state, { payload }) => {
                 state.status = "success";
                 state.user = payload;
                 state.errors = {};
-                state.userVerified = payload?.user_verified;
-                state.userStatus =  "success";
-                state.signedIn = true
+                state.loggedIn = true
             })
             .addCase(getUser.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
                 state.user = {};
-                state.userVerified = false,
-                state.userStatus =  "failed";
-                signedIn = true
             })
 
         builder
@@ -113,7 +99,6 @@ export const authSlice = createSlice({
             .addCase(updateUserDetails.pending, state => {
                 state.update = "pending";
                 state.errors = {};
-                state.signedIn = false
             })
             .addCase(updateUserDetails.fulfilled, (state, {payload}) => {
                 state.update = "success";
@@ -128,7 +113,6 @@ export const authSlice = createSlice({
             .addCase(deleteUserAccount.pending, state => {
                 state.deleteAccount = "pending";
                 state.errors = {};
-                state.signedIn = false
             })
             .addCase(deleteUserAccount.fulfilled, (state, {payload}) => {
                 state.deleteAccount = "success";
@@ -144,7 +128,6 @@ export const authSlice = createSlice({
             .addCase(updateUserImage.pending, state => {
                 state.update = "pending";
                 state.errors = {};
-                state.signedIn = false
             })
             .addCase(updateUserImage.fulfilled, (state, {payload}) => {
                 console.log(payload, "you")
