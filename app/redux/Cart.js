@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {addToCart, updateCart, listCart, deleteCart} from "@Request/Cart"
+import {addToCart, updateCart,deleteAllCart,deleteMultipleCart, listCart, deleteCart} from "@Request/Cart"
 
 export const cartSlice = createSlice({
     name: "cart",
@@ -9,6 +9,8 @@ export const cartSlice = createSlice({
         errors: {},
         addCart: "idle",
         removeCart: "idle",
+        removeAllCart: "idle",
+        removeMultipleCart: "idle",
         addCart: "idle",
         updateCartItems: "idle",
         loaded: "idle",
@@ -18,6 +20,8 @@ export const cartSlice = createSlice({
             state.errors = {}
             state.addCart = "idle",
             state.removeCart = "idle",
+            state.removeAllCart = "idle",
+            state.removeMultipleCart = "idle",
             state.updateCartItems = "idle"
             // state.loaded = "idle";
         },
@@ -89,6 +93,35 @@ export const cartSlice = createSlice({
                 state.removeCart = "failed";
                 state.errors = payload;
             })
+
+            builder
+            .addCase(deleteAllCart.pending, state => {
+                state.removeAllCart = "pending";
+                state.errors = {};
+            })
+            .addCase(deleteAllCart.fulfilled, (state, action) => {
+                state.removeAllCart = "success";
+                state.errors = {};
+            })
+            .addCase(deleteAllCart.rejected, (state, { payload }) => {
+                state.removeAllCart = "failed";
+                state.errors = payload;
+            })
+
+            builder
+            .addCase(deleteMultipleCart.pending, state => {
+                state.removeMultipleCart = "pending";
+                state.errors = {};
+            })
+            .addCase(deleteMultipleCart.fulfilled, (state, action) => {
+                state.removeMultipleCart = "success";
+                state.errors = {};
+            })
+            .addCase(deleteMultipleCart.rejected, (state, { payload }) => {
+                state.removeMultipleCart = "failed";
+                state.errors = payload;
+            })
+
 
     }
 });

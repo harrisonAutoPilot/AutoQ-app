@@ -135,6 +135,18 @@ export default styles = StyleSheet.create({
     color: "#212121",
     letterSpacing: 0.2,
   },
+  productTitleN: {
+    fontSize: 10,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 20,
+    color: "#fff",
+    letterSpacing: 0.2,
+    marginLeft:5,
+    textTransform:'uppercase',
+  },
+  trashIcon:{
+marginTop:4,
+  },
   phoneImg: {
     width: 30,
     height: 30,
@@ -322,6 +334,19 @@ export default styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginTop: 20
   },
+  thrashN: {
+    flexDirection:'row',
+    marginLeft: 10,
+    backgroundColor:'red',
+    borderWidth: 0,
+    borderColor: "#E0E0E0",
+    borderRadius: 100,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    alignSelf: "flex-end",
+    justifyContent: "flex-end",
+    marginTop: 20
+  },
   thrashP: {
     marginLeft: 20,
     borderWidth: 1,
@@ -446,5 +471,53 @@ badgeText: {
         borderRadius:50,
         backgroundColor:'#bfbfbf',
         alignSelf:'center'
+      },
+      deleteBarContainer: {
+        width: wp('95%'),
+        padding: 5,
+        height: 40,
+        backgroundColor: '#FAFAFA',
+        borderRadius: 5,
+        alignSelf: 'center',
+        marginTop: 5,
+        marginBottom: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems:"center",
+    
+      },
+      deleteBtnContainer: {
+        flexDirection: 'row',
+        justifyContent: "space-between",
+    
+      },
+      delBtn: {
+        backgroundColor: '#00b300',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 120,
+        height: 30,
+        marginRight: 10
+      },
+      delText:{
+        fontSize: 12,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 30,
+        color: "#fff",
+        letterSpacing: 0.3,
+      },
+      selText:{
+        fontSize: 16,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 30,
+        color: "rgba(124, 207, 36, 1)", 
+      },
+      checkCover:{
+        left:9,
+       top:5,
+        position:"absolute",
+        zIndex:900,
+    
       }
     })

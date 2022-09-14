@@ -25,3 +25,15 @@ export const deleteCart = createAsyncThunk("cart/delete",
         const Axios = await AxiosBase();
         return apiRequest(Axios.delete(`api/v1/cart/${id}`), thunkAPI)
     });
+    
+    export const deleteMultipleCart = createAsyncThunk("cart/multiple/delete",
+    async (items, thunkAPI) => {
+        const Axios = await AxiosBase();
+        return apiRequest(Axios.post(`api/v1/cart/delete/multiple`, items), thunkAPI)
+    });
+
+    export const deleteAllCart = createAsyncThunk("cart/delete/all",
+    async (_, thunkAPI) => {
+        const Axios = await AxiosBase();
+        return apiRequest(Axios.delete(`api/v1/cart/delete/all`), thunkAPI)
+    });

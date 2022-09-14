@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, Dimensions, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, SafeAreaView,RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
@@ -9,23 +9,33 @@ import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
-import { listCart, deleteCart, updateCart } from "@Request/Cart";
-import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig } from "@Component";
+import { listCart, deleteCart,deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
+import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup } from "@Store/Cart";
 import { cleanup as clean } from "@Store/Product";
+import ConfirmDelete from "./ConfirmDelete";
+import ConfirmSelected from "./ConfirmSelectedDelete";
+
 
 const Cart = (props) => {
+    const { items, removeCart,removeMultipleCart, removeAllCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const [err, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
     const [copyCartAmount, setCopyCartAmount] = useState({});
     const [copyCart, setCopyCart] = useState([]);
+    const [selDel, setSelDel] = useState([])
+    const [itemSelected, setItemSelected] = useState(false);
     const [scrollText, setScrollText] = useState(true);
     const [itemDeleted] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [selCount, setSelCount] = useState()
+    const [showConfirmSelected, setShowConfirmSelected] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
-    const { items, removeCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
+   
 
     const browse = () => props.navigation.navigate("Catalogue");
     const openCart = () => dispatch(listCart());
@@ -49,9 +59,18 @@ const Cart = (props) => {
 
     }, [items.carts])
 
+
+console.log("melody", items.carts);
+
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
+
+    const onRefresh = () => {
+        //Clear old data of the list
+        dispatch(listCart());
+      };
+    
 
     const refreshView = useCallback((msg, suc) => {
         wait(500).then(() => {
@@ -203,8 +222,82 @@ const Cart = (props) => {
         dispatch(deleteCart(id))
     };
 
+    const deleteAll = () => {
+       
+        dispatch(deleteAllCart())
+        setShowConfirm(false)
+       
+    }
+    const deleteSelected = () => {
+        setShowConfirmSelected(false)
+        let itemId = { items: selDel }
+        console.log("obimzzz", itemId);
+        dispatch(deleteMultipleCart(itemId))
+    }
+
+
+    const handleCheck = (id) => {
+        if (selDel === []) {
+            setItemSelected(false)
+        }
+        let helperArray = selDel;
+        let itemIndex = helperArray.indexOf(id);
+        if (helperArray.includes(id)) {
+            helperArray.splice(itemIndex, 1)
+            dispatch(listCart())
+            console.log("uuu", helperArray.includes(id));
+            setItemSelected(helperArray.includes(id))
+           
+        } else {
+            helperArray.push(id)
+            selDel.includes(id)
+            dispatch(listCart())
+            // setItemSelected(helperArray.includes(id))
+        }
+        setSelDel(helperArray)
+        setSelCount(Object.keys(selDel).length)
+        console.log("checking", helperArray);
+        console.log("try", selDel.includes(id));
+
+    }
+
+    useEffect(() => {
+        if (removeAllCart === "failed") {
+            refreshView(errors?.msg, "")
+        } else if (removeAllCart === "success") {
+            setCopyCart([])
+            setSelDel([])
+            refreshView("", "Cart items removed")
+            dispatch(listCart())
+
+        } else {
+            setErr("");
+        }
+    }, [removeAllCart]);
+
+
+    useEffect(() => {
+        if (removeMultipleCart === "failed") {
+            refreshView(errors?.msg, "")
+        } else if (removeMultipleCart === "success") {
+            dispatch(listCart())
+            setSelDel([])
+            refreshView("", "Cart items removed")
+          
+
+        } else {
+            setErr("");
+        }
+    }, [removeMultipleCart]);
+
     const ListView = ({ item }) => (
         <View style={styles.midCard}>
+            <Check
+                key={item.id}
+                onPress={() => handleCheck(item.id)}
+                id={() => handleCheck(item.id)}
+                isChecked={selDel.includes(item.id)}
+            />
             <View style={styles.cover}>
                 <View style={styles.imgCover}>
                     <Image source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }} style={styles.drugImg} />
@@ -242,9 +335,29 @@ const Cart = (props) => {
                     </View>
 
                     <View style={styles.iconCover}>
-                        <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
-                            <Text style={styles.productTitle}>Remove</Text>
+                   
+                  {!item?.product?.out_of_stock ? 
+                   <>
+                  {
+                  !item.product?.quantity_available < item.quantity ?
+                    <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
+                       
+                      <Text style={styles.productTitle}>Remove </Text>
+                   </TouchableOpacity >
+                   :
+                   <TouchableOpacity style={styles.thrashN} onPress={() => deleteFromCart(item.id)}>
+                             <Icon name="trash-2" style={styles.trashIcon} color="#fff" />
+                            <Text style={styles.productTitleN}>{item.product.quantity_available} Available</Text>
+                   </TouchableOpacity >
+                  }
+                  </>
+                   :
+                      <TouchableOpacity style={styles.thrashN} onPress={() => deleteFromCart(item.id)}>
+                             <Icon name="trash-2" style={styles.trashIcon} color="#fff" />
+                            <Text style={styles.productTitleN}>Out of Stock</Text>
                         </TouchableOpacity >
+                     }
+                        
                     </View>
 
                 </View>
@@ -303,7 +416,35 @@ const Cart = (props) => {
             
 
             <View style={styles.bottomCover}>
-            
+            {items.carts?.length > 0 ?
+                <View style={styles.deleteBarContainer}>
+                    <Text style={styles.selText}>{selCount}</Text>
+
+
+                    <View style={styles.deleteBtnContainer}>
+
+                        {
+                            selCount > 0 ?
+                                <TouchableOpacity onPress={() => setShowConfirmSelected(true)}>
+                                    <View style={styles.delBtn}>
+                                        <Text style={styles.delText}>Delete selected</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                :
+                                null
+                        }
+                        <TouchableOpacity onPress={() => setShowConfirm(true)}>
+                            <View style={styles.delBtn}>
+
+                                <Text style={styles.delText}>Delete all</Text>
+
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                :
+                null
+            }
                 {loaded !== "success" && itemDeleted
                     ?
                     <CartPlaceholderComponent />
@@ -316,6 +457,13 @@ const Cart = (props) => {
                             dataProvider={dataProvider}
                             layoutProvider={layoutProvider}
                             extendedState={copyCartAmount}
+                            refreshControl={
+                                <RefreshControl
+                                  //refresh control used for the Pull to Refresh
+                                  refreshing={refreshing}
+                                  onRefresh={onRefresh}
+                                />
+                            }
                         />
                         :
                         <AddCartListEmptyBig browse={browse} />
@@ -365,7 +513,17 @@ const Cart = (props) => {
             </View>
             <Loader isVisible={loader} />
             
+            <ConfirmDelete
+                visibleRetrieve={showConfirm}
+                returnBack={() => setShowConfirm(false)}
+                Confirm={() => deleteAll()}
+            />
 
+            <ConfirmSelected
+                visibleRetrieve1={showConfirmSelected}
+                returnBack1={() => setShowConfirmSelected(false)}
+                confirmSelected={() => deleteSelected()}
+            />
         </View>
 
     )

@@ -419,12 +419,13 @@ const styles = StyleSheet.create({
   },
   errText: {
     color: "red",
-    fontSize: 12,
+    fontSize: 9,
     fontFamily: "Urbanist-Regular",
     lineHeight: 16,
     letterSpacing: 0.2,
     fontWeight: "400",
-    textAlign: "left"
+    textAlign: "left",
+   
   },
   showTextPin: {
     color: "#3858CF",
