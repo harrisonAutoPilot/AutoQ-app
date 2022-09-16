@@ -31,6 +31,7 @@ const Cart = (props) => {
     const [scrollText, setScrollText] = useState(true);
     const [itemDeleted] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [stockCheck, setStockCheck] = useState(false)
     const [selCount, setSelCount] = useState()
     const [showConfirmSelected, setShowConfirmSelected] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -132,6 +133,8 @@ console.log("melody", items.carts);
     }, []);
 
 
+
+
     const toastConfig = {
         error: () => (
             <View style={[globalStyles.errMainView, { marginBottom: 10}]}>
@@ -222,6 +225,13 @@ console.log("melody", items.carts);
         dispatch(deleteCart(id))
     };
 
+    const deleteFromCart1 = (id) => {
+        let deletedItem = copyCart.filter((item => item.id !== id))
+        setCopyCart(deletedItem)
+        dispatch(deleteCart(id))
+        
+    };
+
     const deleteAll = () => {
        
         dispatch(deleteAllCart())
@@ -231,7 +241,6 @@ console.log("melody", items.carts);
     const deleteSelected = () => {
         setShowConfirmSelected(false)
         let itemId = { items: selDel }
-        console.log("obimzzz", itemId);
         dispatch(deleteMultipleCart(itemId))
     }
 
@@ -244,14 +253,11 @@ console.log("melody", items.carts);
         let itemIndex = helperArray.indexOf(id);
         if (helperArray.includes(id)) {
             helperArray.splice(itemIndex, 1)
-            dispatch(listCart())
-            console.log("uuu", helperArray.includes(id));
             setItemSelected(helperArray.includes(id))
            
         } else {
             helperArray.push(id)
             selDel.includes(id)
-            dispatch(listCart())
             // setItemSelected(helperArray.includes(id))
         }
         setSelDel(helperArray)
@@ -336,7 +342,7 @@ console.log("melody", items.carts);
 
                     <View style={styles.iconCover}>
                    
-                  {!item?.product?.out_of_stock ? 
+                  {!item?.product?.out_of_stock  ? 
                    <>
                   {
                   !item.product?.quantity_available < item.quantity ?
@@ -352,6 +358,7 @@ console.log("melody", items.carts);
                   }
                   </>
                    :
+                        
                       <TouchableOpacity style={styles.thrashN} onPress={() => deleteFromCart(item.id)}>
                              <Icon name="trash-2" style={styles.trashIcon} color="#fff" />
                             <Text style={styles.productTitleN}>Out of Stock</Text>
@@ -393,7 +400,7 @@ console.log("melody", items.carts);
         if (items.carts) {
             setDataProvider((prevState) => prevState.cloneWithRows(copyCart))
         }
-    }, [copyCart])
+    }, [copyCart, selDel.length])
 
     return (
 
