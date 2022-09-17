@@ -132,9 +132,9 @@ const Products = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.headerSubLastIconView} onPress={openCart}>
                         <IonIcon name="md-cart-outline" size={20} color="#fff" />
-                        {items?.carts?.length ?
+                        {items.carts && items.carts.to > 0 ?
                             <View style={styles.badge}>
-                                <Text style={styles.badgeText}>{items?.carts?.length}</Text>
+                                <Text style={styles.badgeText}>{items?.carts?.total}</Text>
                             </View>
                             : null}
                     </TouchableOpacity>

@@ -234,11 +234,11 @@ export default styles = StyleSheet.create({
     borderRadius: 5,
   },
   dropCover: {
-    // justifyContent: 'space-between',
-    // width: wp('100%'),
-    // borderColor: "rgba(189, 189, 189, 1)",
-    // borderWidth: 1
+
   },
+  dropCover2: {
+    height:500,
+    },
   optionView: {
     flexDirection: "row",
     // borderRadius: 4,

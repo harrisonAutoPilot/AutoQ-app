@@ -3,9 +3,12 @@ import AxiosBase from "@Request/AxiosBase";
 import { apiRequest } from "@Request/Request";
 
 export const listCart = createAsyncThunk("cart/all",
-    async (id, thunkAPI) => {
+    async (no, thunkAPI) => {
         const Axios = await AxiosBase();
-        return apiRequest(Axios.get(`api/v1/cart?store=${id ? id : ""}`), thunkAPI)
+        // const {no} = params
+        // return apiRequest(Axios.get(`api/v1/cart?store=${id ? id : ""}`), thunkAPI)
+        return apiRequest(Axios.get(`api/v1/cart/dev?page=${no}`), thunkAPI)
+       
     });
 
 export const addToCart = createAsyncThunk("cart/add",

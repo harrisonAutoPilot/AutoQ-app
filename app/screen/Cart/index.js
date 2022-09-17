@@ -19,7 +19,7 @@ import ConfirmSelected from "./ConfirmSelectedDelete";
 
 
 const Cart = (props) => {
-    const { items, removeCart,removeMultipleCart, removeAllCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
+    const { items, removeCart,removeMultipleCart, removeAllCart, errors, updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const [err, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
@@ -42,26 +42,42 @@ const Cart = (props) => {
     const openCart = () => dispatch(listCart());
     const redirectToSearch = () => props.navigation.navigate("Search");
 
+    // useEffect(() => {
+    //     if (items.carts && items.carts.length) {
+    //         let quantity = items.carts.map((item) => {
+    //             return {
+    //                 id: item.id,
+    //                 quantity: item.quantity,
+    //                 cart_id: item.id,
+    //                 total_amount: item.total_amount,
+    //                 product: { ...item.product }
+    //             }
+    //         })
+    //         setCopyCart(quantity);
+    //     } else if (items.carts && !items.carts.length) {
+    //         setCopyCart(items.carts)
+    //     }
+
+    // }, [items.carts])
+
     useEffect(() => {
-        if (items.carts && items.carts.length) {
-            let quantity = items.carts.map((item) => {
+        if (listItems.length) {
+            let quantity = listItems.map((item) => {
                 return {
                     id: item.id,
                     quantity: item.quantity,
                     cart_id: item.id,
                     total_amount: item.total_amount,
-                    product: { ...item.product }
+                    product: { ...item.product },
                 }
             })
+
             setCopyCart(quantity);
-        } else if (items.carts && !items.carts.length) {
-            setCopyCart(items.carts)
         }
 
-    }, [items.carts])
+    }, [listItems])
 
 
-console.log("melody", items.carts);
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -72,6 +88,10 @@ console.log("melody", items.carts);
         dispatch(listCart());
       };
     
+
+      const loadMore = () => { 
+        dispatch(listCart(items.carts?.current_page + 1, ));
+    }
 
     const refreshView = useCallback((msg, suc) => {
         wait(500).then(() => {
@@ -262,8 +282,7 @@ console.log("melody", items.carts);
         }
         setSelDel(helperArray)
         setSelCount(Object.keys(selDel).length)
-        console.log("checking", helperArray);
-        console.log("try", selDel.includes(id));
+       
 
     }
 
@@ -395,11 +414,16 @@ console.log("melody", items.carts);
         return <ListView item={data} />;
     };
 
+  
     useEffect(() => {
         setCopyCartAmount({})
-        if (items.carts) {
-            setDataProvider((prevState) => prevState.cloneWithRows(copyCart))
+
+        if (listItems.length || selDel.length) {
+            setDataProvider(dataProvider.cloneWithRows(copyCart))
+        }else if(!copyCart.length){
+            setDataProvider(dataProvider.cloneWithRows([]))
         }
+
     }, [copyCart, selDel.length])
 
     return (
@@ -412,9 +436,11 @@ console.log("melody", items.carts);
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.headerSubLastIconView} onPress={openCart}>
                         <IonIcon name="md-cart-outline" size={20} color="#fff" />
-                        {items.carts?.length ?
+
+                       
+                        {items.carts && items.carts.to > 0 ?
                             <View style={styles.badge}>
-                                <Text style={styles.badgeText}>{items.carts?.length}</Text>
+                                <Text style={styles.badgeText}>{items.carts?.total}</Text>
                             </View>
                             : null}
                     </TouchableOpacity>
@@ -423,7 +449,7 @@ console.log("melody", items.carts);
             
 
             <View style={styles.bottomCover}>
-            {items.carts?.length > 0 ?
+            {items.carts && items.carts.to > 0 ?
                 <View style={styles.deleteBarContainer}>
                     <Text style={styles.selText}>{selCount}</Text>
 
@@ -464,13 +490,19 @@ console.log("melody", items.carts);
                             dataProvider={dataProvider}
                             layoutProvider={layoutProvider}
                             extendedState={copyCartAmount}
-                            refreshControl={
-                                <RefreshControl
-                                  //refresh control used for the Pull to Refresh
-                                  refreshing={refreshing}
-                                  onRefresh={onRefresh}
-                                />
-                            }
+                            onEndReachedThreshold={0.5}
+                            onEndReached={() => {
+                                if (items.carts?.current_page < items.carts?.last_page) {
+                                    loadMore()
+                                }
+                            }}
+                            // refreshControl={
+                            //     <RefreshControl
+                            //       //refresh control used for the Pull to Refresh
+                            //       refreshing={refreshing}
+                            //       onRefresh={onRefresh}
+                            //     />
+                            // }
                         />
                         :
                         <AddCartListEmptyBig browse={browse} />

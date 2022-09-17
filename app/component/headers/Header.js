@@ -18,6 +18,7 @@ const Header = (props) => {
         dispatch(getNotification())
     }, []);
     
+  
     return (
         <View>
             <StatusBar barStyle="light-content" backgroundColor='#00319D' hidden={false} />
@@ -48,9 +49,10 @@ const Header = (props) => {
                                     <View style={styles.headerSubLastIconView}>
                                         <Icon name="md-cart-outline" color="#fff" size={26} />
                                     </View>
-                                    {items?.carts?.length ?
+                                  
+                                    {items.carts && items.carts.to > 0 ?
                                     <View style={styles.badge}>
-                                        <Text style={styles.badgeText}>{items?.carts?.length}</Text>
+                                        <Text style={styles.badgeText}>{items.carts?.total}</Text>
                                     </View>
                                     : null}
                                 </TouchableOpacity >
