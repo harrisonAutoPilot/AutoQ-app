@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, Dimensions, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, SafeAreaView,RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
@@ -9,49 +9,89 @@ import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
-import { listCart, deleteCart, updateCart } from "@Request/Cart";
-import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig } from "@Component";
+import { listCart, deleteCart,deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
+import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup } from "@Store/Cart";
 import { cleanup as clean } from "@Store/Product";
+import ConfirmDelete from "./ConfirmDelete";
+import ConfirmSelected from "./ConfirmSelectedDelete";
+
 
 const Cart = (props) => {
+    const { items, removeCart,removeMultipleCart, removeAllCart, errors, updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const [err, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
     const [copyCartAmount, setCopyCartAmount] = useState({});
     const [copyCart, setCopyCart] = useState([]);
+    const [selDel, setSelDel] = useState([])
+    const [itemSelected, setItemSelected] = useState(false);
     const [scrollText, setScrollText] = useState(true);
     const [itemDeleted] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [stockCheck, setStockCheck] = useState(false)
+    const [selCount, setSelCount] = useState()
+    const [showConfirmSelected, setShowConfirmSelected] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
-    const { items, removeCart, errors, updateCartItems, loaded } = useSelector((state) => state.cart);
+   
 
     const browse = () => props.navigation.navigate("Catalogue");
     const openCart = () => dispatch(listCart());
     const redirectToSearch = () => props.navigation.navigate("Search");
 
+    // useEffect(() => {
+    //     if (items.carts && items.carts.length) {
+    //         let quantity = items.carts.map((item) => {
+    //             return {
+    //                 id: item.id,
+    //                 quantity: item.quantity,
+    //                 cart_id: item.id,
+    //                 total_amount: item.total_amount,
+    //                 product: { ...item.product }
+    //             }
+    //         })
+    //         setCopyCart(quantity);
+    //     } else if (items.carts && !items.carts.length) {
+    //         setCopyCart(items.carts)
+    //     }
+
+    // }, [items.carts])
+
     useEffect(() => {
-        if (items.carts && items.carts.length) {
-            let quantity = items.carts.map((item) => {
+        if (listItems.length) {
+            let quantity = listItems.map((item) => {
                 return {
                     id: item.id,
                     quantity: item.quantity,
                     cart_id: item.id,
                     total_amount: item.total_amount,
-                    product: { ...item.product }
+                    product: { ...item.product },
                 }
             })
+
             setCopyCart(quantity);
-        } else if (items.carts && !items.carts.length) {
-            setCopyCart(items.carts)
         }
 
-    }, [items.carts])
+    }, [listItems])
+
+
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
+
+    const onRefresh = () => {
+        //Clear old data of the list
+        dispatch(listCart());
+      };
+    
+
+      const loadMore = () => { 
+        dispatch(listCart(items.carts?.current_page + 1, ));
+    }
 
     const refreshView = useCallback((msg, suc) => {
         wait(500).then(() => {
@@ -111,6 +151,8 @@ const Cart = (props) => {
             setCopyCart([]);
         }
     }, []);
+
+
 
 
     const toastConfig = {
@@ -203,8 +245,84 @@ const Cart = (props) => {
         dispatch(deleteCart(id))
     };
 
+    const deleteFromCart1 = (id) => {
+        let deletedItem = copyCart.filter((item => item.id !== id))
+        setCopyCart(deletedItem)
+        dispatch(deleteCart(id))
+        
+    };
+
+    const deleteAll = () => {
+       
+        dispatch(deleteAllCart())
+        setShowConfirm(false)
+       
+    }
+    const deleteSelected = () => {
+        setShowConfirmSelected(false)
+        let itemId = { items: selDel }
+        dispatch(deleteMultipleCart(itemId))
+    }
+
+
+    const handleCheck = (id) => {
+        if (selDel === []) {
+            setItemSelected(false)
+        }
+        let helperArray = selDel;
+        let itemIndex = helperArray.indexOf(id);
+        if (helperArray.includes(id)) {
+            helperArray.splice(itemIndex, 1)
+            setItemSelected(helperArray.includes(id))
+           
+        } else {
+            helperArray.push(id)
+            selDel.includes(id)
+            // setItemSelected(helperArray.includes(id))
+        }
+        setSelDel(helperArray)
+        setSelCount(Object.keys(selDel).length)
+       
+
+    }
+
+    useEffect(() => {
+        if (removeAllCart === "failed") {
+            refreshView(errors?.msg, "")
+        } else if (removeAllCart === "success") {
+            setCopyCart([])
+            setSelDel([])
+            refreshView("", "Cart items removed")
+            dispatch(listCart())
+
+        } else {
+            setErr("");
+        }
+    }, [removeAllCart]);
+
+
+    useEffect(() => {
+        if (removeMultipleCart === "failed") {
+            refreshView(errors?.msg, "")
+        } else if (removeMultipleCart === "success") {
+            dispatch(listCart())
+            setSelDel([])
+            refreshView("", "Cart items removed")
+          
+
+        } else {
+            setErr("");
+        }
+    }, [removeMultipleCart]);
+
     const ListView = ({ item }) => (
         <View style={styles.midCard}>
+            <Check
+                key={item.id}
+                onPress={() => handleCheck(item.id)}
+                id={() => handleCheck(item.id)}
+                isChecked={selDel.includes(item.id)}
+            />
             <View style={styles.cover}>
                 <View style={styles.imgCover}>
                     <Image source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }} style={styles.drugImg} />
@@ -242,9 +360,30 @@ const Cart = (props) => {
                     </View>
 
                     <View style={styles.iconCover}>
-                        <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
-                            <Text style={styles.productTitle}>Remove</Text>
+                   
+                  {!item?.product?.out_of_stock  ? 
+                   <>
+                  {
+                  !item.product?.quantity_available < item.quantity ?
+                    <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
+                       
+                      <Text style={styles.productTitle}>Remove </Text>
+                   </TouchableOpacity >
+                   :
+                   <TouchableOpacity style={styles.thrashN} onPress={() => deleteFromCart(item.id)}>
+                             <Icon name="trash-2" style={styles.trashIcon} color="#fff" />
+                            <Text style={styles.productTitleN}>{item.product.quantity_available} Available</Text>
+                   </TouchableOpacity >
+                  }
+                  </>
+                   :
+                        
+                      <TouchableOpacity style={styles.thrashN} onPress={() => deleteFromCart(item.id)}>
+                             <Icon name="trash-2" style={styles.trashIcon} color="#fff" />
+                            <Text style={styles.productTitleN}>Out of Stock</Text>
                         </TouchableOpacity >
+                     }
+                        
                     </View>
 
                 </View>
@@ -275,12 +414,17 @@ const Cart = (props) => {
         return <ListView item={data} />;
     };
 
+  
     useEffect(() => {
         setCopyCartAmount({})
-        if (items.carts) {
-            setDataProvider((prevState) => prevState.cloneWithRows(copyCart))
+
+        if (listItems.length || selDel.length) {
+            setDataProvider(dataProvider.cloneWithRows(copyCart))
+        }else if(!copyCart.length){
+            setDataProvider(dataProvider.cloneWithRows([]))
         }
-    }, [copyCart])
+
+    }, [copyCart, selDel.length])
 
     return (
 
@@ -292,9 +436,11 @@ const Cart = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.headerSubLastIconView} onPress={openCart}>
                         <IonIcon name="md-cart-outline" size={20} color="#fff" />
-                        {items.carts?.length ?
+
+                       
+                        {items.carts && items.carts.to > 0 ?
                             <View style={styles.badge}>
-                                <Text style={styles.badgeText}>{items.carts?.length}</Text>
+                                <Text style={styles.badgeText}>{items.carts?.total}</Text>
                             </View>
                             : null}
                     </TouchableOpacity>
@@ -303,7 +449,35 @@ const Cart = (props) => {
             
 
             <View style={styles.bottomCover}>
-            
+            {items.carts && items.carts.to > 0 ?
+                <View style={styles.deleteBarContainer}>
+                    <Text style={styles.selText}>{selCount}</Text>
+
+
+                    <View style={styles.deleteBtnContainer}>
+
+                        {
+                            selCount > 0 ?
+                                <TouchableOpacity onPress={() => setShowConfirmSelected(true)}>
+                                    <View style={styles.delBtn}>
+                                        <Text style={styles.delText}>Delete selected</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                :
+                                null
+                        }
+                        <TouchableOpacity onPress={() => setShowConfirm(true)}>
+                            <View style={styles.delBtn}>
+
+                                <Text style={styles.delText}>Delete all</Text>
+
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                :
+                null
+            }
                 {loaded !== "success" && itemDeleted
                     ?
                     <CartPlaceholderComponent />
@@ -316,6 +490,19 @@ const Cart = (props) => {
                             dataProvider={dataProvider}
                             layoutProvider={layoutProvider}
                             extendedState={copyCartAmount}
+                            onEndReachedThreshold={0.5}
+                            onEndReached={() => {
+                                if (items.carts?.current_page < items.carts?.last_page) {
+                                    loadMore()
+                                }
+                            }}
+                            // refreshControl={
+                            //     <RefreshControl
+                            //       //refresh control used for the Pull to Refresh
+                            //       refreshing={refreshing}
+                            //       onRefresh={onRefresh}
+                            //     />
+                            // }
                         />
                         :
                         <AddCartListEmptyBig browse={browse} />
@@ -365,7 +552,17 @@ const Cart = (props) => {
             </View>
             <Loader isVisible={loader} />
             
+            <ConfirmDelete
+                visibleRetrieve={showConfirm}
+                returnBack={() => setShowConfirm(false)}
+                Confirm={() => deleteAll()}
+            />
 
+            <ConfirmSelected
+                visibleRetrieve1={showConfirmSelected}
+                returnBack1={() => setShowConfirmSelected(false)}
+                confirmSelected={() => deleteSelected()}
+            />
         </View>
 
     )

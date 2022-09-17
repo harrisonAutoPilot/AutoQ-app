@@ -5,6 +5,7 @@ import BtnLg from "./btns/BtnLg";
 import BtnPre from "./btns/BtnPre";
 import Header from "./headers/Header";
 import COHeader from "./headers/COHeader";
+import Check from "./Check";
 import EmptyPlaceHolder from "./placeholders/EmptyPlaceHolder";
 import WalletCard from "./WalletCard";
 import AddCartListEmptyBig from "./placeholders/AddCartListEmptyBig";
@@ -17,5 +18,5 @@ import EmptyStore from "./Empty/emptyStore"
 import EmptyFinance from "./Empty/emptyFinance"
 import EmptyCustomer from "./Empty/emptyCustomer"
 
-export { FormikValidator, InputField, AuthBtn, Header, COHeader, 
+export { FormikValidator,Check, InputField, AuthBtn, Header, COHeader, 
     EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder, EmptyStore,SuccessMsgViewTwo, ErrorMsg, Success, NavHeader, BtnLg, BtnPre};

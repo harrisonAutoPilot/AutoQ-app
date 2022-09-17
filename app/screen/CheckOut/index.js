@@ -22,13 +22,14 @@ const CheckOut = (props) => {
     const [errMsg, setErrMsg] = useState("");
     const [err, setErr] = useState("");
     const [category, setCategory] = useState("");
+    const [cartItem, setCartItem] = useState([]);
     const [deliveryType, setDeliveryType] = useState();
     const [deliveryDate, setDeliveryDate] = useState();
     const [deliveryPrice, setDeliveryPrice] = useState(0);
     const [deliveryTypeName, setDeliveryTypeName] = useState();
     const [deliveryTypeStatus, setDeliveryTypeStatus] = useState(false);
 
-    const { items } = useSelector((state) => state.cart);
+    const { items,listItems } = useSelector((state) => state.cart);
     const [selected, setSelected] = useState({});
     const { payment } = useSelector((state) => state.payment);
     const { wallet } = useSelector((state) => state.wallet);
@@ -63,6 +64,10 @@ const CheckOut = (props) => {
         dispatch(listCart())
         dispatch(getWallet())
         dispatch(getStore())
+        if (listItems.length) {
+            setCartItem(items.carts?.data && items.carts?.data)
+        }
+        
 
        BackHandler.addEventListener(
             "hardwareBackPress",
@@ -70,6 +75,11 @@ const CheckOut = (props) => {
           );
           return () => BackHandler.removeEventListener("hardwareBackPress", backToCart);
     }, []);
+
+    const loadMore = () => {
+        dispatch(listCart(items.carts?.current_page + 1));
+        
+    }
 
 
     const backToCart = () => {
@@ -116,7 +126,7 @@ const CheckOut = (props) => {
             </View>
 
             <View style={styles.detailCover}>
-                <Text numberOfLines={1} style={styles.itemDetails}>{item.product.name}</Text>
+                <Text numberOfLines={1} style={styles.itemDetails}>{item.product?.name}</Text>
             </View>
             <View style={styles.quanCover}>
                 <Text style={styles.itemDetails}>x{item.quantity}</Text>
@@ -214,11 +224,20 @@ const CheckOut = (props) => {
 
                                 <View style={styles.dropCover}>
                                     <FlatList
-                                        data={items.carts}
+                                        data={cartItem}
                                         renderItem={renderItem2}
                                         keyExtractor={item => item.id}
                                         ListEmptyComponent={PlaceholderComponent}
-                                        horizontal={false}
+                                        // horizontal={false}
+                                        showsVerticalScrollIndicator={true}
+                                        extraData={cartItem}
+                                        initialNumToRender={10}
+                                        onEndReachedThreshold={0.5}
+                                        onEndReached={() => {
+                                            if (items.carts?.current_page < items.carts?.last_page) {
+                                                loadMore()
+                                            }
+                                        }}
                                     />
                                 </View>
 

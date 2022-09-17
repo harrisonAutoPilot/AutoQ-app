@@ -1,14 +1,17 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {addToCart, updateCart, listCart, deleteCart} from "@Request/Cart"
-
+import {addToCart, updateCart,deleteAllCart,deleteMultipleCart, listCart, deleteCart} from "@Request/Cart"
+import dict from "@Helper/dict";
 export const cartSlice = createSlice({
     name: "cart",
     initialState: {
         items: [],
+        listItems:[],
         status: "idle",
         errors: {},
         addCart: "idle",
         removeCart: "idle",
+        removeAllCart: "idle",
+        removeMultipleCart: "idle",
         addCart: "idle",
         updateCartItems: "idle",
         loaded: "idle",
@@ -18,6 +21,8 @@ export const cartSlice = createSlice({
             state.errors = {}
             state.addCart = "idle",
             state.removeCart = "idle",
+            state.removeAllCart = "idle",
+            state.removeMultipleCart = "idle",
             state.updateCartItems = "idle"
             // state.loaded = "idle";
         },
@@ -35,7 +40,8 @@ export const cartSlice = createSlice({
                 state.items = [];
             })
             .addCase(listCart.fulfilled, (state, action) => {
-                state.items = action.payload;
+                state.items = action.payload
+                state.listItems = dict(state.listItems, action.payload.carts.data)
                 state.status = "success";
                 state.loaded = "success";
                 state.errors = {};
@@ -45,6 +51,7 @@ export const cartSlice = createSlice({
                 state.loaded ="failed";
                 state.errors = payload;
                 state.items = [];
+                state.listItems = [];
             })
 
             builder
@@ -89,6 +96,35 @@ export const cartSlice = createSlice({
                 state.removeCart = "failed";
                 state.errors = payload;
             })
+
+            builder
+            .addCase(deleteAllCart.pending, state => {
+                state.removeAllCart = "pending";
+                state.errors = {};
+            })
+            .addCase(deleteAllCart.fulfilled, (state, action) => {
+                state.removeAllCart = "success";
+                state.errors = {};
+            })
+            .addCase(deleteAllCart.rejected, (state, { payload }) => {
+                state.removeAllCart = "failed";
+                state.errors = payload;
+            })
+
+            builder
+            .addCase(deleteMultipleCart.pending, state => {
+                state.removeMultipleCart = "pending";
+                state.errors = {};
+            })
+            .addCase(deleteMultipleCart.fulfilled, (state, action) => {
+                state.removeMultipleCart = "success";
+                state.errors = {};
+            })
+            .addCase(deleteMultipleCart.rejected, (state, { payload }) => {
+                state.removeMultipleCart = "failed";
+                state.errors = payload;
+            })
+
 
     }
 });
