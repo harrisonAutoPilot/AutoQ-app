@@ -245,13 +245,6 @@ const Cart = (props) => {
         dispatch(deleteCart(id))
     };
 
-    const deleteFromCart1 = (id) => {
-        let deletedItem = copyCart.filter((item => item.id !== id))
-        setCopyCart(deletedItem)
-        dispatch(deleteCart(id))
-        
-    };
-
     const deleteAll = () => {
        
         dispatch(deleteAllCart())
@@ -278,7 +271,7 @@ const Cart = (props) => {
         } else {
             helperArray.push(id)
             selDel.includes(id)
-            // setItemSelected(helperArray.includes(id))
+         
         }
         setSelDel(helperArray)
         setSelCount(Object.keys(selDel).length)
