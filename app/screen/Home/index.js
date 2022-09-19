@@ -40,7 +40,6 @@ const Home = (props) => {
 
         dispatch(getAgent());
         dispatch(getCustomers());
-        // dispatch(listCart());
     }, []);
 
     return (

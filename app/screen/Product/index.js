@@ -36,7 +36,7 @@ const Products = (props) => {
 
     useEffect(() => {
         dispatch(searchProducts({search: props.route.params?.category, no:1}));
-        dispatch(listCart());
+        dispatch(listCart(1));
         dispatch(getPaymentOptions());
         return () => {
             dispatch(cleanup())

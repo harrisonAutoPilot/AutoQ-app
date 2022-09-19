@@ -91,7 +91,7 @@ const ConfirmCheckOut = (props) => {
                 setLoader(false);
                 setErr(err)
             }else if (suc){
-                dispatch(listCart())
+                dispatch(listCart(1))
             }
         });
 

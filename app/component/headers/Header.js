@@ -14,7 +14,7 @@ const Header = (props) => {
     const { notification } = useSelector((state) => state.notification);
 
     useEffect(() => {
-        dispatch(listCart());
+        dispatch(listCart(1));
         dispatch(getNotification())
     }, []);
     

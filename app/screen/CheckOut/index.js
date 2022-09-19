@@ -61,7 +61,7 @@ const CheckOut = (props) => {
 
     useEffect(() => {
         dispatch(listPaymentMethod());
-        dispatch(listCart())
+        dispatch(listCart(1))
         dispatch(getWallet())
         dispatch(getStore())
         if (listItems.length) {
@@ -84,7 +84,7 @@ const CheckOut = (props) => {
 
     const backToCart = () => {
         dispatch(delivery())
-        dispatch(listCart())
+        dispatch(listCart(1))
         props.navigation.navigate("Cart");
     }
 

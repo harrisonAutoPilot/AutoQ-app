@@ -1,6 +1,8 @@
 import { createSlice} from "@reduxjs/toolkit";
 import {addToCart, updateCart,deleteAllCart,deleteMultipleCart, listCart, deleteCart} from "@Request/Cart"
 import dict from "@Helper/dict";
+
+
 export const cartSlice = createSlice({
     name: "cart",
     initialState: {
@@ -24,11 +26,14 @@ export const cartSlice = createSlice({
             state.removeAllCart = "idle",
             state.removeMultipleCart = "idle",
             state.updateCartItems = "idle"
-            // state.loaded = "idle";
         },
         idle: (state) => {
             state.loaded = "idle";
         },
+        cleanList: (state) => {
+            state.items = []
+            state.listItems = []
+        }
 
     },
     extraReducers: builder => {
@@ -37,7 +42,6 @@ export const cartSlice = createSlice({
                 state.status = "pending";
                 state.loaded = "pending";
                 state.errors = {};
-                state.items = [];
             })
             .addCase(listCart.fulfilled, (state, action) => {
                 state.items = action.payload
@@ -128,6 +132,6 @@ export const cartSlice = createSlice({
 
     }
 });
-export const { cleanup, idle } = cartSlice.actions
+export const { cleanup, idle, cleanList } = cartSlice.actions
 
 export default cartSlice.reducer;

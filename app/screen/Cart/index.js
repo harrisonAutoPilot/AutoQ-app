@@ -12,15 +12,16 @@ import styles from "./style";
 import { listCart, deleteCart,deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
-import { cleanup } from "@Store/Cart";
+import { cleanup, cleanList } from "@Store/Cart";
 import { cleanup as clean } from "@Store/Product";
 import ConfirmDelete from "./ConfirmDelete";
 import ConfirmSelected from "./ConfirmSelectedDelete";
 
 
 const Cart = (props) => {
-    const { items, removeCart,removeMultipleCart, removeAllCart, errors, updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
+    
     const dispatch = useDispatch();
+
     const [err, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
@@ -31,34 +32,19 @@ const Cart = (props) => {
     const [scrollText, setScrollText] = useState(true);
     const [itemDeleted] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [stockCheck, setStockCheck] = useState(false)
     const [selCount, setSelCount] = useState()
     const [showConfirmSelected, setShowConfirmSelected] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
-   
+    const { items, removeCart,removeMultipleCart, removeAllCart, errors, 
+        updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
+
 
     const browse = () => props.navigation.navigate("Catalogue");
-    const openCart = () => dispatch(listCart());
+
+    const openCart = () => dispatch(listCart(1));
+
     const redirectToSearch = () => props.navigation.navigate("Search");
-
-    // useEffect(() => {
-    //     if (items.carts && items.carts.length) {
-    //         let quantity = items.carts.map((item) => {
-    //             return {
-    //                 id: item.id,
-    //                 quantity: item.quantity,
-    //                 cart_id: item.id,
-    //                 total_amount: item.total_amount,
-    //                 product: { ...item.product }
-    //             }
-    //         })
-    //         setCopyCart(quantity);
-    //     } else if (items.carts && !items.carts.length) {
-    //         setCopyCart(items.carts)
-    //     }
-
-    // }, [items.carts])
 
     useEffect(() => {
         if (listItems.length) {
@@ -73,23 +59,20 @@ const Cart = (props) => {
             })
 
             setCopyCart(quantity);
+        }else{
+            setCopyCart([])
         }
 
-    }, [listItems])
+    }, [listItems, copyCart])
 
 
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
-
-    const onRefresh = () => {
-        //Clear old data of the list
-        dispatch(listCart());
-      };
     
 
-      const loadMore = () => { 
+    const loadMore = () => { 
         dispatch(listCart(items.carts?.current_page + 1, ));
     }
 
@@ -99,7 +82,8 @@ const Cart = (props) => {
             setSuccessMsg(suc);
             if (suc) {
                 setLoader(false)
-                dispatch(listCart())
+                dispatch(cleanList())
+                dispatch(listCart(1))
             } else {
                 setLoader(false)
                 Toast.show({
@@ -122,6 +106,8 @@ const Cart = (props) => {
             setErr(msg);
             if (suc) {
                 setLoader(false)
+                dispatch(cleanList())
+                dispatch(listCart(1))
                 props.navigation.navigate("CheckOut");
             } else {
                 setLoader(false)
@@ -141,7 +127,7 @@ const Cart = (props) => {
     }, []);
 
     useEffect(() => {
-        dispatch(listCart());
+        dispatch(listCart(1));
         const interval = setInterval(() => {
             setScrollText((scrollText) => !scrollText);
         }, 1000);
@@ -151,8 +137,6 @@ const Cart = (props) => {
             setCopyCart([]);
         }
     }, []);
-
-
 
 
     const toastConfig = {
@@ -245,18 +229,10 @@ const Cart = (props) => {
         dispatch(deleteCart(id))
     };
 
-    const deleteFromCart1 = (id) => {
-        let deletedItem = copyCart.filter((item => item.id !== id))
-        setCopyCart(deletedItem)
-        dispatch(deleteCart(id))
-        
-    };
 
     const deleteAll = () => {
-       
-        dispatch(deleteAllCart())
         setShowConfirm(false)
-       
+        dispatch(deleteAllCart())
     }
     const deleteSelected = () => {
         setShowConfirmSelected(false)
@@ -266,25 +242,19 @@ const Cart = (props) => {
 
 
     const handleCheck = (id) => {
-        if (selDel === []) {
-            setItemSelected(false)
-        }
+
         let helperArray = selDel;
+
         let itemIndex = helperArray.indexOf(id);
+      
         if (helperArray.includes(id)) {
             helperArray.splice(itemIndex, 1)
-            setItemSelected(helperArray.includes(id))
-           
         } else {
             helperArray.push(id)
-            selDel.includes(id)
-            // setItemSelected(helperArray.includes(id))
         }
-        setSelDel(helperArray)
-        setSelCount(Object.keys(selDel).length)
-       
 
-    }
+        setSelDel(helperArray)
+    };
 
     useEffect(() => {
         if (removeAllCart === "failed") {
@@ -293,7 +263,6 @@ const Cart = (props) => {
             setCopyCart([])
             setSelDel([])
             refreshView("", "Cart items removed")
-            dispatch(listCart())
 
         } else {
             setErr("");
@@ -305,10 +274,8 @@ const Cart = (props) => {
         if (removeMultipleCart === "failed") {
             refreshView(errors?.msg, "")
         } else if (removeMultipleCart === "success") {
-            dispatch(listCart())
             setSelDel([])
             refreshView("", "Cart items removed")
-          
 
         } else {
             setErr("");
@@ -317,12 +284,12 @@ const Cart = (props) => {
 
     const ListView = ({ item }) => (
         <View style={styles.midCard}>
-            <Check
-                key={item.id}
+         
+         <Check
                 onPress={() => handleCheck(item.id)}
-                id={() => handleCheck(item.id)}
                 isChecked={selDel.includes(item.id)}
             />
+
             <View style={styles.cover}>
                 <View style={styles.imgCover}>
                     <Image source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }} style={styles.drugImg} />
@@ -349,7 +316,6 @@ const Cart = (props) => {
                 </View>
 
                 <View>
-
 
                     <View style={styles.priceCover}>
                         {item.total_amount.length > 5 ?
@@ -419,6 +385,7 @@ const Cart = (props) => {
         setCopyCartAmount({})
 
         if (listItems.length || selDel.length) {
+            console.log("ko")
             setDataProvider(dataProvider.cloneWithRows(copyCart))
         }else if(!copyCart.length){
             setDataProvider(dataProvider.cloneWithRows([]))
@@ -457,7 +424,7 @@ const Cart = (props) => {
                     <View style={styles.deleteBtnContainer}>
 
                         {
-                            selCount > 0 ?
+                           selDel.length ?
                                 <TouchableOpacity onPress={() => setShowConfirmSelected(true)}>
                                     <View style={styles.delBtn}>
                                         <Text style={styles.delText}>Delete selected</Text>
@@ -478,7 +445,7 @@ const Cart = (props) => {
                 :
                 null
             }
-                {loaded !== "success" && itemDeleted
+                {itemDeleted
                     ?
                     <CartPlaceholderComponent />
                     :
@@ -496,13 +463,6 @@ const Cart = (props) => {
                                     loadMore()
                                 }
                             }}
-                            // refreshControl={
-                            //     <RefreshControl
-                            //       //refresh control used for the Pull to Refresh
-                            //       refreshing={refreshing}
-                            //       onRefresh={onRefresh}
-                            //     />
-                            // }
                         />
                         :
                         <AddCartListEmptyBig browse={browse} />
@@ -514,7 +474,7 @@ const Cart = (props) => {
             </View>
 
                 <SafeAreaView>
-                    {items.total_amount && loaded === "success" && copyCart && copyCart.length ?
+                    {items.total_amount && copyCart && copyCart.length ?
                         <View style={styles.bottomDownCover}>
 
                             <View style={styles.orderCover}>
