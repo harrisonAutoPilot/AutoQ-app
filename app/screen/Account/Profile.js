@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
@@ -11,7 +11,7 @@ import { cleanup, logout } from "@Store/Auth";
 import Loader from "@Screen/Loader";
 import ConfirmDelete from "./ConfirmDelete";
 import { SuccessMsgViewTwo } from "@Component";
-
+import links, { TLinks } from "./links";
 
 export default Profile = () => {
 
@@ -26,7 +26,7 @@ export default Profile = () => {
 
     useEffect(() => {
         return () => {
-            dispatch(cleanup())   
+            dispatch(cleanup())
         }
     }, []);
 
@@ -62,8 +62,8 @@ export default Profile = () => {
 
     };
 
-       // DISABLE ACCOUNT
-       const deleteMyAccount = () => {
+    // DISABLE ACCOUNT
+    const deleteMyAccount = () => {
         setShowConfirm(false)
         setLoader(true);
         dispatch(deleteUserAccount(user.id))
@@ -117,7 +117,7 @@ export default Profile = () => {
             })
 
         });
-      
+
     }, []);
 
     const toastConfig = {
@@ -136,7 +136,7 @@ export default Profile = () => {
             waitTime(errors?.msg, "");
         } else if (update === "success") {
             waitTime("", "Profile Image Updated");
-        }else{
+        } else {
             setSuccessMsg("")
         }
     }, [update]);
@@ -148,12 +148,30 @@ export default Profile = () => {
         } else if (deleteAccount === "success") {
             dispatch(logout());
         }
-          
+
     }, [deleteAccount]);
+
+    const List = ({ item }) => (
+
+        <View style={styles.cardCover}>
+            <View style={styles.locCover}>
+                <View style={styles.locImgCover}>
+                    <Image source={item.icon} style={styles.locImg} />
+                </View>
+                <Text style={styles.locTextTitle}>{item.title}:</Text>
+            </View>
+            <View>
+                <Text style={styles.locText}>{user?.phone}</Text>
+            </View>
+        </View>
+
+    )
+
+
 
     return (
         <View style={styles.container}>
-        
+
             {successMsg ? <Toast config={toastConfig} /> : null}
             {errMsg ? <Toast config={toastConfig} /> : null}
 
@@ -173,66 +191,21 @@ export default Profile = () => {
 
             </View>
             <View style={styles.bottomCover}>
-          
-            <ScrollView
-                indicatorStyle="white"
-                contentContainerStyle={styles.scrollContentContainer}>
-               
-                    <View style={styles.cardCover}>
-                        <View style={styles.locCover}>
-                            <View style={styles.locImgCover}>
-                                <Image source={require("@Assets/image/map-pin-fill.png")} style={styles.locImg} />
-                            </View>
-                            <Text style={styles.locTextTitle}>Location:</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.locText}>Lagos/Ikeja</Text>
-                        </View>
-                    </View>
-                    <View style={styles.cardCover}>
-                        <View style={styles.locCover}>
-                            <View style={styles.locImgCover}>
-                                <Image source={require("@Assets/image/agentPhone.png")} style={styles.locImg} />
-                            </View>
-                            <Text style={styles.locTextTitle}>Phone:</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.locText}>+{user?.phone}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.cardCover}>
-                        <View style={styles.locCover}>
-                            <View style={styles.locImgCover}>
-                                <Image source={require("@Assets/image/agentWhatsapp.png")} style={styles.locImg} />
-                            </View>
-                            <Text style={styles.locTextTitle}>Whatsapp:</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.locText}>+{user?.phone}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.cardCover1}>
-                        <View style={styles.locCover}>
-                            <View style={styles.locImgCover}>
-                                <Image source={require("@Assets/image/agentEmail.png")} style={styles.locImg} />
-                            </View>
-                            <Text style={styles.locTextTitle}>Email:</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.locText}>{user?.email}</Text>
-                        </View>
-                    </View>
 
+                <View>
+
+
+                    <FlatList data={links} renderItem={List} keyExtractor={item => item.id} horizontal={false} />
                     <View >
-                    <TouchableOpacity style={styles.deleteCover} onPress={() => setShowConfirm(true)}>
-                        <Icon name="trash-2" color="#D32F2F" size={16} />
-                        <Text style={styles.deleteText}>Delete Account</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.deleteCover} onPress={() => setShowConfirm(true)}>
+                            <Icon name="trash-2" color="#D32F2F" size={16} />
+                            <Text style={styles.deleteText}>Delete Account</Text>
+                        </TouchableOpacity>
 
+
+                    </View>
 
                 </View>
-              
-            </ScrollView>
             </View>
 
             <Loader isVisible={loader} />
