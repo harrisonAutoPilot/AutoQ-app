@@ -209,7 +209,8 @@ export default styles = StyleSheet.create({
     container: {
         backgroundColor: '#f2f3f4',
         width: wp('100%'),
-        // height: hp('100%'),
+        // height: '100%',
+        flex: 1
 
     },
     topCover: {
@@ -273,9 +274,6 @@ export default styles = StyleSheet.create({
     },
     bottomCover: {
         alignItems: 'center',
-        height: hp('58%'),
-        flexGrow: 1,
-        // backgroundColor:'#DCDCDC'
     },
     cardCover: {
         flexDirection: "row",
@@ -348,11 +346,6 @@ export default styles = StyleSheet.create({
     },
     downCover: {
         marginTop: 20,
-    },
-    scrollContentContainer: {
-        // height: "115%",
-        // paddingBottom: 300,
-
     },
     // This is for the toggle
     thumbOnStyle: {

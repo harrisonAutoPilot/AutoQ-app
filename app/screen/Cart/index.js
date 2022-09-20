@@ -28,13 +28,10 @@ const Cart = (props) => {
     const [copyCartAmount, setCopyCartAmount] = useState({});
     const [copyCart, setCopyCart] = useState([]);
     const [selDel, setSelDel] = useState([])
-    const [itemSelected, setItemSelected] = useState(false);
     const [scrollText, setScrollText] = useState(true);
     const [itemDeleted] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [selCount, setSelCount] = useState()
     const [showConfirmSelected, setShowConfirmSelected] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
 
     const { items, removeCart,removeMultipleCart, removeAllCart, errors, 
         updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
@@ -229,7 +226,6 @@ const Cart = (props) => {
         dispatch(deleteCart(id))
     };
 
-
     const deleteAll = () => {
         setShowConfirm(false)
         dispatch(deleteAllCart())
@@ -384,14 +380,14 @@ const Cart = (props) => {
     useEffect(() => {
         setCopyCartAmount({})
 
-        if (listItems.length || selDel.length) {
-            console.log("ko")
+        if (copyCart.length) {
+            console.log(copyCart, "kop")
             setDataProvider(dataProvider.cloneWithRows(copyCart))
         }else if(!copyCart.length){
             setDataProvider(dataProvider.cloneWithRows([]))
         }
 
-    }, [copyCart, selDel.length])
+    }, [copyCart])
 
     return (
 
@@ -418,7 +414,7 @@ const Cart = (props) => {
             <View style={styles.bottomCover}>
             {items.carts && items.carts.to > 0 ?
                 <View style={styles.deleteBarContainer}>
-                    <Text style={styles.selText}>{selCount}</Text>
+                    <Text style={styles.selText}>{selDel.length ?  selDel.length : null}</Text>
 
 
                     <View style={styles.deleteBtnContainer}>

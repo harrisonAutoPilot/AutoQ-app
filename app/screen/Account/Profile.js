@@ -26,7 +26,7 @@ export default Profile = () => {
 
     useEffect(() => {
         return () => {
-            dispatch(cleanup())   
+            dispatch(cleanup())
         }
     }, []);
 
@@ -62,8 +62,8 @@ export default Profile = () => {
 
     };
 
-       // DISABLE ACCOUNT
-       const deleteMyAccount = () => {
+    // DISABLE ACCOUNT
+    const deleteMyAccount = () => {
         setShowConfirm(false)
         setLoader(true);
         dispatch(deleteUserAccount(user.id))
@@ -117,7 +117,7 @@ export default Profile = () => {
             })
 
         });
-      
+
     }, []);
 
     const toastConfig = {
@@ -136,7 +136,7 @@ export default Profile = () => {
             waitTime(errors?.msg, "");
         } else if (update === "success") {
             waitTime("", "Profile Image Updated");
-        }else{
+        } else {
             setSuccessMsg("")
         }
     }, [update]);
@@ -148,94 +148,81 @@ export default Profile = () => {
         } else if (deleteAccount === "success") {
             dispatch(logout());
         }
-          
+
     }, [deleteAccount]);
+
+    const ProfileList = ({ image, title, name }) => (
+        <View style={styles.cardCover}>
+            <View style={styles.locCover}>
+                <View style={styles.locImgCover}>
+                    <Image source={image} style={styles.locImg} />
+                </View>
+                <Text style={styles.locTextTitle}>{title}:</Text>
+            </View>
+            <View>
+                <Text style={styles.locText}>{name}</Text>
+            </View>
+        </View>
+    )
 
     return (
         <View style={styles.container}>
-        
+
             {successMsg ? <Toast config={toastConfig} /> : null}
             {errMsg ? <Toast config={toastConfig} /> : null}
-
-            <View style={styles.topCover}>
-                <View style={styles.imgCover}>
-                    <Image source={{ uri: `${URL}${user?.picture_url}` }} style={styles.img} />
-                    <View style={styles.cameraCover}>
-                        <TouchableOpacity onPress={updateProfilePic}>
-                            <Image source={require("@Assets/image/camera.png")} style={styles.camImg} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={styles.topTextCover}>
-                    <Text style={styles.agentNameText}>{user?.name}</Text>
-                    <Text style={styles.agentCodeText}>RH/AG/{user?.id} - Registered Agent</Text>
-                </View>
-
-            </View>
-            <View style={styles.bottomCover}>
-          
             <ScrollView
-                indicatorStyle="white"
-                contentContainerStyle={styles.scrollContentContainer}>
-               
-                    <View style={styles.cardCover}>
-                        <View style={styles.locCover}>
-                            <View style={styles.locImgCover}>
-                                <Image source={require("@Assets/image/map-pin-fill.png")} style={styles.locImg} />
-                            </View>
-                            <Text style={styles.locTextTitle}>Location:</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.locText}>Lagos/Ikeja</Text>
+                indicatorStyle="white">
+
+                <View style={styles.topCover}>
+                    <View style={styles.imgCover}>
+                        <Image source={{ uri: `${URL}${user?.picture_url}` }} style={styles.img} />
+                        <View style={styles.cameraCover}>
+                            <TouchableOpacity onPress={updateProfilePic}>
+                                <Image source={require("@Assets/image/camera.png")} style={styles.camImg} />
+                            </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={styles.cardCover}>
-                        <View style={styles.locCover}>
-                            <View style={styles.locImgCover}>
-                                <Image source={require("@Assets/image/agentPhone.png")} style={styles.locImg} />
-                            </View>
-                            <Text style={styles.locTextTitle}>Phone:</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.locText}>+{user?.phone}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.cardCover}>
-                        <View style={styles.locCover}>
-                            <View style={styles.locImgCover}>
-                                <Image source={require("@Assets/image/agentWhatsapp.png")} style={styles.locImg} />
-                            </View>
-                            <Text style={styles.locTextTitle}>Whatsapp:</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.locText}>+{user?.phone}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.cardCover1}>
-                        <View style={styles.locCover}>
-                            <View style={styles.locImgCover}>
-                                <Image source={require("@Assets/image/agentEmail.png")} style={styles.locImg} />
-                            </View>
-                            <Text style={styles.locTextTitle}>Email:</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.locText}>{user?.email}</Text>
-                        </View>
+                    <View style={styles.topTextCover}>
+                        <Text style={styles.agentNameText}>{user?.name}</Text>
+                        <Text style={styles.agentCodeText}>RH/AG/{user?.id} - Registered Agent</Text>
                     </View>
 
-                    <View >
+                </View>
+                <View style={styles.bottomCover}>
+
+                <ProfileList
+                    image={require("@Assets/image/map-pin-fill.png")}
+                    title="Location"
+                    name="Lagos/Ikeja"
+                />
+                
+
+                <ProfileList
+                    image={require("@Assets/image/agentPhone.png")}
+                    title="Phone"
+                    name={`+${user?.phone}`}
+                />
+
+                <ProfileList
+                    image={require("@Assets/image/agentWhatsapp.png")}
+                    title="Whatsapp"
+                    name={`+${user?.phone}`}
+                />
+
+                <ProfileList
+                    image={require("@Assets/image/agentEmail.png")}
+                    title="Email"
+                    name={user?.email}
+                />
+                </View>
+             
                     <TouchableOpacity style={styles.deleteCover} onPress={() => setShowConfirm(true)}>
                         <Icon name="trash-2" color="#D32F2F" size={16} />
                         <Text style={styles.deleteText}>Delete Account</Text>
                     </TouchableOpacity>
 
-
-                </View>
-              
+                <Loader isVisible={loader} />
             </ScrollView>
-            </View>
-
-            <Loader isVisible={loader} />
 
             <ConfirmDelete
                 visibleConfirm={showConfirm}
