@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, FlatList, ScrollView, Image, BackHandler, Platform } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import DashedLine from 'react-native-dashed-line';
-import styles from "./style";
-import { AuthBtn as Btn, COHeader as Header } from "@Component";
 import FIcon from "react-native-vector-icons/MaterialIcons";
 import Icon from "react-native-vector-icons/FontAwesome5";
+
+
+import styles from "./style";
+import { AuthBtn as Btn, COHeader as Header } from "@Component";
 import { listPaymentMethod } from "@Request/PaymentMethod";
 import Dropdown from './Dropdown';
 import { getWallet } from "@Request/Wallet";
@@ -47,7 +49,7 @@ const CheckOut = (props) => {
                 active,
                 wallet: wallet.balance,
                 amount: items.total_amount,
-                id: items.carts.map((cart) => cart.id),
+                id: listItems.map((cart) => cart.id),
                 delivery_type: deliveryType,
                 delivery_date: deliveryDate,
                 delivery_price: deliveryPrice,
@@ -61,7 +63,7 @@ const CheckOut = (props) => {
 
     useEffect(() => {
         dispatch(listPaymentMethod());
-        dispatch(listCart(1))
+        // dispatch(listCart(1))
         dispatch(getWallet())
         dispatch(getStore())
         if (listItems.length) {
@@ -77,14 +79,14 @@ const CheckOut = (props) => {
     }, []);
 
     const loadMore = () => {
-        dispatch(listCart(items.carts?.current_page + 1));
+        // dispatch(listCart(items.carts?.current_page + 1));
         
     }
 
 
     const backToCart = () => {
         dispatch(delivery())
-        dispatch(listCart(1))
+        // dispatch(listCart(1))
         props.navigation.navigate("Cart");
     }
 
@@ -216,11 +218,11 @@ const CheckOut = (props) => {
                         </View>
 
                         <View>
-                            <View style={styles.title2Cover}>
+                            {/* <View style={styles.title2Cover}>
                                 <Text style={styles.titleText}>ITEM DETAILS</Text>
-                            </View>
+                            </View> */}
 
-                            <View style={styles.selectContainer}>
+                            {/* <View style={styles.selectContainer}>
 
                                 <View style={styles.dropCover}>
                                     <FlatList
@@ -241,7 +243,7 @@ const CheckOut = (props) => {
                                     />
                                 </View>
 
-                            </View>
+                            </View> */}
                             <View style={styles.bottomDownCover}>
 
                                 <View style={styles.subtotalCover}>

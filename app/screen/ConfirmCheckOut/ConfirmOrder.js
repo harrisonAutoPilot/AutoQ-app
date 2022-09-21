@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, TouchableWithoutFeedback, Keyboard, TextInput } from "react-native";
 import Toast from 'react-native-toast-message';
 
@@ -139,7 +139,7 @@ const Overlay = (props) => {
                                 </View>
 
                                 <TouchableOpacity style={styles.labelCover2} onPress={props.resendToken}>
-                                    <Text style={styles.label4}>Yet to receive SMS code? <Text style={styles.label5}>Resend</Text></Text>
+                                    <Text style={styles.label4}>Yet to receive SMS code? {props.showResendPin ? <Text style={styles.label5}>Resend</Text> : null}</Text>
                                 </TouchableOpacity>
                             </View>
                         </TouchableWithoutFeedback>

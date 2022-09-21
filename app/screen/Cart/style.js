@@ -161,6 +161,7 @@ marginTop:4,
     justifyContent: "flex-end",
     paddingLeft: 10,
     paddingRight: 10,
+    marginTop: 6
   
   },
   iconCoverP: {
@@ -241,7 +242,7 @@ marginTop:4,
     paddingBottom: 20
   },
   bottomCover: {
-    height: '93%',
+    height: '60%',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: "#fff"
@@ -336,16 +337,25 @@ marginTop:4,
   },
   thrashN: {
     flexDirection:'row',
-    marginLeft: 10,
-    backgroundColor:'red',
+    backgroundColor:'rgba(211, 47, 47, 0.1)',
     borderWidth: 0,
-    borderColor: "#E0E0E0",
-    borderRadius: 100,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    alignSelf: "flex-end",
-    justifyContent: "flex-end",
-    marginTop: 20
+    borderColor: "rgba(211, 47, 47, 0.5)",
+    borderRadius: 20,
+    paddingHorizontal: 6,
+    width:130,
+    paddingVertical: 4,
+    alignItems:'center',
+    justifyContent: "center",
+    marginTop: 5,
+    alignSelf: "center"
+    
+  },
+  outofstockText: {
+    fontSize: 11,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 16,
+    color: "#D32F2F",
+    letterSpacing: 0.2,
   },
   thrashP: {
     marginLeft: 20,

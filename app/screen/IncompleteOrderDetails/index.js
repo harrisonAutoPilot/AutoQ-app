@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, ScrollView, FlatList, } from "react-native";
+import { View, Text, Image, ScrollView, FlatList, Platform } from "react-native";
 import styles from "./style";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
@@ -13,12 +13,15 @@ import { getCustomerPendingOrders, verifyOrder, verifyCode } from "@Request/Cust
 const InCompleteOrderDetails = (props) => {
 
    const dispatch = useDispatch();
+
    const [err, setErr] = useState("");
    const [loader, setLoader] = useState(false);
    const [successMsg, setSuccessMsg] = useState("");
+   const [showResendCodeBtn, setShowResendCodeBtn] = useState(true);
 
    const bottomSheet = useRef();
    const orders = props.route.params.item;
+
 
    const { errors, verify, verificationStatus } = useSelector((state) => state.order);
 
@@ -28,17 +31,22 @@ const InCompleteOrderDetails = (props) => {
 
    const verifyToken = (a, b, c, d) => {
       const code = { code: parseInt(`${a}${b}${c}${d}`) }
+      setShowResendCodeBtn(false)
       setLoader(true);
       dispatch(verifyCode(code));
    };
 
    const resendToken = () => {
       const details = { orderGroup_id: orders.id };
-      setLoader(true);
+      Platform.OS === "android" ?
+      setLoader(true):
+      null
+      setShowResendCodeBtn(false)
       dispatch(verifyOrder(details));
    };
 
    const closeBottomSheet = () => {
+      clearInterval(waitTimeToResendVerification)
       dispatch(cleanVerify());
       bottomSheet.current.close();
    }
@@ -50,6 +58,21 @@ const InCompleteOrderDetails = (props) => {
          </View>
       ),
    };
+
+   const cleanVerifyCall = useCallback(() => {
+      wait(3000).then(() => {
+         setSuccessMsg("");
+          dispatch(cleanVerify())
+      });
+
+  }, []);
+
+   const waitTimeToResendVerification = useCallback(() => {
+      wait(15000).then(() => {
+          setShowResendCodeBtn(true);
+      });
+
+  }, []);
 
    const waitTime = useCallback((msg) => {
       wait(1000).then(() => {
@@ -72,6 +95,7 @@ const InCompleteOrderDetails = (props) => {
 
       if (verify === "failed" && props.navigation.isFocused()) {
          waitTime("", errors?.msg)
+         waitTimeToResendVerification()
       } else if (verify === "success") {
          setLoader(false);
          bottomSheet.current.close();
@@ -82,10 +106,14 @@ const InCompleteOrderDetails = (props) => {
 
       if (verificationStatus === "failed" && props.navigation.isFocused()) {
          waitTime("", errors?.msg)
+
       } else if (verificationStatus === "success" && props.navigation.isFocused()) {
+         waitTimeToResendVerification()
          setSuccessMsg("Verification code sent");
-         bottomSheet.current.show();
+         cleanVerifyCall()
          setLoader(false)
+         bottomSheet.current.show();
+         
       }
 
    }, [errors, verify, verificationStatus]);
@@ -110,7 +138,7 @@ const InCompleteOrderDetails = (props) => {
             <Text style={styles.snDownText}>QTY/<Text style={styles.capitalize}>{item.product?.pack_style}</Text> : {item.product?.total_quantity_sold}</Text>
          </View>
       </View>
-   )
+   );
 
    return (
       <View style={styles.main}>
@@ -228,6 +256,7 @@ const InCompleteOrderDetails = (props) => {
             resendToken={() => resendToken(orders.id)}
             phone={orders?.user?.phone}
             close={closeBottomSheet}
+            showResendPin={showResendCodeBtn}
          />
       </View>
    )

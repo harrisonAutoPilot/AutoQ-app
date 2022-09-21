@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, Dimensions, SafeAreaView,RefreshControl } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, SafeAreaView, RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
@@ -9,7 +9,7 @@ import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
-import { listCart, deleteCart,deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
+import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup, cleanList } from "@Store/Cart";
@@ -19,7 +19,7 @@ import ConfirmSelected from "./ConfirmSelectedDelete";
 
 
 const Cart = (props) => {
-    
+
     const dispatch = useDispatch();
 
     const [err, setErr] = useState("");
@@ -32,8 +32,10 @@ const Cart = (props) => {
     const [itemDeleted] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [showConfirmSelected, setShowConfirmSelected] = useState(false);
+    const [trackRecyclerList, setTrackRecyclerList] = useState(false);
 
-    const { items, removeCart,removeMultipleCart, removeAllCart, errors, 
+
+    const { items, removeCart, removeMultipleCart, removeAllCart, errors,
         updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
 
 
@@ -45,6 +47,10 @@ const Cart = (props) => {
 
     useEffect(() => {
         if (listItems.length) {
+            if(listItems.length !== copyCart.length){
+                setTrackRecyclerList(false)
+            }
+            
             let quantity = listItems.map((item) => {
                 return {
                     id: item.id,
@@ -56,21 +62,21 @@ const Cart = (props) => {
             })
 
             setCopyCart(quantity);
-        }else{
+        } else {
             setCopyCart([])
         }
 
-    }, [listItems, copyCart])
+    }, [listItems, copyCart.length])
 
 
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
-    
 
-    const loadMore = () => { 
-        dispatch(listCart(items.carts?.current_page + 1, ));
+
+    const loadMore = () => {
+        dispatch(listCart(items.carts?.current_page + 1,));
     }
 
     const refreshView = useCallback((msg, suc) => {
@@ -81,6 +87,7 @@ const Cart = (props) => {
                 setLoader(false)
                 dispatch(cleanList())
                 dispatch(listCart(1))
+                setTrackRecyclerList(false)
             } else {
                 setLoader(false)
                 Toast.show({
@@ -94,7 +101,7 @@ const Cart = (props) => {
         })
         wait(2000).then(() => {
             dispatch(cleanup());
-            dispatch(clean())
+            // dispatch(clean())
         })
     }, []);
 
@@ -119,12 +126,13 @@ const Cart = (props) => {
         })
         wait(2000).then(() => {
             dispatch(cleanup());
-            dispatch(clean())
+            // dispatch(clean())
         })
     }, []);
 
     useEffect(() => {
         dispatch(listCart(1));
+        setTrackRecyclerList(false)
         const interval = setInterval(() => {
             setScrollText((scrollText) => !scrollText);
         }, 1000);
@@ -138,7 +146,7 @@ const Cart = (props) => {
 
     const toastConfig = {
         error: () => (
-            <View style={[globalStyles.errMainView, { marginBottom: 10}]}>
+            <View style={[globalStyles.errMainView, { marginBottom: 10 }]}>
                 <Text style={globalStyles.failedResponseText}>{err}</Text>
             </View>
         ),
@@ -177,27 +185,28 @@ const Cart = (props) => {
 
     const goBack = () => props.navigation.goBack();
 
-    const increaseCart = ({id, quantity, product:{stock_count}}) => {
+    const increaseCart = ({ id, quantity, product: { stock_count } }) => {
         if (quantity < stock_count) {
-        let filteredCart = copyCart.filter(quantity => {
-            if (quantity.id === id) {
-                quantity.quantity = quantity.quantity + 1
-                quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
-                return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+            let filteredCart = copyCart.filter(quantity => {
+                if (quantity.id === id) {
+                    quantity.quantity = quantity.quantity + 1
+                    quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
 
-            }
-        })
+                }
+            })
 
-        setCopyCartAmount(filteredCart[0])
-        let copiedcopyCartAmount = filteredCart
+            setCopyCartAmount(filteredCart[0])
+            let copiedcopyCartAmount = filteredCart
 
-        var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
-        setCopyCart(res)
-        return res
-    }
+            var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
+            setCopyCart(res)
+            setTrackRecyclerList(false)
+            return res
+        }
     };
 
-    const decreaseCart = ({id}) => {
+    const decreaseCart = ({ id }) => {
 
         let filteredCart = copyCart.filter(quantity => {
             if (quantity.id === id && quantity.quantity > 1) {
@@ -213,6 +222,7 @@ const Cart = (props) => {
         let copiedcopyCartAmount = filteredCart
         var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
         setCopyCart(res)
+        setTrackRecyclerList(false)
         return res
     };
 
@@ -242,7 +252,7 @@ const Cart = (props) => {
         let helperArray = selDel;
 
         let itemIndex = helperArray.indexOf(id);
-      
+
         if (helperArray.includes(id)) {
             helperArray.splice(itemIndex, 1)
         } else {
@@ -250,6 +260,7 @@ const Cart = (props) => {
         }
 
         setSelDel(helperArray)
+        setTrackRecyclerList(false)
     };
 
     useEffect(() => {
@@ -280,8 +291,8 @@ const Cart = (props) => {
 
     const ListView = ({ item }) => (
         <View style={styles.midCard}>
-         
-         <Check
+
+            <Check
                 onPress={() => handleCheck(item.id)}
                 isChecked={selDel.includes(item.id)}
             />
@@ -295,18 +306,28 @@ const Cart = (props) => {
                         <Text style={styles.descText} numberOfLines={2}>{item.product.name}</Text>
                     </View>
                     <View style={styles.increaseCartMainAmountView}>
+                        {item.product.out_of_stock ?
+                            <View style={styles.thrashN} >
+                                <Text style={styles.outofstockText}>Out of Stock</Text>
+                            </View> :
+                            item.product?.quantity_available > item.quantity ?
 
-                        <View style={styles.cartAmountView}>
-                            <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item); }}>
-                                <Icon name="minus" color="#757575" />
-                            </TouchableOpacity>
-                            <View style={styles.increaseText}>
-                                <Text style={styles.productTitle} >{item.quantity}</Text>
-                            </View>
-                            <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item); }}>
-                                <Icon name="plus" color="#757575" />
-                            </TouchableOpacity>
-                        </View>
+                                <View style={styles.cartAmountView}>
+                                    <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item); }}>
+                                        <Icon name="minus" color="#757575" />
+                                    </TouchableOpacity>
+                                    <View style={styles.increaseText}>
+                                        <Text style={styles.productTitle} >{item.quantity}</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.decrease} onPressOut={() => { increaseCart(item); }}>
+                                        <Icon name="plus" color="#757575" />
+                                    </TouchableOpacity>
+                                </View>
+                                :
+                                <View style={styles.thrashN} >
+                                    <Text style={styles.outofstockText}>Amount Unavailable</Text>
+                                </View>
+                        }
                     </View>
 
                 </View>
@@ -322,30 +343,12 @@ const Cart = (props) => {
                     </View>
 
                     <View style={styles.iconCover}>
-                   
-                  {!item?.product?.out_of_stock  ? 
-                   <>
-                  {
-                  !item.product?.quantity_available < item.quantity ?
-                    <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
-                       
-                      <Text style={styles.productTitle}>Remove </Text>
-                   </TouchableOpacity >
-                   :
-                   <TouchableOpacity style={styles.thrashN} onPress={() => deleteFromCart(item.id)}>
-                             <Icon name="trash-2" style={styles.trashIcon} color="#fff" />
-                            <Text style={styles.productTitleN}>{item.product.quantity_available} Available</Text>
-                   </TouchableOpacity >
-                  }
-                  </>
-                   :
-                        
-                      <TouchableOpacity style={styles.thrashN} onPress={() => deleteFromCart(item.id)}>
-                             <Icon name="trash-2" style={styles.trashIcon} color="#fff" />
-                            <Text style={styles.productTitleN}>Out of Stock</Text>
+
+                        <TouchableOpacity style={styles.thrash} onPress={() => deleteFromCart(item.id)}>
+                            <Text style={styles.productTitle}>Remove </Text>
                         </TouchableOpacity >
-                     }
-                        
+
+
                     </View>
 
                 </View>
@@ -376,18 +379,23 @@ const Cart = (props) => {
         return <ListView item={data} />;
     };
 
-  
+
     useEffect(() => {
         setCopyCartAmount({})
 
-        if (copyCart.length) {
-            console.log(copyCart, "kop")
-            setDataProvider(dataProvider.cloneWithRows(copyCart))
-        }else if(!copyCart.length){
-            setDataProvider(dataProvider.cloneWithRows([]))
+        if (!trackRecyclerList) {
+            if (copyCart.length > 0 || selDel.length) {
+                console.log("tracklist", "count")
+                setDataProvider(dataProvider.cloneWithRows(copyCart));
+                setTrackRecyclerList(true)
+            }
+            else if (!copyCart.length && loaded === "success") {
+                setDataProvider(dataProvider.cloneWithRows([]))
+            }
         }
+        
 
-    }, [copyCart])
+    }, [copyCart, trackRecyclerList])
 
     return (
 
@@ -400,8 +408,8 @@ const Cart = (props) => {
                     <TouchableOpacity style={styles.headerSubLastIconView} onPress={openCart}>
                         <IonIcon name="md-cart-outline" size={20} color="#fff" />
 
-                       
-                        {items.carts && items.carts.to > 0 ?
+
+                        {items.carts?.data?.length ?
                             <View style={styles.badge}>
                                 <Text style={styles.badgeText}>{items.carts?.total}</Text>
                             </View>
@@ -409,39 +417,36 @@ const Cart = (props) => {
                     </TouchableOpacity>
                 </View>
             </Header>
-            
 
             <View style={styles.bottomCover}>
-            {items.carts && items.carts.to > 0 ?
-                <View style={styles.deleteBarContainer}>
-                    <Text style={styles.selText}>{selDel.length ?  selDel.length : null}</Text>
+                {items.carts?.data?.length ?
+                    <View style={styles.deleteBarContainer}>
+                        <Text style={styles.selText}>{selDel.length ? selDel.length : null}</Text>
 
 
-                    <View style={styles.deleteBtnContainer}>
+                        <View style={styles.deleteBtnContainer}>
 
-                        {
-                           selDel.length ?
-                                <TouchableOpacity onPress={() => setShowConfirmSelected(true)}>
-                                    <View style={styles.delBtn}>
-                                        <Text style={styles.delText}>Delete selected</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                :
-                                null
-                        }
-                        <TouchableOpacity onPress={() => setShowConfirm(true)}>
-                            <View style={styles.delBtn}>
-
-                                <Text style={styles.delText}>Delete all</Text>
-
-                            </View>
-                        </TouchableOpacity>
+                            {
+                                selDel.length ?
+                                    <TouchableOpacity onPress={() => setShowConfirmSelected(true)}>
+                                        <View style={styles.delBtn}>
+                                            <Text style={styles.delText}>Delete selected</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    :
+                                    null
+                            }
+                            <TouchableOpacity onPress={() => setShowConfirm(true)}>
+                                <View style={styles.delBtn}>
+                                    <Text style={styles.delText}>Delete all</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                :
-                null
-            }
-                {itemDeleted
+                    :
+                    null
+                }
+                {itemDeleted && loaded === "idle"
                     ?
                     <CartPlaceholderComponent />
                     :
@@ -465,18 +470,22 @@ const Cart = (props) => {
 
                 }
                 <View style={styles.mainBody}>
-                {err ? <Toast config={toastConfig} /> : null}
-                {successMsg ? <Toast config={toastConfig} /> : null}
-            </View>
+                    {err ? <Toast config={toastConfig} /> : null}
+                    {successMsg ? <Toast config={toastConfig} /> : null}
+                </View>
 
-                <SafeAreaView>
+             
+
+            </View>
+           
+           
                     {items.total_amount && copyCart && copyCart.length ?
                         <View style={styles.bottomDownCover}>
 
                             <View style={styles.orderCover}>
 
                                 <Text style={styles.orderText}>ORDER SUMMARY</Text>
-                                {(items.carts.length > 3) ?
+                                {(items.carts.data.length > 3) ?
                                     <View style={[styles.scrollTextCover, { display: scrollText ? 'none' : 'flex' }
                                     ]} >
                                         <Text
@@ -490,24 +499,22 @@ const Cart = (props) => {
                             </View>
                             <View style={styles.subtotalCover}>
                                 <Text style={styles.subText}>Subtotal</Text>
-                                <Text style={styles.subText}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
+                                <Text style={styles.subText}>₦{items.total_amount !== "" ? commafy(items.total_amount) : null}</Text>
                             </View>
                             <View style={styles.totalCover}>
                                 <Text style={styles.totalText2}>Total</Text>
 
-                                <Text style={styles.totalText2}>₦{items.total_amount !== "" ? calculateFinalAmount() : null}</Text>
+                                <Text style={styles.totalText2}>₦{items.total_amount !== "" ? commafy(items.total_amount) : null}</Text>
 
                             </View>
 
                             <View style={styles.addBtnCover}>
                                 <Btn title="Proceed to Check out" style={styles.addressBtn2} onPress={redirectToCheckOut} />
                             </View>
-                        </View> : <BottomPlaceholder />}
-                </SafeAreaView>
+                        </View> : null}
 
-            </View>
             <Loader isVisible={loader} />
-            
+
             <ConfirmDelete
                 visibleRetrieve={showConfirm}
                 returnBack={() => setShowConfirm(false)}

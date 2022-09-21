@@ -272,6 +272,9 @@ const Overlay = (props) => {
                                     <View style={styles.modalminiSecondView}>
                                         <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result.quantity_per_pack}</Text></Text>
                                     </View>
+                                    <View style={styles.modalminiSecondView}>
+                                        <Text style={styles.modalminiTitle}>Expiry Date: <Text style={{ color: "red" }}>{result.expiry_date}</Text></Text>
+                                    </View>
 
                                     {result.stock_count > 0 ?
 

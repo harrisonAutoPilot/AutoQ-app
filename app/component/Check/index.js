@@ -1,16 +1,14 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import FIcon from "react-native-vector-icons/Fontisto";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import AIcon from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/Feather';
+
+
 const Check = (props, id) => {
-    // const iconName = props.isChecked ?
-    //     "checkbox-active" : "checkbox-passive";
 
     return (
         <View style={styles.container}>
             <Pressable onPress={props.onPress} id={id}>
-                {/* <FIcon name={iconName} size={12} color="#5f9a32" /> */}
               { props.isChecked ? <AIcon name="checksquare" size={20} color="green" /> :  <Icon name="square" size={20} color="green" />}  
                               
                             

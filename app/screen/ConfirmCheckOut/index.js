@@ -12,6 +12,7 @@ import Loader from "@Screen/Loader";
 import BottomSheet from "./ConfirmOrder";
 import { cleanup as delivery } from "@Store/DeliveryOptions";
 import { listCart } from "@Request/Cart";
+import { cleanList } from "@Store/Cart";
 
 const ConfirmCheckOut = (props) => {
     const dispatch = useDispatch();
@@ -19,7 +20,11 @@ const ConfirmCheckOut = (props) => {
     const [err, setErr] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [loader, setLoader] = useState(false);
+    const [showResendCodeBtn, setShowResendCodeBtn] = useState(true);
+
+
     const { selected, active, amount, wallet, delivery_date, delivery_type, delivery_price, category, deliveryTypeName } = props.route.params;
+
     const bottomSheet = useRef();
 
     const { update, errors, orderDetail, verify, verificationStatus } = useSelector((state) => state.order);
@@ -31,6 +36,8 @@ const ConfirmCheckOut = (props) => {
     const closeBottomSheet = () => {
         bottomSheet.current.close();
         dispatch(getCustomerPendingOrders(1));
+        dispatch(cleanList());
+        dispatch(listCart(1));
         props.navigation.navigate("PendingOrder");
     }
 
@@ -63,6 +70,8 @@ const ConfirmCheckOut = (props) => {
         }
 
         if (verify === "failed" && props.navigation.isFocused()) {
+            setLoader(false);
+            waitTimeToResendVerification()
             waitTime("", errors?.msg)
         } else if (verify === "success" && props.navigation.isFocused()) {
             setLoader(false)
@@ -72,8 +81,11 @@ const ConfirmCheckOut = (props) => {
         }
 
         if (verificationStatus === "failed" && props.navigation.isFocused()) {
+            setLoader(false);
             waitTime("", errors?.msg)
+            waitTimeToResendVerification()
         } else if (verificationStatus === "success" && props.navigation.isFocused()) {
+            waitTimeToResendVerification()
             Platform.OS === "ios" ? bottomSheet.current.show(): null
             waitSuccessTime()
         }
@@ -86,11 +98,13 @@ const ConfirmCheckOut = (props) => {
     };
 
     const waitTime = useCallback((suc, err) => {
+        
         wait(1000).then(() => {
             if (err) {
                 setLoader(false);
                 setErr(err)
             }else if (suc){
+                dispatch(cleanList())
                 dispatch(listCart(1))
             }
         });
@@ -102,12 +116,10 @@ const ConfirmCheckOut = (props) => {
     }, []);
 
     const waitSuccessTime = useCallback(() => {
-        wait(1000).then(() => {
-            setLoader(false);
-            setSuccessMsg("Verification code sent")
-        });
+        setLoader(false);
+        setSuccessMsg("Verification code sent")
 
-        wait(1000).then(() => {
+        wait(2000).then(() => {
             setSuccessMsg("")
             dispatch(cleanVerify());
 
@@ -117,19 +129,30 @@ const ConfirmCheckOut = (props) => {
 
     const submit = () => {
         const details = { store_id: selected.id, payment_method_id: active, delivery_date, delivery_type };
-        setLoader(true)
+        setLoader(true);
+        setShowResendCodeBtn(false)
         dispatch(placeOrder(details));
     };
+
+    const waitTimeToResendVerification = useCallback(() => {
+        wait(15000).then(() => {
+            console.log("called me cont")
+            setShowResendCodeBtn(true);
+        });
+
+    }, []);
 
     const verifyToken = (a, b, c, d) => {
         const code = { code: parseInt(`${a}${b}${c}${d}`) }
         setLoader(true)
+        setShowResendCodeBtn(false)
         dispatch(verifyCode(code));
     };
 
     const resendToken = () => {
         const details = { orderGroup_id: orderDetail.order_group_id };
         setLoader(true)
+        setShowResendCodeBtn(false)
         dispatch(verifyOrder(details));
     };
 
@@ -242,15 +265,10 @@ const ConfirmCheckOut = (props) => {
                                 </>
 
                         }
-                        {/* { !loader ?  */}
                         <View style={[styles.addBtnCover]}>
                             <Btn title="Confirm Check Out" style={styles.addressBtn2} onPress={submit} />
                         </View>
-                        {/* // :
-                        // <View style={[styles.addBtnCover]}>
-                        //     <Btn title="Confirming ..." style={styles.addressBtn2} />
-                        // </View>
-                        // } */}
+                       
 
 
                     </View>
@@ -267,6 +285,7 @@ const ConfirmCheckOut = (props) => {
                 resendToken={resendToken}
                 close={closeBottomSheet}
                 phone={selected?.user?.phone}
+                showResendPin={showResendCodeBtn}
             />
 
             <Loader isVisible={loader} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity, BackHandler, Pressable } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import PlaceholderLoader from "./PlaceholderLoader";
 
 import { getPaymentOptions } from "@Request/paymentOptions";
