@@ -529,5 +529,9 @@ badgeText: {
         position:"absolute",
         zIndex:900,
     
+      },
+      activityInd:{
+        paddingBottom: 50, 
+        paddingTop: 20 
       }
     })

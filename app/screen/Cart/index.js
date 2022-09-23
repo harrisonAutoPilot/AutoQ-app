@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, Dimensions, SafeAreaView, RefreshControl } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
@@ -133,11 +133,7 @@ const Cart = (props) => {
     useEffect(() => {
         dispatch(listCart(1));
         setTrackRecyclerList(false)
-        const interval = setInterval(() => {
-            setScrollText((scrollText) => !scrollText);
-        }, 1000);
         return () => {
-            clearInterval(interval);
             dispatch(cleanup());
             setCopyCart([]);
         }
@@ -397,6 +393,18 @@ const Cart = (props) => {
 
     }, [copyCart, trackRecyclerList])
 
+    const Footer = () => (
+        <View>
+            {
+                loaded === "pending" || loaded === "idle" ?
+                    <View style={styles.activityInd}>
+                        <ActivityIndicator color="green" size="large" />
+                    </View>
+                    :
+                    null}
+        </View>
+    )
+
     return (
 
         <View style={styles.view}>
@@ -464,6 +472,7 @@ const Cart = (props) => {
                                     loadMore()
                                 }
                             }}
+                            renderFooter={Footer}
                         />
                         :
                         <AddCartListEmptyBig browse={browse} />
@@ -486,7 +495,7 @@ const Cart = (props) => {
 
                                 <Text style={styles.orderText}>ORDER SUMMARY</Text>
                                 {(items.carts.data.length > 3) ?
-                                    <View style={[styles.scrollTextCover, { display: scrollText ? 'none' : 'flex' }
+                                    <View style={[styles.scrollTextCover, { display: 'flex' }
                                     ]} >
                                         <Text
                                             style={styles.textStyle}>

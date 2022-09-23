@@ -62,7 +62,6 @@ export const cartSlice = createSlice({
             .addCase(addToCart.pending, state => {
                 state.addCart = "pending";
                 state.errors = {};
-                state.addCartMsg = [];
             })
             .addCase(addToCart.fulfilled, (state, action) => {
                 state.addCart = "success";

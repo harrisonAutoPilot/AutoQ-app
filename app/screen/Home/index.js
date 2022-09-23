@@ -8,16 +8,22 @@ import { Header } from "@Component";
 import { getCustomers } from "@Request/Customer";
 
 const Home = (props) => {
+
     const dispatch = useDispatch();
+
     const date = new Date();
 
     const { user } = useSelector((state) => state.auth);
+
     const { customers } = useSelector((state) => state.customer);
+
+    const { agent } = useSelector((state) => state.agent);
+
     const [dayTime, setDayTime] = useState(null);
     const [dayTimeImage, setDayTimeImage] = useState(null);
 
     const openDrawer = () => props.navigation.openDrawer();
-    const { agent } = useSelector((state) => state.agent);
+
 
     const redirectToDeals = () => props.navigation.navigate("Deals");
     const redirectToCustomerOrder = () => props.navigation.navigate("CustomerOrder");
