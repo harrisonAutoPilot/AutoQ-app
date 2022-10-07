@@ -1,50 +1,66 @@
-import React, { useEffect, useState, useRef } from "react";
-import { View, Text, TouchableOpacity, Animated, } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, TouchableOpacity, Image, FlatList,  } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import Icon from 'react-native-vector-icons/Feather';
-
 import styles from "./style";
-import ListEmptyComponent from "./listEmpty";
-import List from "./ListView";
-import { COHeader as Header } from "@Component";
-import data from "./data";
+import {data} from "./data"
+import { COHeader as Header, EmptyDeal } from "@Component";
+// import { getAllDeals } from "@Request/deals";
+import DealPlaceholder from "./DealPlaceholder"
+import { Placeholder } from "rn-placeholder";
 
 const Deals = (props) => {
-   
-    const dispatch = useDispatch();
-    const scrollY = useRef(new Animated.Value(0)).current;
-    const [err, setErr] = useState("");
-    const ITEM_SIZE = 120
 
+    const dispatch = useDispatch();
+    // const { deals } = useSelector((state) => state.deal);
     const goBack = () => props.navigation.navigate("Home");
 
-    const ListView = ({ item, index }) => {
-        const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
-        const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
+    // useEffect(() => {
+    //     dispatch(getAllDeals());
+    // }, []);
 
-        return <List
-            item={item}
-            getItem={() => getItem(item.id)}
-            scale={scale}
-            navigation={() => props.navigation.navigate("NotificationDetail")}
-        />
-    };
+
+   
+   
+
+   
+
+   
+
+    const ListView = (props) => {
+        const item = props.item;
+        const redirectToNavigationDetail = props.navigation;
+
+        return (
+        <View style={styles.listItem}>
+                    <View style={styles.imgCard}>
+                            <Image source={require("@Assets/image/dealRed.png")} style={styles.dealTagImg} />
+                    </View>
+                    <View style={styles.textCover}>
+                        <Text style={styles.redText}>Buy 8 and get 2 free</Text>
+                        <Text style={styles.bgText}>May & Baker Loxagyl 400 Tabs</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.btnStyle}>
+                        <Text style={styles.btnText}>See Deal</Text>
+                    </TouchableOpacity>
+                </View>
+    );
+        }
+
 
     return (
-        <View style={styles.view}>
+        <View style={styles.container}>
             <Header title="Deals" onPress={goBack} styleView={styles.body} styles={styles.headerText} statusBar="#00319D"/>
-            
+
             <View style={styles.mainBody}>
-               
-                <Animated.FlatList
-                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
-                    showsVerticalScrollIndicator={false}
+                <FlatList
                     data={data}
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={ListEmptyComponent}
                     renderItem={ListView}
+                    keyExtractor={item => item.id}
+                    showsVerticalScrollIndicator={true}
                     ListFooterComponent={<View style={{ height: 50 }} />}
-                    columnWrapperStyle={styles.column}
+                    scrollEnabled={true}
+                    ListEmptyComponent={EmptyDeal}
                 />
 
             </View>

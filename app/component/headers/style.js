@@ -80,11 +80,12 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: -6,
         left: 33,
-        width: 14,
-        height: 14,
+        width: 16,
+        height: 16,
         justifyContent: "center",
         alignItems: "center",
-        alignContent: "center"
+        alignContent: "center",
+
     },
     badgeN: {
         backgroundColor: "#43A047",
@@ -98,13 +99,14 @@ const styles = StyleSheet.create({
     },
     badgeText: {
         color: '#fff',
-        fontSize: 10,
+        fontSize: 9,
         fontFamily: "Urbanist-Medium",
         lineHeight: 12,
         letterSpacing: 0.1,
         textAlign: "center",
         justifyContent: "center",
-        alignSelf: "center"
+        alignSelf: "center",
+       
 
     },
     navCoverWhite: {

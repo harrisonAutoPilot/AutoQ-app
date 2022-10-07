@@ -87,12 +87,12 @@ const Home = (props) => {
                                     <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
                                     <Text style={styles.cardBgText}>{agent.orders_count}</Text>
                                 </View>
-                                <View style={styles.cardDownInner}>
+                                <View style={styles.cardDownInner} >
                                     <Text style={styles.cardSmText}>All {"\n"}Orders</Text>
                                 </View>
 
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardThree} >
+                            <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
                                 <Image style={styles.burnImg} source={require("@Assets/image/cardFrame.png")} />
                                 <View style={styles.suninner}>
                                     <View style={styles.cardTopInner}>

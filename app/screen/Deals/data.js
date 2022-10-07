@@ -1,7 +1,7 @@
-export default data = [
+export const data = [
     {
         id: "1",
-        title: "5% Discount Sales",
+        title: "Discount Friday",
         desc: "We are offering 50% discount on all Antibiotic products. We are offering 50% discount on all Antibiotic products. We are offering 50% discount on all Antibiotic products"
     },
     {
