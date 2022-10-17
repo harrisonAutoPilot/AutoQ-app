@@ -37,7 +37,7 @@ export const dealSlice = createSlice({
                 state.status = "success";
             })
             .addCase(getDeals.rejected, (state, { payload }) => {
-                console.log("to check fail", state.status)
+                state.status = "failed";
                 state.errors = payload;
             })
 

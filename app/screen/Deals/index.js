@@ -6,7 +6,7 @@ import {data} from "./data"
 import { COHeader as Header, EmptyDeal,SuccessMsgViewTwo } from "@Component";
 import { getDeals } from "@Request/Deal";
 import { listCart } from "@Request/Cart";
-import { cleanup, cleanupDealStatus } from "@Store/Deal";
+import { cleanupDealStatus } from "@Store/Deal";
 import Toast from 'react-native-toast-message';
 import DealPlaceholder from "./DealPlaceholder"
 import ModalView from "./BottomSheet";
@@ -112,7 +112,7 @@ const Deals = (props) => {
 
     const ListView = (props) => {
         const item = props.item;
-        const redirectToNavigationDetail = props.navigation;
+        // const redirectToNavigationDetail = props.navigation;
 
         return (
         <View style={styles.listItem}>
@@ -157,7 +157,7 @@ const Deals = (props) => {
                     showsVerticalScrollIndicator={true}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     scrollEnabled={true}
-                    ListEmptyComponent={EmptyStore}
+                    ListEmptyComponent={EmptyDeal}
                     refreshControl={
                         <RefreshControl
                             refreshing={refreshing}

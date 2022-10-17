@@ -17,7 +17,7 @@ export default EmptyDeal = (props) => (
         
         <View style={[styles.addBtnCoverCart, styles.orderBtn]} >
        
-             {/* <TrackBtn title="Shop now" style={styles.addressBtn2}  onPress={props.browse}/> */}
+            
         </View>
     </View>
     );
