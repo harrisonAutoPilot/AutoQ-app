@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAgent } from "@Request/Agent";
+import { addDealToCart, getDeals } from "@Request/Deal";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers } from "@Request/Customer";
@@ -16,6 +17,7 @@ const Home = (props) => {
     const { user } = useSelector((state) => state.auth);
 
     const { customers } = useSelector((state) => state.customer);
+    const { deals} = useSelector((state) => state.deal);
 
     const { agent } = useSelector((state) => state.agent);
 
@@ -46,6 +48,7 @@ const Home = (props) => {
 
         dispatch(getAgent());
         dispatch(getCustomers());
+        dispatch(getDeals());
     }, []);
 
     return (
@@ -97,7 +100,12 @@ const Home = (props) => {
                                 <View style={styles.suninner}>
                                     <View style={styles.cardTopInner}>
                                         <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
-                                        <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
+                                        {/* <Text style={styles.cardBgText}>{agent.special_deals_count}</Text> */}
+                                        {   deals.length > 0 ?
+                                        <Image style={styles.sunImg1} source={require("@Assets/image/new-offer.png")} />
+                                        :
+                                        null
+                                        }
                                     </View>
                                     <View style={styles.cardDownInner}>
                                         <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>

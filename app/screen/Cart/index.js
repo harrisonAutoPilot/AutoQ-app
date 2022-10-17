@@ -58,6 +58,8 @@ const Cart = (props) => {
                     cart_id: item.id,
                     total_amount: item.total_amount,
                     product: { ...item.product },
+                    deal_id: item.deal_id,
+                    deal: {...item.deal}
                 }
             })
 
@@ -211,6 +213,11 @@ const Cart = (props) => {
                 return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
 
             }
+        }).sort((a, b) => {
+            if( a?.product?.name < b?.product?.name){
+                return -1
+            }
+           
         })
 
         setCopyCartAmount(filteredCart[0])
@@ -285,7 +292,7 @@ const Cart = (props) => {
         }
     }, [removeMultipleCart]);
 
-    const ListView = ({ item }) => (
+    const CartItem= ({ item }) => (
         <View style={styles.midCard}>
 
             <Check
@@ -354,6 +361,73 @@ const Cart = (props) => {
 
     )
 
+
+    const DealItem = ({ item }) => (
+        <View style={styles.midCard}>
+
+            <Check
+                onPress={() => handleCheck(item.id)}
+                isChecked={selDel.includes(item.id)}
+            />
+
+            <View style={styles.cover}>
+                <View style={styles.imgCover}>
+                    <Image source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }} style={styles.drugImg} />
+                </View>
+                <View style={styles.descCover}>
+                    <View style={styles.descTextView}>
+                        <Text style={styles.descText} numberOfLines={2}>{item.product.name}</Text>
+                    </View>
+                    <View style={styles.increaseCartMainAmountView}>
+                    <View style={styles.qtnCover}>
+                    <Text style={styles.dealQtyB}>QTY: {item.quantity} </Text>
+                   
+                    {item.deal?.get !== null &&
+                   <Text style={styles.dealQty}>+ ({item.deal.get})</Text>
+                    }
+                   
+                </View>
+                    </View>
+
+                </View>
+
+                <View>
+
+                    <View style={styles.priceCover}>
+                    <Text style={styles.priceText}>₦{item?.total_amount !== "" && item?.total_amount !== null ? commafy(item.total_amount) : 0}
+                       <Text style={[styles.priceTextGray, {textDecorationLine: 'line-through'}]}>{item.deal?.get === null && `/₦${commafy(item.product?.price_per_pack * item?.quantity)}`}</Text>
+                    </Text>
+                    </View>
+
+                    <View style={styles.iconCoverD}>
+                            <Image source={require("@Assets/image/dealG.png")} style={styles.dealImg} />
+                    </View>
+
+
+                </View>
+
+            </View>
+        </View>
+
+    )
+
+
+
+
+    const ListView = ({ item }) =>{
+
+        return (
+        <>
+            {item?.deal_id === null ?
+
+                <CartItem item={item} />
+                :
+
+                <DealItem item={item} />
+            }
+        </>
+    )
+        }
     let { width } = Dimensions.get('window');
 
     const [dataProvider, setDataProvider] = useState(

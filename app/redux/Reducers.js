@@ -19,6 +19,7 @@ import productRequestReducer from "./ProductRequest";
 import paymentOptionReducer from "./paymentOptions";
 import deliveryOptionReducer from "./DeliveryOptions";
 import priceListReducer from "./PriceList";
+import dealReducer from "./Deal"
 
 const persistConfig = {
     key: 'root',
@@ -48,5 +49,6 @@ export default combineReducers({
     productRequest: productRequestReducer,
     paymentOptions: paymentOptionReducer,
     deliveryOptions: deliveryOptionReducer,
-    priceList: priceListReducer
+    priceList: priceListReducer,
+    deal:dealReducer
 });

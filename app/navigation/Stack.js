@@ -108,7 +108,7 @@ const StackNavigator = () => {
                             LoginStackNavigator()
                         :
                          SoftUpdateNavigator()
-                        // RootStackNavigator()
+                         //RootStackNavigator()
 
                     :
                     SplashStackNavigator()
