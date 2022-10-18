@@ -9,15 +9,6 @@ import styles from "./style";
 const getRandomColor = (id) => {
     let ids = parseInt(id)
     let shade;
-    // let color = "#";
-    // for (let i = 0; i < 3; i++)
-    //   color += ("0" + Math.floor(Math.random() * Math.pow(16, 2) / 2).toString(16)).slice(-2);
-    // return color;
-
-    // h = 240;
-    // s = Math.floor(Math.random() * 100);
-    // l = Math.floor(Math.random() * 80);
-    // return color = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
 
     if (ids % 2 === 0) {
         shade = "rgb(0, 0, " + (Math.floor(Math.random() * 255)) + ")";
