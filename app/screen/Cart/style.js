@@ -52,7 +52,8 @@ export default styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    height: 140
+    height: 140,
+
   },
   cover: {
     width: wp('100%'),
@@ -125,6 +126,11 @@ export default styles = StyleSheet.create({
     alignSelf: "flex-end",
     justifyContent: "flex-end",
 
+  },
+  checkContainer:{
+   top:20,
+    left:20,
+    position:'absolute'
   },
   priceText: {
     fontSize: 16,

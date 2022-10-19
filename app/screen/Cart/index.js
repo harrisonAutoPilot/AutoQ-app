@@ -365,10 +365,12 @@ const Cart = (props) => {
     const DealItem = ({ item }) => (
         <View style={styles.midCard}>
 
-            <Check
-                onPress={() => handleCheck(item.id)}
-                isChecked={selDel.includes(item.id)}
+         <View style={styles.checkContainer}>
+          <Check
+            onPress={() => handleCheck(item.id)}
+            isChecked={selDel.includes(item.id)}
             />
+         </View>
 
             <View style={styles.cover}>
                 <View style={styles.imgCover}>
@@ -394,9 +396,9 @@ const Cart = (props) => {
                 <View>
 
                     <View style={styles.priceCover}>
-                    <Text style={styles.priceText}>₦{item?.total_amount !== "" && item?.total_amount !== null ? commafy(item.total_amount) : 0}
-                       <Text style={[styles.priceTextGray, {textDecorationLine: 'line-through'}]}>{item.deal?.get === null && `/₦${commafy(item.product?.price_per_pack * item?.quantity)}`}</Text>
-                    </Text>
+                    <Text style={styles.priceText}>₦{item?.total_amount !== "" && item?.total_amount !== null ? commafy(item.total_amount) : 0}  </Text>
+                       <Text style={[styles.priceTextGray, {textDecorationLine: 'line-through'}]}>{item.deal?.get === null && `₦${commafy(item.product?.price_per_pack * item?.quantity)}`}</Text>
+                  
                     </View>
 
                     <View style={styles.iconCoverD}>
