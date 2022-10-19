@@ -44,10 +44,6 @@ const Overlay = (props) => {
     const snapPoints = useMemo(() => ['55%', '90%'], []);
 
 
-    const handleSheetChanges = useCallback(() => {
-        props.changeCart()
-    }, []);
-
     const animationConfigs = useBottomSheetTimingConfigs({
         duration: 250,
         easing: Easing.exp,
@@ -179,14 +175,11 @@ const Overlay = (props) => {
                 index={1}
                 initialSnapIndex={1}
                 snapPoints={snapPoints}
-                onChange={handleSheetChanges}
                 style={styles.addStoreBottomSheet}
                 animationConfigs={animationConfigs}
                 backdropComponent={CustomBackdrop}
-                animateOnMount={true}
-                keyboardBehavior={Platform.OS === "ios" ? "fillParent" : "fullscreen"}
-                keyboardBlurBehavior="restore"
-            >
+                handleIndicatorStyle={{ display: "none" }}
+                 >
 
                 <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
                     <Image source={require("@Assets/image/left.png")} style={globalStyles.backImg} />

@@ -61,6 +61,10 @@ const Cart = (props) => {
                     deal_id: item.deal_id,
                     deal: {...item.deal}
                 }
+            }).sort((a, b) => {
+                if( a?.product?.name < b?.product?.name){
+                    return -1
+                }
             })
 
             setCopyCart(quantity);

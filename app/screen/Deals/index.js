@@ -43,10 +43,6 @@ const Deals = (props) => {
     };
 
 
-    const changeCart = () => {
-        setVisible(false)
-    };
-
 
     const filterProduct = (id) => {
         let resultArray = deals.filter(item => item.id === id)[0];
@@ -124,11 +120,11 @@ const Deals = (props) => {
                         source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }}
                         style={styles.dealImg}
                     />
-                            <Image source={require("@Assets/image/dealRed.png")} style={styles.dealTagImg} />
+                    <Image source={require("@Assets/image/dealRed.png")} style={styles.dealTagImg} />
                           
                     </View>
                     <View style={styles.textCover}>
-                        <Text style={styles.redText}>{item.description}</Text>
+                        <Text style={styles.redText} numberOfLines={2}>{item.description}</Text>
                         <Text style={styles.bgText}>{item.product?.name}</Text>
                     </View>
 
@@ -176,7 +172,6 @@ const Deals = (props) => {
                     onPress={closeSheet}
                     result={result}
                     isVisible={visible}
-                    changeCart={changeCart}
                 /> :
                 null
                 }
