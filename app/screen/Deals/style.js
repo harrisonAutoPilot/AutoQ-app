@@ -160,6 +160,9 @@ export default styles = StyleSheet.create({
     scrollStyle: {
         paddingBottom: 20,
     },
+    mainBody:{
+        paddingTop:20,
+    },
 
     addStoreBottomSheet: {
         borderRadius: 40,

@@ -55,7 +55,6 @@ const Deals = (props) => {
         return setResult(resultArray)
     };
 
-    console.log("get deals", deals)
 
     const refreshDeal = useCallback(() => {
         setRefreshing(true);
@@ -91,12 +90,10 @@ const Deals = (props) => {
         wait(200).then(() => {
 
         if (suc) {
-           
-            console.log("ko")
+ 
             dispatch(getDeals())
             dispatch(listCart(1))
             
-
             Toast.show({
                 type: 'tomatoToast',
                 visibilityTime: 5000,
@@ -107,7 +104,7 @@ const Deals = (props) => {
         }
     })
 
-        wait(4000).then(() => {
+         wait(4000).then(() => {
             dispatch(cleanupDealStatus())
             setSuccessMsg("")
             
