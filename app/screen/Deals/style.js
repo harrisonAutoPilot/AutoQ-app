@@ -153,7 +153,7 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 29.75,
         marginLeft: 5,
         zIndex: 9000,
-        marginTop: 15,
+        marginTop: 5,
 
     },
 

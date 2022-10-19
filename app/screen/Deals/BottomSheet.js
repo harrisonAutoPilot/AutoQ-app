@@ -179,8 +179,7 @@ const Overlay = (props) => {
                 style={styles.addStoreBottomSheet}
                 animationConfigs={animationConfigs}
                 backdropComponent={CustomBackdrop}
-                
-            >
+                 >
 
                 <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
                     <Image source={require("@Assets/image/left.png")} style={globalStyles.backImg} />
