@@ -28,12 +28,12 @@ export default styles = StyleSheet.create({
     },
     listItem:{
         width:wp('95%'),
-        height:220,
+        // height:250,
         borderRadius:10,
         backgroundColor:'#F5F5F5',
         alignSelf:"center",
-        padding:10,
-        marginBottom:10,
+        padding:20,
+         marginBottom:10,
     },
     imgCard:{
         alignSelf:'center',
@@ -53,6 +53,7 @@ export default styles = StyleSheet.create({
         lineHeight: 20,
         color: "#D32F2F",
         letterSpacing: 0.3,
+        textAlign:'center'
 
     },
     bgText:{

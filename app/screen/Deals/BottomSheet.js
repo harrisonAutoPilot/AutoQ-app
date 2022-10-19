@@ -39,14 +39,11 @@ const Overlay = (props) => {
 
 
     const { addDeal, addDealStatus, errors } = useSelector((state) => state.deal);
-    // console.log(result, "result")
 
     const snapPoints = useMemo(() => ['55%', '90%'], []);
 
 
-    const handleSheetChanges = useCallback(() => {
-        props.changeCart()
-    }, []);
+   
 
     const animationConfigs = useBottomSheetTimingConfigs({
         duration: 250,
@@ -179,13 +176,10 @@ const Overlay = (props) => {
                 index={1}
                 initialSnapIndex={1}
                 snapPoints={snapPoints}
-                onChange={handleSheetChanges}
                 style={styles.addStoreBottomSheet}
                 animationConfigs={animationConfigs}
                 backdropComponent={CustomBackdrop}
-                animateOnMount={true}
-                keyboardBehavior={Platform.OS === "ios" ? "fillParent" : "fullscreen"}
-                keyboardBlurBehavior="restore"
+                
             >
 
                 <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
