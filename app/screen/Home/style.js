@@ -37,6 +37,12 @@ const styles = StyleSheet.create({
         height: 20,
         alignSelf: "center"
     },
+    sunImg1: {
+        width: 30,
+        height: 30,
+        alignSelf: "center",
+
+    },
     burnImg:{
         width: wp('40%'),
         height: 150,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { View, Text, RefreshControl, TouchableOpacity, Animated, } from "react-native";
+import { View, Text, RefreshControl, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -17,17 +17,24 @@ import { cleanup, cleanProducts } from "@Store/Product";
 import { getPaymentOptions } from "@Request/paymentOptions";
 
 const Products = (props) => {
-    const dispatch = useDispatch();
-    const scrollY = useRef(new Animated.Value(0)).current;
 
-    const ITEM_SIZE = 130
+    const dispatch = useDispatch();
+   
     const [err, setErr] = useState("");
+
     const [refreshing, setRefreshing] = useState(false);
+
     const [result, setResult] = useState({});
+
     const [successMsg, setSuccessMsg] = useState("");
+
     const [visible, setVisible] = useState(false);
+
     const [searchArray, setSearchArray] = useState([]);
+
     const [textArray, setTextArray] = useState([]);
+
+
     const bottomSheet = useRef();
 
     const { status, errors, searchedProducts, searchProductsData } = useSelector((state) => state.product);
@@ -108,14 +115,11 @@ const Products = (props) => {
         return setResult(resultArray)
     };
 
-    const ListView = ({ item, index}) => {
-        const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
-        const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
+    const ListView = ({ item }) => {
 
         return <List
             item={item}
             getItem={() => getItem(item.id)}
-            scale={scale}
             creditType={props.route.params?.creditType ? props.route.params.creditType : ""}
         />
     };
@@ -168,8 +172,7 @@ const Products = (props) => {
 
             </View>
          
-            <Animated.FlatList
-                onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+            <FlatList
                 showsVerticalScrollIndicator={false}
                 data={!searchArray.length ? searchedProducts : searchArray}
                 keyExtractor={item => item.id}

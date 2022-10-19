@@ -65,6 +65,7 @@ export const authSlice = createSlice({
             .addCase(getUser.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
+                state.isAuthenticated = false
                 state.user = {};
             })
 

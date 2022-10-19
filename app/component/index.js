@@ -13,10 +13,11 @@ import SuccessMsgViewTwo from "./toast/successMsgViewError";
 import ErrorMsg from "./toast/errorMsgView";
 import Success from "./success/index"
 import NavHeader from "./headers/NavLightHeader";
+import EmptyDeal from "./Empty/emptyDeal";
 import EmptyOrder from "./Empty/emptyOrder";
 import EmptyStore from "./Empty/emptyStore"
 import EmptyFinance from "./Empty/emptyFinance"
 import EmptyCustomer from "./Empty/emptyCustomer"
 
 export { FormikValidator,Check, InputField, AuthBtn, Header, COHeader, 
-    EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder, EmptyStore,SuccessMsgViewTwo, ErrorMsg, Success, NavHeader, BtnLg, BtnPre};
+    EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder, EmptyStore, EmptyDeal,SuccessMsgViewTwo, ErrorMsg, Success, NavHeader, BtnLg, BtnPre};

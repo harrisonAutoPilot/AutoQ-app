@@ -1,53 +1,185 @@
-import React, { useEffect, useState, useRef } from "react";
-import { View, Text, TouchableOpacity, Animated, } from "react-native";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import Icon from 'react-native-vector-icons/Feather';
+
 
 import styles from "./style";
-import ListEmptyComponent from "./listEmpty";
-import List from "./ListView";
-import { COHeader as Header } from "@Component";
-import data from "./data";
+import { COHeader as Header, EmptyDeal,SuccessMsgViewTwo } from "@Component";
+import { getDeals } from "@Request/Deal";
+import { listCart } from "@Request/Cart";
+import { cleanupDealStatus } from "@Store/Deal";
+import Toast from 'react-native-toast-message';
+import DealPlaceholder from "./DealPlaceholder"
+import ModalView from "./BottomSheet";
 
 const Deals = (props) => {
-   
+
+
+    const bottomSheet = useRef();
+
+
     const dispatch = useDispatch();
-    const scrollY = useRef(new Animated.Value(0)).current;
-    const [err, setErr] = useState("");
-    const ITEM_SIZE = 120
+   
+
+    const [result, setResult] = useState({});
+
+    const [visible, setVisible] = useState(false);
+
+    const [successMsg, setSuccessMsg] = useState("");
+
+    const [refreshing, setRefreshing] = useState(false);
+
+
+    const { deals, status, addDealStatus, addDeal } = useSelector((state) => state.deal);
+   
 
     const goBack = () => props.navigation.navigate("Home");
 
-    const ListView = ({ item, index }) => {
-        const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
-        const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
 
-        return <List
-            item={item}
-            getItem={() => getItem(item.id)}
-            scale={scale}
-            navigation={() => props.navigation.navigate("NotificationDetail")}
-        />
+    const closeSheet = () => {
+        bottomSheet.current.close();
+        setVisible(false)
+
     };
 
-    return (
-        <View style={styles.view}>
-            <Header title="Deals" onPress={goBack} styleView={styles.body} styles={styles.headerText} statusBar="#00319D"/>
+
+    const changeCart = () => {
+        setVisible(false)
+    };
+
+
+    const filterProduct = (id) => {
+        let resultArray = deals.filter(item => item.id === id)[0];
+        bottomSheet.current?.present();
+        setVisible(true)
+        return setResult(resultArray)
+    };
+
+    console.log("get deals", deals)
+
+    const refreshDeal = useCallback(() => {
+        setRefreshing(true);
+        dispatch(getDeals());
+        wait(3000).then(() => setRefreshing(false));
+    }, []);
+
+
+    useEffect(() => {
+        if (addDealStatus === "success") {  
+            refreshView(addDeal.message);
+        }
+
+    }, [addDealStatus]);
+
+
+
+    const toastConfig = {
+        tomatoToast: () => (
+            <SuccessMsgViewTwo title={successMsg} styles={styles.toastStyle} />
+        )
+    };
+
+
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    };
+
+
+    const refreshView = useCallback((suc) => {
+        setSuccessMsg(suc);
+
+        wait(200).then(() => {
+
+        if (suc) {
+           
+            console.log("ko")
+            dispatch(getDeals())
+            dispatch(listCart(1))
             
+
+            Toast.show({
+                type: 'tomatoToast',
+                visibilityTime: 5000,
+                autoHide: true,
+                position: 'top',
+                topOffset: 0
+            });
+        }
+    })
+
+        wait(4000).then(() => {
+            dispatch(cleanupDealStatus())
+            setSuccessMsg("")
+            
+        })
+
+    }, []);
+
+   
+
+    const ListView = ({item}) =>  (
+        <View style={styles.listItem}>
+                    <View style={styles.imgCard}>
+                    <Image
+                        source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }}
+                        style={styles.dealImg}
+                    />
+                            <Image source={require("@Assets/image/dealRed.png")} style={styles.dealTagImg} />
+                          
+                    </View>
+                    <View style={styles.textCover}>
+                        <Text style={styles.redText}>{item.description}</Text>
+                        <Text style={styles.bgText}>{item.product?.name}</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.btnStyle} onPress={() => filterProduct(item.id)}>
+                        <Text style={styles.btnText}>See Deal</Text>
+                    </TouchableOpacity>
+                </View>
+    );
+
+
+    return (
+        <View style={styles.container}>
+            <Header title="Deals" onPress={goBack} styleView={styles.body} styles={styles.headerText} statusBar="#00319D"/>
+
+            {successMsg ?
+                <View style={globalStyles.errInCoverNew}>
+                    <Toast config={toastConfig} />
+                </View> : null}
+
             <View style={styles.mainBody}>
-               
-                <Animated.FlatList
-                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
-                    showsVerticalScrollIndicator={false}
-                    data={data}
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={ListEmptyComponent}
+
+            {status === "idle" || status === "pending" ?
+                <DealPlaceholder /> :
+                <FlatList
+                    data={deals}
                     renderItem={ListView}
+                    keyExtractor={item => item.id}
+                    showsVerticalScrollIndicator={true}
                     ListFooterComponent={<View style={{ height: 50 }} />}
-                    columnWrapperStyle={styles.column}
-                />
+                    scrollEnabled={true}
+                    ListEmptyComponent={EmptyDeal}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={refreshDeal} />
+                    }
+                />}
 
             </View>
+            
+            {deals.length ?
+
+                <ModalView
+                    bottomSheet={bottomSheet}
+                    onPress={closeSheet}
+                    result={result}
+                    isVisible={visible}
+                    changeCart={changeCart}
+                /> :
+                null
+                }
 
         </View>
     )

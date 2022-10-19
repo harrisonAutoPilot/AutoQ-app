@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAgent } from "@Request/Agent";
+import { addDealToCart, getDeals } from "@Request/Deal";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers } from "@Request/Customer";
@@ -17,9 +18,13 @@ const Home = (props) => {
 
     const { customers } = useSelector((state) => state.customer);
 
+    const { deals } = useSelector((state) => state.deal);
+
     const { agent } = useSelector((state) => state.agent);
 
+
     const [dayTime, setDayTime] = useState(null);
+
     const [dayTimeImage, setDayTimeImage] = useState(null);
 
     const openDrawer = () => props.navigation.openDrawer();
@@ -43,9 +48,10 @@ const Home = (props) => {
             setDayTime("Good Evening");
             setDayTimeImage(require("@Assets/image/night.png"));
         }
-
+        console.log("hope")
         dispatch(getAgent());
         dispatch(getCustomers());
+        dispatch(getDeals());
     }, []);
 
     return (
@@ -87,17 +93,22 @@ const Home = (props) => {
                                     <Image style={styles.sunImg} source={require("@Assets/image/download.png")} />
                                     <Text style={styles.cardBgText}>{agent.orders_count}</Text>
                                 </View>
-                                <View style={styles.cardDownInner}>
+                                <View style={styles.cardDownInner} >
                                     <Text style={styles.cardSmText}>All {"\n"}Orders</Text>
                                 </View>
 
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardThree} >
+                            <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
                                 <Image style={styles.burnImg} source={require("@Assets/image/cardFrame.png")} />
                                 <View style={styles.suninner}>
                                     <View style={styles.cardTopInner}>
                                         <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
-                                        <Text style={styles.cardBgText}>{agent.special_deals_count}</Text>
+                                        {/* <Text style={styles.cardBgText}>{agent.special_deals_count}</Text> */}
+                                        {   deals.length > 0 ?
+                                        <Image style={styles.sunImg1} source={require("@Assets/image/new-offer.png")} />
+                                        :
+                                        null
+                                        }
                                     </View>
                                     <View style={styles.cardDownInner}>
                                         <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>

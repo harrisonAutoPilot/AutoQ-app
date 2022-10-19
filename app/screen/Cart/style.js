@@ -59,6 +59,17 @@ export default styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal:20,
+   
+  
+  },
+  coverD: {
+    width: wp('100%'),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal:20,
+    marginVertical:-5,
+
+  
   },
   imgCover: {
     justifyContent: "center",
@@ -69,7 +80,7 @@ export default styles = StyleSheet.create({
     alignItems: "center",
     width:80,
     height:80,
-    backgroundColor:'#ebebeb',
+    backgroundColor:'#e6e6e6',
     borderRadius:8,
 
   },
@@ -80,7 +91,14 @@ export default styles = StyleSheet.create({
   },
   descCover: {
     width: "48%",
-    paddingLeft: 25
+    paddingLeft: 25,
+
+  },
+  descCoverD: {
+    width: "48%",
+    paddingLeft: 25,
+    marginTop:-10,
+    
   },
   descText: {
     fontSize: 14,
@@ -96,7 +114,7 @@ export default styles = StyleSheet.create({
   descTextViewP:{
     height:15,
     width:200,
-    backgroundColor:'#ebebeb',
+    backgroundColor:'#e6e6e6',
     borderRadius:20,
     paddingTop: 5
   },
@@ -113,6 +131,16 @@ export default styles = StyleSheet.create({
     fontFamily: "Urbanist-SemiBold",
     lineHeight: 24,
     color: "#469D00",
+    letterSpacing: 0.2,
+    flexWrap:'wrap',
+    maxWidth:100,
+    // textAlign: "right"
+  },
+  priceTextGray: {
+    fontSize: 16,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 24,
+    color: "#bfbfbf",
     letterSpacing: 0.2,
     flexWrap:'wrap',
     maxWidth:100,
@@ -162,6 +190,15 @@ marginTop:4,
     paddingLeft: 10,
     paddingRight: 10,
     marginTop: 6
+  
+  },
+  iconCoverD: {
+    width:130,
+    flexDirection: 'row',
+    justifyContent: "flex-end",
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginTop: 26
   
   },
   iconCoverP: {
@@ -533,5 +570,31 @@ badgeText: {
       activityInd:{
         paddingBottom: 50, 
         paddingTop: 20 
+      },
+      // this is for the deal cart
+      dealImg:{
+        width:30,
+        height:30,
+        // marginRight:10,
+        resizeMode:'contain'
+      },
+      dealQtyB:{
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 16,
+        color: "#757575",
+        letterSpacing: 0.2, 
+      },
+      dealQty:{
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 16,
+        color: "#D32F2F",
+        letterSpacing: 0.2, 
+        marginRight:10,
+      },
+      qtnCover:{
+        flexDirection:'row',
+        marginTop:10,
       }
     })

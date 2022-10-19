@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar, Animated, Keyboard } from "react-native";
+import { View, Text, FlatList, RefreshControl, TouchableOpacity, SafeAreaView, StatusBar,  Keyboard } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -16,25 +16,41 @@ import { cleanup, cleanProducts } from "@Store/Product";
 
 const Search = (props) => {
     const dispatch = useDispatch();
-    const scrollY = useRef(new Animated.Value(0)).current;
-    const ITEM_SIZE = 130
+ 
     const [refreshing, setRefreshing] = useState(false);
+
     const [search, setSearch] = useState("");
+
     const [searchCategory, setSearchCategory] = useState("");
+
     const [active, setActive] = useState("");
+
     const [searchArray, setSearchArray] = useState([]);
+
     const [searchCategoryArray, setSearchCategoryArray] = useState([]);
+
     const [result, setResult] = useState({});
-    const bottomSheet = useRef();
+
     const [visible, setVisible] = useState(false);
+
     const [request, setRequest] = useState(false);
+
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
     const [searching, setSearching] = useState(false);
+
     const [getCategory, setCategory]= useState("");
+
     const [searchName, setSearchName] = useState("");
+
     const [creditParams, setCreditParams]= useState("");
 
+
+    const bottomSheet = useRef();
+
+
     const { categories } = useSelector((state) => state.category);
+
     const { status, errors, searchedProducts, searchProductsData } = useSelector((state) => state.product);
 
     const redirectToRequest = () => props.navigation.navigate("ProductRequest");
@@ -176,28 +192,22 @@ const Search = (props) => {
         </View>
     };
 
-    const ListItem = ({ item, index }) => {
-        // const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
-        // const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
+    const ListItem = ({ item }) => {
 
         return <ListItems
             item={item}
             onPress={() => itemsAddedToWishlist(item.id)}
             getItem={() => getItem(item.id)}
-            // scale={scale}
             creditType={creditParams ? creditParams : ""}
         />
     };
 
     const ListView2 = ({ item, index }) => {
-        const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
-        const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
 
         return <ListItems
             item={item}
             onPress={() => itemsAddedToWishlist(item.id)}
             getItem={() => getItem(item.id)}
-            scale={scale}
         />
     };
 

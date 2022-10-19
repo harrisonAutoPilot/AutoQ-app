@@ -544,6 +544,13 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 25,
     },
+
+    imgCoverBigDeal: {
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        marginTop: 120,
+        marginBottom: 35,
+    },
     imgCoverMd: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -582,6 +589,16 @@ const styles = StyleSheet.create({
         letterSpacing: 0.1,
         fontWeight: "600",
         paddingBottom: 10,
+    },
+    emptyTextSmDeal: {
+        fontFamily: "Urbanist-Regular",
+        fontSize: 18,
+        lineHeight: 20,
+        color: "#757575",
+        letterSpacing: 0.1,
+        fontWeight: "600",
+        paddingBottom: 10,
+        marginTop:10,
     },
 
     emptyTextBig: {

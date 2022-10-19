@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, TouchableOpacity, Animated, } from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -12,8 +12,7 @@ import NotificationPlaceholder from "./NotificationPlaceholder";
 const Notification = (props) => {
 
     const dispatch = useDispatch();
-    const scrollY = useRef(new Animated.Value(0)).current;
-    const ITEM_SIZE = 120
+
 
     useEffect(() => {
         dispatch(getNotification());
@@ -24,13 +23,11 @@ const Notification = (props) => {
     const goBack = () => props.navigation.navigate("Home");
 
     const ListView = ({ item, index }) => {
-        const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
-        const scale = scrollY.interpolate({ inputRange, outputRange: [1, 1, 1, 0] });
+     
 
         return <List
             item={item}
             getItem={() => getItem(item.id)}
-            scale={scale}
             navigation={(item) => props.navigation.navigate("NotificationDetail", { item })}
         />
     };
@@ -57,8 +54,7 @@ const Notification = (props) => {
                 </View>
                 {status === "pending" || status === "idle" ?
                     <NotificationPlaceholder /> :
-                    <Animated.FlatList
-                        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
+                    <FlatList
                         showsVerticalScrollIndicator={false}
                         data={notification.notifications}
                         keyExtractor={item => item.id}

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Animated } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 
 import styles from "./style";
@@ -58,7 +58,7 @@ const List = (props) => {
 
 
     return (
-        <Animated.View style={[ { transform: [{ scale: props.scale }] }]}>
+        <View>
             <TouchableOpacity style={[styles.listContainer, {backgroundColor : getRandomColor(item.id), borderColor: getRandomBorderColor(item.id)}]} onPress={() => redirectToNavigationDetail(item)}>
             <View style={[styles.listIcon, {backgroundColor: getRandomIconColor(item.id)}]}>
                 <Icon name="bell" color={getRandomTextColor(item.id)} size={20}/>
@@ -77,7 +77,7 @@ const List = (props) => {
             <Text style={[styles.desc]}>{item.created_at.substring(0, 10).split('-').reverse().join('/')}</Text>
             </View>
             </TouchableOpacity>
-        </Animated.View>
+        </View>
     )
 };
 
