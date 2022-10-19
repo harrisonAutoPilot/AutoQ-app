@@ -18,6 +18,7 @@ const apiRequest = async (asyncFn, thunkAPI, route) => {
       }
       else{
          console.log(error?.response?.data, "error Request")
+         
       return thunkAPI.rejectWithValue({ msg: error?.response?.data?.error, status: error?.response?.status });
       }
    }

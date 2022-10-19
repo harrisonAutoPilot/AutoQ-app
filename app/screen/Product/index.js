@@ -32,8 +32,6 @@ const Products = (props) => {
 
     const [searchArray, setSearchArray] = useState([]);
 
-    const [textArray, setTextArray] = useState([]);
-
 
     const bottomSheet = useRef();
 
@@ -43,10 +41,15 @@ const Products = (props) => {
 
     useEffect(() => {
         dispatch(searchProducts({search: props.route.params?.category, no:1}));
+
         dispatch(listCart(1));
+
         dispatch(getPaymentOptions());
+
         return () => {
+
             dispatch(cleanup())
+
             dispatch(cleanProducts());
         }
     }, []);

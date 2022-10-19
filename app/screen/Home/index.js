@@ -37,6 +37,7 @@ const Home = (props) => {
     const redirectToInactiveCustomers = () => props.navigation.navigate("CustomersDashboard", { id: 1 });
     const redirectToPendingCustomers = () => props.navigation.navigate("CustomersDashboard");
 
+    
     useEffect(() => {
         if ((date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12) {
             setDayTime("Good Morning");
@@ -48,9 +49,11 @@ const Home = (props) => {
             setDayTime("Good Evening");
             setDayTimeImage(require("@Assets/image/night.png"));
         }
-        console.log("hope")
+        
         dispatch(getAgent());
+
         dispatch(getCustomers());
+
         dispatch(getDeals());
     }, []);
 

@@ -39,7 +39,7 @@ const Overlay = (props) => {
 
 
     const { addDeal, addDealStatus, errors } = useSelector((state) => state.deal);
-    // console.log(result, "result")
+
 
     const snapPoints = useMemo(() => ['55%', '90%'], []);
 

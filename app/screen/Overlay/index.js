@@ -120,7 +120,7 @@ const Overlay = (props) => {
             setErr(msg);
             setAdding(false)
             if (suc) {
-                dispatch(listCart())
+                dispatch(listCart(1))
                 Toast.show({
                     type: 'tomatoToast',
                     visibilityTime: 5000,
