@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 import { View } from "react-native"
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import {NativeViewGestureHandler} from "react-native-gesture-handler"
@@ -9,6 +9,9 @@ import CardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CardItems'
 const SmallCard = (props) => {
   const [index, setIndex] = React.useState(0)
   const isCarousel = React.useRef(null)
+  const [dotLength, setDotLength] =useState(3)
+
+
 
   return (
     <View>
@@ -37,7 +40,7 @@ const SmallCard = (props) => {
       />
       </NativeViewGestureHandler>
       <Pagination
-        dotsLength={props.img.length}
+        dotsLength={props.img.length > 3 ? dotLength : props.img.length}
         activeDotIndex={index}
         carouselRef={isCarousel}
         dotStyle={{

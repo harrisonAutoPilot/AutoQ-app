@@ -100,9 +100,8 @@ const Overlay = (props) => {
 
         if (suc) {
             setErr("");
-            dispatch(getDeals())
-            dispatch(listCart(1))
             props.onPress()
+           
 
         } else {
             setErr(msg);

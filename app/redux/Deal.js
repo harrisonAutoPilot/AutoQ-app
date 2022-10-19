@@ -34,7 +34,7 @@ export const dealSlice = createSlice({
                 state.deals = []
             })
             .addCase(getDeals.fulfilled, (state, action) => {
-                console.log("deal", action.payload.data)
+               // console.log("deal", action.payload.data)
                 state.deals = action.payload.data;
                 state.status = "success";
             })
