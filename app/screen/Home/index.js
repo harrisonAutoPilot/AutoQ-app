@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAgent } from "@Request/Agent";
-import { addDealToCart, getDeals } from "@Request/Deal";
+import { getDeals } from "@Request/Deal";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers } from "@Request/Customer";
@@ -31,10 +31,15 @@ const Home = (props) => {
 
 
     const redirectToDeals = () => props.navigation.navigate("Deals");
+
     const redirectToCustomerOrder = () => props.navigation.navigate("CustomerOrder");
+
     const openNotification = () => props.navigation.navigate("Notification");
+
     const openCart = () => props.navigation.navigate("Cart");
+
     const redirectToInactiveCustomers = () => props.navigation.navigate("CustomersDashboard", { id: 1 });
+    
     const redirectToPendingCustomers = () => props.navigation.navigate("CustomersDashboard");
 
     
