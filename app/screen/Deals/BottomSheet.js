@@ -179,6 +179,7 @@ const Overlay = (props) => {
                 style={styles.addStoreBottomSheet}
                 animationConfigs={animationConfigs}
                 backdropComponent={CustomBackdrop}
+                handleIndicatorStyle={{ display: "none" }}
                  >
 
                 <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
