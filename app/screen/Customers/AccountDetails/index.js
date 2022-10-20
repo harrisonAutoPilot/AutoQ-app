@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
-import { useFocusEffect } from '@react-navigation/native';
 
 import styles from "./style";
 import { COHeader as Header } from "@Component";
@@ -11,16 +10,30 @@ import Orders from "./Orders";
 import { getCustomerOrder } from "@Request/Customer";
 
 const CustomerDetails = (props) => {
+
+
     const dispatch = useDispatch();
+
+
     const cart = () => props.navigation.navigate("Cart")
+
     const [activeId, setActiveId] = useState(1);
+
+
     const details = props.route?.params?.details;
+
+
     const name = props.route?.params?.name;
 
     const goBack = () => props.navigation.navigate("CustomersDashboard");
+
     const detailsScreen = (item) => props.navigation.navigate("OrderDetails", { item });
+
     const showActive = (id) => setActiveId(id)
+
+
     const viewStore = () => props.navigation.navigate("MyStore", {id:details.id});
+
 
     useEffect(() => {
         dispatch(getCustomerOrder(details.id))

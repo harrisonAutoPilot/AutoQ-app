@@ -427,7 +427,10 @@ const Cart = (props) => {
         </>
     )
         }
+
+
     let { width } = Dimensions.get('window');
+
 
     const [dataProvider, setDataProvider] = useState(
         new DataProvider((r1, r2) => {

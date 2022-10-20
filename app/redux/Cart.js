@@ -33,25 +33,25 @@ export const cartSlice = createSlice({
         cleanList: (state) => {
             state.items = []
             state.listItems = []
-        }
+        },
+        cleanStatus: (state) => {
+            state.loaded = "idle"
+        },
 
     },
     extraReducers: builder => {
         builder
             .addCase(listCart.pending, state => {
-                state.status = "pending";
                 state.loaded = "pending";
                 state.errors = {};
             })
             .addCase(listCart.fulfilled, (state, action) => {
                 state.items = action.payload
                 state.listItems = dict(state.listItems, action.payload.carts.data)
-                state.status = "success";
                 state.loaded = "success";
                 state.errors = {};
             })
             .addCase(listCart.rejected, (state, { payload }) => {
-                state.status = "failed";
                 state.loaded ="failed";
                 state.errors = payload;
                 state.items = [];
@@ -131,6 +131,6 @@ export const cartSlice = createSlice({
 
     }
 });
-export const { cleanup, idle, cleanList } = cartSlice.actions
+export const { cleanup, idle, cleanList, cleanStatus } = cartSlice.actions
 
 export default cartSlice.reducer;

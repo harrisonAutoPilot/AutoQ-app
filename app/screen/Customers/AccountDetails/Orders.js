@@ -8,7 +8,9 @@ import { reOrder } from "@Request/CustomerOrder";
 import { cleanReOrder } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
 import Loader from "@Screen/Loader";
-import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard"
+import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
+import { listCart } from "@Request/Cart";
+import { cleanStatus, cleanList } from "@Store/Cart";
 
 const Order = (props) => {
     const dispatch = useDispatch();
@@ -18,6 +20,7 @@ const Order = (props) => {
     const flatListRef = useRef()
 
     const { errors, update } = useSelector((state) => state.order);
+    
     const { orders, orderStatus } = useSelector((state) => state.customer);
 
     const reOrders = (id) => {
@@ -32,7 +35,11 @@ const Order = (props) => {
         } else if (update === "success") {
             setLoader(false)
             dispatch(cleanReOrder())
-            props.cart()
+            dispatch(cleanList())
+            dispatch(cleanStatus())
+            dispatch(listCart(1))
+            props.cart();
+
         } else {
             setErr("")
         }
