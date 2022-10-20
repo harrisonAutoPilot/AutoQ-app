@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { View, Text, TouchableOpacity, Image, Platform, Animated } from "react-native";
+import { View, Text, TouchableOpacity, Image,  Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-toast-message';
@@ -15,8 +15,7 @@ import {
 
 
 import styles from './style';
-import { addDealToCart, getDeals } from "@Request/Deal";
-import { listCart } from "@Request/Cart";
+import { addDealToCart } from "@Request/Deal";
 import commafy from "@Helper/Commafy";
 import FIcon from "react-native-vector-icons/FontAwesome5";
 import { cleanup } from "@Store/Deal";

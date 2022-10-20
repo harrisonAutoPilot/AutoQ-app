@@ -11,7 +11,7 @@ import URL from "@Helper/Constant";
 import styles from "./style";
 
 const CardItem = ({ item, index }) => {
-  console
+
   return (
     <View style={styles.container} key={item.key}>
     <Image

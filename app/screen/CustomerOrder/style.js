@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 15
     },
+
     mainContainer: {
         flex: 1,
         flexWrap: 'wrap',

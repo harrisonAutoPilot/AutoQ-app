@@ -13,23 +13,37 @@ import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCa
 
 
 const PendingOrder = (props) => {
+
+
     const dispatch = useDispatch();
+
+
     const [search, setSearch] = useState("");
+
     const [result, setResult] = useState([]);
+
     const [refreshing, setRefreshing] = useState(false);
+
     const [showModal, setShowModal] = useState(false);
+
     const [trackLoaded, setTrackLoaded] = useState(false);
 
-    const flatListRef = useRef()
+
+    const flatListRef = useRef();
+
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
+
 
     const { pendingOrders, loaded, pendingOrdersCurrentPage } = useSelector((state) => state.order);  
     
     
       useEffect(() => {
+
         dispatch(getCustomerPendingOrders(1));
+
         return () => {
+
           dispatch(cleanup())
         }
       }, []);
@@ -93,13 +107,19 @@ const PendingOrder = (props) => {
     }, []);
 
     const dismissKeyboard = () => Keyboard.dismiss();
+
+
     const goToCat = () => props.navigation.navigate("Home",  { screen: 'HomeScreen' });
+
+
     const details = (item) => props.navigation.navigate("IncompleteOrderDetails", { item });
+
 
     const loadMore = () => {
         setTrackLoaded(true)
         dispatch(getCustomerPendingOrders(pendingOrdersCurrentPage?.current_page + 1));
-    }
+    };
+    
 
     const ListView = ({ item }) => (
             <TouchableOpacity style={[styles.card, styles.elevation]} onPress={() => details(item)}>

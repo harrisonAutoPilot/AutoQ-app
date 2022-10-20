@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
-import { EmptyPlaceHolder } from "@Component";
+import { EmptyPlaceHolder, SuccessMsgViewTwo, } from "@Component";
 import { reOrder } from "@Request/CustomerOrder";
 import { cleanReOrder } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
@@ -37,6 +37,16 @@ const Order = (props) => {
             setErr("")
         }
     }, [update]);
+
+
+    const toastConfig = {
+        error: () => (
+            <View style={[globalStyles.errMainView]}>
+                <Text style={globalStyles.failedResponseText}>{err}</Text>
+            </View>
+        ),
+
+    };
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));

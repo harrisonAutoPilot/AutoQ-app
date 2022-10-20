@@ -15,11 +15,17 @@ const InCompleteOrderDetails = (props) => {
    const dispatch = useDispatch();
 
    const [err, setErr] = useState("");
+
    const [loader, setLoader] = useState(false);
+
    const [successMsg, setSuccessMsg] = useState("");
+
    const [showResendCodeBtn, setShowResendCodeBtn] = useState(true);
 
+
    const bottomSheet = useRef();
+
+
    const orders = props.route.params.item;
 
 
