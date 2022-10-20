@@ -20,24 +20,41 @@ import { cleanup as delivery } from "@Store/DeliveryOptions";
 const CheckOut = (props) => {
 
     const dispatch = useDispatch();
+
+
     const [active, setActive] = useState();
+
     const [errMsg, setErrMsg] = useState("");
+
     const [err, setErr] = useState("");
+
     const [category, setCategory] = useState("");
+
     const [cartItem, setCartItem] = useState([]);
+
     const [deliveryType, setDeliveryType] = useState();
+
     const [deliveryDate, setDeliveryDate] = useState();
+
     const [deliveryPrice, setDeliveryPrice] = useState(0);
+
     const [deliveryTypeName, setDeliveryTypeName] = useState();
+
     const [deliveryTypeStatus, setDeliveryTypeStatus] = useState(false);
 
-    const { items,listItems } = useSelector((state) => state.cart);
     const [selected, setSelected] = useState({});
+
+
+    const { items,listItems } = useSelector((state) => state.cart);
+    
     const { payment } = useSelector((state) => state.payment);
+
     const { wallet } = useSelector((state) => state.wallet);
+
     const { stores } = useSelector((state) => state.store);
 
     const { status, errors, options } = useSelector((state) => state.deliveryOptions);
+    
 
     const Confirm = () => {
         if (active && selected.id && deliveryType) {
@@ -164,7 +181,11 @@ const CheckOut = (props) => {
                             <Text style={styles.selectText}>Select Store to deliver products</Text>
                             <View style={styles.dropCover}>
                                 {stores.stores ?
-                                    <Dropdown label="" storeAddress="Select Store" data={data} onSelect={setSelected} delivery={setDeliveryType} />
+                                    <Dropdown label="" 
+                                    storeAddress="Select Store" 
+                                    onSelect={setSelected} 
+                                    delivery={setDeliveryType} 
+                                    />
                                     :
                                     <Text style={styles.itemDetails} >Loading...</Text>}
                             </View>

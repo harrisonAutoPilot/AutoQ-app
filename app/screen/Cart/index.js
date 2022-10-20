@@ -13,7 +13,6 @@ import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart } f
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup, cleanList } from "@Store/Cart";
-import { cleanup as clean } from "@Store/Product";
 import ConfirmDelete from "./ConfirmDelete";
 import ConfirmSelected from "./ConfirmSelectedDelete";
 
@@ -82,7 +81,7 @@ const Cart = (props) => {
 
 
     const loadMore = () => {
-        dispatch(listCart(items.carts?.current_page + 1,));
+        dispatch(listCart(items.carts?.current_page + 1));
     }
 
     const refreshView = useCallback((msg, suc) => {
@@ -217,11 +216,6 @@ const Cart = (props) => {
                 return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
 
             }
-        }).sort((a, b) => {
-            if( a?.product?.name < b?.product?.name){
-                return -1
-            }
-           
         })
 
         setCopyCartAmount(filteredCart[0])
@@ -416,7 +410,6 @@ const Cart = (props) => {
         </View>
 
     )
-
 
 
 

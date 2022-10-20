@@ -9,7 +9,7 @@ import CardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CardItems'
 const SmallCard = (props) => {
   const [index, setIndex] = React.useState(0)
   const isCarousel = React.useRef(null)
-  const [dotLength, setDotLength] =useState(3)
+  const [dotLength, setDotLength] = useState(3)
 
 
 
