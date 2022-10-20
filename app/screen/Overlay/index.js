@@ -239,7 +239,7 @@ const Overlay = (props) => {
                             <View >
                                 <View style={styles.topModalView}>
                                     <View style={styles.topModalImageView}>
-                                        <SmallCard img={result.product_image.filter((element,index)=> index < 3)} />
+                                        <SmallCard img={result.product_images.filter((element,index)=> index < 3)} />
                                     </View>
                                     <View style={styles.modalTitleView}>
                                         <Text style={styles.modalTitle}>{result.name}</Text>
