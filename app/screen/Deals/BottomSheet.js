@@ -201,7 +201,7 @@ const Overlay = (props) => {
                         <View>
 
                             <View style={styles.topModalImageView}>
-                                <SmallCard img={result.product?.product_images} style={styles.smallCardCover} />
+                                <SmallCard img={result.product?.product_images.filter((element,index)=> index < 3)} style={styles.smallCardCover} />
                             </View>
 
                             <View style={styles.promoContainer}>
