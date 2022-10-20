@@ -34,6 +34,7 @@ export default styles = StyleSheet.create({
         borderTopRightRadius: 0,
         backgroundColor: '#fff',
     },
+   
     view: {
         flex: 1,
         backgroundColor: "#fff"

@@ -127,7 +127,7 @@ const Order = (props) => {
 
     return (
         <View style={styles.main2}>
-            {err ? <Toast config={toastConfig} /> : null}
+         
 
 
             <View style={styles.bottomCover2}>
@@ -149,7 +149,9 @@ const Order = (props) => {
                 }
             </View>
 
-
+       
+          {err ? <Toast config={toastConfig} /> : null}
+   
             <Loader isVisible={loader} />
 
         </View>
