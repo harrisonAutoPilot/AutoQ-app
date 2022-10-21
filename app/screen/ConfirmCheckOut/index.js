@@ -79,7 +79,7 @@ const ConfirmCheckOut = (props) => {
             dispatch(listCart(1))
             showVerifyModal()
             waitTimeToResendVerification()
-            Platform.OS === "ios" ? bottomSheet?.current?.show() : null
+            Platform.OS === "ios" ? bottomSheet.current?.present() : null
             waitSuccessTime()
 
         }
@@ -101,7 +101,7 @@ const ConfirmCheckOut = (props) => {
             waitTimeToResendVerification()
         } else if (verificationStatus === "success" && props.navigation.isFocused()) {
             waitTimeToResendVerification()
-            Platform.OS === "ios" ? bottomSheet?.current?.show() : null
+            Platform.OS === "ios" ? bottomSheet.current?.present() : null
             waitSuccessTime()
         }
 
