@@ -53,6 +53,7 @@ const ConfirmCheckOut = (props) => {
     // useEffect(() => {
     //     if (orderDetail.order_group_id) {
     //         const details = { orderGroup_id: orderDetail.order_group_id };
+    //         console.log(details, "kop")
     //         setLoader(false)
     //         dispatch(verifyOrder(details));
     //         Platform.OS === "android" ?
@@ -74,7 +75,12 @@ const ConfirmCheckOut = (props) => {
         if (update === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
         } else if (update === "success" && props.navigation.isFocused()) {
-            waitTime("Order Placed Successfully", "");
+            dispatch(cleanList())
+            dispatch(listCart(1))
+            showVerifyModal()
+            waitTimeToResendVerification()
+            Platform.OS === "ios" ? bottomSheet?.current?.show() : null
+            waitSuccessTime()
 
         }
 
@@ -108,7 +114,7 @@ const ConfirmCheckOut = (props) => {
 
     const waitTime = useCallback((suc, err) => {
 
-        wait(1000).then(() => {
+        wait(300).then(() => {
             if (err) {
                 setLoader(false);
                 setErr(err)
