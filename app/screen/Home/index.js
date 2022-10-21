@@ -112,7 +112,7 @@ const Home = (props) => {
                                     <View style={styles.cardTopInner}>
                                         <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
                                         {/* <Text style={styles.cardBgText}>{agent.special_deals_count}</Text> */}
-                                        {   deals.length > 0 ?
+                                        { deals.length  ?
                                         <Image style={styles.sunImg1} source={require("@Assets/image/new-offer.png")} />
                                         :
                                         null

@@ -1,31 +1,50 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback,
+     RefreshControl, FlatList, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from 'react-native-vector-icons/MaterialIcons';
 import Toast from 'react-native-toast-message';
 
+
 import Modal from "./SortBy";
 import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
 import { getCustomerOrders, reOrder } from "@Request/CustomerOrder";
-import { cleanup } from "@Store/CustomerOrder";
+import { cleanup, cleanOrder } from "@Store/CustomerOrder";
 import styles from "./style";
 import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "./CustomerPlaceholderCard";
+import { listCart } from "@Request/Cart";
+import { cleanStatus, cleanList } from "@Store/Cart";
 import EmptyOrder from "@Component/Empty/emptyOrder"
 
 const CustomerOrder = (props) => {
+
     const dispatch = useDispatch();
+
+
     const [search, setSearch] = useState("");
+
     const [result, setResult] = useState([]);
+
     const [refreshing, setRefreshing] = useState(false);
+
     const [showModal, setShowModal] = useState(false);
+
     const [err, setErr] = useState("");
+
     const [loader, setLoader] = useState(false);
+
+    const [trackLoaded, setTrackLoaded] = useState(false);
+
+
     const flatListRef = useRef()
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
-    const { errors, orders, update, status } = useSelector((state) => state.order);
+
+
+    const { errors, orders, update, status, ordersCurrentPage } = useSelector((state) => state.order);
+
 
     const toastConfig = {
         error: () => (
@@ -35,34 +54,50 @@ const CustomerOrder = (props) => {
         ),
     };
 
+
     const redirectToSort = () => {
         setShowModal(true)
     };
 
 
     useEffect(() => {
-        dispatch(getCustomerOrders());
-        return () => dispatch(cleanup());
-    }, [])
+        dispatch(cleanOrder())
+
+        dispatch(getCustomerOrders(1));
+
+        return () => {
+            dispatch(cleanup());
+        }
+    }, []);
+
 
     useEffect(() => {
         if (search.length > 0) {
             filterOrder();
         }
+
     }, [search.length]);
+
 
     useEffect(() => {
         if (update === "failed" && props.navigation.isFocused()) {
             waitTime(errors?.msg);
         } else if (update === "success" && props.navigation.isFocused()) {
+            setLoader(false)
+            dispatch(cleanList())
+            dispatch(cleanStatus())
+            dispatch(listCart(1));
+          
             props.navigation.navigate("Cart")
+            dispatch(cleanup());
         } else {
             setErr("")
         }
     }, [update]);
 
+
     const filterOrder = () => {
-        let searched = orders.orders.filter(val => {
+        let searched = orders.filter(val => {
             if (val.ref_no !== null && val.ref_no.toLowerCase().includes(search.toLowerCase())) {
                 return val
             }
@@ -70,9 +105,10 @@ const CustomerOrder = (props) => {
         return setResult(searched)
     };
 
+
     const sortOrder = (id) => {
         setShowModal(false);
-        let order = [...orders.orders];
+        let order = [...orders];
         let searched;
 
         switch (id) {
@@ -99,6 +135,7 @@ const CustomerOrder = (props) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
+
     const waitTime = useCallback((msg) => {
         wait(1000).then(() => {
             setLoader(false);
@@ -116,21 +153,54 @@ const CustomerOrder = (props) => {
         })
     }, []);
 
+
     const refreshView = useCallback(() => {
         setRefreshing(true);
-        dispatch(getCustomerOrders());
+
+        dispatch(cleanOrder());
+
+        dispatch(getCustomerOrders(1));
+        
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
+
     const reOrders = (id) => {
         const details = { order_group_id: id };
+
         setLoader(true)
+
         dispatch(reOrder(details));
     };
 
+
+    const loadMore = () => {
+        setTrackLoaded(true)
+
+        dispatch(getCustomerOrders(ordersCurrentPage?.current_page + 1));
+    };
+
+
     const dismissKeyboard = () => Keyboard.dismiss();
+
+
     const goToCat = () => props.navigation.navigate("Home", { screen: 'HomeScreen' });
+
     const details = (item) => props.navigation.navigate("OrderDetails", { item });
+
+
+    const Footer = () => (
+        <View>
+            {
+               status === "pending" || status === "idle" ?
+                    <View style={styles.activityInd}>
+                        <ActivityIndicator color="green" size="large" />
+                    </View>
+                    :
+                    null}
+        </View>
+    )
+
 
     const ListView = ({ item }) => (
         <TouchableOpacity onPress={() => details(item)}>
@@ -204,7 +274,7 @@ const CustomerOrder = (props) => {
 
                     <View style={styles.exchangeCover}>
                         <Text style={styles.allOrderText}> All Orders</Text>
-                        {orders.orders?.length ?
+                        {orders?.length ?
                             <TouchableOpacity style={styles.exchangeClickk} onPress={redirectToSort}>
                                 <FIcon name="sort" color="rgba(255, 255, 255, 0.8)" size={14} style={styles.searchIcon} />
                                 <Text style={styles.exchangeText}>Sort by</Text>
@@ -218,12 +288,12 @@ const CustomerOrder = (props) => {
             {err ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.bottomCover}>
-                {status === "pending" || status === "idle" ?
+                {(status === "pending" || status === "idle") && !trackLoaded ?
                     <CustomerPlaceholderCard />
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={!result.length ? orders.orders : result}
+                        data={!result.length ? orders : result}
                         renderItem={ListView}
                         ListEmptyComponent={EmptyPlaceHolder}
                         keyExtractor={item => item.id}
@@ -235,7 +305,13 @@ const CustomerOrder = (props) => {
                         getItemLayout={(data, index) => (
                             { length: 100, offset: 100 * index, index }
                         )}
-                        extraData={orders.orders}
+                        onEndReached={() => {
+                            if (ordersCurrentPage?.current_page < ordersCurrentPage?.last_page) {
+                                loadMore()
+                            }
+                        }}
+                        ListFooterComponent={Footer}
+                        
                     />
                 }
             </View>

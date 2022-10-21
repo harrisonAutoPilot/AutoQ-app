@@ -1,5 +1,6 @@
 import { createSlice} from "@reduxjs/toolkit";
 import {getCustomers, updatePendingCustomers, registerCustomer, getCustomerOrder} from "@Request/Customer";
+import dict from "@Helper/dict"
 
 export const customerSlice = createSlice({
     name: "customer",
@@ -8,15 +9,19 @@ export const customerSlice = createSlice({
         status: "idle",
         update: "idle",
         errors: {},
-        orders: {},
-        orderStatus: "idle"
+        orders: [],
+        orderStatus: "idle",
+        ordersCurrentPage: {}
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
-            // state.status = "idle",
             state.update = "idle"
-            // state.customers = []
+        },
+        cleanOrder: (state) => {
+            state.orderStatus = "idle"
+            state.orders = []
+            state.ordersCurrentPage = {}
         },
    
     },
@@ -30,7 +35,6 @@ export const customerSlice = createSlice({
             .addCase(getCustomers.fulfilled, (state, action) => {
                 state.customers = action.payload;
                 state.status = "success";
-                state.errors = {};
             })
             .addCase(getCustomers.rejected, (state, { payload }) => {
                 state.status = "failed";
@@ -42,17 +46,17 @@ export const customerSlice = createSlice({
             .addCase(getCustomerOrder.pending, state => {
                 state.orderStatus = "pending";
                 state.errors = {};
-                state.orders = [];
             })
             .addCase(getCustomerOrder.fulfilled, (state, action) => {
-                state.orders = action.payload;
+                state.orders = dict(state.orders, action.payload.orders.data);
+                state.ordersCurrentPage = action.payload.orders
                 state.orderStatus = "success";
-                state.errors = {};
             })
             .addCase(getCustomerOrder.rejected, (state, { payload }) => {
                 state.orderStatus = "failed";
                 state.errors = payload;
-                state.orders = {};
+                state.orders = [];
+                state.ordersCurrentPage = {}
             })
 
             builder
@@ -87,6 +91,6 @@ export const customerSlice = createSlice({
     }
 });
 
-export const { cleanup } = customerSlice.actions
+export const { cleanup, cleanOrder } = customerSlice.actions
 
 export default customerSlice.reducer;

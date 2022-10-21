@@ -30,7 +30,7 @@ const ConfirmCheckOut = (props) => {
     const { update, errors, orderDetail, verify, verificationStatus } = useSelector((state) => state.order);
 
     const backToCart = () => {
-        props.navigation.navigate("CheckOut");  
+        props.navigation.navigate("CheckOut");
     }
 
     const closeBottomSheet = () => {
@@ -50,23 +50,32 @@ const ConfirmCheckOut = (props) => {
     }, []);
 
 
-    useEffect(() => {
-        if (orderDetail.order_group_id) {
-            const details = { orderGroup_id: orderDetail.order_group_id };
-            setLoader(false)
-            dispatch(verifyOrder(details));
-            Platform.OS === "android" ? 
-            bottomSheet.current.show()
+    // useEffect(() => {
+    //     if (orderDetail.order_group_id) {
+    //         const details = { orderGroup_id: orderDetail.order_group_id };
+    //         setLoader(false)
+    //         dispatch(verifyOrder(details));
+    //         Platform.OS === "android" ?
+    //             bottomSheet.current.show()
+    //             : null
+    //     }
+    // }, [orderDetail.order_group_id])
+
+
+    const showVerifyModal = () => {
+        setLoader(false)
+        Platform.OS === "android" ?
+            bottomSheet?.current?.show()
             : null
-        }
-    }, [orderDetail.order_group_id])
+    };
+
 
     useEffect(() => {
         if (update === "failed" && props.navigation.isFocused()) {
             waitTime("", errors?.msg)
         } else if (update === "success" && props.navigation.isFocused()) {
-            waitTime("Order Placed Successfully", "")
-            
+            waitTime("Order Placed Successfully", "");
+
         }
 
         if (verify === "failed" && props.navigation.isFocused()) {
@@ -86,7 +95,7 @@ const ConfirmCheckOut = (props) => {
             waitTimeToResendVerification()
         } else if (verificationStatus === "success" && props.navigation.isFocused()) {
             waitTimeToResendVerification()
-            Platform.OS === "ios" ? bottomSheet.current.show(): null
+            Platform.OS === "ios" ? bottomSheet?.current?.show() : null
             waitSuccessTime()
         }
 
@@ -98,14 +107,15 @@ const ConfirmCheckOut = (props) => {
     };
 
     const waitTime = useCallback((suc, err) => {
-        
+
         wait(1000).then(() => {
             if (err) {
                 setLoader(false);
                 setErr(err)
-            }else if (suc){
+            } else if (suc) {
                 dispatch(cleanList())
                 dispatch(listCart(1))
+                showVerifyModal()
             }
         });
 
@@ -247,7 +257,7 @@ const ConfirmCheckOut = (props) => {
                             <Text style={styles.subText}>Delivery</Text>
                             <Text style={styles.subText}>₦{delivery_price ? commafy(delivery_price) : 0}</Text>
                         </View>
-                       
+
 
                         {
                             Platform.OS === "android" ?
@@ -268,7 +278,7 @@ const ConfirmCheckOut = (props) => {
                         <View style={[styles.addBtnCover]}>
                             <Btn title="Confirm Check Out" style={styles.addressBtn2} onPress={submit} />
                         </View>
-                       
+
 
 
                     </View>

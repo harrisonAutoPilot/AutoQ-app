@@ -7,17 +7,20 @@ import { AuthBtn as Btn, Success } from "@Component";
 import { cleanup} from "@Store/CustomerOrder";
 import { idle } from "@Store/Cart";
 import { getCustomerOrders, getCustomerPendingOrders } from "@Request/CustomerOrder";
+import { cleanOrder } from "@Store/CustomerOrder";
 
 const CheckoutSuccess = (props) => {
   const dispatch = useDispatch();
   const {amount, delivery_price} = props.route.params
 
   const goBack = () => {
-    props.navigation.navigate("CustomerOrder");
     dispatch(cleanup())
+    dispatch(cleanOrder())
     dispatch(idle())
-    dispatch(getCustomerOrders())
+    dispatch(getCustomerOrders(1))
     dispatch(getCustomerPendingOrders(1))
+    props.navigation.navigate("CustomerOrder");
+   
   }
 
 
@@ -33,7 +36,8 @@ const CheckoutSuccess = (props) => {
     return () => {
       dispatch(cleanup());
       dispatch(idle());
-      dispatch(getCustomerOrders());
+      dispatch(cleanOrder())
+      dispatch(getCustomerOrders(1));
       dispatch(getCustomerPendingOrders(1));
       BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
     }

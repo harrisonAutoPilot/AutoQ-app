@@ -3,7 +3,8 @@ import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
-import { EmptyPlaceHolder, SuccessMsgViewTwo, } from "@Component";
+
+import { EmptyPlaceHolder } from "@Component";
 import { reOrder } from "@Request/CustomerOrder";
 import { cleanReOrder } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
@@ -11,23 +12,36 @@ import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
 import { listCart } from "@Request/Cart";
 import { cleanStatus, cleanList } from "@Store/Cart";
+import { getCustomerOrder } from "@Request/Customer";
 
 const Order = (props) => {
+
     const dispatch = useDispatch();
 
+
     const [err, setErr] = useState("");
+
     const [loader, setLoader] = useState(false);
+
+    const [trackLoaded, setTrackLoaded] = useState(false);
+
+
     const flatListRef = useRef()
+    
 
     const { errors, update } = useSelector((state) => state.order);
     
-    const { orders, orderStatus } = useSelector((state) => state.customer);
+    const { orders, orderStatus, ordersCurrentPage } = useSelector((state) => state.customer);
+
 
     const reOrders = (id) => {
         const details = { order_group_id: id };
+
         setLoader(true)
+
         dispatch(reOrder(details));
     };
+    
 
     useEffect(() => {
         if (update === "failed") {
@@ -75,6 +89,14 @@ const Order = (props) => {
             dispatch(cleanReOrder());
         })
     }, []);
+
+
+    const loadMore = () => {
+        setTrackLoaded(true)
+
+        dispatch(getCustomerOrder({id: details.id, no: ordersCurrentPage?.current_page + 1}));
+
+    };
 
 
     const ListView = ({ item }) => (
@@ -132,18 +154,32 @@ const Order = (props) => {
 
     )
 
+
+    const Footer = () => (
+        <View>
+            {
+               orderStatus === "pending" || orderStatus === "idle" ?
+                    <View style={styles.activityInd}>
+                        <ActivityIndicator color="green" size="large" />
+                    </View>
+                    :
+                    null}
+        </View>
+    )
+
+
     return (
         <View style={styles.main2}>
          
 
 
             <View style={styles.bottomCover2}>
-                {orderStatus === "idle" || orderStatus === "pending" ?
+                {(orderStatus === "idle" || orderStatus === "pending") && !trackLoaded ?
                     <CustomerPlaceholderCard />
                     :
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={orders.orders}
+                        data={orders}
                         renderItem={ListView}
                         ListEmptyComponent={EmptyPlaceHolder}
                         keyExtractor={item => item.id}
@@ -152,6 +188,12 @@ const Order = (props) => {
                         getItemLayout={(data, index) => (
                             { length: 100, offset: 100 * index, index }
                         )}
+                        onEndReached={() => {
+                            if (ordersCurrentPage?.current_page < ordersCurrentPage?.last_page) {
+                                loadMore()
+                            }
+                        }}
+                        ListFooterComponent={Footer}
                     />
                 }
             </View>

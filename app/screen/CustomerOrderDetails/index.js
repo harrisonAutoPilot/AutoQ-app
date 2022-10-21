@@ -6,8 +6,10 @@ import Toast from 'react-native-toast-message';
 
 import { AuthBtn, COHeader as Header } from "@Component/index";
 import { reOrder } from "@Request/CustomerOrder";
-import { cleanReOrder } from "@Store/CustomerOrder";
+import { cleanReOrder, cleanup } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
+import { listCart } from "@Request/Cart";
+import { cleanStatus, cleanList } from "@Store/Cart";
 
 const CustomerOrderDetails = (props) => {
 
@@ -51,9 +53,13 @@ const CustomerOrderDetails = (props) => {
       if (update === "failed") {
          waitTime(errors?.msg);
       } else if (update === "success") {
-         setLoader(false)
+         setLoader(false);
+         dispatch(cleanList());
+         dispatch(cleanStatus());
+         dispatch(listCart(1));
          dispatch(cleanReOrder());
          props.navigation.navigate("Cart")
+         dispatch(cleanup());
       } else {
          setErr("")
       }

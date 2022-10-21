@@ -1,5 +1,6 @@
 import { createSlice} from "@reduxjs/toolkit";
 import {getCustomerOrders, placeOrder, reOrder, trackOrder, verifyOrder, verifyCode, getCustomerPendingOrders} from "@Request/CustomerOrder";
+import dict from "@Helper/dict";
 
 export const orderSlice = createSlice({
     name: "order",
@@ -15,19 +16,23 @@ export const orderSlice = createSlice({
         pendingOrders: [],
         trackOrderStatus: "idle",
         trackOrderList: [],
-        pendingOrdersCurrentPage: {}
+        pendingOrdersCurrentPage: {},
+        ordersCurrentPage: {}
     },
     reducers:{
         cleanup: (state) => {
             state.errors = {}
-            // state.status = "idle",
             state.update = "idle"
-            // state.orderDetail = {}
             state.verify = "idle"
             state.verificationStatus = "idle"
             state.pendingOrders = []
             state.trackOrderList= []
             state.trackOrderStatus = "idle"
+        },
+        cleanOrder: (state) => {
+            state.status = "idle"
+            state.orders = []
+            state.ordersCurrentPage = {}
         },
         cleanReOrder: (state) => {
             state.errors = {}
@@ -56,10 +61,11 @@ export const orderSlice = createSlice({
             .addCase(getCustomerOrders.pending, state => {
                 state.status = "pending";
                 state.errors = {};
-                state.orders = [];
+            
             })
             .addCase(getCustomerOrders.fulfilled, (state, action) => {
-                state.orders = action.payload;
+                state.orders = dict(state.orders, action.payload.orders.data);
+                state.ordersCurrentPage = action.payload.orders
                 state.status = "success";
                 state.errors = {};
             })
@@ -67,6 +73,7 @@ export const orderSlice = createSlice({
                 state.status = "failed";
                 state.errors = payload;
                 state.orders = [];
+                state.ordersCurrentPage = {}
             })
 
             builder
@@ -75,25 +82,7 @@ export const orderSlice = createSlice({
                 state.loaded = "pending"
             })
             .addCase(getCustomerPendingOrders.fulfilled, (state, action) => {
-                const reducerWithDictionary = (arrayOne, arrayTwo) => {
-                    const reducedArray = []
-                    const dictionary = {}
-                  
-                    arrayOne.forEach(object => {
-                      if(dictionary[object.id]) return
-                      dictionary[object.id] = true
-                      reducedArray.push(object)
-                    })
-                  
-                    arrayTwo.forEach(object => {
-                      if(dictionary[object.id]) return
-                      dictionary[object.id] = true
-                      reducedArray.push(object)
-                    })
-                  
-                    return reducedArray
-                  }
-                state.pendingOrders = reducerWithDictionary(state.pendingOrders, action.payload.orders.data);
+                state.pendingOrders = dict(state.pendingOrders, action.payload.orders.data);
                 state.pendingOrdersCurrentPage = action.payload.orders
                 state.errors = {};
                 state.loaded = "success";
@@ -117,7 +106,6 @@ export const orderSlice = createSlice({
 
             })
             .addCase(placeOrder.rejected, (state, { payload }) => {
-        
                 state.update = "failed";
                 state.errors = payload;
                 state.orderDetail = {}
@@ -194,6 +182,6 @@ export const orderSlice = createSlice({
 
 });
 
-export const { cleanup, cleanErr, cleanVerify, cleanfailedOrder, cleanReOrder } = orderSlice.actions
+export const { cleanup, cleanErr, cleanVerify, cleanfailedOrder, cleanReOrder, cleanOrder } = orderSlice.actions
 
 export default orderSlice.reducer;

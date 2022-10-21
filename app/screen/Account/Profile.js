@@ -100,7 +100,10 @@ export default Profile = () => {
 
         });
 
-        wait(4000).then(() => { dispatch(cleanup()) })
+        wait(4000).then(() => { 
+            dispatch(cleanup()) 
+            setErrMsg("")
+        })
     }, []);
 
     const waitTime2 = useCallback((err) => {

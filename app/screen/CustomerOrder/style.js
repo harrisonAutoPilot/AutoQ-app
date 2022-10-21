@@ -536,6 +536,10 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         paddingBottom: 10,
     },
+    activityInd:{
+        paddingBottom: 50, 
+        paddingTop: 20 
+      },
 });
 
 export default styles

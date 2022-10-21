@@ -7,19 +7,25 @@ import { AuthBtn as Btn, Success } from "@Component";
 import { cleanup } from "@Store/Customer";
 import { getCustomerOrders } from "@Request/CustomerOrder";
 import { getCustomers } from "@Request/Customer";
-// import { listCart} from "@Request/Cart";
+import { cleanOrder } from "@Store/CustomerOrder";
 
 
 const CustomerSuccess = (props) => {
+
   const dispatch = useDispatch();
+
+  
   const details = props.route.params?.details
+
 
   const goBack = () => {
     dispatch(cleanup());
-    dispatch(getCustomerOrders());
+    dispatch(cleanOrder())
+    dispatch(getCustomerOrders(1));
     dispatch(getCustomers());
     props.navigation.navigate("CustomersDashboard")
   };
+
 
   const handleBackButton = () => {
     if (props.navigation.isFocused()) {
@@ -28,15 +34,18 @@ const CustomerSuccess = (props) => {
     }
   };
 
+
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButton);
     return () => {
       dispatch(cleanup())
-      dispatch(getCustomerOrders());
+      dispatch(cleanOrder())
+      dispatch(getCustomerOrders(1));
       dispatch(getCustomers());
       BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
     }
   }, []);
+  
 
   return (
     <Success style={{ marginTop: -50 }}>

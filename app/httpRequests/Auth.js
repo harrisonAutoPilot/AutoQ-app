@@ -9,11 +9,13 @@ export const login = createAsyncThunk("auth/login",
             thunkAPI, "auth")
     });
 
+
 export const getUser = createAsyncThunk("auth/user",
     async (_, thunkAPI) => {
         const Axios = await AxiosBase();
         return apiRequest(Axios.get('api/v1/user'), thunkAPI);
     });
+
 
 export const getPhoneVerificationPin = createAsyncThunk("auth/phone_verification",
     async (_, thunkAPI) => {
@@ -21,11 +23,13 @@ export const getPhoneVerificationPin = createAsyncThunk("auth/phone_verification
         return apiRequest(Axios.get('api/v1/user/verification_code/send'), thunkAPI);
     });
 
+
 export const verifyPin = createAsyncThunk("auth/verify/pin",
     async (user, thunkAPI) => {
         const Axios = await AxiosBase();
         return apiRequest(Axios.post('api/v1/user/phone/verify', user), thunkAPI);
     });
+
 
 export const activateAccount = createAsyncThunk("auth/activate_account",
     async (user, thunkAPI) => {
@@ -40,6 +44,7 @@ export const forgotPin = createAsyncThunk("auth/forgot_pin",
             thunkAPI)
     });
 
+
 export const updateUserDetails = createAsyncThunk("auth/user/update",
     async (user, thunkAPI) => {
         const Axios = await AxiosBase();
@@ -48,13 +53,13 @@ export const updateUserDetails = createAsyncThunk("auth/user/update",
     });
 
 
-    export const deleteUserAccount = createAsyncThunk("auth/user/delete",
+export const deleteUserAccount = createAsyncThunk("auth/user/delete",
     async (id, thunkAPI) => {
         const Axios = await AxiosBase();
         return apiRequest(Axios.patch(`api/v1/users/${id}/disable`),
             thunkAPI)
     });
-    
+
 
 export const updateUserPassword = createAsyncThunk("auth/password/update",
     async (user, thunkAPI) => {
@@ -62,6 +67,7 @@ export const updateUserPassword = createAsyncThunk("auth/password/update",
         return apiRequest(Axios.patch(`api/v1/users/password/${user.id}`, user),
             thunkAPI)
     });
+
 
 export const updateUserImage = createAsyncThunk("auth/image/update",
     async (user, thunkAPI) => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, RefreshControl, FlatList} from "react-native";
+import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, 
+    RefreshControl, FlatList, ActivityIndicator} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from 'react-native-vector-icons/MaterialIcons';
@@ -117,8 +118,22 @@ const PendingOrder = (props) => {
 
     const loadMore = () => {
         setTrackLoaded(true)
+
         dispatch(getCustomerPendingOrders(pendingOrdersCurrentPage?.current_page + 1));
     };
+
+
+    const Footer = () => (
+        <View>
+            {
+               loaded === "pending" || loaded === "idle" ?
+                    <View style={styles.activityInd}>
+                        <ActivityIndicator color="green" size="large" />
+                    </View>
+                    :
+                    null}
+        </View>
+    )
     
 
     const ListView = ({ item }) => (
@@ -211,6 +226,7 @@ const PendingOrder = (props) => {
                                 loadMore()
                             }
                         }}
+                        ListFooterComponent={Footer}
                     />
                 }
             </View>

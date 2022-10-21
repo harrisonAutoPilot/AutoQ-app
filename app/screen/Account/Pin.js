@@ -64,7 +64,10 @@ export default Pin = () => {
 
         });
 
-        wait(4000).then(() => { dispatch(cleanup()) })
+        wait(4000).then(() => { 
+            dispatch(cleanup())
+            setErrMsg("")
+        })
     }, []);
 
 

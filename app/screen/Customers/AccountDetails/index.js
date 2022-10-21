@@ -8,6 +8,7 @@ import InActive from "./Inactive";
 import CustomerInfo from "./Info";
 import Orders from "./Orders";
 import { getCustomerOrder } from "@Request/Customer";
+import { cleanOrder } from "@Store/Customer";
 
 const CustomerDetails = (props) => {
 
@@ -36,8 +37,15 @@ const CustomerDetails = (props) => {
 
 
     useEffect(() => {
-        dispatch(getCustomerOrder(details.id))
-    }, [])
+
+        dispatch(getCustomerOrder({id: details.id, no: 1}))
+
+        return () => {
+            dispatch(cleanOrder())
+        }
+
+    }, []);
+
 
     return (
         <View style={styles.view}>
@@ -55,7 +63,17 @@ const CustomerDetails = (props) => {
                 </View>
 
             </View>
-            {activeId === 1 ? <CustomerInfo details={details}  store={viewStore} name={name}/> : <Orders details={details} detailsScreen={detailsScreen} cart={cart} />}
+            {activeId === 1 ? 
+            
+            <CustomerInfo 
+            details={details}  
+            store={viewStore} 
+            name={name}/> : 
+
+            <Orders 
+            details={details} 
+            detailsScreen={detailsScreen} 
+            cart={cart} />}
 
         </View>
     )
