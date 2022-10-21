@@ -167,7 +167,6 @@ const ConfirmCheckOut = (props) => {
 
     const resendToken = () => {
         const details = { orderGroup_id: orderDetail.order_group_id };
-        setLoader(true)
         setShowResendCodeBtn(false)
         dispatch(verifyOrder(details));
     };
