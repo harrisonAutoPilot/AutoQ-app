@@ -1,12 +1,20 @@
-import React, { useState, useRef, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, TouchableWithoutFeedback, Keyboard, TextInput } from "react-native";
+import React, { useEffect, useState,useRef, useCallback, useMemo } from "react";
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, TouchableWithoutFeedback, Keyboard,Animated, TextInput } from "react-native";
 import Toast from 'react-native-toast-message';
 
 import styles from './style';
 import FIcon from "react-native-vector-icons/FontAwesome5";
 import { SuccessMsgViewTwo } from "@Component";
-import BottomSheet from "react-native-gesture-bottom-sheet";
+import {
+    BottomSheetScrollView, useBottomSheetTimingConfigs,
+    BottomSheetModal, BottomSheetModalProvider, BottomSheetTextInput
+} from '@gorhom/bottom-sheet';
 import { AuthBtn as Btn } from "@Component";
+import {
+    Easing, Extrapolate,
+    interpolate,
+    useAnimatedStyle,
+} from 'react-native-reanimated';
 
 
 const Overlay = (props) => {
@@ -21,18 +29,60 @@ const Overlay = (props) => {
 
     const dismissKeyboard = () => Keyboard.dismiss();
  
+    const snapPoints = useMemo(() => ['80%', '85%'], []);
+
+    const handleSheetChanges = useCallback((index) => {
+        console.log('handleSheetChanges', index);
+    }, []);
+
+    const animationConfigs = useBottomSheetTimingConfigs({
+        duration: 250,
+        easing: Easing.exp,
+    });
+
+    const CustomBackdrop = ({ animatedIndex, style }) => {
+        // animated variables
+        const containerAnimatedStyle = useAnimatedStyle(() => ({
+            opacity: interpolate(
+                animatedIndex.value,
+                [0, 1],
+                [0, 1],
+                Extrapolate.CLAMP
+            ),
+        }));
+
+        const containerStyle = useMemo(
+            () => [
+                style,
+                {
+                    backgroundColor: "rgba(0,0,0,0.6)"
+                },
+                containerAnimatedStyle,
+            ],
+            [style, containerAnimatedStyle]
+        );
+
+        return <Animated.View style={containerStyle} />;
+    };
+
 
     const ModalView = () => (
-        <View>
-            <BottomSheet 
-            draggable={false} 
-            ref={props.bottomSheet} 
-            sheetBackgroundColor={'#ffffff'} 
-            height={Dimensions.get("window").height / 1.20} 
-            radius={50} 
-            styles={styles.addStoreBottomSheet}
-            
-            >
+        <BottomSheetModalProvider>
+
+            <BottomSheetModal
+                ref={props.bottomSheet}
+                index={1}
+                initialSnapIndex={1}
+                snapPoints={snapPoints}
+                onChange={handleSheetChanges}
+                style={styles.addStoreBottomSheet}
+                enablePanDownToClose={false}
+                enableTouchOutsideToClose={false}
+                animationConfigs={animationConfigs}
+                backdropComponent={CustomBackdrop}
+                handleIndicatorStyle={{ display: "none" }}
+                 >
+
                 <View style={globalStyles.dragIcon}>
                     <FIcon name="minus" color="gray" size={35} />
                     </View>
@@ -51,7 +101,9 @@ const Overlay = (props) => {
                     <Text style={styles.modalTitle}>Confirm Order</Text>
                 </View>
 
-                <ScrollView>
+                <BottomSheetScrollView contentContainerStyle={styles.scrollStyle} 
+                 bounces={false}
+                >
 
                     <View style={styles.modalView}>
 
@@ -146,21 +198,21 @@ const Overlay = (props) => {
 
                     </View>
 
-                </ ScrollView >
+                </BottomSheetScrollView>
                 <View style={[styles.addBtnCover2]}>
                     {inputOne.length && inputTwo.length && inputThree.length && inputFour.length ?
                         <Btn title="Confirm Order" style={styles.addressBtn2} onPress={() => props.submit(inputOne, inputTwo, inputThree, inputFour)} />
                         : null}
                 </View>
-            </BottomSheet>
-        </View>
-    );
+                </BottomSheetModal>
 
-    return (
-        <View>
-            {ModalView()}
-        </View>
-    )
+</BottomSheetModalProvider>
+
+);
+
+return (
+    ModalView()
+)
 };
 
 export default Overlay;

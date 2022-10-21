@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, TouchableOpacity, Image, Keyboard, TouchableWithoutFeedback, Dimensions, ScrollView, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Image, Keyboard,Pressable, TouchableWithoutFeedback, Dimensions, ScrollView, TextInput } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import styles from './style';
 import { addToCart } from "@Request/Cart";
@@ -65,7 +65,8 @@ const Overlay = (props) => {
 
 
     const WithDraw = () => (
-        <BottomSheet hasDraggableIcon ref={props.bottomSheetW} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.20} radius={50} styles={styles.addStoreBottomSheet}>
+
+        <BottomSheet hasDraggableIcon   ref={props.bottomSheetW} sheetBackgroundColor={'#ffffff'} height={Dimensions.get("window").height / 1.20} radius={50} styles={styles.addStoreBottomSheet}>
 
             <ScrollView style={styles.modalView}>
                 <View style={styles.modalView}>
@@ -189,6 +190,7 @@ const Overlay = (props) => {
                 </View>
             </View>
         </BottomSheet>
+
     );
 
     return (
