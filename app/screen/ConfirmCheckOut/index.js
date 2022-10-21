@@ -66,7 +66,7 @@ const ConfirmCheckOut = (props) => {
     const showVerifyModal = () => {
         setLoader(false)
         Platform.OS === "android" ?
-            bottomSheet?.current?.show()
+            bottomSheet.current?.present()
             : null
     };
 

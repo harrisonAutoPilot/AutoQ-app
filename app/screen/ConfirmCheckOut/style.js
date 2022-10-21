@@ -105,6 +105,10 @@ export default styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "right"
   },
+  addStoreBottomSheet: {
+    borderRadius: 40,
+    overflow: "hidden"
+},
   subText: {
     fontSize: 14,
     fontFamily: "Urbanist-Regular",
