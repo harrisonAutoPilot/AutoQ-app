@@ -7,6 +7,8 @@ import { getDeals } from "@Request/Deal";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers } from "@Request/Customer";
+import { listCart } from "@Request/Cart";
+import { getNotification } from "@Request/Notification";
 
 const Home = (props) => {
 
@@ -60,13 +62,21 @@ const Home = (props) => {
         dispatch(getCustomers());
 
         dispatch(getDeals());
+
+        dispatch(getNotification());
+
+        dispatch(listCart(1));
+        
     }, []);
 
     return (
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
 
-                <Header drawer={openDrawer} notify={openNotification} cart={openCart} />
+                <Header 
+                drawer={openDrawer} 
+                notify={openNotification} 
+                cart={openCart} />
                 
                 <View style={styles.agentFaceCover}>
                     <Image style={styles.agentImg} source={{ uri: `${URL}${user?.picture_url}` }} />

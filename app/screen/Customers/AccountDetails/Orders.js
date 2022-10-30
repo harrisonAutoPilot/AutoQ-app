@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
@@ -35,6 +35,7 @@ const Order = (props) => {
 
 
     const reOrders = (id) => {
+
         const details = { order_group_id: id };
 
         setLoader(true)
@@ -94,7 +95,7 @@ const Order = (props) => {
     const loadMore = () => {
         setTrackLoaded(true)
 
-        dispatch(getCustomerOrder({id: details.id, no: ordersCurrentPage?.current_page + 1}));
+        dispatch(getCustomerOrder({id: props?.details?.id, no: ordersCurrentPage?.current_page + 1}));
 
     };
 
