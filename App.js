@@ -52,6 +52,8 @@ const App = () => {
         {isOffline ? <Network />: null}
         
       </PersistGate>
+
+      
     </Provider>
   
   );

@@ -23,5 +23,25 @@ const getFcmToken = async () => {
 }
 
 
+export const notificationListener = async () => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+        console.log(
+            'Notification caused app to open from background state:',
+            remoteMessage.notification,
+        );
+    });
+
+    messaging()
+        .getInitialNotification()
+        .then(remoteMessage => {
+            if (remoteMessage) {
+                console.log(
+                    'Notification caused app to open from quit state:',
+                    remoteMessage.notification,
+                );
+
+            }
+        });
+}
 
 

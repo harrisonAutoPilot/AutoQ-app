@@ -4,8 +4,8 @@ import Toast from 'react-native-toast-message';
 import messaging from '@react-native-firebase/messaging';
 
 
-import { requestUserPermission } from "@Helper/NotificationPermission";
-import ForGround from "@Component/foregroundToast"
+import { requestUserPermission, notificationListener } from "@Helper/NotificationPermission";
+import ForGround from "@Component/foregroundToast";
 
 
 const Notification = () => {
@@ -40,6 +40,8 @@ const Notification = () => {
   useEffect(() => {
 
     requestUserPermission();
+    
+    notificationListener()
 
     const unsubscribe = messaging().onMessage(async remoteMessage => {
 
@@ -60,7 +62,7 @@ const Notification = () => {
           }
         });
 
-        waitTime()
+        waitTime();
 
       }
 
@@ -68,7 +70,7 @@ const Notification = () => {
 
     return () => {
       setNotify(false)
-      unsubscribe()
+      unsubscribe();
     }
 
 
@@ -76,7 +78,7 @@ const Notification = () => {
 
   return (
     <>
-      {notify ?
+      { notify ?
         <Toast config={toastConfig} forwardRef={ref => Toast.setRef(ref)} />
         : null}
     </>
