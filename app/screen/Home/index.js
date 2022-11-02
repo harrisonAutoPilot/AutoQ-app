@@ -42,7 +42,7 @@ const Home = (props) => {
 
     const redirectToInactiveCustomers = () => props.navigation.navigate("CustomersDashboard", { id: 1 });
     
-    const redirectToPendingCustomers = () => props.navigation.navigate("CustomersDashboard");
+    const redirectToPendingCustomers = () => props.navigation.navigate("CustomersDashboard", {id: 2});
 
     
     useEffect(() => {

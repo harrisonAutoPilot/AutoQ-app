@@ -14,8 +14,12 @@ import { cleanup } from "@Store/Customer";
 const CustomersDashboard = (props) => {
 
     const dispatch = useDispatch();
+
+
     const [activeId, setActiveId] = useState(1);
+
     const [search, setSearch] = useState("");
+
     const [result, setResult] = useState([]);
 
 
@@ -27,15 +31,17 @@ const CustomersDashboard = (props) => {
         }
     }, [search.length]);
 
+
     useEffect(() => {
         dispatch(getCustomers());
         return () => dispatch(cleanup())
-    }, [])
+    }, []);
+
 
     useEffect(() => {
         if (props.route.params?.id === 1) {
             setActiveId(3)
-        }else if(props.route.params?.id === "pending") {
+        }else if(props.route.params?.id === 2) {
             setActiveId(1)
         }
     }, [props.route.params])
@@ -43,15 +49,25 @@ const CustomersDashboard = (props) => {
     const dismissKeyboard = () => Keyboard.dismiss();
 
     const openDrawer = () => props.navigation.openDrawer();
+
     const reg = () => props.navigation.navigate("CustomerRegistration", {key: 2});
+
     const reg_details = (items) => props.navigation.navigate("CustomerRegistration", { items, key: 1 });
-    const openFavourite = () => props.navigation.navigate("SavedItem", { id: 1 })
+
+    const openFavourite = () => props.navigation.navigate("SavedItem", { id: 1 });
+
     const openNotification = () => props.navigation.navigate("Notification");
+
     const openCart = () => props.navigation.navigate("Cart");
+
     const custom_details = (details, name) => props.navigation.navigate("CustomerDetails", { details, name });
 
+
     const { customers } = useSelector((state) => state.customer);
+
+
     const showActive = (id) => setActiveId(id);
+    
 
     const searchCustomers = () => {
         let searched = [];

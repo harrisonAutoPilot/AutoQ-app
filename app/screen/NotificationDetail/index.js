@@ -26,8 +26,16 @@ const NotificationDetail = (props) => {
 
     useEffect(() => {
         dispatch(getReadNotification(details.id))
-    
       }, []);
+
+
+    //   Working on it
+    //   useEffect(() => {
+    //     if(details.status){
+    //     dispatch(getReadNotification(details.id))
+    //     }
+    
+    //   }, [details.status]);
 
 
       useEffect(() => {
