@@ -3,6 +3,8 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
  } from 'react-native-responsive-screen';
+
+ 
 const styles = StyleSheet.create({
     btn:{
         width:wp('85%'),

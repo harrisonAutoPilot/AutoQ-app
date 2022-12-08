@@ -118,7 +118,7 @@ const InCompleteOrderDetails = (props) => {
          setSuccessMsg("Verification code sent");
          cleanVerifyCall()
          setLoader(false)
-         bottomSheet.current.show();
+         bottomSheet.current.present();
          
       }
 

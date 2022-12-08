@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import { getNotification} from "@Request/Notification";
+import { getNotification, getReadNotification} from "@Request/Notification";
 
 export const notificationSlice = createSlice({
     name: "notification",
@@ -7,12 +7,16 @@ export const notificationSlice = createSlice({
         notification: [],
         status: "idle",
         errors: {},
+        readStatus: "idle",
+        notificationCount: 0
     },
     reducers:{
         cleanup: (state) => {
             state.status = "idle";
             state.errors = {};
             state.notification = [];
+            state.readStatus = "idle";
+            state.notificationCount = 0;
         },
         
     },
@@ -22,11 +26,15 @@ export const notificationSlice = createSlice({
                 state.status = "pending";
                 state.errors = {};
                 state.notification = [];
+                state.notificationCount = 0
             })
             .addCase(getNotification.fulfilled, (state, action) => {
+                console.log("notification called count")
                 state.notification = action.payload;
                 state.status = "success";
-                state.errors = {};
+                state.notificationCount = action.payload.notifications.filter(notification => {
+                    return notification.pivot?.status === "unread"
+                }).length
             })
             .addCase(getNotification.rejected, (state, { payload }) => {
                 state.status = "failed";
@@ -34,6 +42,16 @@ export const notificationSlice = createSlice({
                 state.notification = [];
             })
 
+            builder
+            .addCase(getReadNotification.pending, state => {
+                state.readStatus = "pending";
+            })
+            .addCase(getReadNotification.fulfilled, (state) => {
+                state.readStatus = "success";
+            })
+            .addCase(getReadNotification.rejected, (state) => {
+                state.readStatus = "failed";
+            })
            
     }
 });

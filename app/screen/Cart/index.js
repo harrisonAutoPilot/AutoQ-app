@@ -346,7 +346,7 @@ const Cart = (props) => {
                             <View style={styles.thrashN} >
                                 <Text style={styles.outofstockText}>Out of Stock</Text>
                             </View> :
-                            item.product?.quantity_available > item.quantity ?
+                            item.product?.stock_count >= item.quantity ?
 
                                 <View style={styles.cartAmountView}>
                                     <TouchableOpacity style={styles.increase} onPress={() => { decreaseCart(item); }}>

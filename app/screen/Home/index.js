@@ -7,6 +7,8 @@ import { getDeals } from "@Request/Deal";
 import styles from './style';
 import { Header } from "@Component";
 import { getCustomers } from "@Request/Customer";
+import { listCart } from "@Request/Cart";
+import { getNotification } from "@Request/Notification";
 
 const Home = (props) => {
 
@@ -40,7 +42,7 @@ const Home = (props) => {
 
     const redirectToInactiveCustomers = () => props.navigation.navigate("CustomersDashboard", { id: 1 });
     
-    const redirectToPendingCustomers = () => props.navigation.navigate("CustomersDashboard");
+    const redirectToPendingCustomers = () => props.navigation.navigate("CustomersDashboard", {id: 2});
 
     
     useEffect(() => {
@@ -66,7 +68,10 @@ const Home = (props) => {
         <View style={styles.miniMainBody}>
             <View style={styles.topCover}>
 
-                <Header drawer={openDrawer} notify={openNotification} cart={openCart} />
+                <Header 
+                drawer={openDrawer} 
+                notify={openNotification} 
+                cart={openCart} />
                 
                 <View style={styles.agentFaceCover}>
                     <Image style={styles.agentImg} source={{ uri: `${URL}${user?.picture_url}` }} />

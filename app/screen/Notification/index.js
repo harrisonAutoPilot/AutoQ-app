@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
@@ -18,6 +18,7 @@ const Notification = (props) => {
         dispatch(getNotification());
     }, []);
 
+
     const { notification, error, status } = useSelector((state) => state.notification);
 
     const goBack = () => props.navigation.navigate("Home");
@@ -32,6 +33,7 @@ const Notification = (props) => {
         />
     };
 
+
     return (
         <View style={styles.view}>
             <Header title="Notification" onPress={goBack} styleView={styles.body} />
@@ -40,6 +42,7 @@ const Notification = (props) => {
                     <View>
                         <Text style={styles.subHeadingTitle}>This Week</Text>
                     </View>
+
                     {/* <View style={styles.subHeading}>
                         <TouchableOpacity style={[styles.miniHeaderView, styles.filterView]}>
                             <Icon name="chevron-down" size={14} color="#212121" />
@@ -51,6 +54,7 @@ const Notification = (props) => {
                             <Text style={styles.text}>Clear All</Text>
                         </TouchableOpacity>
                     </View> */}
+
                 </View>
                 {status === "pending" || status === "idle" ?
                     <NotificationPlaceholder /> :
