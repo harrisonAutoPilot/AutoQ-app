@@ -29,5 +29,5 @@ export default styles = StyleSheet.create({
     borderRadius: 60,
     paddingBottom: 20
   },
-
+  
   })

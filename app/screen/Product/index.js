@@ -40,7 +40,7 @@ const Products = (props) => {
 
 
     useEffect(() => {
-        dispatch(searchProducts({search: props.route.params?.category, no:1}));
+        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1}));
 
         dispatch(listCart(1));
 
@@ -55,7 +55,7 @@ const Products = (props) => {
     }, []);
 
     const loadMore = () => {
-        dispatch(searchProducts({ search: props.route.params?.category, no: searchProductsData?.current_page + 1 }));
+        dispatch(searchProducts({ search: props.route.params?.category, category_id:props.route.params?.category_id, no: searchProductsData?.current_page + 1 }));
     }
 
     useEffect(() => {
@@ -84,7 +84,7 @@ const Products = (props) => {
     const refreshView = useCallback(() => {
         setErr("");
         setRefreshing(true);
-        dispatch(searchProducts({search: props.route.params?.category, no:1}));
+        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1}));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 

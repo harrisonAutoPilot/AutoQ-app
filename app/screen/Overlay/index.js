@@ -80,6 +80,17 @@ const Overlay = (props) => {
 
     // UseEffects
     useEffect(() => {
+        if (result.max_quantity_per_sale != 0  && cartAmount > result.max_quantity_per_sale) {
+            refreshView("Max Quntity Exceeded", "")
+           setCartAmount(1)
+        } 
+    }, [cartAmount]);
+    
+
+
+
+    // UseEffects
+    useEffect(() => {
         if (addCart === "failed") {
             refreshView(errors?.msg ? errors?.msg : "An error occurred", "")
             setSuccessMsg("");
@@ -177,6 +188,8 @@ const Overlay = (props) => {
             return setCartAmount(cartAmount + 1)
     };
 
+    console.log("this is the result for", result)
+
     const decreaseCart = () => {
         setErr("")
         if (cartAmount > 1) return setCartAmount(cartAmount - 1);
@@ -254,6 +267,16 @@ const Overlay = (props) => {
                                             : null
                                         }
                                     </View>
+                                    {
+                                        result.description != null ?
+                                        <View style={styles.descriptionCover}>
+                                        <Text style={styles.descriptionTitle}>Combo Description</Text>
+                                        <Text style={styles.descriptionContent}>{result.ddescription}</Text>
+                                    </View>
+                                    :
+                                    null
+                                    }
+                                    
                                 </View>
 
                                 <View style={styles.modalMiniBody}>

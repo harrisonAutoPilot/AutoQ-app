@@ -1,12 +1,13 @@
 import { createSlice} from "@reduxjs/toolkit";
 import {getDeals, getDealById, addDealToCart} from "@Request/Deal"
-
+import dict from "@Helper/dict";
 
 
 export const dealSlice = createSlice({
     name: "deal",
     initialState: {
         deals: [],
+        dealsItems:[],
         status: "idle",
         errors: {},
         idStatus: "idle",
@@ -31,12 +32,18 @@ export const dealSlice = createSlice({
                 console.log("deal pending")
                 state.status = "pending";
                 state.errors = {};
-                state.deals = []
+                state.deals = [];
+                state.dealsItems = []
             })
-            .addCase(getDeals.fulfilled, (state, action) => {
-               // console.log("deal", action.payload.data)
-                state.deals = action.payload.data;
+
+           
+            .addCase(getDeals.fulfilled, (state, action) => { 
+                state.deals = action.payload
+               // console.log("this is deal new", action.payload);
+                state.dealsItems = dict(state.dealsItems, action.payload.data)
+                //console.log("deal redux", state.dealsItems)
                 state.status = "success";
+                state.errors = {};
             })
             .addCase(getDeals.rejected, (state, { payload }) => {
                 console.log("deal fail", payload)

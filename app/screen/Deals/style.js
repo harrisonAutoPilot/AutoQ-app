@@ -60,7 +60,8 @@ export default styles = StyleSheet.create({
         fontFamily: "Urbanist-Regular",
         lineHeight: 24,
         color: "#212121",
-        letterSpacing: 0.3,   
+        letterSpacing: 0.3,  
+        textAlign:'center' 
     },
 
     btnStyle:{
