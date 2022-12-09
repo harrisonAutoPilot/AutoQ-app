@@ -162,9 +162,6 @@ const Overlay = (props) => {
     };
 
 
-    console.log("this is the description", result);
-
-
     const ModalView = () => (
 
         <BottomSheetModalProvider>

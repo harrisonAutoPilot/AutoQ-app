@@ -52,6 +52,7 @@ const Cart = (props) => {
     }
 
     const returnHeader = () => {
+        setSearchCart("")
         setShowSearch(false)
     }
 
@@ -464,7 +465,7 @@ const Cart = (props) => {
         }
 
 
-        // console.log("this is my search", searchCart);
+      
 
     let { width } = Dimensions.get('window');
 
@@ -499,7 +500,7 @@ const Cart = (props) => {
                     setDataProvider(dataProvider.cloneWithRows(copyCart))    
                 }else{
                     setDataProvider(dataProvider.cloneWithRows(searchArray))   
-                }[]
+                }
 
              
                 // setDataProvider(dataProvider.cloneWithRows(copyCart));
