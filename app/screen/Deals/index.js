@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl } from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, RefreshControl } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -27,10 +27,12 @@ const Deals = (props) => {
 
     const [successMsg, setSuccessMsg] = useState("");
 
+    const [allDeals, setAllDeals] = useState([])
+
     const [refreshing, setRefreshing] = useState(false);
 
 
-    const { deals, status, addDealStatus, addDeal } = useSelector((state) => state.deal);
+    const { deals, status, addDealStatus,dealsItems, addDeal } = useSelector((state) => state.deal);
    
 
     const goBack = () => props.navigation.navigate("Home");
@@ -42,19 +44,33 @@ const Deals = (props) => {
 
     };
 
+    useEffect(() => {
 
+        if (dealsItems.length) {
+            setAllDeals(deals.data && deals.data)
+        }
+       
+      }, [dealsItems]);
+
+    const loadMore = () => {
+
+        dispatch(getDeals({id:deals?.current_page + 1}));
+    }
 
     const filterProduct = (id) => {
-        let resultArray = deals.filter(item => item.id === id)[0];
+        let resultArray = dealsItems.filter(item => item.id === id)[0];
+
+        console.log("the filter", resultArray)
         bottomSheet.current?.present();
         setVisible(true)
         return setResult(resultArray)
     };
 
 
+
     const refreshDeal = useCallback(() => {
         setRefreshing(true);
-        dispatch(getDeals());
+        dispatch(getDeals({id:1}));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
@@ -108,7 +124,6 @@ const Deals = (props) => {
 
     }, []);
 
-   
 
     const ListView = ({item}) =>  (
         <View style={styles.listItem}>
@@ -144,25 +159,36 @@ const Deals = (props) => {
             <View style={styles.mainBody}>
 
             {status === "idle" || status === "pending" ?
+
                 <DealPlaceholder /> :
                 <FlatList
-                    data={deals}
+                    data={dealsItems}
+                    // extraData={allDeals}
                     renderItem={ListView}
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={true}
                     ListFooterComponent={<View style={{ height: 50 }} />}
                     scrollEnabled={true}
                     ListEmptyComponent={EmptyDeal}
+                    // initialNumToRender={8}
+                    onEndReachedThreshold={0.5}
                     refreshControl={
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={refreshDeal} />
                     }
-                />}
+                    
+                    onEndReached={() => {
+                        if (deals?.current_page < deals?.last_page) {
+                            loadMore()
+                        }
+                    }}
+                />
+             }
 
             </View>
             
-            {deals.length ?
+            {dealsItems.length > 0 ?
 
                 <ModalView
                     bottomSheet={bottomSheet}

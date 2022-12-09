@@ -5,7 +5,7 @@ import { apiRequest } from "@Request/Request";
 export const listCart = createAsyncThunk("cart/all",
     async (no, thunkAPI) => {
         const Axios = await AxiosBase();
-        return apiRequest(Axios.get(`api/v1/cart?page=${no}`), thunkAPI)
+        return apiRequest(Axios.get(`api/v1/cart`), thunkAPI)
        
     });
 

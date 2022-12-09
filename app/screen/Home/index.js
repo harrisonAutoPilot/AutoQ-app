@@ -61,12 +61,7 @@ const Home = (props) => {
 
         dispatch(getCustomers());
 
-        dispatch(getDeals());
-
-        dispatch(getNotification());
-
-        dispatch(listCart(1));
-        
+        dispatch(getDeals({no:1}));
     }, []);
 
     return (
@@ -122,7 +117,7 @@ const Home = (props) => {
                                     <View style={styles.cardTopInner}>
                                         <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
                                         {/* <Text style={styles.cardBgText}>{agent.special_deals_count}</Text> */}
-                                        { deals.length  ?
+                                        { deals?.total > 0 ?
                                         <Image style={styles.sunImg1} source={require("@Assets/image/new-offer.png")} />
                                         :
                                         null

@@ -602,5 +602,25 @@ badgeText: {
       qtnCover:{
         flexDirection:'row',
         marginTop:10,
+      },
+      backImg:{
+        width:26,
+        height:26,
+        resizeMode:"contain"
+      },
+      searchBarCover:{
+        width:wp('100%'),
+        padding:10,
+        backgroundColor:'#00319D',
+        flexDirection:"row",
+        justifyContent:'space-between',
+        alignItems:'center'
+      },
+      inputSearch:{
+        width:wp('85%'),
+        height:45,
+        borderRadius:4,
+        backgroundColor:'#fff',
+        paddingLeft:20
       }
     })

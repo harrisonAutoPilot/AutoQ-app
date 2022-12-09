@@ -776,7 +776,27 @@ notifyMeBtn2:{
     backgroundColor: "#cdcdcd",
     borderRadius: 100,
     marginBottom: 20
-}
+},
+descriptionCover:{
+    width:wp('100%'),
+    paddingHorizontal:20,
+    paddingVertical:10,
+    alignSelf:'center'
+  },
+  descriptionTitle:{
+    fontSize: 16,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 28,
+    color: "#212121",
+    letterSpacing: 0.2,
+  },
+  descriptionContent:{
+    fontSize: 14,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 28,
+    color: "#212121",
+    letterSpacing: 0.2,
+  }
 
 });
 

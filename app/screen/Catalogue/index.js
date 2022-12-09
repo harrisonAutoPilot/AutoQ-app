@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, Dimensions } from "react-native";
+import { View, Text, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, Dimensions, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
@@ -51,6 +51,8 @@ const Catalogue = (props) => {
         setSearchCategoryArray(searchedProducts)
         toTop()
     };
+    
+    console.log("this is it", searchCategoryArray);
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -62,8 +64,9 @@ const Catalogue = (props) => {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    const getAllProducts = (category, display_name) => {
-        props.navigation.navigate("Product", { category, display_name })
+    const getAllProducts = (category, display_name, id) => {
+        props.navigation.navigate("Product", { category, display_name, category_id: id })
+     
     }
 
     const dismissKeyboard = () => Keyboard.dismiss();
@@ -117,9 +120,12 @@ const Catalogue = (props) => {
         }
     }, [categories, searchCategoryArray])
 
+    console.log("categories list", searchCategory);
+
     const ListView = ({ item }) => (
-        <TouchableOpacity style={[styles.listContainer, styles.elevation]} onPress={() => getAllProducts(item.name, !searchCategoryArray.length ? item.display_name : item.category?.display_name)}>
-            <View style={styles.listContainerImageView}>
+        <TouchableOpacity style={[styles.listContainer, styles.elevation]} onPress={() => getAllProducts(item.name, !searchCategoryArray.length ? item.display_name : item.category?.display_name, item.id)}>
+           
+            <View style={styles.listContainerImageView}>          
                 <Image source={{ uri: `${URL}${item.image_url}` }} style={styles.image} resizeMode="cover" />
             </View>
             <View style={styles.listContainerTextView} >

@@ -2,15 +2,15 @@ import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
+import globalStyle from "@Helper/GlobalStyles";
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
-
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
 import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
-import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header, AddCartListEmptyBig, Check } from "@Component";
+import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header,InputField, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup, cleanList } from "@Store/Cart";
 import ConfirmDelete from "./ConfirmDelete";
@@ -32,6 +32,10 @@ const Cart = (props) => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [showConfirmSelected, setShowConfirmSelected] = useState(false);
     const [trackRecyclerList, setTrackRecyclerList] = useState(false);
+    const [showSearch, setShowSearch ] = useState(false)
+    const [searchCart, setSearchCart] = useState ("")
+    const [searchArray, setSearchArray] = useState([]);
+    const [ slength , setSlength] = useState(false)
 
 
     const { items, removeCart, removeMultipleCart, removeAllCart, errors,
@@ -42,7 +46,16 @@ const Cart = (props) => {
 
     const openCart = () => dispatch(listCart(1));
 
-    const redirectToSearch = () => props.navigation.navigate("Search");
+    // const redirectToSearch = () => props.navigation.navigate("Search");
+    const redirectToSearch =()=>{
+        setShowSearch(true)
+    }
+
+    const returnHeader = () => {
+        setSearchCart("")
+        setShowSearch(false)
+    }
+
 
     useEffect(() => {
         if (listItems.length) {
@@ -79,6 +92,28 @@ const Cart = (props) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
+
+    const searchItem = () => {
+        let searched = copyCart.filter(val => {
+            if (val.product.name.toLowerCase().includes(searchCart.toLowerCase())) {
+                return val
+            }
+            return null
+        });
+        setSearchArray(searched)
+    };
+
+
+    useEffect(() => {
+        if (searchCart.length) {
+            searchItem();
+            setSlength(true)
+        } else if (!searchCart.length) {
+            setSearchArray([]);   
+            setSlength(false)
+        }
+       
+    }, [searchCart.length]);
 
     const loadMore = () => {
         dispatch(listCart(items.carts?.current_page + 1));
@@ -172,6 +207,7 @@ const Cart = (props) => {
             setErr("");
         }
     }, [removeCart]);
+
 
     useEffect(() => {
         if (updateCartItems === "failed") {
@@ -429,6 +465,8 @@ const Cart = (props) => {
         }
 
 
+      
+
     let { width } = Dimensions.get('window');
 
 
@@ -458,7 +496,14 @@ const Cart = (props) => {
         if (!trackRecyclerList) {
             if (copyCart.length > 0 || selDel.length) {
                 console.log("tracklist", "count")
-                setDataProvider(dataProvider.cloneWithRows(copyCart));
+                if(!searchArray.length > 0){
+                    setDataProvider(dataProvider.cloneWithRows(copyCart))    
+                }else{
+                    setDataProvider(dataProvider.cloneWithRows(searchArray))   
+                }
+
+             
+                // setDataProvider(dataProvider.cloneWithRows(copyCart));
                 setTrackRecyclerList(true)
             }
             else if (!copyCart.length && loaded === "success") {
@@ -484,6 +529,24 @@ const Cart = (props) => {
     return (
 
         <View style={styles.view}>
+            {
+                showSearch ?
+
+             <View style={styles.searchBarCover}>
+                <TouchableOpacity onPress={returnHeader}>
+					<Image source={require("@Assets/image/leading-icon.png")} style={styles.backImg} />
+				</TouchableOpacity>
+             <View>
+             <InputField
+                style={styles.inputSearch}
+                placeholder="Search Cart Items"
+                placeholderTextColor="#9E9E9E"
+                onChangeText={(text) => setSearchCart(text)}
+                value={searchCart}
+            />
+             </View>
+            </View>    
+            : 
             <Header onPress={goBack} title="Cart" styleView={styles.body2} >
                 <View style={styles.headerSubIconView}>
                     <TouchableOpacity onPress={redirectToSearch}>
@@ -501,6 +564,8 @@ const Cart = (props) => {
                     </TouchableOpacity>
                 </View>
             </Header>
+            }
+           
 
             <View style={styles.bottomCover}>
                 {items.carts?.data?.length ?
@@ -539,7 +604,7 @@ const Cart = (props) => {
                         <RecyclerListView
                             style={{ width: "100%" }}
                             rowRenderer={rowRenderer}
-                            dataProvider={dataProvider}
+                            dataProvider={!slength ? dataProvider : dataProvider.cloneWithRows(searchArray)}
                             layoutProvider={layoutProvider}
                             extendedState={copyCartAmount}
                             onEndReachedThreshold={0.5}

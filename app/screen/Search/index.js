@@ -41,6 +41,8 @@ const Search = (props) => {
 
     const [getCategory, setCategory]= useState("");
 
+    const [categoryId, setCategoryId] = useState("")
+
     const [searchName, setSearchName] = useState("");
 
     const [creditParams, setCreditParams]= useState("");
@@ -100,15 +102,17 @@ const Search = (props) => {
 
 
     // Show the Products in the Categories
-    const showMapCategory = (category) => {
+    const showMapCategory = (category, id) => {
         dispatch(cleanProducts());
         dispatch(cleanup())
         setSearchArray([])
+        setCategoryId(id)
         setCategory(category)
         setSearchName(category);
-        dispatch(searchProducts({ search: category, no:1 }));
+        dispatch(searchProducts({ search: category,category_id: id, no:1 }));
         setActive(category);
         setCreditParams("")
+      
         
     }
     const closeSheet = () => {
@@ -137,13 +141,17 @@ const Search = (props) => {
         }
     }, [props.route.params?.item]);
 
+
+    console.log("ytttt", props.route.params?.category);
+
     const searchCategoryItem = () => {
         setRequest(true);
         setSearchName(searchCategory);
         dispatch(cleanProducts());
-        dispatch(searchProducts({ search: searchCategory.toLowerCase(), no: 1 }))
+        dispatch(searchProducts({ search: searchCategory.toLowerCase(), category_id: categoryId, no: 1 }))
         setSearching(true)
-        // setSearchCategoryArray(searchedProducts)
+        console.log("the category", searchCategory)
+         setSearchCategoryArray(searchedProducts)
     };
 
     const redirectToFilter = () => {
@@ -162,6 +170,7 @@ const Search = (props) => {
                 setSearchCategoryArray([]);
             }
     
+            console.log("this is to check the category", props?.route?.params?.item)
         }, [searchedProducts])
 
     // Add Items to Wishlist
@@ -179,14 +188,14 @@ const Search = (props) => {
     const refreshView = useCallback(() => {
         setRefreshing(true);
         dispatch(cleanProducts())
-        dispatch(searchProducts({ search: searchName, no:1 }));
+        dispatch(searchProducts({ search: searchName, category_id : categoryId, no:1 }));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
     const ListView = ({ item }) => {
 
         return <View style={[styles.listContainer, active === item.name ? styles.activeColor : null]}>
-            <TouchableOpacity onPress={() => { showMapCategory(item.name); setSearch("") }}>
+            <TouchableOpacity onPress={() => { showMapCategory(item.name, item.id); setSearch("") }}>
                 <Text style={[styles.inputTitle, styles.color2]}>{item?.display_name?.trim()}</Text>
             </TouchableOpacity>
         </View>
