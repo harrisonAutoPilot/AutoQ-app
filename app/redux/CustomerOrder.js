@@ -95,6 +95,7 @@ export const orderSlice = createSlice({
 
             builder
             .addCase(placeOrder.pending, state => {
+                console.log("place order loading")
                 state.update = "pending";
                 state.errors = {};
                 state.orderDetail = {}

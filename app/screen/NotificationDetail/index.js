@@ -12,7 +12,7 @@ const NotificationDetail = (props) => {
 
     const dispatch = useDispatch();
 
-
+z
     const goBack = () => props.navigation.goBack();
 
 
