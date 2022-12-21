@@ -378,9 +378,14 @@ export default styles = StyleSheet.create({
     },
     toastCover:{
         position:'absolute',
-        top:hp('-8%'),
+        top:hp('8%'),
         alignSelf:'center',
          width:wp('100%'),
         zIndex:9000
-    }
+    },
+    activityInd:{
+        paddingBottom: 50, 
+        paddingTop: 20 
+      },
+
 })

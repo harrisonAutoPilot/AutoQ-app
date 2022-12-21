@@ -111,7 +111,8 @@ const StackNavigator = () => {
                          //RootStackNavigator()
 
                     :
-                    SplashStackNavigator()
+                     SplashStackNavigator()
+                  
             }
         </Stack.Navigator>
     )

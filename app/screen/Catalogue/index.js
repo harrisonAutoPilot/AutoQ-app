@@ -123,6 +123,8 @@ const Catalogue = (props) => {
     console.log("categories list", searchCategory);
 
     const ListView = ({ item }) => (
+        <>
+       
         <TouchableOpacity style={[styles.listContainer, styles.elevation]} onPress={() => getAllProducts(item.name, !searchCategoryArray.length ? item.display_name : item.category?.display_name, item.id)}>
            
             <View style={styles.listContainerImageView}>          
@@ -138,6 +140,7 @@ const Catalogue = (props) => {
 
             </View>
         </TouchableOpacity>
+        </>
     );
 
     return (
@@ -164,19 +167,34 @@ const Catalogue = (props) => {
 
             <View style={styles.mainBody}>
                 <Text style={globalStyles.title}>PRODUCT CATALOG</Text>
-
+                  
                 {err ? <View style={globalStyles.errMainView}>
                     <Text style={globalStyles.failedResponseText}>{err}</Text>
                 </View> : null}
 
+              
+                
+                
                 {dataProvider && dataProvider.getSize() > 0 ?
-
+                <>
+                  {/* <View style={styles.staticCard}>
+                <View style={styles.imgCover}>
+                    <Image source={require("@Assets/image/static.png")} style={styles.staticImg} />
+                    </View>
+                   <View style={styles.downCover}>
+                   <Text>All Products</Text>
+                   <View >
+                    <Icon name="chevron-right" size={18} color="#757575" />
+                </View>
+                   </View>
+                </View>  */}
                     <RecyclerListView
                         style={{ width: "100%" }}
                         rowRenderer={rowRenderer}
                         dataProvider={dataProvider}
                         layoutProvider={layoutProvider}
                     />
+                </>
                     :
                     <CatelogueCardPlaceholder />}
             </View>

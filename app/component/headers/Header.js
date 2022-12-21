@@ -10,7 +10,7 @@ import styles from "./style";
 const Header = (props) => {
 
 
-    const { items } = useSelector((state) => state.cart);
+    const { items, listItems } = useSelector((state) => state.cart);
 
     const { notificationCount } = useSelector((state) => state.notification);
     

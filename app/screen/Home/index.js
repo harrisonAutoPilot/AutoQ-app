@@ -61,6 +61,8 @@ const Home = (props) => {
 
         dispatch(getCustomers());
 
+        dispatch(listCart())
+
         dispatch(getDeals({no:1}));
     }, []);
 

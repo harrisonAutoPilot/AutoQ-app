@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {addToCart, updateCart,deleteAllCart,deleteMultipleCart, listCart, deleteCart} from "@Request/Cart"
+import {addToCart, updateCart,deleteAllCart,deleteMultipleCart, listCart,searchCartList, deleteCart} from "@Request/Cart"
 import dict from "@Helper/dict";
 
 
@@ -9,6 +9,8 @@ export const cartSlice = createSlice({
         items: [],
         listItems:[],
         status: "idle",
+        searchCartsData: [],
+        searchedCarts:[],
         errors: {},
         addCart: "idle",
         removeCart: "idle",
@@ -34,6 +36,10 @@ export const cartSlice = createSlice({
             state.items = []
             state.listItems = []
         },
+        cleanCarts: (state) => {
+            state.searchedCarts = []
+            state.searchCartsData = []
+        },
         cleanStatus: (state) => {
             state.loaded = "idle"
         },
@@ -57,6 +63,47 @@ export const cartSlice = createSlice({
                 state.items = [];
                 state.listItems = [];
             })
+
+
+
+            builder
+            .addCase(searchCartList.pending, state => {
+                state.errors = {};
+                state.status = "pending";
+            })
+            .addCase(searchCartList.fulfilled, (state, action) => {
+                const reducerWithDictionary = (arrayOne, arrayTwo) => {
+                    const reducedArray = []
+                    const dictionary = {}
+                  
+                    arrayOne.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    arrayTwo.forEach(object => {
+                      if(dictionary[object.id]) return
+                      dictionary[object.id] = true
+                      reducedArray.push(object)
+                    })
+                  
+                    return reducedArray
+                  }
+                state.searchedCarts = reducerWithDictionary(state.searchedCarts, action.payload.data);
+                state.searchCartsData = action.payload;
+                state.status = "success";
+                state.errors = {};
+            })
+            .addCase(searchCartList.rejected, (state, { payload }) => {
+                state.status = "failed";
+                state.errors = payload;
+                state.searchedCarts = [];
+                state.searchCartsData = [];
+            })
+
+
+
 
             builder
             .addCase(addToCart.pending, state => {
@@ -131,6 +178,6 @@ export const cartSlice = createSlice({
 
     }
 });
-export const { cleanup, idle, cleanList, cleanStatus } = cartSlice.actions
+export const { cleanup, idle,cleanCarts, cleanList, cleanStatus } = cartSlice.actions
 
 export default cartSlice.reducer;

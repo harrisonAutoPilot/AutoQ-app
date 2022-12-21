@@ -31,6 +31,9 @@ const Deals = (props) => {
 
     const [refreshing, setRefreshing] = useState(false);
 
+    const [dealsLoaded, setDealsLoaded] = useState(false);
+
+    
 
     const { deals, status, addDealStatus,dealsItems, addDeal } = useSelector((state) => state.deal);
    
@@ -44,6 +47,8 @@ const Deals = (props) => {
 
     };
 
+    console.log("the deals item", deals)
+
     useEffect(() => {
 
         if (dealsItems.length) {
@@ -53,8 +58,8 @@ const Deals = (props) => {
       }, [dealsItems]);
 
     const loadMore = () => {
-
-        dispatch(getDeals({id:deals?.current_page + 1}));
+        setDealsLoaded(true)
+        dispatch(getDeals({no:deals?.current_page + 1}));
     }
 
     const filterProduct = (id) => {
@@ -96,6 +101,9 @@ const Deals = (props) => {
     };
 
 
+    
+
+
     const refreshView = useCallback((suc) => {
         setSuccessMsg(suc);
 
@@ -125,6 +133,19 @@ const Deals = (props) => {
     }, []);
 
 
+    const Footer = () => (
+        <View>
+            {
+                status === "pending" || status === "idle" ?
+                <View style={styles.activityInd}>
+                    <ActivityIndicator color="green" size="large" />
+                </View>
+                :
+                null}
+        </View>
+    )
+
+
     const ListView = ({item}) =>  (
         <View style={styles.listItem}>
                     <View style={styles.imgCard}>
@@ -151,39 +172,44 @@ const Deals = (props) => {
         <View style={styles.container}>
             <Header title="Deals" onPress={goBack} styleView={styles.body} styles={styles.headerText} statusBar="#00319D"/>
 
-            {successMsg ?
+           <View style={styles.toastCover}>
+           {successMsg ?
                 <View style={globalStyles.errInCoverNew}>
                     <Toast config={toastConfig} />
                 </View> : null}
 
+           </View>
             <View style={styles.mainBody}>
 
-            {status === "idle" || status === "pending" ?
+            {status === "idle" || status === "pending" && !dealsLoaded ? 
 
                 <DealPlaceholder /> :
+ 
+                dealsItems.length > 0 ?
+
                 <FlatList
-                    data={dealsItems}
-                    // extraData={allDeals}
+                    data={allDeals}
                     renderItem={ListView}
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={true}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
                     scrollEnabled={true}
-                    ListEmptyComponent={EmptyDeal}
-                    // initialNumToRender={8}
-                    onEndReachedThreshold={0.5}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={refreshDeal} />
-                    }
-                    
+                    ListFooterComponent={Footer}
+                    getItemLayout={(data, index) => (
+                        { length: 100, offset: 100 * index, index }
+                    )}
+                     initialNumToRender={5}
+                     onEndReachedThreshold={0.5}
+            
                     onEndReached={() => {
                         if (deals?.current_page < deals?.last_page) {
                             loadMore()
                         }
                     }}
+                    
                 />
+                :
+
+                <EmptyDeal />
              }
 
             </View>

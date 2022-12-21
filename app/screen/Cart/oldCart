@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions,FlatList, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import globalStyle from "@Helper/GlobalStyles";
@@ -9,7 +9,7 @@ import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
-import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
+import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart,searchCartList } from "@Request/Cart";
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header,InputField, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup, cleanList } from "@Store/Cart";
@@ -26,6 +26,7 @@ const Cart = (props) => {
     const [loader, setLoader] = useState(false);
     const [copyCartAmount, setCopyCartAmount] = useState({});
     const [copyCart, setCopyCart] = useState([]);
+    const [copyCartSearch, setCopyCartSearch] = useState([]);
     const [selDel, setSelDel] = useState([])
     const [scrollText, setScrollText] = useState(true);
     const [itemDeleted] = useState(false);
@@ -39,23 +40,29 @@ const Cart = (props) => {
 
 
     const { items, removeCart, removeMultipleCart, removeAllCart, errors,
-        updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
+        updateCartItems, loaded, listItems, searchedCarts, searchCartsData } = useSelector((state) => state.cart);
 
 
     const browse = () => props.navigation.navigate("Catalogue");
 
     const openCart = () => dispatch(listCart(1));
 
-     const redirectToSearch = () => props.navigation.navigate("Search");
-
-    // const redirectToSearch =()=>{
-    //     setShowSearch(true)
-    // }
+    // const redirectToSearch = () => props.navigation.navigate("Search");
+    const redirectToSearch =()=>{
+        setShowSearch(true)
+    }
 
     const returnHeader = () => {
         setSearchCart("")
         setShowSearch(false)
     }
+
+
+console.log("this is the searchcart",  searchCartsData.last_page);
+
+console.log("this is the search Cart Paginated", searchedCarts);
+
+
 
 
     useEffect(() => {
@@ -89,25 +96,59 @@ const Cart = (props) => {
 
 
 
+// this is for the searched item quqntity change and sort
+useEffect(() => {
+    if (searchedCarts.length) {
+        if(searchedCarts.length !== copyCartSearch.length){
+            setTrackRecyclerList(false)
+        }
+        
+        let quantity = searchedCarts.map((item) => {
+            return {
+                id: item.id,
+                quantity: item.quantity,
+                cart_id: item.id,
+                total_amount: item.total_amount,
+                product: { ...item.product },
+                deal_id: item.deal_id,
+                deal: {...item.deal}
+            }
+        }).sort((a, b) => {
+            if( a?.product?.name < b?.product?.name){
+                return -1
+            }
+        })
+
+        setCopyCartSearch(quantity);
+    } else {
+        setCopyCartSearch([])
+    }
+
+}, [searchedCarts, copyCartSearch.length])
+
+
+
+
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
 
-    const searchItem = () => {
-        let searched = copyCart.filter(val => {
-            if (val.product.name.toLowerCase().includes(searchCart.toLowerCase())) {
-                return val
-            }
-            return null
-        });
-        setSearchArray(searched)
-    };
+    // const searchItem = () => {
+    //     let searched = copyCart.filter(val => {
+    //         if (val.product.name.toLowerCase().includes(searchCart.toLowerCase())) {
+    //             return val
+    //         }
+    //         return null
+    //     });
+    //     setSearchArray(searched)
+    // };
 
 
     useEffect(() => {
         if (searchCart.length) {
-            searchItem();
+            dispatch(searchCartList({search:searchCart.toLowerCase(), no: 1}))
+            //searchItem();
             setSlength(true)
         } else if (!searchCart.length) {
             setSearchArray([]);   
@@ -116,9 +157,16 @@ const Cart = (props) => {
        
     }, [searchCart.length]);
 
+    console.log("this is the input", searchCart.toLowerCase());
+
     const loadMore = () => {
         dispatch(listCart(items.carts?.current_page + 1));
     }
+
+    const loadMore2 = () => {
+        dispatch(searchCartList({search: searchCart.toLowerCase(), no:searchCartsData.current_page + 1}));
+    }
+
 
     const refreshView = useCallback((msg, suc) => {
         wait(500).then(() => {
@@ -177,6 +225,7 @@ const Cart = (props) => {
         return () => {
             dispatch(cleanup());
             setCopyCart([]);
+            setCopyCartSearch([]);
         }
     }, []);
 
@@ -224,25 +273,47 @@ const Cart = (props) => {
     const goBack = () => props.navigation.goBack();
 
     const increaseCart = ({ id, quantity, product: { stock_count } }) => {
-        if (quantity < stock_count) {
-            let filteredCart = copyCart.filter(quantity => {
-                if (quantity.id === id) {
-                    quantity.quantity = quantity.quantity + 1
-                    quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
-                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+            let filteredCart 
 
-                }
-            })
-
-            setCopyCartAmount(filteredCart[0])
-            let copiedcopyCartAmount = filteredCart
-
-            var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
-            setCopyCart(res)
-            setTrackRecyclerList(false)
-            return res
+            if (quantity < stock_count) {
+                
+                if(searchCart.length){
+                    console.log("the search")
+                 filteredCart = copyCartSearch.filter(quantity => {
+                    if (quantity.id === id) {
+                        quantity.quantity = quantity.quantity + 1
+                        quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                        return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+    
+                    }
+                })
+    
+                
+            }
+        }else {
+             
+                filteredCart = copyCart.filter(quantity => {
+                    if (quantity.id === id) {
+                        quantity.quantity = quantity.quantity + 1
+                        quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                        return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+    
+                    }
+                })
+    
+         
+            
         }
-    };
+
+        setCopyCartAmount(filteredCart[0])
+        let copiedcopyCartAmount = filteredCart
+
+        var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
+        setCopyCart(res)
+       // setCopyCartSearch(res)
+        setTrackRecyclerList(false)
+        return res
+            };
 
     const decreaseCart = ({ id }) => {
 
@@ -495,6 +566,23 @@ const Cart = (props) => {
         setCopyCartAmount({})
 
         if (!trackRecyclerList) {
+           if(searchCart){
+            if (copyCartSearch.length > 0 || selDel.length) {
+                console.log("tracklist", "count")
+                // if(!searchArray.length > 0){
+                //     setDataProvider(dataProvider.cloneWithRows(copyCart))    
+                // }else{
+                //     setDataProvider(dataProvider.cloneWithRows(searchArray))   
+                // }
+
+             
+                setDataProvider(dataProvider.cloneWithRows(copyCartSearch));
+                setTrackRecyclerList(true)
+            }
+            else if (!copyCartSearch.length && loaded === "success") {
+                setDataProvider(dataProvider.cloneWithRows([]))
+            }
+           }else{
             if (copyCart.length > 0 || selDel.length) {
                 console.log("tracklist", "count")
                 // if(!searchArray.length > 0){
@@ -504,16 +592,22 @@ const Cart = (props) => {
                 // }
 
              
-                 setDataProvider(dataProvider.cloneWithRows(copyCart));
+                setDataProvider(dataProvider.cloneWithRows(copyCart));
                 setTrackRecyclerList(true)
             }
             else if (!copyCart.length && loaded === "success") {
                 setDataProvider(dataProvider.cloneWithRows([]))
             }
+           }
         }
         
 
-    }, [copyCart, trackRecyclerList])
+    }, [copyCart,copyCartSearch, trackRecyclerList])
+
+
+    
+
+
 
     const Footer = () => (
         <View>
@@ -598,26 +692,54 @@ const Cart = (props) => {
                 }
                 {itemDeleted && loaded === "idle"
                     ?
-                    <CartPlaceholderComponent />
+                     <CartPlaceholderComponent />
                     :
-                    dataProvider && dataProvider.getSize() > 0 ?
+                    // dataProvider && dataProvider.getSize() > 0 ?
 
-                        <RecyclerListView
-                            style={{ width: "100%" }}
-                            rowRenderer={rowRenderer}
-                            dataProvider={!slength ? dataProvider : dataProvider.cloneWithRows(searchArray)}
-                            layoutProvider={layoutProvider}
-                            extendedState={copyCartAmount}
-                            onEndReachedThreshold={0.5}
-                            onEndReached={() => {
-                                if (items.carts?.current_page < items.carts?.last_page) {
-                                    loadMore()
-                                }
+                    //     <RecyclerListView
+                    //         style={{ width: "100%" }}
+                    //         rowRenderer={rowRenderer}
+                    //         dataProvider={!slength ? dataProvider : dataProvider.cloneWithRows(searchCartsData.data)}
+                    //         layoutProvider={layoutProvider}
+                    //         extendedState={copyCartAmount}
+                    //         onEndReachedThreshold={0.5}
+                    //         onEndReached={() => {
+                    //             if (items.carts?.current_page < items.carts?.last_page) {
+                    //                 loadMore()
+                    //             }else if(searchCartsData.current_page < searchCartsData.last_page){
+                    //                 loadMore2()
+                    //             }
+                    //         }}
+                    //         renderFooter={Footer}
+                    //     />
+                    //     :
+                    //     <AddCartListEmptyBig browse={browse} />
+
+                    <FlatList
+                    data={searchCartsData.data}
+                    renderItem={ListView}
+                    keyExtractor={item => item.id}
+                    showsVerticalScrollIndicator={true}
+                    scrollEnabled={true}
+                    // ListFooterComponent={Footer}
+                    // ListEmptyComponent={EmptyDeal}
+                    getItemLayout={(data, index) => (
+                        { length: 100, offset: 100 * index, index }
+                    )}
+                     initialNumToRender={5}
+                    onEndReachedThreshold={0.5}
+                    // refreshControl={
+                    //     <RefreshControl
+                    //         refreshing={refreshing}
+                    //         onRefresh={refreshDeal} />
+                    // }
+                    
+                    onEndReached={() => {
+                        if(searchCartsData.current_page < searchCartsData.last_page){
+                                loadMore2()
                             }}
-                            renderFooter={Footer}
-                        />
-                        :
-                        <AddCartListEmptyBig browse={browse} />
+                        }
+                    />
 
                 }
                 <View style={styles.mainBody}>
