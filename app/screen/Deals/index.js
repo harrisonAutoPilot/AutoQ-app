@@ -33,6 +33,8 @@ const Deals = (props) => {
 
     const [dealsLoaded, setDealsLoaded] = useState(false);
 
+    const flatListRef = useRef()
+
     
 
     const { deals, status, addDealStatus,dealsItems, addDeal } = useSelector((state) => state.deal);
@@ -138,12 +140,12 @@ const Deals = (props) => {
     const Footer = () => (
         <View>
             {
-                status === "pending" || status === "idle" ?
-                <View style={styles.activityInd}>
-                    <ActivityIndicator color="green" size="large" />
-                </View>
-                :
-                null}
+            status === "pending" || status === "idle" ?
+            <View style={styles.activityInd}>
+                <ActivityIndicator color="green" size="large" />
+            </View>
+            :
+            null}
         </View>
     )
 
@@ -183,38 +185,40 @@ const Deals = (props) => {
            </View>
             <View style={styles.mainBody}>
 
-            {status === "idle" || status === "pending" && !dealsLoaded ? 
+          
+            {(status === "pending" || status === "idle") && !dealsLoaded ? 
 
                 <DealPlaceholder /> :
  
-                dealsItems.length > 0 ?
-
                 <FlatList
                     data={allDeals}
                     renderItem={ListView}
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={true}
-                    scrollEnabled={true}
-                    ListFooterComponent={<View style={{ height: 50 }} />}
+                    ref={flatListRef}
+                    ListEmptyComponent={EmptyDeal}
                     getItemLayout={(data, index) => (
                         { length: 100, offset: 100 * index, index }
                     )}
-                     initialNumToRender={5}
-                     onEndReachedThreshold={0.5}
-            
+                     initialNumToRender={3}
+                    //  onEndReachedThreshold={0.5}
+                     refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={refreshDeal} />
+                    }
                     onEndReached={() => {
                         if (deals?.current_page < deals?.last_page) {
                             loadMore()
                         }
                     }}
-                    
+                 ListFooterComponent={Footer}  
                 />
-                :
-
-                <EmptyDeal />
+               
              }
 
             </View>
+
             
             {dealsItems.length > 0 ?
 
