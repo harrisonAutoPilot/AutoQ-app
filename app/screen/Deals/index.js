@@ -49,19 +49,19 @@ const Deals = (props) => {
 
     };
 
-    console.log("the deals item", deals)
 
     useEffect(() => {
 
-        if (dealsItems.length) {
-            setAllDeals(deals.data && deals.data)
+        if (dealsItems.length == 0) {
+            dispatch(getDeals(1));
         }
        
-      }, [dealsItems]);
+      },[]);
 
     const loadMore = () => {
         setDealsLoaded(true)
-        dispatch(getDeals({no:deals?.current_page + 1}));
+        console.log("load more called");
+        dispatch(getDeals(deals?.current_page + 1));
     }
 
     const filterProduct = (id) => {
@@ -104,7 +104,7 @@ const Deals = (props) => {
 
 
 
-    console.log("find the length", dealsItems.length);
+  
     
 
 
@@ -191,25 +191,26 @@ const Deals = (props) => {
                 <DealPlaceholder /> :
  
                 <FlatList
-                    data={allDeals}
+                    data={dealsItems}
                     renderItem={ListView}
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={true}
+                    refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+                    }
                     ref={flatListRef}
                     ListEmptyComponent={EmptyDeal}
                     getItemLayout={(data, index) => (
                         { length: 100, offset: 100 * index, index }
                     )}
-                     initialNumToRender={3}
-                    //  onEndReachedThreshold={0.5}
-                     refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={refreshDeal} />
-                    }
+                    initialNumToRender={5}
+                    onEndReachedThreshold={0.5}
+                     
                     onEndReached={() => {
                         if (deals?.current_page < deals?.last_page) {
-                            loadMore()
+                           loadMore()
+
+                           console.log("the page length",dealsItems.length )
                         }
                     }}
                  ListFooterComponent={Footer}  
