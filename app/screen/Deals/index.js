@@ -56,9 +56,12 @@ const Deals = (props) => {
         }
        
       }, [dealsItems]);
+      
 
     const loadMore = () => {
-        setDealsLoaded(true)
+
+        setDealsLoaded(true);
+
         dispatch(getDeals({no:deals?.current_page + 1}));
     }
 
