@@ -101,6 +101,8 @@ const Deals = (props) => {
     };
 
 
+
+    console.log("find the length", dealsItems.length);
     
 
 
@@ -193,7 +195,7 @@ const Deals = (props) => {
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={true}
                     scrollEnabled={true}
-                    ListFooterComponent={Footer}
+                    ListFooterComponent={<View style={{ height: 50 }} />}
                     getItemLayout={(data, index) => (
                         { length: 100, offset: 100 * index, index }
                     )}
