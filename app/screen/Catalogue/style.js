@@ -163,5 +163,38 @@ export default styles = StyleSheet.create({
         paddingBottom:Platform.OS === "android" ? 11 : 5,
 
     },
+    staticCard:{
+        width:170,
+        height:150,
+        borderRadius:20,
+        backgroundColor:"#f5f5f5",
+        alignItems:'center',
+        justifyContent:'center',
+        marginTop:15,
+        marginBottom:20,
+    },
+    staticImg:{
+        width:80,
+        height:80,
+        borderRadius:100,
+    },
+    imgCover:{
+        width:80,
+        height:80,
+        borderRadius:100,
+        backgroundColor:"#bfbfbf",
+        
+    },
+    downCover:{
+        width:170,
+        borderTopWidth:1,
+        borderTopColor:'#fff',
+        padding:10,
+        alignItems:'center',
+        marginTop:15,
+        flexDirection:'row',
+        justifyContent:'space-between'
+
+    }
 
 })

@@ -9,6 +9,15 @@ export const listCart = createAsyncThunk("cart/all",
        
     });
 
+   
+export const searchCartList = createAsyncThunk("cart/searchl",
+async (searched, thunkAPI) => {
+    const Axios = await AxiosBase();
+    const { search, no, store_id} = searched
+    return apiRequest(Axios.get(`api/v1/cart/search?page=${no}&q=${search}`), thunkAPI)
+    
+});
+
 export const addToCart = createAsyncThunk("cart/add",
     async (items, thunkAPI) => {
         const Axios = await AxiosBase();

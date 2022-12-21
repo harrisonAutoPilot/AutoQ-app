@@ -6,7 +6,7 @@ import { apiRequest } from "@Request/Request";
 export const getDeals = createAsyncThunk("deals/all",
     async (no, thunkAPI) => {
         const Axios = await AxiosBase();
-        return apiRequest(Axios.get(`api/v1/deals?page=${no.id}`), thunkAPI)
+        return apiRequest(Axios.get(`api/v1/deals?page=${no}`), thunkAPI)
     });
 
 

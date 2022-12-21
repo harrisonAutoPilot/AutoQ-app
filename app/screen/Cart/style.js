@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -614,7 +614,8 @@ badgeText: {
         backgroundColor:'#00319D',
         flexDirection:"row",
         justifyContent:'space-between',
-        alignItems:'center'
+        alignItems:'center',
+      paddingTop:Platform.OS === "ios" ? 45 : 20
       },
       inputSearch:{
         width:wp('85%'),
@@ -622,5 +623,28 @@ badgeText: {
         borderRadius:4,
         backgroundColor:'#fff',
         paddingLeft:20
-      }
+      },
+      inputContainer:{
+    
+      },
+      clearTextView:{
+        backgroundColor: '#DCDCDC',
+        paddingVertical: 3,
+        paddingHorizontal: 6,
+        borderRadius: 50
+    },
+    clearText:{
+        fontSize: 11,
+        fontFamily: "Urbanist-Regular",
+        color: "#9E9E9E",
+        letterSpacing: 0.25,
+        fontWeight: "400"
+    },
+    inputText: {
+      marginLeft: 10.15,
+      width: "77%",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center"
+  },
     })
