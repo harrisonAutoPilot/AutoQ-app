@@ -79,9 +79,13 @@ const Deals = (props) => {
 
 
     const refreshDeal = useCallback(() => {
+
         setRefreshing(true);
+
         dispatch(getDeals({id:1}));
+
         wait(3000).then(() => setRefreshing(false));
+        
     }, []);
 
 

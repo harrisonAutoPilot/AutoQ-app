@@ -80,6 +80,7 @@ const Overlay = (props) => {
 
     // UseEffects
     useEffect(() => {
+        
         if (result.max_quantity_per_sale != 0  && cartAmount > result.max_quantity_per_sale) {
             refreshView("Max Quantity Exceeded", "")
            setCartAmount(1)
