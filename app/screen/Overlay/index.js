@@ -85,9 +85,6 @@ const Overlay = (props) => {
            setCartAmount(1)
         } 
     }, [cartAmount]);
-    
-
-
 
     // UseEffects
     useEffect(() => {
