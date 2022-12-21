@@ -1,4 +1,4 @@
-import {StyleSheet} from "react-native";
+import {Platform, StyleSheet} from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -162,6 +162,7 @@ export default styles = StyleSheet.create({
     },
     mainBody:{
         paddingTop:20,
+        paddingBottom:Platform.OS === "android" ? 20 : 40
     },
 
     addStoreBottomSheet: {
