@@ -162,7 +162,7 @@ export default styles = StyleSheet.create({
     },
     mainBody:{
         paddingTop:20,
-        paddingBottom:Platform.OS === "android" ? 20 : 40
+        paddingBottom:Platform.OS === "android" ? 50 : 50
     },
 
     addStoreBottomSheet: {
