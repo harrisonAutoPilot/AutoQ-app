@@ -27,6 +27,7 @@ const Overlay = (props) => {
     const inputThreeRef = useRef(null);
     const inputFourRef = useRef(null);
 
+
     const dismissKeyboard = () => Keyboard.dismiss();
  
     const snapPoints = useMemo(() => ['80%', '85%'], []);
@@ -65,7 +66,8 @@ const Overlay = (props) => {
         return <Animated.View style={containerStyle} />;
     };
 
-
+ 
+  
     const ModalView = () => (
         <BottomSheetModalProvider>
 
@@ -88,13 +90,17 @@ const Overlay = (props) => {
                     </View>
 
                 <View style={globalStyles.errInCoverNew2}>
-                    {props.err ? <View style={[globalStyles.errMainView, globalStyles.marginTop, { marginHorizontal: 20 }]}>
+              
+                    {props.err ? <View style={[globalStyles.errMainView, globalStyles.marginTop, { marginHorizontal: 20,marginTop:100, position:'absolute', zIndex:9000 }]}>
                         <FIcon name="exclamation-circle" color="#fff" style={globalStyles.exclaImg} size={20} />
                         <Text style={globalStyles.failedResponseText}>{props.err}</Text>
+                       
                     </View> : null}
                     {props.success ? <SuccessMsgViewTwo title={props.success} /> : null}
+                  
                 </View>
                 <View style={styles.modalPadding}>
+                    
                     <TouchableOpacity onPress={props.close} style={styles.backCover}>
                         <Image source={require("@Assets/image/leading-iconn.png")} style={globalStyles.backImg} />
                     </TouchableOpacity>
@@ -113,11 +119,12 @@ const Overlay = (props) => {
                                     Please enter the SMS confirmation code sent to the registered number <Text style={styles.phone}>+{props?.phone}</Text>.
                                     The code is valid for 15 minutes.
                                 </Text>
-
+                            
                             </View>
                         </View>
                         <View style={styles.labelCover}>
                             <Text style={styles.label3}>SMS CODE</Text>
+                           
                         </View>
                         <TouchableWithoutFeedback onPress={dismissKeyboard}>
                             <View>

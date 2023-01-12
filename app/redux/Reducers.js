@@ -19,7 +19,15 @@ import productRequestReducer from "./ProductRequest";
 import paymentOptionReducer from "./paymentOptions";
 import deliveryOptionReducer from "./DeliveryOptions";
 import priceListReducer from "./PriceList";
-import dealReducer from "./Deal"
+import dealReducer from "./Deal";
+import groupProductReducer from "./GroupProducts";
+
+
+// import kessingtonReducer from "./Kessington";
+// import backInStockReducer from "./BackInStock";
+// import popularProductReducer from "./PopularProducts";
+// import  newProductReducer from "./NewProducts";
+
 
 const persistConfig = {
     key: 'root',
@@ -50,5 +58,11 @@ export default combineReducers({
     paymentOptions: paymentOptionReducer,
     deliveryOptions: deliveryOptionReducer,
     priceList: priceListReducer,
-    deal:dealReducer
+    deal:dealReducer,
+    groupProduct:groupProductReducer,
+
+    // kessington:kessingtonReducer,
+    // backInStock:backInStockReducer,
+    // popularProduct:popularProductReducer,
+    // newProduct:newProductReducer
 });

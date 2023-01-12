@@ -459,6 +459,14 @@ statusText2: {
   letterSpacing: 0.1,
   textTransform: 'capitalize',
 },
+errorCover:{
+  width:wp("90%"),
+  position:'absolute',
+  marginTop:100,
+  zIndex:9000,
+  alignSelf:'center',
+  alignItems:"center"
+}
 });
 
 export default styles

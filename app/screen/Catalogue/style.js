@@ -164,14 +164,14 @@ export default styles = StyleSheet.create({
 
     },
     staticCard:{
-        width:170,
+        width:wp('95%'),
         height:150,
-        borderRadius:20,
-        backgroundColor:"#f5f5f5",
+        borderRadius:8,
+        alignSelf:'center',
         alignItems:'center',
         justifyContent:'center',
-        marginTop:15,
-        marginBottom:20,
+        marginTop:10,
+        marginBottom:10,
     },
     staticImg:{
         width:80,
@@ -183,10 +183,18 @@ export default styles = StyleSheet.create({
         height:80,
         borderRadius:100,
         backgroundColor:"#bfbfbf",
+        marginTop:5,
         
     },
+    cardImg:{
+        width:wp('94%'),
+        borderRadius:6,
+        height:160,
+    },
     downCover:{
-        width:170,
+        width:200,
+        borderRadius:30,
+        backgroundColor:"#fff",
         borderTopWidth:1,
         borderTopColor:'#fff',
         padding:10,
@@ -195,6 +203,14 @@ export default styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between'
 
+    },
+    allProductText:{
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 24,
+        color: "#757575",
+        letterSpacing: 0.1,
+        textTransform: "capitalize"
     }
 
 })

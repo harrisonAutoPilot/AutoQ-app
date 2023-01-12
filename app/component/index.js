@@ -18,6 +18,7 @@ import EmptyOrder from "./Empty/emptyOrder";
 import EmptyStore from "./Empty/emptyStore"
 import EmptyFinance from "./Empty/emptyFinance"
 import EmptyCustomer from "./Empty/emptyCustomer"
+import EmptyCategory from "./Empty/emptyCategory"
 
 export { FormikValidator,Check, InputField, AuthBtn, Header, COHeader, 
-    EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder, EmptyStore, EmptyDeal,SuccessMsgViewTwo, ErrorMsg, Success, NavHeader, BtnLg, BtnPre};
+    EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder,EmptyCategory, EmptyStore, EmptyDeal,SuccessMsgViewTwo, ErrorMsg, Success, NavHeader, BtnLg, BtnPre};
