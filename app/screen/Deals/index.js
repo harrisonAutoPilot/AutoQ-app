@@ -202,7 +202,7 @@ const Deals = (props) => {
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={true}
                     refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+                    <RefreshControl refreshing={refreshing} onRefresh={refreshDeal} />
                     }
                     ref={flatListRef}
                     ListEmptyComponent={EmptyDeal}
@@ -215,7 +215,6 @@ const Deals = (props) => {
                     onEndReached={() => {
                         if (deals?.current_page < deals?.last_page) {
                            loadMore()
-
                            console.log("the page length",dealsItems.length )
                         }
                     }}

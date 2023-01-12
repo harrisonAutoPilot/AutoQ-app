@@ -28,7 +28,7 @@ import StoreDetails from "@Screen/Customers/MyStore/StoreDetails";
 import RegConfirm from "@Screen/Customers/Registration/RegConfirm";
 import SoftUpdate from "@Screen/SoftUpdate";
 import InCompleteOrderDetails from "@Screen/IncompleteOrderDetails";
-
+import GenProducts from "@Screen/GenProducts"
 
 const RootStack = createNativeStackNavigator();
 const LoginStack = createNativeStackNavigator();
@@ -84,6 +84,10 @@ export const RootStackNavigator = () => {
                 <RootStack.Screen name="Product" component={Product} />
                 <RootStack.Screen name="Filter" component={Filter} />
                 <RootStack.Screen name="Search" component={Search} />
+            </RootStack.Group>
+
+            <RootStack.Group>
+                <RootStack.Screen name="GenProducts" component={GenProducts} />
             </RootStack.Group>
 
             <RootStack.Group>

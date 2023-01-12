@@ -563,8 +563,8 @@ const styles = StyleSheet.create({
     },
 
     emptyCartImg: {
-        width: 85,
-        height: 85,
+        width: 105,
+        height: 105,
         resizeMode: 'contain',
     },
 

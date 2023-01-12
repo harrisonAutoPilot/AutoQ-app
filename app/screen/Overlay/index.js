@@ -250,13 +250,13 @@ const Overlay = (props) => {
                             <View >
                                 <View style={styles.topModalView}>
                                     <View style={styles.topModalImageView}>
-                                        <SmallCard img={result.product_images} />
+                                        <SmallCard img={result?.product_images} />
                                     </View>
                                     <View style={styles.modalTitleView}>
-                                        <Text style={styles.modalTitle}>{result.name}</Text>
+                                        <Text style={styles.modalTitle}>{result?.name}</Text>
                                     </View>
                                     <View style={styles.modalTitleView}>
-                                        <Text style={styles.modalTitle2}>{result.pack_size}</Text>
+                                        <Text style={styles.modalTitle2}>{result?.pack_size}</Text>
                                        
                                         {props.output && props.output != 0 ?
                                             <View style={styles.crossCover}>
@@ -267,10 +267,10 @@ const Overlay = (props) => {
                                         }
                                     </View>
                                     {
-                                        result.description != null ?
+                                        result?.description != null ?
                                         <View style={styles.descriptionCover}>
                                         <Text style={styles.descriptionTitle}>Combo Description</Text>
-                                        <Text style={styles.descriptionContent}>{result.ddescription}</Text>
+                                        <Text style={styles.descriptionContent}>{result?.ddescription}</Text>
                                     </View>
                                     :
                                     null
@@ -282,27 +282,27 @@ const Overlay = (props) => {
                                 <View style={styles.modalMiniBody}>
                                 
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Category: <Text style={styles.modalminiSecondTitle}>{result.category.display_name}</Text></Text>
+                                        <Text style={styles.modalminiTitle}>Category: <Text style={styles.modalminiSecondTitle}>{result?.category?.display_name}</Text></Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Available: {result.stock_count > 0 ? <Text style={{ color: "#469D00" }}>In Stock ({commafy(result.stock_count)})</Text> : <Text style={{ color: "red" }}>Out of Stock</Text>}</Text>
+                                        <Text style={styles.modalminiTitle}>Available: {result?.stock_count > 0 ? <Text style={{ color: "#469D00" }}>In Stock ({commafy(result.stock_count)})</Text> : <Text style={{ color: "red" }}>Out of Stock</Text>}</Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Price/Roll: <Text style={{ color: "#469D00" }}>&#8358;{commafy(result.price_per_pack)}</Text></Text>
+                                        <Text style={styles.modalminiTitle}>Price/Roll: <Text style={{ color: "#469D00" }}>&#8358;{commafy(result?.price_per_pack)}</Text></Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Carton Quantity: <Text style={{ color: "#469D00" }}>{result.quantity_per_carton}</Text></Text>
+                                        <Text style={styles.modalminiTitle}>Carton Quantity: <Text style={{ color: "#469D00" }}>{result?.quantity_per_carton}</Text></Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result.quantity_per_pack}</Text></Text>
+                                        <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result?.quantity_per_pack}</Text></Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Expiry Date: <Text style={{ color: "red" }}>{result.expiry_date}</Text></Text>
+                                        <Text style={styles.modalminiTitle}>Expiry Date: <Text style={{ color: "red" }}>{result?.expiry_date}</Text></Text>
                                     </View>
                                     {
                                         result.max_quantity_per_sale > 0 ?
                                         <View style={styles.modalminiSecondView}>
-                                         <Text style={styles.modalminiTitle}>Max Quantity Per Sales: <Text style={{ color: "red" }}>{result.max_quantity_per_sale}</Text></Text>
+                                         <Text style={styles.modalminiTitle}>Max Quantity Per Sales: <Text style={{ color: "red" }}>{result?.max_quantity_per_sale}</Text></Text>
                                          </View>
                                          :
                                          null

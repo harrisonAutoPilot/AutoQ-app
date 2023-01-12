@@ -29,7 +29,7 @@ const InCompleteOrderDetails = (props) => {
    const orders = props.route.params.item;
 
 
-   const { errors, verify, verificationStatus } = useSelector((state) => state.order);
+   const { errors, verify, verificationStatus, errorsCheck } = useSelector((state) => state.order);
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -72,6 +72,8 @@ const InCompleteOrderDetails = (props) => {
       });
 
   }, []);
+
+  
 
    const waitTimeToResendVerification = useCallback(() => {
       wait(15000).then(() => {
@@ -182,7 +184,10 @@ const InCompleteOrderDetails = (props) => {
                      </View>
                   </View>
 
-                  {err ? <Toast config={toastConfig} /> : null}
+                <View style={styles.errorCover}>
+                {err ? <Toast config={toastConfig} /> : null}
+                
+                </View>
 
                   <View style={[styles.midCard, styles.elevation]}>
                      <FlatList
@@ -257,7 +262,7 @@ const InCompleteOrderDetails = (props) => {
          <BottomSheet
             bottomSheet={bottomSheet}
             submit={verifyToken}
-            err={err}
+            err={errors.msg}
             success={successMsg}
             resendToken={() => resendToken(orders.id)}
             phone={orders?.user?.phone}

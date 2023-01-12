@@ -388,5 +388,12 @@ export default styles = StyleSheet.create({
         paddingBottom: 20, 
         paddingTop: 20 
       },
+    errInCoverNew:{
+    width:wp("92%"),
+    alignSelf:'center',
+    marginTop:120,
+    position:'absolute',
+    zIndex:9000
+    }
 
 })

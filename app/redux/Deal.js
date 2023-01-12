@@ -41,7 +41,7 @@ export const dealSlice = createSlice({
                 state.deals = action.payload
                 console.log("current deal length", state.dealsItems.length);
                 state.dealsItems = dict(state.dealsItems, action.payload.data)
-                console.log("Latest deal length", state.dealsItems.length);
+               // console.log("Latest deal length", state.dealsItems.length);
                 state.status = "success";
                 state.errors = {};
             })
@@ -50,7 +50,7 @@ export const dealSlice = createSlice({
           
 
             .addCase(getDeals.rejected, (state, { payload }) => {
-                console.log("deal fail", payload)
+                //console.log("deal fail", payload)
                 state.status = "failed";
                 state.errors = payload;
             })
@@ -77,12 +77,12 @@ export const dealSlice = createSlice({
                 state.addDeal = {}
             })
             .addCase(addDealToCart.fulfilled, (state, action) => {
-                console.log(action.payload, "deal pass")
+                //console.log(action.payload, "deal pass")
                 state.addDealStatus = "success";
                 state.addDeal = action.payload
             })
             .addCase(addDealToCart.rejected, (state, { payload }) => {
-                console.log(payload, "deal fail")
+                //console.log(payload, "deal fail")
                 state.addDealStatus = "failed";
                 state.errors = payload;
             })

@@ -8,6 +8,7 @@ export const orderSlice = createSlice({
         orders: [],
         status: "idle",
         errors: {},
+        errorsCheck:{},
         update: "idle",
         orderDetail : {},
         loaded: "idle",
@@ -22,6 +23,7 @@ export const orderSlice = createSlice({
     reducers:{
         cleanup: (state) => {
             state.errors = {}
+            state.errorsCheck = {}
             state.update = "idle"
             state.verify = "idle"
             state.verificationStatus = "idle"
@@ -36,6 +38,7 @@ export const orderSlice = createSlice({
         },
         cleanReOrder: (state) => {
             state.errors = {}
+            state.errorsCheck = {}
             state.update = "idle"
             state.orderDetail = {}
             state.trackOrderList= []
@@ -45,12 +48,14 @@ export const orderSlice = createSlice({
         },
         cleanErr: (state) => {
             state.errors = {}
+            state.errorsCheck = {}
         },
         cleanVerify: (state) => {
             state.verificationStatus = "idle"
         },
         cleanfailedOrder: (state) => {
             state.errors = {}
+            state.errorsCheck = {}
             // state.update = "idle",
             state.verify = "idle"
             state.verificationStatus = "idle"
@@ -124,24 +129,30 @@ export const orderSlice = createSlice({
 
             })
             .addCase(verifyOrder.rejected, (state, { payload }) => {
-                console.log(payload, "verify fail")
+            
                 state.verificationStatus = "failed"
                 state.errors = payload;
+                console.log("redux errors", payload);
             })
 
             builder
             .addCase(verifyCode.pending, state => {
                 state.errors = {};
+                state.errorsCheck = {}
                 state.verify = "pending";
+                console.log("redux verifycode is pending");
             })
             .addCase(verifyCode.fulfilled, (state, action) => {
                 state.errors = {}; 
+                state.errorsCheck = {};
                 state.verify =  "success";
 
             })
             .addCase(verifyCode.rejected, (state, { payload }) => {
                 state.errors = payload;
                 state.verify =  "failed";
+                state.errorsCheck = payload;
+                console.log("redux verifycode is failed3", state.errorsCheck);
             })
 
             builder

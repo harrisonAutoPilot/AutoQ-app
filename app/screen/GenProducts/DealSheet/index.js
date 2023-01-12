@@ -13,7 +13,7 @@ import {
     useAnimatedStyle,
 } from 'react-native-reanimated';
 
-
+import { SuccessMsgViewTwo } from "@Component";
 import styles from './style';
 import { addDealToCart } from "@Request/Deal";
 import commafy from "@Helper/Commafy";
@@ -22,16 +22,17 @@ import { cleanup } from "@Store/Deal";
 import SmallCard from '@Screen/Overlay/SmallCard';
 
 
-const Overlay = (props) => {
+const DealsOverlay = (props) => {
 
     const dispatch = useDispatch();
 
     const result = props.result;
 
-    console.log("the result oooo", result)
+console.log("the result oooo", result)
     const regex = new RegExp("^0+(?!$)", 'g');
 
-
+    const [successMsg, setSuccessMsg] = useState("");
+    
     const [errMsg, setErr] = useState("");
     const [adding, setAdding] = useState(false);
     const [amount, setAmount] = useState(0)
@@ -83,12 +84,13 @@ const Overlay = (props) => {
         if (addDealStatus === "failed") {
             refreshView(errors?.msg, "")
         } else if (addDealStatus === "success") {
-            refreshView("", addDeal.message);
+             refreshView("", addDeal.message);
+          
         }
 
     }, [addDealStatus]);
 
-
+      
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
@@ -98,10 +100,16 @@ const Overlay = (props) => {
         setAdding(false)
 
         if (suc) {
-            setErr("");
-            //props.onPress()
+            setSuccessMsg(suc);
+            Toast.show({
+                type: 'tomatoToast',
+                visibilityTime: 5000,
+                autoHide: true,
+                position: 'top',
+                topOffset: 0
+            });
+        
            
-
         } else {
             setErr(msg);
             Toast.show({
@@ -117,16 +125,19 @@ const Overlay = (props) => {
     }, []);
 
 
-
-
     const toastConfig = {
         error: () => (
-            <View style={[globalStyles.errMainView, globalStyles.marginTop, { marginHorizontal: 20 }]}>
+            <View style={[globalStyles.errMainView, globalStyles.marginTop]}>
                 <FIcon name="exclamation-circle" color="#fff" style={globalStyles.exclaImg} size={20} />
                 <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
             </View>
+        ),
+
+        tomatoToast: () => (
+            <SuccessMsgViewTwo title={successMsg} />
         )
     };
+
 
 console.log("the result for the all product", result);
 
@@ -164,13 +175,13 @@ console.log("the result for the all product", result);
     };
 
 
-    const ModalView = () => (
+    const DealsModal = () => (
 
         <BottomSheetModalProvider>
 
 
             <BottomSheetModal
-                ref={props.bottomSheet}
+                ref={props.bottomSheetDeals}
                 index={1}
                 initialSnapIndex={1}
                 snapPoints={snapPoints}
@@ -194,9 +205,15 @@ console.log("the result for the all product", result);
                         <View style={styles.toastCover}>
 
                         </View>
-                        <View style={globalStyles.errInCoverNew}>
+                        <View style={styles.errInCoverNew}>
+                         
                             {errMsg ? <Toast config={toastConfig} /> : null}
+                         {successMsg ? <Toast config={toastConfig} /> : null}
+                        
+                           
                         </View>
+                        
+                            
                         <View>
 
                             <View style={styles.topModalImageView}>
@@ -228,11 +245,11 @@ console.log("the result for the all product", result);
                             </View>
 
                             <View style={styles.modalminiSecondView}>
-                               <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result.quantity}</Text></Text> 
+                                <Text style={styles.modalminiTitle}>Pack Quantity: <Text style={{ color: "#469D00" }}>{result.quantity}</Text></Text>
                             </View>
 
                             <View style={styles.modalminiSecondView}>
-                             <Text style={styles.modalminiTitle}>Expiry Date: <Text style={{ color: "red" }}>{result.product?.expiry_date}</Text></Text> 
+                                <Text style={styles.modalminiTitle}>Expiry Date: <Text style={{ color: "red" }}>{result.product?.expiry_date}</Text></Text>
                             </View>
 
                         </View>
@@ -296,8 +313,8 @@ console.log("the result for the all product", result);
     );
 
     return (
-        ModalView()
+        DealsModal()
     )
 };
 
-export default Overlay;
+export default DealsOverlay;
