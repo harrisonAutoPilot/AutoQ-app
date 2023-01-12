@@ -6,7 +6,7 @@ import dict from "@Helper/dict";
 export const dealSlice = createSlice({
     name: "deal",
     initialState: {
-        deals: [],
+        deals: {},
         dealsItems:[],
         status: "idle",
         errors: {},
@@ -32,19 +32,23 @@ export const dealSlice = createSlice({
                 console.log("deal pending")
                 state.status = "pending";
                 state.errors = {};
-                state.deals = [];
-                state.dealsItems = []
+                state.deals = {};
+              
             })
 
            
             .addCase(getDeals.fulfilled, (state, action) => { 
                 state.deals = action.payload
-               // console.log("this is deal new", action.payload);
+                console.log("current deal length", state.dealsItems.length);
                 state.dealsItems = dict(state.dealsItems, action.payload.data)
-                //console.log("deal redux", state.dealsItems)
+                console.log("Latest deal length", state.dealsItems.length);
                 state.status = "success";
                 state.errors = {};
             })
+
+
+          
+
             .addCase(getDeals.rejected, (state, { payload }) => {
                 console.log("deal fail", payload)
                 state.status = "failed";
