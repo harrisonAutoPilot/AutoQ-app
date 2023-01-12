@@ -40,7 +40,7 @@ export const groupProductSlice = createSlice({
     extraReducers: builder => {
             builder
             .addCase(getBackInStock.pending, state => {
-                console.log("backInStocks pending");
+                //console.log("backInStocks pending");
                 state.status = "pending";
                 state.errors = {};
                 state.backInStocks = {}; 
@@ -48,15 +48,13 @@ export const groupProductSlice = createSlice({
   
             .addCase(getBackInStock.fulfilled, (state, action) => { 
                 state.backInStocks = action.payload
-                console.log("current backInStocks", state.backInStocks);
                 state.backInStocksItems = dict(state.backInStocksItems, action.payload)
-                console.log("Latest backInStocks length", state.backInStocksItems.length);
+                //console.log("Latest backInStocks length", state.backInStocksItems.length);
                 state.status = "success";
                 state.errors = {};
             })
 
             .addCase(getBackInStock.rejected, (state, { payload }) => {
-                console.log("deal fail", payload)
                 state.status = "failed";
                 state.errors = payload;
             })
@@ -64,7 +62,6 @@ export const groupProductSlice = createSlice({
 
             builder
             .addCase(getKessington.pending, state => {
-                console.log("kessington pending")
                 state.status = "pending";
                 state.errors = {};
                 state.kessingtons = {};
@@ -73,14 +70,12 @@ export const groupProductSlice = createSlice({
             
             .addCase(getKessington.fulfilled, (state, action) => { 
                 state.kessingtons = action.payload
-                console.log("the kess redux", action.payload);
                 state.kessingtonItems = dict(state.kessingtonItems, action.payload)
                 state.status = "success";
                 state.errors = {};
             })
 
             .addCase(getKessington.rejected, (state, { payload }) => {
-                console.log("kessington fail", payload)
                 state.status = "failed";
                 state.errors = payload;
             })  
@@ -88,7 +83,6 @@ export const groupProductSlice = createSlice({
             
             builder
             .addCase(getPopularProducts.pending, state => {
-                console.log("popularProduct pending")
                 state.status = "pending";
                 state.errors = {};
                 state.popularProducts = {};   
@@ -102,7 +96,6 @@ export const groupProductSlice = createSlice({
             })
 
             .addCase(getPopularProducts.rejected, (state, { payload }) => {
-                console.log("popularProduct fail", payload)
                 state.status = "failed";
                 state.errors = payload;
             })
@@ -110,7 +103,6 @@ export const groupProductSlice = createSlice({
 
             builder
             .addCase(getNewProducts.pending, state => {
-                console.log("newProducts pending")
                 state.status = "pending";
                 state.errors = {};
                 state.newProducts = {};
@@ -119,14 +111,12 @@ export const groupProductSlice = createSlice({
 
             .addCase(getNewProducts.fulfilled, (state, action) => { 
                 state.newProducts = action.payload
-                console.log("the new ...", action.payload);
                 state.newProductItems = dict(state.newProductItems, action.payload)
                 state.status = "success";
                 state.errors = {};
             })
 
             .addCase(getNewProducts.rejected, (state, { payload }) => {
-                console.log("popularProduct fail", payload)
                 state.status = "failed";
                 state.errors = payload;
             })

@@ -60,7 +60,6 @@ const GenProducts = (props) => {
 
     const {status,errors, kessingtons,kessingtonItems, backInStocks,backInStocksItems, newProducts, newProductItems,  popularProducts,popularProductItems,} = useSelector((state) => state.groupProduct);
 
-    // const { sta,errors,tus, errors, searchedProducts, searchProductsData } = useSelector((state) => state.product);
     const { items } = useSelector((state) => state.cart);
 
   
@@ -114,8 +113,7 @@ const GenProducts = (props) => {
       };
       const selectCategory = (name) => {
         setCategory(name);
-        // setSearch(name)
-        console.log("you selected:" + name);
+        //console.log("you selected:" + name);
       
       };
 
@@ -129,12 +127,7 @@ const GenProducts = (props) => {
         }
     }, [errors]);
 
-    useEffect(() => {
-        if (props.route.params?.item) {
-            setSearchArray(props.route.params.item)
-        }
-    }, [props.route.params?.item]);
-
+   
 
     const closeSheet = () => {
         setVisible(false)
@@ -365,8 +358,6 @@ const GenProducts = (props) => {
                 if(active === "1" && deals?.current_page < deals?.last_page) {
                     loadMore()
                     console.log("the page length",dealsItems.length )
-                }else if (active === "2" && deals?.current_page < deals?.last_page){
-                    loadMore()
                 }
                    
                 }}
