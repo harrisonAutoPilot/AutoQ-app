@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Keyboard,
+  FlatList,
   TouchableWithoutFeedback,
   Dimensions,
   Alert,
@@ -126,17 +127,28 @@ const Catalogue = props => {
     ),
   );
 
+  const staticObj = {
+    id: 354667, 
+    category: 'All Products', 
+    image_url: "product_images/HiiT3VOyHP7l6EFUgpG4mEER5DqZAZbD4XpjW1Ed37071.webp",
+    display_name: "All Products",
+    name:"All Product"
+  };
 
 
   const rowRenderer = (type, data) => {
-    return <ListView item={data} />;
-  };
+    return <ListView item={data} />
+      
+  }
+
+console.log("the search", categories)
 
   useEffect(() => {
     if (searchCategoryArray.length) {
       setDataProvider(prevState => prevState.cloneWithRows(searchCategory));
     } else if (categories.length) {
-      setDataProvider(prevState => prevState.cloneWithRows(categories));
+      const result = [staticObj, ...categories]
+      setDataProvider(prevState => prevState.cloneWithRows(result));
     }
   }, [categories, searchCategoryArray]);
 
@@ -147,13 +159,16 @@ const Catalogue = props => {
       <TouchableOpacity
         style={[styles.listContainer, styles.elevation]}
         onPress={() =>
+          {item.id === 354667 ?
+            gotoGen()
+            :
           getAllProducts(
             item.name,
             !searchCategoryArray.length
               ? item.display_name
               : item.category?.display_name,
             item.id,
-          )
+          )}
         }>
         <View style={styles.listContainerImageView}>
           <Image
@@ -219,20 +234,7 @@ const Catalogue = props => {
 
         {dataProvider && dataProvider.getSize() > 0 ? (
           <>
-            <TouchableOpacity onPress={gotoGen}>
-            <View style={styles.staticCard}>
-         <View style={{ flex:1,width:"90%", alignSelf:'center', alignItems:'center'}}>
-         <Image source={require("@Assets/image/drugg.jpeg")} style={styles.cardImg} />
-         </View>
-
-              <View style={styles.downCover}>
-                <Text style={styles.allProductText}>View All Products</Text>
-                <View>
-                  <Icon name="chevron-right" size={18} color="#757575" />
-                </View>
-              </View>
-            </View>
-            </TouchableOpacity>
+            
             <RecyclerListView
               style={{width: '100%'}}
               rowRenderer={rowRenderer}

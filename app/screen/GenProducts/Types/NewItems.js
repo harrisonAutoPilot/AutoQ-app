@@ -121,7 +121,7 @@ export default NewItems = (props) => {
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id}
             renderItem={ListItem}
-            ListEmptyComponent={<View />}
+            ListEmptyComponent={<EmptyCategory />}
             refreshControl={
                 <RefreshControl 
                 refreshing={refreshing} 

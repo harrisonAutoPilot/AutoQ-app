@@ -12,7 +12,7 @@ import styles from "./style";
 import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart,searchCartList } from "@Request/Cart";
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header,InputField, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
-import { cleanup, cleanList } from "@Store/Cart";
+import { cleanup, cleanList,cleanSearchCart} from "@Store/Cart";
 import ConfirmDelete from "./ConfirmDelete";
 import ConfirmSelected from "./ConfirmSelectedDelete";
 
@@ -121,35 +121,6 @@ useEffect(() => {
 
 
 
-// useEffect(() => {
-//     if (searchCartData.length) {
-
-//         let quantity = searchCartData.map((item) => {
-
-//             return {
-//                 id: item.id,
-//                 quantity: item.quantity,
-//                 cart_id: item.id,
-//                 total_amount: item.total_amount,
-//                 product: { ...item.product },
-//                 deal_id: item.deal_id,
-//                 deal: { ...item.deal }
-//             }
-//         })
-
-//         setCopySearchData(quantity);
-//     } else {
-
-//         setCopySearchData([]);
-
-//         setSearchCartCalled(false);
-//     }
-
-// }, [searchCartData.length])
-
-
-
-
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
@@ -180,6 +151,19 @@ useEffect(() => {
         }
        
     }, [searchCart.length]);
+
+    useEffect(() => {
+        if (searchCart.length) {
+
+            dispatch(cleanSearchCart());
+
+            dispatch(searchCartList({ name: searchCart, id: 1 }))
+
+        }
+
+
+
+    }, [searchCart]);
 
 
     const loadMore = () => {
@@ -294,26 +278,6 @@ useEffect(() => {
 
     const goBack = () => props.navigation.goBack();
 
-    // const increaseCart = ({ id, quantity, product: { stock_count } }) => {
-    //     if (quantity < stock_count) {
-    //         let filteredCart = copyCart.filter(quantity => {
-    //             if (quantity.id === id) {
-    //                 quantity.quantity = quantity.quantity + 1
-    //                 quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
-    //                 return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
-
-    //             }
-    //         })
-
-    //         setCopyCartAmount(filteredCart[0])
-    //         let copiedcopyCartAmount = filteredCart
-
-    //         var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
-    //         setCopyCart(res)
-    //         setTrackRecyclerList(false)
-    //         return res
-    //     }
-    // };
 
     const increaseCart = ({ id, quantity, product: { stock_count } }) => {
         if (quantity < stock_count) {
@@ -627,13 +591,7 @@ useEffect(() => {
         if (!trackRecyclerList) {
             if (copyCart.length > 0 || selDel.length) {
                 console.log("tracklist", "count")
-                // if(!searchArray.length > 0){
-                //     setDataProvider(dataProvider.cloneWithRows(copyCart))    
-                // }else{
-                //     setDataProvider(dataProvider.cloneWithRows(searchArray))   
-                // }
-
-             
+               
                  setDataProvider(dataProvider.cloneWithRows(copyCart));
                 setTrackRecyclerList(true)
             }

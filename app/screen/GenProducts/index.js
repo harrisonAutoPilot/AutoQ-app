@@ -64,8 +64,7 @@ const GenProducts = props => {
 //   neww
 const [productDetails, setProductDetails] = useState({});
 
-const [
-    kessProductDetails, setKessProductDetails] = useState({});
+const [kessProductDetails, setKessProductDetails] = useState({});
 
   const [result, setResult] = useState({});
 

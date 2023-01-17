@@ -160,7 +160,7 @@ console.log("the result for the all product", result);
 
             setAdding(true)
 
-            const cartDetails = { quantity: amount, id: result.id }
+            const cartDetails = { quantity: amount, id: result?.id }
 
             dispatch(addDealToCart(cartDetails));
 
