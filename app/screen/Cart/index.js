@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import globalStyle from "@Helper/GlobalStyles";
@@ -9,7 +9,7 @@ import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
-import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
+import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart,searchCartList } from "@Request/Cart";
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header,InputField, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
 import { cleanup, cleanList } from "@Store/Cart";
@@ -26,6 +26,7 @@ const Cart = (props) => {
     const [loader, setLoader] = useState(false);
     const [copyCartAmount, setCopyCartAmount] = useState({});
     const [copyCart, setCopyCart] = useState([]);
+    const [copySearchData, setCopySearchData] = useState([]);
     const [selDel, setSelDel] = useState([])
     const [scrollText, setScrollText] = useState(true);
     const [itemDeleted] = useState(false);
@@ -39,18 +40,19 @@ const Cart = (props) => {
 
 
     const { items, removeCart, removeMultipleCart, removeAllCart, errors,
-        updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
+        updateCartItems, loaded, listItems, searchCartsData, searchedCarts } = useSelector((state) => state.cart);
 
 
     const browse = () => props.navigation.navigate("Catalogue");
 
     const openCart = () => dispatch(listCart(1));
 
-     const redirectToSearch = () => props.navigation.navigate("Search");
+     //const redirectToSearch = () => props.navigation.navigate("Search");
+     const redirectToSearch =()=>{
+        setShowSearch(true)
+    }
 
-    // const redirectToSearch =()=>{
-    //     setShowSearch(true)
-    // }
+
 
     const returnHeader = () => {
         setSearchCart("")
@@ -87,6 +89,65 @@ const Cart = (props) => {
 
     }, [listItems, copyCart.length])
 
+// this is for the searched item quqntity change and sort
+useEffect(() => {
+    if (searchedCarts.length) {
+        if(searchedCarts.length !== copySearchData.length){
+            setTrackRecyclerList(false)
+        }
+        
+        let quantity = searchedCarts.map((item) => {
+            return {
+                id: item.id,
+                quantity: item.quantity,
+                cart_id: item.id,
+                total_amount: item.total_amount,
+                product: { ...item.product },
+                deal_id: item.deal_id,
+                deal: {...item.deal}
+            }
+        }).sort((a, b) => {
+            if( a?.product?.name < b?.product?.name){
+                return -1
+            }
+        })
+
+        setCopySearchData(quantity);
+    } else {
+        setCopySearchData([])
+    }
+
+}, [searchedCarts, copySearchData.length])
+
+
+
+// useEffect(() => {
+//     if (searchCartData.length) {
+
+//         let quantity = searchCartData.map((item) => {
+
+//             return {
+//                 id: item.id,
+//                 quantity: item.quantity,
+//                 cart_id: item.id,
+//                 total_amount: item.total_amount,
+//                 product: { ...item.product },
+//                 deal_id: item.deal_id,
+//                 deal: { ...item.deal }
+//             }
+//         })
+
+//         setCopySearchData(quantity);
+//     } else {
+
+//         setCopySearchData([]);
+
+//         setSearchCartCalled(false);
+//     }
+
+// }, [searchCartData.length])
+
+
 
 
     const wait = (timeout) => {
@@ -94,20 +155,24 @@ const Cart = (props) => {
     };
 
 
-    const searchItem = () => {
-        let searched = copyCart.filter(val => {
-            if (val.product.name.toLowerCase().includes(searchCart.toLowerCase())) {
-                return val
-            }
-            return null
-        });
-        setSearchArray(searched)
-    };
+    // const searchItem = () => {
+    //     let searched = copyCart.filter(val => {
+    //         if (val.product.name.toLowerCase().includes(searchCart.toLowerCase())) {
+    //             return val
+    //         }
+    //         return null
+    //     });
+    //     setSearchArray(searched)
+    //     dispatch(searchCartList())
+    // };
 
+
+   
 
     useEffect(() => {
         if (searchCart.length) {
-            searchItem();
+            dispatch(searchCartList({search:searchCart.toLowerCase(), no: 1}))
+            //searchItem();
             setSlength(true)
         } else if (!searchCart.length) {
             setSearchArray([]);   
@@ -116,8 +181,14 @@ const Cart = (props) => {
        
     }, [searchCart.length]);
 
+
     const loadMore = () => {
         dispatch(listCart(items.carts?.current_page + 1));
+    }
+
+
+    const loadMore2 = () => {
+        dispatch(searchCartList({search: searchCart.toLowerCase(), no:searchCartsData.current_page + 1}));
     }
 
     const refreshView = useCallback((msg, suc) => {
@@ -223,16 +294,59 @@ const Cart = (props) => {
 
     const goBack = () => props.navigation.goBack();
 
-    const increaseCart = ({ id, quantity, product: { stock_count } }) => {
-        if (quantity < stock_count) {
-            let filteredCart = copyCart.filter(quantity => {
-                if (quantity.id === id) {
-                    quantity.quantity = quantity.quantity + 1
-                    quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
-                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+    // const increaseCart = ({ id, quantity, product: { stock_count } }) => {
+    //     if (quantity < stock_count) {
+    //         let filteredCart = copyCart.filter(quantity => {
+    //             if (quantity.id === id) {
+    //                 quantity.quantity = quantity.quantity + 1
+    //                 quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+    //                 return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
 
-                }
-            })
+    //             }
+    //         })
+
+    //         setCopyCartAmount(filteredCart[0])
+    //         let copiedcopyCartAmount = filteredCart
+
+    //         var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
+    //         setCopyCart(res)
+    //         setTrackRecyclerList(false)
+    //         return res
+    //     }
+    // };
+
+    const increaseCart = ({ id, quantity, product: { stock_count } }) => {
+
+        if (quantity < stock_count) {
+
+            let filteredCart;
+
+            if (searchedCarts.length) {
+
+                filteredCart = copySearchData.filter(quantity => {
+
+                    if (quantity.id === id) {
+                        quantity.quantity = quantity.quantity + 1
+                        quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                        return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+
+                    }
+                })
+
+
+            } else {
+
+                filteredCart = copyCart.filter(quantity => {
+
+                    if (quantity.id === id) {
+                        quantity.quantity = quantity.quantity + 1
+                        quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                        return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+
+                    }
+                })
+
+            }
 
             setCopyCartAmount(filteredCart[0])
             let copiedcopyCartAmount = filteredCart
@@ -241,26 +355,48 @@ const Cart = (props) => {
             setCopyCart(res)
             setTrackRecyclerList(false)
             return res
+
         }
     };
 
     const decreaseCart = ({ id }) => {
 
-        let filteredCart = copyCart.filter(quantity => {
-            if (quantity.id === id && quantity.quantity > 1) {
-                quantity.quantity = quantity.quantity - 1
-                quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
-                return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
+        let filteredCart;
 
-            }
-        })
+        if (searchedCarts.length) {
+
+            filteredCart = copySearchData.filter(quantity => {
+                if (quantity.id === id && quantity.quantity > 1) {
+                    quantity.quantity = quantity.quantity - 1
+                    quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
+                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
+
+                }
+            })
+
+        } else {
+
+            filteredCart = copyCart.filter(quantity => {
+                if (quantity.id === id && quantity.quantity > 1) {
+                    quantity.quantity = quantity.quantity - 1
+                    quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
+                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
+
+                }
+            })
+
+        }
 
         setCopyCartAmount(filteredCart[0])
 
-        let copiedcopyCartAmount = filteredCart
+        let copiedcopyCartAmount = filteredCart;
+
         var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
-        setCopyCart(res)
-        setTrackRecyclerList(false)
+        
+        setCopyCart(res);
+
+        setTrackRecyclerList(false);
+        
         return res
     };
 
@@ -596,7 +732,11 @@ const Cart = (props) => {
                     :
                     null
                 }
-                {itemDeleted && loaded === "idle"
+
+                {
+                    !slength ?
+                    <>
+                    {itemDeleted && loaded === "idle"
                     ?
                     <CartPlaceholderComponent />
                     :
@@ -605,7 +745,7 @@ const Cart = (props) => {
                         <RecyclerListView
                             style={{ width: "100%" }}
                             rowRenderer={rowRenderer}
-                            dataProvider={!slength ? dataProvider : dataProvider.cloneWithRows(searchArray)}
+                            dataProvider={dataProvider}
                             layoutProvider={layoutProvider}
                             extendedState={copyCartAmount}
                             onEndReachedThreshold={0.5}
@@ -620,6 +760,27 @@ const Cart = (props) => {
                         <AddCartListEmptyBig browse={browse} />
 
                 }
+                </>
+                :
+                <FlatList
+                    data={copySearchData}
+                    keyExtractor={item => item.id}
+                    renderItem={ListView}
+                    ListEmptyComponent={<View />}
+                    onEndReachedThreshold={0.5}
+                    onEndReached={() => {
+                        if(searchCartsData.current_page < searchCartsData.last_page){
+                            loadMore2()
+                        }}
+                    
+                    }
+                    
+                />
+                }
+
+
+
+                
                 <View style={styles.mainBody}>
                     {err ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}

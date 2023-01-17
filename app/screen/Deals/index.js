@@ -131,14 +131,11 @@ const Deals = (props) => {
         }
     })
 
-         wait(4000).then(() => {
-
-            dispatch(cleanupDealStatus());
-
-            setSuccessMsg("");
-            
-            
-        })
+        wait(4000).then(() => {
+        dispatch(cleanupDealStatus())
+        setSuccessMsg("")
+        
+    })
 
     }, []);
 
@@ -176,6 +173,7 @@ const Deals = (props) => {
                     </TouchableOpacity>
                 </View>
     );
+    
 
 
     return (

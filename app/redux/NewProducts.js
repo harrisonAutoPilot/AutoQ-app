@@ -8,7 +8,7 @@ export const newProductSlice = createSlice({
     initialState: {
         newProducts: {},
         newProductItems:[],
-        status: "idle",
+        newProductStatus: "idle",
         errors: {},
         idStatus: "idle",
        
@@ -25,7 +25,7 @@ export const newProductSlice = createSlice({
             builder
             .addCase(getNewProducts.pending, state => {
                 console.log("newProducts pending")
-                state.status = "pending";
+                state.newProductStatus = "pending";
                 state.errors = {};
                 state.newProducts = {};
               
@@ -35,13 +35,13 @@ export const newProductSlice = createSlice({
                 state.newProducts = action.payload
                 console.log("the new ...", action.payload);
                 state.newProductItems = dict(state.newProductItems, action.payload)
-                state.status = "success";
+                state.newProductStatus = "success";
                 state.errors = {};
             })
 
             .addCase(getNewProducts.rejected, (state, { payload }) => {
                 console.log("popularProduct fail", payload)
-                state.status = "failed";
+                state.newProductStatus = "failed";
                 state.errors = payload;
             })
 

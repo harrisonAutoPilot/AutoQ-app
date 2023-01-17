@@ -8,13 +8,16 @@ import styles from './style';
 import { Header } from "@Component";
 import { getCustomers } from "@Request/Customer";
 import { listCart } from "@Request/Cart";
-import { getNotification } from "@Request/Notification";
+
 
 const Home = (props) => {
 
+
     const dispatch = useDispatch();
 
+
     const date = new Date();
+
 
     const { user } = useSelector((state) => state.auth);
 
@@ -29,10 +32,10 @@ const Home = (props) => {
 
     const [dayTimeImage, setDayTimeImage] = useState(null);
 
+
     const openDrawer = () => props.navigation.openDrawer();
 
-
-    const redirectToDeals = () => props.navigation.navigate("Deals");
+    const redirectToDeals = () =>  props.navigation.navigate("GenProducts")
 
     const redirectToCustomerOrder = () => props.navigation.navigate("CustomerOrder");
 
@@ -47,14 +50,23 @@ const Home = (props) => {
     
     useEffect(() => {
         if ((date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12) {
+
             setDayTime("Good Morning");
+
             setDayTimeImage(require("@Assets/image/sun.png"));
+
         } else if ((date.getHours() > 12 || date.getHours() == 12) && date.getHours() < 18) {
+
             setDayTime("Good Afternoon");
+
             setDayTimeImage(require("@Assets/image/sun.png"));
+
         } else {
+
             setDayTime("Good Evening");
+
             setDayTimeImage(require("@Assets/image/night.png"));
+
         }
         
         dispatch(getAgent());
@@ -64,6 +76,7 @@ const Home = (props) => {
         dispatch(listCart())
 
         dispatch(getDeals({no:1}));
+
     }, []);
 
     return (
@@ -78,13 +91,16 @@ const Home = (props) => {
                 <View style={styles.agentFaceCover}>
                     <Image style={styles.agentImg} source={{ uri: `${URL}${user?.picture_url}` }} />
                 </View>
+
                 <View style={styles.welcomeCover}>
                     <Image style={styles.sunImg} source={dayTimeImage} />
                     <Text style={styles.welcomeText}>{dayTime} {user.name?.split(" ")[0]}</Text>
                 </View>
+
             </View>
 
             <View style={styles.bottomCover}>
+
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                 >
@@ -113,9 +129,17 @@ const Home = (props) => {
                                 </View>
 
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardThree} onPress={redirectToDeals}>
-                                <Image style={styles.burnImg} source={require("@Assets/image/cardFrame.png")} />
+
+                            <TouchableOpacity 
+                            style={styles.cardThree} 
+                            onPress={redirectToDeals}>
+
+                                <Image 
+                                style={styles.burnImg} 
+                                source={require("@Assets/image/cardFrame.png")} />
+
                                 <View style={styles.suninner}>
+
                                     <View style={styles.cardTopInner}>
                                         <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
                                         {/* <Text style={styles.cardBgText}>{agent.special_deals_count}</Text> */}
@@ -125,17 +149,26 @@ const Home = (props) => {
                                         null
                                         }
                                     </View>
+
                                     <View style={styles.cardDownInner}>
                                         <Text style={styles.cardSmText}>Special {"\n"}Deals</Text>
                                     </View>
                                 </View>
 
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardFour} onPress={redirectToInactiveCustomers}>
+
+                            <TouchableOpacity 
+                            style={styles.cardFour} 
+                            onPress={redirectToInactiveCustomers}>
+
                                 <View style={styles.cardTopInner}>
-                                    <Image style={styles.sunImg} source={require("@Assets/image/UsersThree.png")} />
+                                    <Image 
+                                    style={styles.sunImg} 
+                                    source={require("@Assets/image/UsersThree.png")} />
+
                                     <Text style={styles.cardBgText}>{customers?.inactive?.count}</Text>
                                 </View>
+
                                 <View style={styles.cardDownInner}>
                                     <Text style={styles.cardSmText}>Inactive {"\n"}Customers</Text>
                                 </View>

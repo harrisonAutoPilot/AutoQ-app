@@ -8,7 +8,7 @@ export const kessingtonSlice = createSlice({
     initialState: {
         kessingtons: [],
         kessingtonItems:[],
-        status: "idle",
+        kessingtonStatus: "idle",
         errors: {},
         idStatus: "idle",
         addKessingtonStatus: "idle",
@@ -19,7 +19,7 @@ export const kessingtonSlice = createSlice({
             state.errors = {}
             
         },
-        cleanupDealStatus: (state) => {
+        cleanupKessingtonStatus: (state) => {
             state.addKessingtonStatus= "idle",
             state.addKessington = {}
             
@@ -29,7 +29,7 @@ export const kessingtonSlice = createSlice({
             builder
             .addCase(getKessington.pending, state => {
                 console.log("kessington pending")
-                state.status = "pending";
+                state.kessingtonStatus = "pending";
                 state.errors = {};
                 state.kessingtons = {};
               
@@ -38,7 +38,7 @@ export const kessingtonSlice = createSlice({
             .addCase(getKessington.fulfilled, (state, action) => { 
                 state.kessingtons = action.payload
                 state.kessingtonItems = dict(state.kessingtonItems, action.payload)
-                state.status = "success";
+                state.kessingtonStatus = "success";
                 state.errors = {};
             })
 
@@ -47,7 +47,7 @@ export const kessingtonSlice = createSlice({
 
             .addCase(getKessington.rejected, (state, { payload }) => {
                 console.log("kessington fail", payload)
-                state.status = "failed";
+                state.kessingtonStatus = "failed";
                 state.errors = payload;
             })
 
