@@ -37,9 +37,9 @@ const Cart = (props) => {
     const [searchCart, setSearchCart] = useState ("")
     const [searchArray, setSearchArray] = useState([]);
     const [ slength , setSlength] = useState(false)
+    const [searchCartCalled, setSearchCartCalled] = useState(false)
 
-
-    const { items, removeCart, removeMultipleCart, removeAllCart, errors,
+    const { items, removeCart, removeMultipleCart,searchStatus, removeAllCart, errors,
         updateCartItems, loaded, listItems, searchCartsData, searchedCarts } = useSelector((state) => state.cart);
 
 
@@ -56,6 +56,7 @@ const Cart = (props) => {
 
     const returnHeader = () => {
         setSearchCart("")
+        setSelDel([])
         setShowSearch(false)
     }
 
@@ -170,6 +171,9 @@ useEffect(() => {
         dispatch(listCart(items.carts?.current_page + 1));
     }
 
+console.log("the cart page", items.carts?.current_page);
+console.log("the dataaa", items.carts);
+
 
     const loadMore2 = () => {
         dispatch(searchCartList({search: searchCart.toLowerCase(), no:searchCartsData.current_page + 1}));
@@ -255,8 +259,13 @@ useEffect(() => {
 
     useEffect(() => {
         if (removeCart === "failed") {
+
             refreshView(errors?.msg, "")
         } else if (removeCart === "success") {
+            dispatch(listCart(1));
+            setTrackRecyclerList(false)
+             setSearchCart("")
+             setShowSearch(false)
             refreshView("", "Item removed")
         } else {
             setSuccessMsg("");
@@ -411,8 +420,13 @@ useEffect(() => {
 
     useEffect(() => {
         if (removeMultipleCart === "failed") {
+            
             refreshView(errors?.msg, "")
         } else if (removeMultipleCart === "success") {
+            dispatch(listCart(1));
+            setTrackRecyclerList(false)
+             setSearchCart("")
+             setShowSearch(false)
             setSelDel([])
             refreshView("", "Cart items removed")
 
@@ -713,7 +727,10 @@ useEffect(() => {
 
                 }
                 </>
-                :
+                 : (searchStatus === "idle" || searchStatus === "pending") && !searchCartCalled  ?
+
+                 <CartPlaceholderComponent /> :
+                 <View >
                 <FlatList
                     data={copySearchData}
                     keyExtractor={item => item.id}
@@ -723,16 +740,15 @@ useEffect(() => {
                     onEndReached={() => {
                         if(searchCartsData.current_page < searchCartsData.last_page){
                             loadMore2()
+                        }
                         }}
-                    
+                        ListFooterComponent={searchStatus === "pending" && searchCartCalled ? <ActivityIndicator />: <View /> }
+                    />
+                    </View>
                     }
                     
-                />
-                }
 
-
-
-                
+        
                 <View style={styles.mainBody}>
                     {err ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
