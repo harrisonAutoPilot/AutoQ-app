@@ -619,6 +619,7 @@ badgeText: {
       },
       inputSearch:{
         width:wp('85%'),
+        color: "#9E9E9E",
         height:45,
         borderRadius:4,
         backgroundColor:'#fff',

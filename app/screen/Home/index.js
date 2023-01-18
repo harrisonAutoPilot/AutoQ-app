@@ -144,7 +144,7 @@ const Home = (props) => {
                                         <Image style={styles.sunImg} source={require("@Assets/image/tag.png")} />
                                         {/* <Text style={styles.cardBgText}>{agent.special_deals_count}</Text> */}
                                         { deals?.total > 0 ?
-                                        <Image style={styles.sunImg1} source={require("@Assets/image/new-offer.png")} />
+                                        <Text style={styles.cardBgText}>{ deals?.total}</Text>
                                         :
                                         null
                                         }

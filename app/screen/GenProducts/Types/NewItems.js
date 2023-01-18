@@ -116,17 +116,17 @@ export default NewItems = (props) => {
             <ProductPlaceholderCard />
             :
 
-            <FlatList
-                data={newProductItems}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={item => item.id}
-                renderItem={ListItem}
-                ListEmptyComponent={<View />}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={refreshNewProducts} />
-                }
-            />
+        <FlatList
+            data={newProductItems}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => item.id}
+            renderItem={ListItem}
+            ListEmptyComponent={<EmptyCategory />}
+            refreshControl={
+                <RefreshControl 
+                refreshing={refreshing} 
+                onRefresh={refreshNewProducts} />
+            }
+        />
     )
 };

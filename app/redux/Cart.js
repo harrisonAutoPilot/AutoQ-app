@@ -9,7 +9,8 @@ export const cartSlice = createSlice({
         items: [],
         listItems:[],
         status: "idle",
-        searchCartsData: [],
+        searchStatus:"idle",
+        searchCartsData: {},
         searchedCarts:[],
         errors: {},
         addCart: "idle",
@@ -38,11 +39,16 @@ export const cartSlice = createSlice({
         },
         cleanCarts: (state) => {
             state.searchedCarts = []
-            state.searchCartsData = []
+            state.searchCartsData = {}
         },
         cleanStatus: (state) => {
             state.loaded = "idle"
         },
+        cleanSearchCart: (state) => {
+            state.searchStatus = "idle"
+            state.searchCartsData = {}
+            state.searchedCarts = []
+        }
 
     },
     extraReducers: builder => {
@@ -69,7 +75,7 @@ export const cartSlice = createSlice({
             builder
             .addCase(searchCartList.pending, state => {
                 state.errors = {};
-                state.status = "pending";
+                state.searchStatus = "pending";
             })
             .addCase(searchCartList.fulfilled, (state, action) => {
                 const reducerWithDictionary = (arrayOne, arrayTwo) => {
@@ -92,14 +98,14 @@ export const cartSlice = createSlice({
                   }
                 state.searchedCarts = reducerWithDictionary(state.searchedCarts, action.payload.data);
                 state.searchCartsData = action.payload;
-                state.status = "success";
+                state.searchStatus = "success";
                 state.errors = {};
             })
             .addCase(searchCartList.rejected, (state, { payload }) => {
-                state.status = "failed";
+                state.searchStatus= "failed";
                 state.errors = payload;
                 state.searchedCarts = [];
-                state.searchCartsData = [];
+                state.searchCartsData = {};
             })
 
 
@@ -178,6 +184,6 @@ export const cartSlice = createSlice({
 
     }
 });
-export const { cleanup, idle,cleanCarts, cleanList, cleanStatus } = cartSlice.actions
+export const { cleanup, idle,cleanCarts,cleanSearchCart, cleanList, cleanStatus } = cartSlice.actions
 
 export default cartSlice.reducer;

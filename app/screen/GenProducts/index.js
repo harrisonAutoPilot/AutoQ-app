@@ -32,7 +32,17 @@ const GenProducts = props => {
 
   const [productDetails, setProductDetails] = useState({});
 
-  const [kessProductDetails, setKessProductDetails] = useState({});
+  const [refreshingBackInStock, setRefreshingBackInStock] = useState(false);
+
+  const [refreshingPopularProducts, setRefreshingPopularProducts] = useState(false);
+
+  const [refreshingNewProducts, setRefreshingNewProducts] = useState(false);
+
+  const [dealsResult, setDealsResult] = useState({});
+
+
+
+const [kessProductDetails, setKessProductDetails] = useState({});
 
   const [result, setResult] = useState({});
 
