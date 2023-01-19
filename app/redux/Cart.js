@@ -21,6 +21,7 @@ export const cartSlice = createSlice({
         updateCartItems: "idle",
         loaded: "idle",
     },
+    
     reducers:{
         cleanup: (state) => {
             state.errors = {}
@@ -52,18 +53,23 @@ export const cartSlice = createSlice({
 
     },
     extraReducers: builder => {
+
         builder
             .addCase(listCart.pending, state => {
                 state.loaded = "pending";
                 state.errors = {};
             })
+
             .addCase(listCart.fulfilled, (state, action) => {
+                console.log(action.payload.carts.data, "cal")
                 state.items = action.payload
                 state.listItems = dict(state.listItems, action.payload.carts.data)
                 state.loaded = "success";
-                state.errors = {};
+              
             })
+
             .addCase(listCart.rejected, (state, { payload }) => {
+                console.log(payload, "fail")
                 state.loaded ="failed";
                 state.errors = payload;
                 state.items = [];
@@ -124,6 +130,7 @@ export const cartSlice = createSlice({
                 state.addCart = "failed";
                 state.errors = payload;
             })
+            
 
             builder
             .addCase(updateCart.pending, state => {

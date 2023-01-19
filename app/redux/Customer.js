@@ -79,12 +79,12 @@ export const customerSlice = createSlice({
                 state.errors = {};
             })
             .addCase(registerCustomer.fulfilled, (state, action) => {
-                // console.log(action)
+               
                 state.update = "success";
                 state.errors = {};
             })
             .addCase(registerCustomer.rejected, (state, { payload }) => {
-                console.log("not again", payload)
+               
                 state.update = "failed";
                 state.errors = payload;
             })

@@ -29,28 +29,20 @@ export const dealSlice = createSlice({
     extraReducers: builder => {
             builder
             .addCase(getDeals.pending, state => {
-                console.log("deal pending")
                 state.status = "pending";
                 state.errors = {};
                 state.deals = {};
               
             })
-
-           
             .addCase(getDeals.fulfilled, (state, action) => { 
                 state.deals = action.payload
-                console.log("current deal length", state.dealsItems.length);
                 state.dealsItems = dict(state.dealsItems, action.payload.data)
-               // console.log("Latest deal length", state.dealsItems.length);
                 state.status = "success";
                 state.errors = {};
             })
 
-
-          
-
             .addCase(getDeals.rejected, (state, { payload }) => {
-                //console.log("deal fail", payload)
+            
                 state.status = "failed";
                 state.errors = payload;
             })
@@ -77,12 +69,12 @@ export const dealSlice = createSlice({
                 state.addDeal = {}
             })
             .addCase(addDealToCart.fulfilled, (state, action) => {
-                //console.log(action.payload, "deal pass")
+         
                 state.addDealStatus = "success";
                 state.addDeal = action.payload
             })
             .addCase(addDealToCart.rejected, (state, { payload }) => {
-                //console.log(payload, "deal fail")
+               
                 state.addDealStatus = "failed";
                 state.errors = payload;
             })

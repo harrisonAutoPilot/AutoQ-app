@@ -186,7 +186,7 @@ const Overlay = (props) => {
             return setCartAmount(cartAmount + 1)
     };
 
-    console.log("this is the result for", result)
+
 
     const decreaseCart = () => {
         setErr("")

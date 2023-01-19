@@ -47,6 +47,7 @@ const Deals = (props) => {
       
     }, []);
 
+
     const {status, errors, deals, addDealStatus, dealsItems, addDeal} = useSelector(state => state.deal);
 
 
@@ -71,8 +72,10 @@ const Deals = (props) => {
         setRefreshing(true);
 
         dispatch(cleanupDealStatus());
+      
 
         dispatch(getDeals({id: 1}));
+       
 
         wait(3000).then(() => setRefreshing(false));
         
