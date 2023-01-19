@@ -4,12 +4,13 @@ import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback,
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import FIcon from 'react-native-vector-icons/MaterialIcons';
-
+import Toast from 'react-native-toast-message';
 import Modal from "@Screen/CustomerOrder/SortBy";
-import { InputField, COHeader as Header, EmptyPlaceHolder } from "@Component";
-import { getCustomerPendingOrders } from "@Request/CustomerOrder";
-import { cleanup } from "@Store/CustomerOrder";
+import { InputField, COHeader as Header, EmptyPlaceHolder, ConfirmBottomSheet } from "@Component";
+import { getCustomerPendingOrders ,reAddToCart} from "@Request/CustomerOrder";
+import { cleanup, cleanReOrder } from "@Store/CustomerOrder";
 import styles from "@Screen/CustomerOrder/style";
+import Loader from "@Screen/Loader";
 import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
 
 
@@ -18,6 +19,11 @@ const PendingOrder = (props) => {
 
     const dispatch = useDispatch();
 
+    const [errMsg, setErrMsg] = useState("");
+
+    const [successMsg, setSuccessMsg] = useState("");
+
+    const [loader, setLoader] = useState(false);
 
     const [search, setSearch] = useState("");
 
@@ -29,18 +35,22 @@ const PendingOrder = (props) => {
 
     const [trackLoaded, setTrackLoaded] = useState(false);
 
+    const [cartItems, setCartItems] = useState ("")
+
 
     const flatListRef = useRef();
+
+    const bottomSheet = useRef();
 
 
     const toTop = () => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
 
 
-    const { pendingOrders, loaded, pendingOrdersCurrentPage } = useSelector((state) => state.order);  
+    const { pendingOrders, loaded, pendingOrdersCurrentPage, addToCart,errors } = useSelector((state) => state.order);  
     
     
       useEffect(() => {
-
+       
         dispatch(getCustomerPendingOrders(1));
 
         return () => {
@@ -49,10 +59,42 @@ const PendingOrder = (props) => {
         }
       }, []);
 
+console.log("the error", errors);
+
+  useEffect(() => {
+    if (addToCart  === "failed" && props.navigation.isFocused()) {
+        setLoader(false)
+      setSuccessMsg("");
+      refreshView(errors?.msg, "")
+    } else if (addToCart  === "success" && props.navigation.isFocused()) {
+        setLoader(false)
+      setErrMsg("");
+      props.navigation.navigate("Cart")
+    
+    }
+  }, [addToCart ]);
+
 
     const redirectToSort = () => {
         setShowModal(true)
     };
+
+    const reAdd =(item) =>{
+        setCartItems(item?.delivery_type?.pivot?.order_group_id)
+        bottomSheet.current.show()
+      
+    }
+
+    const closePrompt = () =>{
+        bottomSheet.current.close()
+    }
+
+    const readdItem = () =>{
+        bottomSheet.current.close()
+        setLoader(true)
+        // console.log("we just readded .....", cartItems);
+        dispatch(reAddToCart(cartItems))
+    }
 
 
     useEffect(() => {
@@ -100,12 +142,56 @@ const PendingOrder = (props) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
 
-    const refreshView = useCallback(() => {
+    const refreshViewLoad = useCallback(() => {
         setRefreshing(true);
         dispatch(cleanup())
         dispatch(getCustomerPendingOrders(1));
         wait(3000).then(() => setRefreshing(false));
     }, []);
+
+    
+      const refreshView = useCallback((msg, suc) => {
+        wait(1000).then(() => {
+          setLoader(false)
+          if (msg) {
+            setErrMsg(msg);
+            Toast.show({
+              type: 'error',
+              visibilityTime: 5000,
+              autoHide: true,
+              position: 'top',
+              topOffset: 0
+            })
+    
+          } else {
+            setSuccessMsg(suc);
+            Toast.show({
+              type: 'tomatoToast',
+              visibilityTime: 5000,
+              autoHide: true,
+              position: 'top',
+              topOffset: 0
+            })
+          }
+        })
+    
+        wait(4000).then(() => { dispatch(cleanReOrder()); })
+      }, []);
+
+      const toastConfig = {
+
+        error: () =>
+        (
+          <View style={[globalStyles.errMainView3]}>
+            <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
+          </View>
+        ),
+        tomatoToast: () => (
+          <SuccessMsgViewTwo title={successMsg} />
+        )
+      };
+    
+    
 
     const dismissKeyboard = () => Keyboard.dismiss();
 
@@ -162,12 +248,12 @@ const PendingOrder = (props) => {
                         <Text style={styles.statusText2}>Incomplete</Text>
                     </View>
 
-                    {/* {item.ref_no !== null ?
-                        <TouchableOpacity style={styles.reorderCover} onPress={() => {resendToken(item.id); setPhone(item?.user?.phone); setId(item.id); setAmount(item.total_amount)}}>
-                            <Text style={styles.reOrderText}>Refresh</Text>
-                            <Image source={require("@Assets/image/refresh.png")} style={styles.refreshImg} />
+                  
+                        <TouchableOpacity style={styles.reorderCover} onPress={() => reAdd(item)}>
+                            <Text style={styles.reOrderText}>Re-Add to cart</Text>
+                           
                         </TouchableOpacity>
-                        : null} */}
+                
 
                 </View>
 
@@ -178,7 +264,8 @@ const PendingOrder = (props) => {
     return (
         <View style={styles.main}>
             <Header title="Incomplete Orders" style={styles.btnText} onPress={goToCat} />
-
+            {errMsg ? <Toast config={toastConfig} /> : null}
+            {successMsg ? <Toast config={toastConfig} /> : null}
                 <TouchableWithoutFeedback  onPress={dismissKeyboard}>
                     <View style={styles.blueColor}>
                         <View style={[styles.searchSection]}>
@@ -218,7 +305,7 @@ const PendingOrder = (props) => {
                         ref={flatListRef}
                         initialNumToRender={5}
                         refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+                            <RefreshControl refreshing={refreshing} onRefresh={refreshViewLoad} />
                         }
                         onEndReachedThreshold={0.5}
                         onEndReached={() => {
@@ -238,6 +325,15 @@ const PendingOrder = (props) => {
                 onSwipeComplete1={() => setShowModal(false)}
             />
 
+
+            <ConfirmBottomSheet 
+           bottomSheet = {bottomSheet}
+           proceed={readdItem}
+           nope ={closePrompt}
+
+            />
+
+<Loader isVisible={loader} />
         </View>
     )
 };

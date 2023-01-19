@@ -398,7 +398,21 @@ const styles = StyleSheet.create({
     },
     reorderCover: {
         flexDirection: 'row',
+        alignItems:'center',
+        padding:5,
+        paddingHorizontal:15,
+        backgroundColor:'#00319D',
+        borderRadius:50
+    },
 
+    reorderCover1: {
+        flexDirection: 'row',
+        alignItems:'center',
+        padding:5,
+        paddingHorizontal:15,
+        borderWidth:0.9,
+        borderColor:'#00319D',
+        borderRadius:50
     },
     reorderCoverP: {
         flexDirection: 'row',
@@ -409,9 +423,9 @@ const styles = StyleSheet.create({
 
     },
     reOrderText: {
-        color: '#757575',
-        fontSize: 11,
-        fontFamily: "Urbanist-Medium",
+        color: '#fff',
+        fontSize: 9,
+        fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         letterSpacing: 0.1,
         textTransform: 'uppercase',

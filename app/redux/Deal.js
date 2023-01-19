@@ -21,27 +21,24 @@ export const dealSlice = createSlice({
             
         },
         cleanupDealStatus: (state) => {
-            state.addDealStatus= "idle",
-            state.addDeal = {}
-            
+            state.dealsItems = [],
+            state.deals ={},
+            state.status= "idle" 
         },
     },
     extraReducers: builder => {
             builder
             .addCase(getDeals.pending, state => {
-                console.log("deal pending")
+                // console.log("deal pending")
                 state.status = "pending";
                 state.errors = {};
                 state.deals = {};
               
             })
 
-           
             .addCase(getDeals.fulfilled, (state, action) => { 
                 state.deals = action.payload
-                console.log("current deal length", state.dealsItems.length);
                 state.dealsItems = dict(state.dealsItems, action.payload.data)
-               // console.log("Latest deal length", state.dealsItems.length);
                 state.status = "success";
                 state.errors = {};
             })

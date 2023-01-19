@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getCustomerOrders, placeOrder, reOrder, trackOrder, verifyOrder, verifyCode, getCustomerPendingOrders} from "@Request/CustomerOrder";
+import {getCustomerOrders, placeOrder, reOrder,reAddToCart, trackOrder, verifyOrder, verifyCode, getCustomerPendingOrders} from "@Request/CustomerOrder";
 import dict from "@Helper/dict";
 
 export const orderSlice = createSlice({
@@ -7,7 +7,9 @@ export const orderSlice = createSlice({
     initialState: {
         orders: [],
         status: "idle",
+        addToCart: "idle",
         errors: {},
+        added:{},
         errorsCheck:{},
         update: "idle",
         orderDetail : {},
@@ -40,7 +42,9 @@ export const orderSlice = createSlice({
             state.errors = {}
             state.errorsCheck = {}
             state.update = "idle"
+            state.addToCart = "idle"
             state.orderDetail = {}
+            state.added = {}
             state.trackOrderList= []
             state.trackOrderStatus = "idle"
             state.verify = "idle"
@@ -189,6 +193,26 @@ export const orderSlice = createSlice({
                 state.errors = payload;
                 state.trackOrderList = []
             })
+
+
+            builder
+            .addCase(reAddToCart.pending, state => {
+                state.addToCart = "pending";
+                state.errors = {};
+                state.added = {}
+            })
+            .addCase(reAddToCart.fulfilled, (state, action) => {
+                state.addToCart = "success";
+                state.errors = {}; 
+                state.added = action.payload
+
+            })
+            .addCase(reAddToCart.rejected, (state, { payload }) => {
+                state.addToCart = "failed";
+                state.errors = payload;
+                state.added = {}
+            })
+
     }
 
 });
