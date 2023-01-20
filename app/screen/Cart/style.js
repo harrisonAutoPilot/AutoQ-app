@@ -648,4 +648,18 @@ badgeText: {
       justifyContent: "space-between",
       alignItems: "center"
   },
+  toastStyle:{
+    backgroundColor: "rgba(67, 160, 71, 1)",
+    borderRadius: 8,
+    paddingVertical: 18,
+    flexDirection: "row",
+    paddingHorizontal: 15,
+    alignItems: "center",
+    width: wp('90%'),
+    elevation: 5,
+    marginLeft: 20,
+    position: "absolute",
+    top: -70,
+},
+
     })

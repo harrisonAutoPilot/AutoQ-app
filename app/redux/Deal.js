@@ -13,6 +13,7 @@ export const dealSlice = createSlice({
         idStatus: "idle",
         deal: {},
         addDealStatus: "idle",
+        checkRefresh:"idle",
         addDeal: {}
     },
     reducers:{
@@ -21,9 +22,10 @@ export const dealSlice = createSlice({
             
         },
         cleanupDealStatus: (state) => {
-            // state.dealsItems = [],
-            // state.deals ={},
-            state.status= "idle" 
+             state.dealsItems = [],
+             state.deals ={},
+            state.status= "idle" ,
+            state.checkRefresh="idle"
         },
     },
     extraReducers: builder => {

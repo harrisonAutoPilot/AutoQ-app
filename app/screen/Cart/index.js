@@ -195,18 +195,27 @@ useEffect(() => {
             dispatch(cleanSearchCart());
 
             dispatch(searchCartList({ search: searchText, id: 1 }))
-
         }
-
     }, [searchText]);
+
+    useEffect(() => {
+        if (searchText.length) {
+            dispatch(searchCartList({search:searchText.toLowerCase(), no: 1}))
+            //searchItem();
+            setSlength(true)
+        } else if (!searchText.length) {
+            setSearchArray([]);   
+            setSlength(false)
+        }
+       
+    }, [searchText.length]);
 
 
     const loadMore = () => {
         dispatch(listCart(items.carts?.current_page + 1));
     }
 
-console.log("the cart page", items.carts?.current_page);
-console.log("the dataaa", items.carts);
+
 
 
     const loadMore2 = () => {
@@ -267,9 +276,8 @@ console.log("the dataaa", items.carts);
 
     useEffect(() => {
         refreshView("", "Item removed")
-
         dispatch(listCart(1));
-        setTrackRecyclerList(false)
+        //setTrackRecyclerList(false)
         return () => {
             dispatch(cleanup());
             setCopyCart([]);
@@ -294,16 +302,18 @@ console.log("the dataaa", items.carts);
         dispatch(updateCart(copyCart))
     }
 
+
     useEffect(() => {
         if (removeCart === "failed") {
 
             refreshView(errors?.msg, "")
         } else if (removeCart === "success") {
-            dispatch(listCart(1));
-            setTrackRecyclerList(false)
+            refreshView("", "Item removed")
+            // dispatch(listCart(1));
+            // setTrackRecyclerList(false)
              setSearchText("")
              setShowSearch(false)
-            refreshView("", "Item removed")
+          
         } else {
             setSuccessMsg("");
             setErr("");
@@ -447,7 +457,7 @@ console.log("the dataaa", items.carts);
         } else if (removeAllCart === "success") {
             setCopyCart([])
             setSelDel([])
-            refreshView("", "Cart items removed")
+           // refreshView("", "Cart items removed")
 
         } else {
             setErr("");
@@ -455,16 +465,18 @@ console.log("the dataaa", items.carts);
     }, [removeAllCart]);
 
 
-
     useEffect(() => {
         if (removeMultipleCart === "failed") {
+            
             refreshView(errors?.msg, "")
         } else if (removeMultipleCart === "success") {
-           // dispatch(listCart(1));
-            setSearchText("")
-            setShowSearch(false)
-           setSelDel([])
             refreshView("", "Cart items removed")
+            //dispatch(listCart(1));
+            // setTrackRecyclerList(false)
+             setSearchText("")
+             setShowSearch(false)
+            setSelDel([])
+          
 
         } else {
             setErr("");
@@ -736,7 +748,7 @@ console.log("the dataaa", items.carts);
                 }
 
                 {
-                    !searchText.length ?
+                    !slength ?
                     <>
                     {itemDeleted && loaded === "idle"
                     ?
@@ -782,9 +794,7 @@ console.log("the dataaa", items.carts);
                     />
                     </View>
                     }
-                    
-
-        
+                            
                 <View style={styles.mainBody}>
                     {err ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}

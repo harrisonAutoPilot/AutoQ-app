@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   bgTitleText:{
     fontSize: 22,
     color: '#04393A',
-    // fontFamily: "Urbanist-SemiBold",
+    fontFamily: "Urbanist-SemiBold",
     lineHeight: 24,
     letterSpacing: 0.2,
     fontWeight: "600",

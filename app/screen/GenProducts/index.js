@@ -117,9 +117,7 @@ const openDealsSheet = () => {
     bottomSheetDeals.current?.present();
     setVisibleDeals(true);
 
-
 };
-
 
 
   useEffect(() => {
