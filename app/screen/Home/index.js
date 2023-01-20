@@ -32,7 +32,7 @@ const Home = (props) => {
     const openDrawer = () => props.navigation.openDrawer();
 
 
-    // const redirectToDeals = () => props.navigation.navigate("Deals");
+    //const redirectToDeals = () => props.navigation.navigate("Deals");
     const redirectToDeals = () =>  props.navigation.navigate("GenProducts")
 
     const redirectToCustomerOrder = () => props.navigation.navigate("CustomerOrder");

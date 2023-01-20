@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator, FlatList, Keyboard  } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
@@ -35,8 +35,9 @@ const Cart = (props) => {
     const [showConfirmSelected, setShowConfirmSelected] = useState(false);
     const [trackRecyclerList, setTrackRecyclerList] = useState(false);
     const [showSearch, setShowSearch ] = useState(false)
-    const [searchCart, setSearchCart] = useState ("")
+    const [searchText, setSearchText] = useState("");
     const [searchArray, setSearchArray] = useState([]);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [ slength , setSlength] = useState(false)
     const [searchCartCalled, setSearchCartCalled] = useState(false)
 
@@ -55,8 +56,36 @@ const Cart = (props) => {
 
 
 
+    useEffect(() => {
+
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true);
+            }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false);
+            }
+        );
+        return () => {
+
+            keyboardDidShowListener.remove();
+
+            keyboardDidHideListener.remove();
+
+            dispatch(cleanup());
+        }
+
+    }, []);
+
+
+
+
     const returnHeader = () => {
-        setSearchCart("")
+        setSearchText("")
         setSelDel([])
         setShowSearch(false)
     }
@@ -73,7 +102,7 @@ const Cart = (props) => {
 
                 setCopyCart([]);
 
-                setSearchCart("");
+                setSearchText("");
 
                 setSearchCartCalled(false)
 
@@ -116,7 +145,6 @@ const Cart = (props) => {
 useEffect(() => {
     if (searchedCarts.length) {
        
-        
         let quantity = searchedCarts.map((item) => {
             return {
                 id: item.id,
@@ -141,7 +169,6 @@ useEffect(() => {
 }, [searchedCarts.length])
 
 
-
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
@@ -149,7 +176,7 @@ useEffect(() => {
 
     // const searchItem = () => {
     //     let searched = copyCart.filter(val => {
-    //         if (val.product.name.toLowerCase().includes(searchCart.toLowerCase())) {
+    //         if (val.product.name.includes(searchCart)) {
     //             return val
     //         }
     //         return null
@@ -160,29 +187,18 @@ useEffect(() => {
 
 
    
+;
 
     useEffect(() => {
-        if (searchCart.length) {
-            dispatch(searchCartList({search:searchCart.toLowerCase(), no: 1}))
-          
-            setSlength(true)
-        } else if (!searchCart.length) {
-            setSearchArray([]);   
-            setSlength(false)
-        }
-       
-    }, [searchCart.length]);
-
-    useEffect(() => {
-        if (searchCart.length) {
+        if (searchText.length) {
 
             dispatch(cleanSearchCart());
 
-            dispatch(searchCartList({ name: searchCart, id: 1 }))
+            dispatch(searchCartList({ search: searchText, id: 1 }))
 
         }
 
-    }, [searchCart]);
+    }, [searchText]);
 
 
     const loadMore = () => {
@@ -195,7 +211,7 @@ console.log("the dataaa", items.carts);
 
     const loadMore2 = () => {
         setSearchCartCalled(true)
-        dispatch(searchCartList({search: searchCart.toLowerCase(), no:searchCartsData.current_page + 1}));
+        dispatch(searchCartList({search: searchText, no:searchCartsData.current_page + 1}));
     }
 
     const refreshView = useCallback((msg, suc) => {
@@ -250,6 +266,8 @@ console.log("the dataaa", items.carts);
     }, []);
 
     useEffect(() => {
+        refreshView("", "Item removed")
+
         dispatch(listCart(1));
         setTrackRecyclerList(false)
         return () => {
@@ -267,7 +285,7 @@ console.log("the dataaa", items.carts);
         ),
 
         tomatoToast: () => (
-            <SuccessMsgViewTwo title={successMsg} />
+            <SuccessMsgViewTwo title={successMsg} styles={styles.toastStyle} />
         )
     };
 
@@ -283,7 +301,7 @@ console.log("the dataaa", items.carts);
         } else if (removeCart === "success") {
             dispatch(listCart(1));
             setTrackRecyclerList(false)
-             setSearchCart("")
+             setSearchText("")
              setShowSearch(false)
             refreshView("", "Item removed")
         } else {
@@ -311,7 +329,7 @@ console.log("the dataaa", items.carts);
         if (quantity < stock_count) {
             let filteredCart;
 
-            if (searchCart.length) {
+            if (searchText.length) {
 
                 filteredCart = copySearchData.filter(quantity => {
 
@@ -353,7 +371,7 @@ console.log("the dataaa", items.carts);
 
         let filteredCart;
 
-        if (searchCart.length) {
+        if (searchText.length) {
 
             filteredCart = copySearchData.filter(quantity => {
                 if (quantity.id === id && quantity.quantity > 1) {
@@ -437,16 +455,15 @@ console.log("the dataaa", items.carts);
     }, [removeAllCart]);
 
 
+
     useEffect(() => {
         if (removeMultipleCart === "failed") {
-            
             refreshView(errors?.msg, "")
         } else if (removeMultipleCart === "success") {
-            dispatch(listCart(1));
-            setTrackRecyclerList(false)
-             setSearchCart("")
-             setShowSearch(false)
-            setSelDel([])
+           // dispatch(listCart(1));
+            setSearchText("")
+            setShowSearch(false)
+           setSelDel([])
             refreshView("", "Cart items removed")
 
         } else {
@@ -663,8 +680,8 @@ console.log("the dataaa", items.carts);
                 style={styles.inputSearch}
                 placeholder="Search Cart Items"
                 placeholderTextColor="#9E9E9E"
-                onChangeText={(text) => setSearchCart(text)}
-                value={searchCart}
+                onChangeText={(text) => setSearchText(text)}
+                value={searchText}
             />
              </View>
             </View>    
@@ -719,7 +736,7 @@ console.log("the dataaa", items.carts);
                 }
 
                 {
-                    !slength ?
+                    !searchText.length ?
                     <>
                     {itemDeleted && loaded === "idle"
                     ?
@@ -749,7 +766,7 @@ console.log("the dataaa", items.carts);
                  : (searchStatus === "idle" || searchStatus === "pending") && !searchCartCalled  ?
 
                  <CartPlaceholderComponent /> :
-                 <View >
+                 <View style={{flex:1, height:"100%"}}>
                 <FlatList
                     data={copySearchData}
                     keyExtractor={item => item.id}
@@ -778,7 +795,7 @@ console.log("the dataaa", items.carts);
             </View>
            
            
-                    {items.total_amount && copyCart && copyCart.length ?
+                    {!isKeyboardVisible && items.total_amount && copyCart && copyCart.length ?
                         <View style={styles.bottomDownCover}>
 
                             <View style={styles.orderCover}>
