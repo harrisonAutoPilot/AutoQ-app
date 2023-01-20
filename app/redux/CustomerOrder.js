@@ -104,6 +104,7 @@ export const orderSlice = createSlice({
 
             builder
             .addCase(placeOrder.pending, state => {
+             
                 state.update = "pending";
                 state.errors = {};
                 state.orderDetail = {}
@@ -126,7 +127,7 @@ export const orderSlice = createSlice({
                 state.verificationStatus = "pending"
             })
             .addCase(verifyOrder.fulfilled, (state, action) => {
-                console.log(action.payload, "verify suc")
+            
                 state.verificationStatus = "success"
                 state.errors = {}; 
 
@@ -135,7 +136,7 @@ export const orderSlice = createSlice({
             
                 state.verificationStatus = "failed"
                 state.errors = payload;
-                console.log("redux errors", payload);
+              
             })
 
             builder
@@ -143,7 +144,7 @@ export const orderSlice = createSlice({
                 state.errors = {};
                 state.errorsCheck = {}
                 state.verify = "pending";
-                console.log("redux verifycode is pending");
+            
             })
             .addCase(verifyCode.fulfilled, (state, action) => {
                 state.errors = {}; 
@@ -155,7 +156,7 @@ export const orderSlice = createSlice({
                 state.errors = payload;
                 state.verify =  "failed";
                 state.errorsCheck = payload;
-                console.log("redux verifycode is failed3", state.errorsCheck);
+             
             })
 
             builder

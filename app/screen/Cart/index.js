@@ -336,7 +336,9 @@ useEffect(() => {
 
 
     const increaseCart = ({ id, quantity, product: { stock_count } }) => {
+
         if (quantity < stock_count) {
+
             let filteredCart;
 
             if (searchText.length) {
@@ -407,10 +409,14 @@ useEffect(() => {
 
         setCopyCartAmount(filteredCart[0])
 
-        let copiedcopyCartAmount = filteredCart
+        let copiedcopyCartAmount = filteredCart;
+
         var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
+        
         setCopyCart(res);
-        setTrackRecyclerList(false)
+
+        setTrackRecyclerList(false);
+        
         return res
     };
 
@@ -658,6 +664,7 @@ useEffect(() => {
                 setTrackRecyclerList(true)
             }
             else if (!copyCart.length && loaded === "success") {
+                console.log("tracklist", "count2")
                 setDataProvider(dataProvider.cloneWithRows([]))
             }
         }

@@ -141,8 +141,6 @@ console.log("the result oooo", result)
     };
 
 
-console.log("the result for the all product", result);
-
 
     const addItemsToCart = () => {
 

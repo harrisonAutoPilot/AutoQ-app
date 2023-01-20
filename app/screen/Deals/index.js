@@ -12,6 +12,7 @@ import Toast from 'react-native-toast-message';
 import DealPlaceholder from "./DealPlaceholder"
 import ModalView from "./BottomSheet";
 
+
 const Deals = (props) => {
 
 
@@ -26,8 +27,6 @@ const Deals = (props) => {
     const [visible, setVisible] = useState(false);
 
     const [successMsg, setSuccessMsg] = useState("");
-
-    const [allDeals, setAllDeals] = useState([])
 
     const [refreshing, setRefreshing] = useState(false);
 
@@ -44,47 +43,53 @@ const Deals = (props) => {
 
 
     const closeSheet = () => {
+
         bottomSheet.current.close();
-        setVisible(false)
+
+        setVisible(false);
 
     };
 
 
-    useEffect(() => {
-
-        if (dealsItems.length == 0) {
-            dispatch(getDeals(1));
-        }
-       
-      },[]);
 
     const loadMore = () => {
-        setDealsLoaded(true)
-        console.log("load more called");
+
+        setDealsLoaded(true);
+
         dispatch(getDeals(deals?.current_page + 1));
-    }
+    };
+
 
     const filterProduct = (id) => {
+
         let resultArray = dealsItems.filter(item => item.id === id)[0];
 
-        console.log("the filter", resultArray)
         bottomSheet.current?.present();
-        setVisible(true)
+
+        setVisible(true);
+
         return setResult(resultArray)
     };
 
 
 
     const refreshDeal = useCallback(() => {
+
         setRefreshing(true);
+
         dispatch(getDeals({id:1}));
+
         wait(3000).then(() => setRefreshing(false));
+        
     }, []);
 
 
     useEffect(() => {
+
         if (addDealStatus === "success") {  
+
             refreshView(addDeal.message);
+
         }
 
     }, [addDealStatus]);
@@ -104,15 +109,16 @@ const Deals = (props) => {
 
 
 
-
     const refreshView = useCallback((suc) => {
+
         setSuccessMsg(suc);
 
         wait(200).then(() => {
 
         if (suc) {
  
-            dispatch(getDeals())
+            dispatch(getDeals(1));
+
             dispatch(listCart(1))
             
             Toast.show({

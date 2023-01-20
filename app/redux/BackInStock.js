@@ -27,7 +27,7 @@ export const backInStockSlice = createSlice({
     extraReducers: builder => {
             builder
             .addCase(getBackInStock.pending, state => {
-                console.log("backInStocks pending")
+              
                 state.bisStatus = "pending";
                 state.errors = {};
                 state.backInStocks = {}; 
@@ -35,15 +35,15 @@ export const backInStockSlice = createSlice({
   
             .addCase(getBackInStock.fulfilled, (state, action) => { 
                 state.backInStocks = action.payload
-                console.log("current backInStocks", state.backInStocks);
+              
                 state.backInStocksItems = dict(state.backInStocksItems, action.payload)
-                console.log("Latest backInStocks length", state.backInStocksItems.length);
+               
                 state.bisStatus = "success";
                 state.errors = {};
             })
 
             .addCase(getBackInStock.rejected, (state, { payload }) => {
-                console.log("deal fail", payload)
+              
                 state.bisStatus = "failed";
                 state.errors = payload;
             })

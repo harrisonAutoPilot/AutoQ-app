@@ -27,7 +27,7 @@ const RootNavigator = () => {
         }
         else if (priceStatus === "failed") {
             // background color should be light red
-            console.log("hi", errors)
+           
             setColor("rgba(211, 47, 47, 1)")
             setText("Price List download failed")
             removeText("")

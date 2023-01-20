@@ -66,7 +66,6 @@ const Catalogue = props => {
     toTop();
   };
 
-  console.log('this is it', searchCategoryArray);
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));

@@ -29,7 +29,6 @@ const App = () => {
 
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
 
-console.log("the log", isOffline)
 
       const offline = !(state.isConnected && (state.isInternetReachable || state.isInternetReachable === null ));
 

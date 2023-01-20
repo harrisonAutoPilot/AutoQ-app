@@ -10,14 +10,16 @@ const apiRequest = async (asyncFn, thunkAPI, route) => {
          const token = data.token;
          const key = Config.KEY;
          await Keychain.setGenericPassword(key, token);
+        
       }
       return data
    } catch (error) {
+   
       if (error?.response?.status == 500){
+         
       return thunkAPI.rejectWithValue({ msg: "Internal Error", status: 500 })
       }
       else{
-         console.log(error?.response?.data, "error Request")
          
       return thunkAPI.rejectWithValue({ msg: error?.response?.data?.error, status: error?.response?.status });
       }

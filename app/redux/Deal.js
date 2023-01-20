@@ -37,7 +37,6 @@ export const dealSlice = createSlice({
                 state.deals = {};
               
             })
-
             .addCase(getDeals.fulfilled, (state, action) => { 
                 state.deals = action.payload
                 state.dealsItems = dict(state.dealsItems, action.payload.data)
@@ -45,11 +44,8 @@ export const dealSlice = createSlice({
                 state.errors = {};
             })
 
-
-          
-
             .addCase(getDeals.rejected, (state, { payload }) => {
-                //console.log("deal fail", payload)
+            
                 state.status = "failed";
                 state.errors = payload;
             })
@@ -76,12 +72,12 @@ export const dealSlice = createSlice({
                 state.addDeal = {}
             })
             .addCase(addDealToCart.fulfilled, (state, action) => {
-                //console.log(action.payload, "deal pass")
+         
                 state.addDealStatus = "success";
                 state.addDeal = action.payload
             })
             .addCase(addDealToCart.rejected, (state, { payload }) => {
-                //console.log(payload, "deal fail")
+               
                 state.addDealStatus = "failed";
                 state.errors = payload;
             })

@@ -1,35 +1,20 @@
-import React, {useEffect, useState, useCallback, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
-  RefreshControl,
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import Icon from 'react-native-vector-icons/Feather';
+import { useSelector, useDispatch } from 'react-redux';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-message';
 
 import styles from './style';
-import {searchProducts} from '@Request/Product';
-import {
-  SuccessMsgViewTwo,
-  COHeader as Header,
-  EmptyCategory,
-} from '@Component/index';
+import { SuccessMsgViewTwo, COHeader as Header, } from '@Component/index';
 import BottomSheet from '@Screen/Overlay';
-import List from './ListView';
-import ProductPlaceholderCard from './ProductPlaceholderCard';
-import {listCart} from '@Request/Cart';
 import data from './data';
-import {cleanup, cleanProducts} from '@Store/Product';
-import {getPaymentOptions} from '@Request/paymentOptions';
 import DealsModal from './DealSheet';
-import { Portal } from 'react-native-portalize';
-// this is where i start my endpoint calls
-import {getDeals} from '@Request/Deal';
-// new
+import { getDeals } from '@Request/Deal';
 import Deals from './Types/Deals';
 import Kessington from './Types/Kessington'
 import BackInStock from './Types/BackInStock';
@@ -39,18 +24,13 @@ import NewItems from './Types/NewItems'
 const GenProducts = props => {
   const dispatch = useDispatch();
 
-  const {status, errors, deals, addDealStatus, dealsItems, addDeal} =
-    useSelector(state => state.deal);
+  const { status, errors, dealsItems } = useSelector(state => state.deal);
 
-  const {popularProducts, popularProductItems} = useSelector(
-    state => state.popularProduct,
-  );
 
   const [err, setErr] = useState('');
 
-  const [refreshing, setRefreshing] = useState(false);
 
-  const [refreshingKess, setRefreshingKess] = useState(false);
+  const [productDetails, setProductDetails] = useState({});
 
   const [refreshingBackInStock, setRefreshingBackInStock] = useState(false);
 
@@ -61,8 +41,6 @@ const GenProducts = props => {
   const [dealsResult, setDealsResult] = useState({});
 
 
-//   neww
-const [productDetails, setProductDetails] = useState({});
 
 const [kessProductDetails, setKessProductDetails] = useState({});
 
@@ -78,15 +56,12 @@ const [kessProductDetails, setKessProductDetails] = useState({});
 
   const [visibleDeals, setVisibleDeals] = useState(false);
 
-  const [searchArray, setSearchArray] = useState([]);
-
-  const [selectArray, setSelectArray] = useState([]);
 
   const bottomSheetDeals = useRef();
 
   const bottomSheet = useRef();
 
-  const {items} = useSelector(state => state.cart);
+  const { items } = useSelector(state => state.cart);
 
 
 
@@ -110,10 +85,10 @@ const [kessProductDetails, setKessProductDetails] = useState({});
 
     bottomSheet.current?.present();
 
-};
+  };
 
 
-const openDealsSheet = () => {
+  const openDealsSheet = () => {
     bottomSheetDeals.current?.present();
     setVisibleDeals(true);
 
@@ -177,12 +152,16 @@ const openDealsSheet = () => {
 
 
   const goBack = () => props.navigation.navigate('Catalogue');
+
+
   const redirectToFilter = () =>
     props.navigation.navigate('Filter', {
       display_name: props.route.params?.display_name,
       category: props.route.params?.category,
       name: 'Product',
     });
+
+    
   const redirectToSearch = () => props.navigation.navigate('Search');
 
   const toastConfig = {
@@ -191,7 +170,7 @@ const openDealsSheet = () => {
         style={[
           globalStyles.errMainView,
           globalStyles.marginTop,
-          {marginHorizontal: 20},
+          { marginHorizontal: 20 },
         ]}>
         <Text style={globalStyles.failedResponseText}>{errMsg}</Text>
       </View>
@@ -200,7 +179,7 @@ const openDealsSheet = () => {
     tomatoToast: () => <SuccessMsgViewTwo title={successMsg} />,
   };
 
- 
+
 
 
 
@@ -252,82 +231,79 @@ const openDealsSheet = () => {
         </View>
 
         {err ? (
-          <View style={[globalStyles.errMainView, {marginBottom: 10}]}>
+          <View style={[globalStyles.errMainView, { marginBottom: 10 }]}>
             <Text style={globalStyles.failedResponseText}>{err}</Text>
           </View>
         ) : null}
       </View>
 
-                <View style={{flex:1}}>
-                {
-                    active === "1" ?
-                    <Deals 
-                    data={setProductDetails}
-                    openSheet={openDealsSheet} 
-                    creditType={
-                        props.route.params?.creditType ? props.route.params.creditType : ''}
-                    />
-                    : active  === "2" ?
-                    <Kessington 
-                    data={setKessProductDetails}
-                    openSheet={openSheet} 
-                    creditType={
-                        props.route.params?.creditType ? props.route.params.creditType : ''}
-                    />
+      <View style={{ flex: 1 }}>
+        {
+          active === "1" ?
+            <Deals
+              data={setProductDetails}
+              openSheet={openDealsSheet}
+              creditType={
+                props.route.params?.creditType ? props.route.params.creditType : ''}
+            />
+            : active === "2" ?
+              <Kessington
+                data={setKessProductDetails}
+                openSheet={openSheet}
+                creditType={
+                  props.route.params?.creditType ? props.route.params.creditType : ''}
+              />
 
-                    : active === "3" ?
-                    <BackInStock 
+              : active === "3" ?
+                <BackInStock
+                  data={setKessProductDetails}
+                  openSheet={openSheet}
+                  creditType={
+                    props.route.params?.creditType ? props.route.params.creditType : ''}
+                />
+                : active === "4" ?
+                  <PopularItems
                     data={setKessProductDetails}
-                    openSheet={openSheet} 
+                    openSheet={openSheet}
                     creditType={
-                        props.route.params?.creditType ? props.route.params.creditType : ''}
-                    />
-                    : active === "4" ?
-                    <PopularItems 
+                      props.route.params?.creditType ? props.route.params.creditType : ''}
+                  />
+                  :
+                  <NewItems
                     data={setKessProductDetails}
-                    openSheet={openSheet} 
+                    openSheet={openSheet}
                     creditType={
-                        props.route.params?.creditType ? props.route.params.creditType : ''}
-                    />
-                    :
-                    <NewItems 
-                    data={setKessProductDetails}
-                    openSheet={openSheet} 
-                    creditType={
-                        props.route.params?.creditType ? props.route.params.creditType : ''}
-                    />
-                  
-                   
-                    
-                
-                }
+                      props.route.params?.creditType ? props.route.params.creditType : ''}
+                  />
 
-                    </View>
 
-   
 
-         {dealsItems.length > 0 ?
-    
-          <DealsModal
-            bottomSheetDeals={bottomSheetDeals}
-            onPress={closeSheetDeals}
-            result={productDetails && productDetails}
-            isVisibleDeals={visibleDeals}
-          />
-      :
-        null
 
         }
-    
-        <BottomSheet
-          bottomSheet={bottomSheet}
-          onPress={closeSheet}
-          result={kessProductDetails}
-          isVisible={visible}
-        />
-    
 
-     
+      </View>
+
+
+
+      {dealsItems.length > 0 ?
+
+        <DealsModal
+          bottomSheetDeals={bottomSheetDeals}
+          onPress={closeSheetDeals}
+          result={productDetails && productDetails}
+          isVisibleDeals={visibleDeals}
+        />
+        :
+        null
+
+      }
+
+      <BottomSheet
+        bottomSheet={bottomSheet}
+        onPress={closeSheet}
+        result={kessProductDetails}
+        isVisible={visible}
+      />
 
 
     </View>

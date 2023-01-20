@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { FlatList, View, Text, TouchableOpacity, Image, RefreshControl,Animated, ActivityIndicator} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+
+
 import styles from '../style';
 import {getDeals} from '@Request/Deal';
 import ProductPlaceholderCard from "../ProductPlaceholderCard";
@@ -69,8 +71,10 @@ const Deals = (props) => {
         setRefreshing(true);
 
         dispatch(cleanupDealStatus());
+      
 
         dispatch(getDeals({id: 1}));
+       
 
         wait(3000).then(() => setRefreshing(false));
         

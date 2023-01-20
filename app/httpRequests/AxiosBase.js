@@ -8,7 +8,7 @@ const axiosbase = async () => {
     const credentials = await Keychain.getGenericPassword();
 
     return Axios.create({
-      baseURL: Config.API_URL,
+      baseURL: Config.TEST_URL,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
