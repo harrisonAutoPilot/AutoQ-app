@@ -47,3 +47,11 @@ export const verifyCode = createAsyncThunk("order/verify_code",
       const Axios = await AxiosBase();
       return apiRequest(Axios.post('api/v1/agent/orders/verify', code), thunkAPI)
    });
+
+
+// this is the endpoint re-add incomplete order to cart
+export const reAddToCart = createAsyncThunk("add/order/cart",
+   async (id, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.get(`api/v1/order_groups/${id}/add_to_cart`), thunkAPI)
+   });

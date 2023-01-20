@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
+import { useFocusEffect } from '@react-navigation/native';
 import globalStyle from "@Helper/GlobalStyles";
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -61,6 +62,27 @@ const Cart = (props) => {
     }
 
 
+    useFocusEffect(
+        useCallback(() => {
+
+            dispatch(cleanList());
+
+            setTrackRecyclerList(false);
+
+            return () => {
+
+                setCopyCart([]);
+
+                setSearchCart("");
+
+                setSearchCartCalled(false)
+
+            }
+
+        }, [])
+    );
+
+
     useEffect(() => {
         if (listItems.length) {
             if(listItems.length !== copyCart.length){
@@ -93,9 +115,7 @@ const Cart = (props) => {
 // this is for the searched item quqntity change and sort
 useEffect(() => {
     if (searchedCarts.length) {
-        if(searchedCarts.length !== copySearchData.length){
-            setTrackRecyclerList(false)
-        }
+       
         
         let quantity = searchedCarts.map((item) => {
             return {
@@ -118,7 +138,7 @@ useEffect(() => {
         setCopySearchData([])
     }
 
-}, [searchedCarts, copySearchData.length])
+}, [searchedCarts.length])
 
 
 
@@ -144,7 +164,7 @@ useEffect(() => {
     useEffect(() => {
         if (searchCart.length) {
             dispatch(searchCartList({search:searchCart.toLowerCase(), no: 1}))
-            //searchItem();
+          
             setSlength(true)
         } else if (!searchCart.length) {
             setSearchArray([]);   
@@ -174,6 +194,7 @@ console.log("the dataaa", items.carts);
 
 
     const loadMore2 = () => {
+        setSearchCartCalled(true)
         dispatch(searchCartList({search: searchCart.toLowerCase(), no:searchCartsData.current_page + 1}));
     }
 
@@ -292,7 +313,7 @@ console.log("the dataaa", items.carts);
 
             let filteredCart;
 
-            if (searchedCarts.length) {
+            if (searchCart.length) {
 
                 filteredCart = copySearchData.filter(quantity => {
 
@@ -334,7 +355,7 @@ console.log("the dataaa", items.carts);
 
         let filteredCart;
 
-        if (searchedCarts.length) {
+        if (searchCart.length) {
 
             filteredCart = copySearchData.filter(quantity => {
                 if (quantity.id === id && quantity.quantity > 1) {

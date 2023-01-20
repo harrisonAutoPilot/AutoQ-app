@@ -47,15 +47,14 @@ const Deals = (props) => {
       
     }, []);
 
-
-    const {status, errors, deals, addDealStatus, dealsItems, addDeal} = useSelector(state => state.deal);
+    const {status, errors, deals, dealsItems} = useSelector(state => state.deal);
 
 
     const loadMoreDeals = () => {
 
         setDealsFirstLoad(true);
 
-        dispatch(getDeals(deals?.current_page + 1));
+        dispatch(getDeals({id:deals?.current_page + 1}));
 
     };
 
@@ -116,9 +115,6 @@ const Deals = (props) => {
                 </View>
             </View>
         </TouchableOpacity>
-
-   
-
     );
     
 
@@ -130,23 +126,22 @@ const Deals = (props) => {
         :
         <FlatList
             data={dealsItems}
-            //numColumns={2}
             keyExtractor={item => item.id}
             renderItem={ListItem}
-            ListEmptyComponent={<EmptyCategory />}
+            ListEmptyComponent={EmptyCategory}
             onEndReachedThreshold={0.5}
             onEndReached={() => {
                 if (deals?.current_page < deals?.last_page) {
                     loadMoreDeals()
                 }
             }}
-            ListFooterComponent={ status === "pending" && <ActivityIndicator />}
+         
             refreshControl={
                 <RefreshControl 
                 refreshing={refreshing} 
                 onRefresh={refreshDeals} />
             }
-            
+         ListFooterComponent={ status === "pending" && <ActivityIndicator />} 
         />
     
     )

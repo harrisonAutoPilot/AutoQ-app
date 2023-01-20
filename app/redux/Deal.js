@@ -21,14 +21,15 @@ export const dealSlice = createSlice({
             
         },
         cleanupDealStatus: (state) => {
-            state.addDealStatus= "idle",
-            state.addDeal = {}
-            
+            state.dealsItems = [],
+            state.deals ={},
+            state.status= "idle" 
         },
     },
     extraReducers: builder => {
             builder
             .addCase(getDeals.pending, state => {
+                // console.log("deal pending")
                 state.status = "pending";
                 state.errors = {};
                 state.deals = {};
