@@ -124,11 +124,13 @@ const Deals = (props) => {
 
         <ProductPlaceholderCard />
         :
+        <>
+        { dealsItems.length > 0 ? 
         <FlatList
             data={dealsItems}
             keyExtractor={item => item.id}
             renderItem={ListItem}
-            ListEmptyComponent={EmptyCategory}
+            // ListEmptyComponent={EmptyCategory}
             onEndReachedThreshold={0.5}
             onEndReached={() => {
                 if (deals?.current_page < deals?.last_page) {
@@ -143,6 +145,10 @@ const Deals = (props) => {
             }
          ListFooterComponent={ status === "pending" && <ActivityIndicator />} 
         />
+        :
+        <EmptyCategory />
+        }
+        </>
     
     )
 };

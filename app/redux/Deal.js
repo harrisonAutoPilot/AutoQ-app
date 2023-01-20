@@ -21,8 +21,8 @@ export const dealSlice = createSlice({
             
         },
         cleanupDealStatus: (state) => {
-            state.dealsItems = [],
-            state.deals ={},
+            // state.dealsItems = [],
+            // state.deals ={},
             state.status= "idle" 
         },
     },
