@@ -47,6 +47,7 @@ export const authSlice = createSlice({
             .addCase(login.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
+                console.log("the errors from redux login", payload)
                 state.isAuthenticated = false
             })
 
