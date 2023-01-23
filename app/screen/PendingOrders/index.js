@@ -249,10 +249,9 @@ console.log("the error", errors);
                     </View>
 
                   
-                        <TouchableOpacity style={styles.reorderCover} onPress={() => reAdd(item)}>
+                        {/* <TouchableOpacity style={styles.reorderCover} onPress={() => reAdd(item)}>
                             <Text style={styles.reOrderText}>Re-Add to cart</Text>
-                           
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                 
 
                 </View>
