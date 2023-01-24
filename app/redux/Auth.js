@@ -47,6 +47,7 @@ export const authSlice = createSlice({
             .addCase(login.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
+                console.log("the errors from redux login", payload)
                 state.isAuthenticated = false
             })
 
@@ -120,7 +121,7 @@ export const authSlice = createSlice({
                 state.errors = {};
             })
             .addCase(deleteUserAccount.rejected, (state, { payload }) => {
-                console.log(payload)
+              
                 state.deleteAccount = "failed";
                 state.errors = payload;
             })
@@ -131,12 +132,12 @@ export const authSlice = createSlice({
                 state.errors = {};
             })
             .addCase(updateUserImage.fulfilled, (state, {payload}) => {
-                console.log(payload, "you")
+                
                 state.update = "success";
                 state.errors = {};
             })
             .addCase(updateUserImage.rejected, (state, { payload }) => {
-                console.log(payload, "jo")
+               
                 state.update = "failed";
                 state.errors = payload;
             })

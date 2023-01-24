@@ -9,7 +9,8 @@ export const cartSlice = createSlice({
         items: [],
         listItems:[],
         status: "idle",
-        searchCartsData: [],
+        searchStatus:"idle",
+        searchCartsData: {},
         searchedCarts:[],
         errors: {},
         addCart: "idle",
@@ -20,6 +21,7 @@ export const cartSlice = createSlice({
         updateCartItems: "idle",
         loaded: "idle",
     },
+    
     reducers:{
         cleanup: (state) => {
             state.errors = {}
@@ -38,26 +40,36 @@ export const cartSlice = createSlice({
         },
         cleanCarts: (state) => {
             state.searchedCarts = []
-            state.searchCartsData = []
+            state.searchCartsData = {}
         },
         cleanStatus: (state) => {
             state.loaded = "idle"
         },
+        cleanSearchCart: (state) => {
+            state.searchStatus = "idle"
+            state.searchCartsData = {}
+            state.searchedCarts = []
+        }
 
     },
     extraReducers: builder => {
+
         builder
             .addCase(listCart.pending, state => {
                 state.loaded = "pending";
                 state.errors = {};
             })
+
             .addCase(listCart.fulfilled, (state, action) => {
+                console.log(action.payload.carts.data, "cal")
                 state.items = action.payload
                 state.listItems = dict(state.listItems, action.payload.carts.data)
                 state.loaded = "success";
-                state.errors = {};
+              
             })
+
             .addCase(listCart.rejected, (state, { payload }) => {
+                console.log(payload, "fail")
                 state.loaded ="failed";
                 state.errors = payload;
                 state.items = [];
@@ -69,7 +81,7 @@ export const cartSlice = createSlice({
             builder
             .addCase(searchCartList.pending, state => {
                 state.errors = {};
-                state.status = "pending";
+                state.searchStatus = "pending";
             })
             .addCase(searchCartList.fulfilled, (state, action) => {
                 const reducerWithDictionary = (arrayOne, arrayTwo) => {
@@ -92,14 +104,14 @@ export const cartSlice = createSlice({
                   }
                 state.searchedCarts = reducerWithDictionary(state.searchedCarts, action.payload.data);
                 state.searchCartsData = action.payload;
-                state.status = "success";
+                state.searchStatus = "success";
                 state.errors = {};
             })
             .addCase(searchCartList.rejected, (state, { payload }) => {
-                state.status = "failed";
+                state.searchStatus= "failed";
                 state.errors = payload;
                 state.searchedCarts = [];
-                state.searchCartsData = [];
+                state.searchCartsData = {};
             })
 
 
@@ -118,6 +130,7 @@ export const cartSlice = createSlice({
                 state.addCart = "failed";
                 state.errors = payload;
             })
+            
 
             builder
             .addCase(updateCart.pending, state => {
@@ -178,6 +191,6 @@ export const cartSlice = createSlice({
 
     }
 });
-export const { cleanup, idle,cleanCarts, cleanList, cleanStatus } = cartSlice.actions
+export const { cleanup, idle,cleanCarts,cleanSearchCart, cleanList, cleanStatus } = cartSlice.actions
 
 export default cartSlice.reducer;

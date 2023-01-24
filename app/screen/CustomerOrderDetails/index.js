@@ -88,7 +88,7 @@ const CustomerOrderDetails = (props) => {
             <Text style={[styles.snTextTwo, styles.snTextTwoAlign]}>₦ {commafy(item?.total_amount)}</Text>
          </View>
          <View style={styles.snDown}>
-            <Text style={styles.snDownText}>QTY/<Text style={styles.capitalize}>{item.product?.pack_style}</Text> : {item.product?.total_quantity_sold}</Text>
+            <Text style={styles.snDownText}>QTY/<Text style={styles.capitalize}>{item.product?.pack_style}</Text> : {item.quantity}</Text>
          </View>
       </View>
    )

@@ -35,7 +35,7 @@ console.log("the result oooo", result)
     
     const [errMsg, setErr] = useState("");
     const [adding, setAdding] = useState(false);
-    const [amount, setAmount] = useState(0)
+    const [amount, setAmount] = useState(result?.buy)
 
 
     const { addDeal, addDealStatus, errors } = useSelector((state) => state.deal);
@@ -75,7 +75,9 @@ console.log("the result oooo", result)
     };
 
     useEffect(() => {
-        setAmount(result?.buy)
+       
+        setAmount(result?.buy || amount)
+       
     }, [props.isVisibleDeals])
 
 
@@ -139,10 +141,9 @@ console.log("the result oooo", result)
     };
 
 
-console.log("the result for the all product", result);
-
 
     const addItemsToCart = () => {
+
 
         if (amount.toString()[0] === "0") {
 
@@ -153,17 +154,20 @@ console.log("the result for the all product", result);
             refreshView(`Amount cannot be less than ${result.buy}`, "");
 
         }
-        else if (amount >= result?.buy && amount.toString()[0] !== "0") {
+        else if (amount >= result.buy && amount.toString()[0] !== "0") {
 
             setAdding(true)
 
-            const cartDetails = { quantity: amount, id: result.id }
+            const cartDetails = { quantity: amount, id: result?.id }
 
             dispatch(addDealToCart(cartDetails));
 
         }
+       
 
     };
+
+    
 
 
     const sentenceCase = (str) => {
@@ -265,7 +269,7 @@ console.log("the result for the all product", result);
                                         value={amount?.toString()}
                                         onChangeText={(val) => {
                                             val = val.replaceAll(regex, "")
-                                            if (val <= result.quantity) {
+                                            if (val <= result?.quantity) {
                                                 setAmount(val.replace(/[^0-9]/g, ''))
                                             }
 

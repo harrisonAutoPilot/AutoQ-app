@@ -37,7 +37,7 @@ const Deals = (props) => {
 
     
 
-    const { deals, status, addDealStatus,dealsItems, addDeal } = useSelector((state) => state.deal);
+    const { deals, status, addDealStatus,dealsItems, addDeal, } = useSelector((state) => state.deal);
    
 
     const goBack = () => props.navigation.navigate("Home");
@@ -104,9 +104,6 @@ const Deals = (props) => {
 
 
 
-  
-    
-
 
     const refreshView = useCallback((suc) => {
         setSuccessMsg(suc);
@@ -128,11 +125,11 @@ const Deals = (props) => {
         }
     })
 
-         wait(4000).then(() => {
-            dispatch(cleanupDealStatus())
-            setSuccessMsg("")
-            
-        })
+        wait(4000).then(() => {
+        dispatch(cleanupDealStatus())
+        setSuccessMsg("")
+        
+    })
 
     }, []);
 
@@ -170,6 +167,7 @@ const Deals = (props) => {
                     </TouchableOpacity>
                 </View>
     );
+    
 
 
     return (

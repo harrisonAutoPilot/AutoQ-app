@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, Image, Dimensions, ActivityIndicator, FlatList, Keyboard  } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
+import { useFocusEffect } from '@react-navigation/native';
 import globalStyle from "@Helper/GlobalStyles";
 import Icon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -9,10 +10,10 @@ import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview
 import BottomPlaceholder from "./bottomPlaceholderLoader";
 import CartPlaceholderComponent from "./CartPlaceholderComponent";
 import styles from "./style";
-import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart } from "@Request/Cart";
+import { listCart, deleteCart, deleteMultipleCart, deleteAllCart, updateCart,searchCartList } from "@Request/Cart";
 import { AuthBtn as Btn, SuccessMsgViewTwo, COHeader as Header,InputField, AddCartListEmptyBig, Check } from "@Component";
 import Loader from "@Screen/Loader";
-import { cleanup, cleanList } from "@Store/Cart";
+import { cleanup, cleanList,cleanSearchCart} from "@Store/Cart";
 import ConfirmDelete from "./ConfirmDelete";
 import ConfirmSelected from "./ConfirmSelectedDelete";
 
@@ -26,6 +27,7 @@ const Cart = (props) => {
     const [loader, setLoader] = useState(false);
     const [copyCartAmount, setCopyCartAmount] = useState({});
     const [copyCart, setCopyCart] = useState([]);
+    const [copySearchData, setCopySearchData] = useState([]);
     const [selDel, setSelDel] = useState([])
     const [scrollText, setScrollText] = useState(true);
     const [itemDeleted] = useState(false);
@@ -33,29 +35,81 @@ const Cart = (props) => {
     const [showConfirmSelected, setShowConfirmSelected] = useState(false);
     const [trackRecyclerList, setTrackRecyclerList] = useState(false);
     const [showSearch, setShowSearch ] = useState(false)
-    const [searchCart, setSearchCart] = useState ("")
+    const [searchText, setSearchText] = useState("");
     const [searchArray, setSearchArray] = useState([]);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [ slength , setSlength] = useState(false)
+    const [searchCartCalled, setSearchCartCalled] = useState(false)
 
-
-    const { items, removeCart, removeMultipleCart, removeAllCart, errors,
-        updateCartItems, loaded, listItems } = useSelector((state) => state.cart);
+    const { items, removeCart, removeMultipleCart,searchStatus, removeAllCart, errors,
+        updateCartItems, loaded, listItems, searchCartsData, searchedCarts } = useSelector((state) => state.cart);
 
 
     const browse = () => props.navigation.navigate("Catalogue");
 
     const openCart = () => dispatch(listCart(1));
 
-     const redirectToSearch = () => props.navigation.navigate("Search");
+     //const redirectToSearch = () => props.navigation.navigate("Search");
+     const redirectToSearch =()=>{
+        setShowSearch(true)
+    }
 
-    // const redirectToSearch =()=>{
-    //     setShowSearch(true)
-    // }
+
+
+    useEffect(() => {
+
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true);
+            }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false);
+            }
+        );
+        return () => {
+
+            keyboardDidShowListener.remove();
+
+            keyboardDidHideListener.remove();
+
+            dispatch(cleanup());
+        }
+
+    }, []);
+
+
+
 
     const returnHeader = () => {
-        setSearchCart("")
+        setSearchText("")
+        setSelDel([])
         setShowSearch(false)
     }
+
+
+    useFocusEffect(
+        useCallback(() => {
+
+            dispatch(cleanList());
+
+            setTrackRecyclerList(false);
+
+            return () => {
+
+                setCopyCart([]);
+
+                setSearchText("");
+
+                setSearchCartCalled(false)
+
+            }
+
+        }, [])
+    );
 
 
     useEffect(() => {
@@ -87,6 +141,32 @@ const Cart = (props) => {
 
     }, [listItems, copyCart.length])
 
+// this is for the searched item quqntity change and sort
+useEffect(() => {
+    if (searchedCarts.length) {
+       
+        let quantity = searchedCarts.map((item) => {
+            return {
+                id: item.id,
+                quantity: item.quantity,
+                cart_id: item.id,
+                total_amount: item.total_amount,
+                product: { ...item.product },
+                deal_id: item.deal_id,
+                deal: {...item.deal}
+            }
+        }).sort((a, b) => {
+            if( a?.product?.name < b?.product?.name){
+                return -1
+            }
+        })
+
+        setCopySearchData(quantity);
+    } else {
+        setCopySearchData([])
+    }
+
+}, [searchedCarts.length])
 
 
     const wait = (timeout) => {
@@ -94,30 +174,53 @@ const Cart = (props) => {
     };
 
 
-    const searchItem = () => {
-        let searched = copyCart.filter(val => {
-            if (val.product.name.toLowerCase().includes(searchCart.toLowerCase())) {
-                return val
-            }
-            return null
-        });
-        setSearchArray(searched)
-    };
+    // const searchItem = () => {
+    //     let searched = copyCart.filter(val => {
+    //         if (val.product.name.includes(searchCart)) {
+    //             return val
+    //         }
+    //         return null
+    //     });
+    //     setSearchArray(searched)
+    //     dispatch(searchCartList())
+    // };
 
+
+   
+;
 
     useEffect(() => {
-        if (searchCart.length) {
-            searchItem();
+        if (searchText.length) {
+
+            dispatch(cleanSearchCart());
+
+            dispatch(searchCartList({ search: searchText, id: 1 }))
+        }
+    }, [searchText]);
+
+    useEffect(() => {
+        if (searchText.length) {
+            dispatch(searchCartList({search:searchText.toLowerCase(), no: 1}))
+            //searchItem();
             setSlength(true)
-        } else if (!searchCart.length) {
+        } else if (!searchText.length) {
             setSearchArray([]);   
             setSlength(false)
         }
        
-    }, [searchCart.length]);
+    }, [searchText.length]);
+
 
     const loadMore = () => {
         dispatch(listCart(items.carts?.current_page + 1));
+    }
+
+
+
+
+    const loadMore2 = () => {
+        setSearchCartCalled(true)
+        dispatch(searchCartList({search: searchText, no:searchCartsData.current_page + 1}));
     }
 
     const refreshView = useCallback((msg, suc) => {
@@ -172,8 +275,9 @@ const Cart = (props) => {
     }, []);
 
     useEffect(() => {
+        refreshView("", "Item removed")
         dispatch(listCart(1));
-        setTrackRecyclerList(false)
+        //setTrackRecyclerList(false)
         return () => {
             dispatch(cleanup());
             setCopyCart([]);
@@ -189,7 +293,7 @@ const Cart = (props) => {
         ),
 
         tomatoToast: () => (
-            <SuccessMsgViewTwo title={successMsg} />
+            <SuccessMsgViewTwo title={successMsg} styles={styles.toastStyle} />
         )
     };
 
@@ -198,11 +302,18 @@ const Cart = (props) => {
         dispatch(updateCart(copyCart))
     }
 
+
     useEffect(() => {
         if (removeCart === "failed") {
+
             refreshView(errors?.msg, "")
         } else if (removeCart === "success") {
             refreshView("", "Item removed")
+            // dispatch(listCart(1));
+            // setTrackRecyclerList(false)
+             setSearchText("")
+             setShowSearch(false)
+          
         } else {
             setSuccessMsg("");
             setErr("");
@@ -223,16 +334,39 @@ const Cart = (props) => {
 
     const goBack = () => props.navigation.goBack();
 
-    const increaseCart = ({ id, quantity, product: { stock_count } }) => {
-        if (quantity < stock_count) {
-            let filteredCart = copyCart.filter(quantity => {
-                if (quantity.id === id) {
-                    quantity.quantity = quantity.quantity + 1
-                    quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
-                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
 
-                }
-            })
+    const increaseCart = ({ id, quantity, product: { stock_count } }) => {
+
+        if (quantity < stock_count) {
+
+            let filteredCart;
+
+            if (searchText.length) {
+
+                filteredCart = copySearchData.filter(quantity => {
+
+                    if (quantity.id === id) {
+                        quantity.quantity = quantity.quantity + 1
+                        quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                        return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+
+                    }
+                })
+
+
+            } else {
+
+                filteredCart = copyCart.filter(quantity => {
+
+                    if (quantity.id === id) {
+                        quantity.quantity = quantity.quantity + 1
+                        quantity.total_amount = parseInt(quantity.product.price_per_pack) * parseInt(quantity.quantity)
+                        return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id }
+
+                    }
+                })
+
+            }
 
             setCopyCartAmount(filteredCart[0])
             let copiedcopyCartAmount = filteredCart
@@ -241,26 +375,48 @@ const Cart = (props) => {
             setCopyCart(res)
             setTrackRecyclerList(false)
             return res
+
         }
     };
 
     const decreaseCart = ({ id }) => {
 
-        let filteredCart = copyCart.filter(quantity => {
-            if (quantity.id === id && quantity.quantity > 1) {
-                quantity.quantity = quantity.quantity - 1
-                quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
-                return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
+        let filteredCart;
 
-            }
-        })
+        if (searchText.length) {
+
+            filteredCart = copySearchData.filter(quantity => {
+                if (quantity.id === id && quantity.quantity > 1) {
+                    quantity.quantity = quantity.quantity - 1
+                    quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
+                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
+
+                }
+            })
+
+        } else {
+
+            filteredCart = copyCart.filter(quantity => {
+                if (quantity.id === id && quantity.quantity > 1) {
+                    quantity.quantity = quantity.quantity - 1
+                    quantity.total_amount = parseInt(quantity.product.price_per_pack * quantity.quantity)
+                    return { quantity: quantity.quantity, total_amount: quantity.total_amount, price_per_pack: quantity.product.price_per_pack, cart_id: quantity.id, }
+
+                }
+            })
+
+        }
 
         setCopyCartAmount(filteredCart[0])
 
-        let copiedcopyCartAmount = filteredCart
+        let copiedcopyCartAmount = filteredCart;
+
         var res = copyCart.map(obj => copiedcopyCartAmount.find(quantity => quantity.cart_id === obj.id) || obj);
-        setCopyCart(res)
-        setTrackRecyclerList(false)
+        
+        setCopyCart(res);
+
+        setTrackRecyclerList(false);
+        
         return res
     };
 
@@ -307,7 +463,7 @@ const Cart = (props) => {
         } else if (removeAllCart === "success") {
             setCopyCart([])
             setSelDel([])
-            refreshView("", "Cart items removed")
+           // refreshView("", "Cart items removed")
 
         } else {
             setErr("");
@@ -317,10 +473,16 @@ const Cart = (props) => {
 
     useEffect(() => {
         if (removeMultipleCart === "failed") {
+            
             refreshView(errors?.msg, "")
         } else if (removeMultipleCart === "success") {
-            setSelDel([])
             refreshView("", "Cart items removed")
+            //dispatch(listCart(1));
+            // setTrackRecyclerList(false)
+             setSearchText("")
+             setShowSearch(false)
+            setSelDel([])
+          
 
         } else {
             setErr("");
@@ -497,17 +659,12 @@ const Cart = (props) => {
         if (!trackRecyclerList) {
             if (copyCart.length > 0 || selDel.length) {
                 console.log("tracklist", "count")
-                // if(!searchArray.length > 0){
-                //     setDataProvider(dataProvider.cloneWithRows(copyCart))    
-                // }else{
-                //     setDataProvider(dataProvider.cloneWithRows(searchArray))   
-                // }
-
-             
+               
                  setDataProvider(dataProvider.cloneWithRows(copyCart));
                 setTrackRecyclerList(true)
             }
             else if (!copyCart.length && loaded === "success") {
+                console.log("tracklist", "count2")
                 setDataProvider(dataProvider.cloneWithRows([]))
             }
         }
@@ -542,8 +699,8 @@ const Cart = (props) => {
                 style={styles.inputSearch}
                 placeholder="Search Cart Items"
                 placeholderTextColor="#9E9E9E"
-                onChangeText={(text) => setSearchCart(text)}
-                value={searchCart}
+                onChangeText={(text) => setSearchText(text)}
+                value={searchText}
             />
              </View>
             </View>    
@@ -596,7 +753,11 @@ const Cart = (props) => {
                     :
                     null
                 }
-                {itemDeleted && loaded === "idle"
+
+                {
+                    !slength ?
+                    <>
+                    {itemDeleted && loaded === "idle"
                     ?
                     <CartPlaceholderComponent />
                     :
@@ -605,7 +766,7 @@ const Cart = (props) => {
                         <RecyclerListView
                             style={{ width: "100%" }}
                             rowRenderer={rowRenderer}
-                            dataProvider={!slength ? dataProvider : dataProvider.cloneWithRows(searchArray)}
+                            dataProvider={dataProvider}
                             layoutProvider={layoutProvider}
                             extendedState={copyCartAmount}
                             onEndReachedThreshold={0.5}
@@ -620,6 +781,27 @@ const Cart = (props) => {
                         <AddCartListEmptyBig browse={browse} />
 
                 }
+                </>
+                 : (searchStatus === "idle" || searchStatus === "pending") && !searchCartCalled  ?
+
+                 <CartPlaceholderComponent /> :
+                 <View style={{flex:1, height:"100%"}}>
+                <FlatList
+                    data={copySearchData}
+                    keyExtractor={item => item.id}
+                    renderItem={ListView}
+                    ListEmptyComponent={<View />}
+                    onEndReachedThreshold={0.5}
+                    onEndReached={() => {
+                        if(searchCartsData.current_page < searchCartsData.last_page){
+                            loadMore2()
+                        }
+                        }}
+                        ListFooterComponent={searchStatus === "pending" && searchCartCalled ? <ActivityIndicator />: <View /> }
+                    />
+                    </View>
+                    }
+                            
                 <View style={styles.mainBody}>
                     {err ? <Toast config={toastConfig} /> : null}
                     {successMsg ? <Toast config={toastConfig} /> : null}
@@ -630,7 +812,7 @@ const Cart = (props) => {
             </View>
            
            
-                    {items.total_amount && copyCart && copyCart.length ?
+                    {!isKeyboardVisible && items.total_amount && copyCart && copyCart.length ?
                         <View style={styles.bottomDownCover}>
 
                             <View style={styles.orderCover}>

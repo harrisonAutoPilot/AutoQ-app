@@ -391,7 +391,7 @@ export default styles = StyleSheet.create({
     errInCoverNew:{
     width:wp("92%"),
     alignSelf:'center',
-    marginTop:120,
+    marginTop:180,
     position:'absolute',
     zIndex:9000
     }

@@ -397,6 +397,20 @@ marginHorizontal:5
     letterSpacing: 0.1,
     textAlign: "center",
     justifyContent: "center",  
- }
+ },
+ miniCardTextInactive:{
+    color: "rgba(73, 69, 79, 1)",
+    fontFamily: "Urbanist-SemiBold",
+    fontSize: 14,
+    lineHeight: 20
+ },
+ typeContainer: {
+    width:wp('100%'),
+    paddingHorizontal: 16,
+    flex: 1,
+    alignSelf:'center',
+    alignItems:'center'
+},
+
 
 })
