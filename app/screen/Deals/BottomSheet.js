@@ -128,7 +128,6 @@ const Overlay = (props) => {
         )
     };
 
-console.log("the result for the all product", result);
 
 
     const addItemsToCart = () => {

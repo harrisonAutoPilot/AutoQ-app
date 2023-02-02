@@ -8,7 +8,14 @@ import { AuthBtn, COHeader as Header } from "@Component/index";
 import { cleanup, cleanfailedOrder, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
-import { getCustomerPendingOrders, verifyOrder, verifyCode } from "@Request/CustomerOrder";
+import { getCustomerPendingOrders, verifyOrder, verifyCode ,getIncompleteItems, verifyCodeIncomplete} from "@Request/CustomerOrder";
+import { cleanup as delivery } from "@Store/DeliveryOptions";
+import { listCart } from "@Request/Cart";
+import { cleanList } from "@Store/Cart";
+import ModalView from "./PromptBottomSheet";
+import ListItemView from "./ListBottomSheet";
+
+
 
 const InCompleteOrderDetails = (props) => {
 
@@ -18,18 +25,27 @@ const InCompleteOrderDetails = (props) => {
 
    const [loader, setLoader] = useState(false);
 
+   const [trapError, setTrapError] = useState()
+
    const [successMsg, setSuccessMsg] = useState("");
 
    const [showResendCodeBtn, setShowResendCodeBtn] = useState(true);
 
+   const [lastCode, setLastCode] = useState()
+
+   const bottomSheetPrompt = useRef();
 
    const bottomSheet = useRef();
+
+   const bottomSheetList = useRef()
 
 
    const orders = props.route.params.item;
 
 
-   const { errors, verify, verificationStatus, errorsCheck } = useSelector((state) => state.order);
+
+
+   const { errors, verify, verificationStatus,errorIncomplete, errorsCheck,incompleteOrderCurrentPage, verifyIncom} = useSelector((state) => state.order);
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -38,8 +54,10 @@ const InCompleteOrderDetails = (props) => {
    const verifyToken = (a, b, c, d) => {
       const code = { code: parseInt(`${a}${b}${c}${d}`) }
       setShowResendCodeBtn(false)
+      setLastCode(code)
       setLoader(true);
       dispatch(verifyCode(code));
+     
    };
 
    const resendToken = () => {
@@ -57,6 +75,45 @@ const InCompleteOrderDetails = (props) => {
       bottomSheet.current.close();
    }
 
+   const closeSheet = () =>{
+      bottomSheetPrompt.current.close()
+   }
+
+   const closeSheetList = () =>{
+      bottomSheetList.current.close()
+   }
+
+   const seeList = () => {
+      bottomSheetPrompt?.current?.close()
+      bottomSheetList?.current?.present()
+   }
+
+   const proceedWithToken = () => {
+      bottomSheet?.current?.close()
+      bottomSheetPrompt?.current?.close()
+      const code = lastCode;
+
+      Platform.OS === "android" ?
+      setLoader(true):
+      null
+      setShowResendCodeBtn(false)
+      dispatch(verifyCodeIncomplete(lastCode));
+     
+   };
+ 
+   const proceedWithTokenList = () => {
+   bottomSheet?.current?.close()
+    bottomSheetList?.current?.close()
+    const code = lastCode;
+
+    Platform.OS === "android" ?
+    setLoader(true):
+    null
+    setShowResendCodeBtn(false)
+    dispatch(verifyCodeIncomplete(lastCode));
+   
+ };
+
    const toastConfig = {
       error: () => (
          <View style={[{ marginHorizontal: 20 }, globalStyles.errMainView2, globalStyles.marginTop]}>
@@ -72,7 +129,6 @@ const InCompleteOrderDetails = (props) => {
       });
 
   }, []);
-
   
 
    const waitTimeToResendVerification = useCallback(() => {
@@ -99,10 +155,19 @@ const InCompleteOrderDetails = (props) => {
       })
    }, []);
 
+
    useEffect(() => {
 
       if (verify === "failed" && props.navigation.isFocused()) {
+         setLoader(false)
+         setTrapError(errorIncomplete?.msg || errors?.msg)
          waitTime("", errors?.msg)
+       
+         if (errors.status === 402){
+            setLoader(false)
+            bottomSheetPrompt?.current?.present()
+            dispatch(getIncompleteItems(orders.id))
+         }
          waitTimeToResendVerification()
       } else if (verify === "success") {
          setLoader(false);
@@ -124,7 +189,19 @@ const InCompleteOrderDetails = (props) => {
          
       }
 
-   }, [errors, verify, verificationStatus]);
+      if (verifyIncom === "failed" && props.navigation.isFocused()) {
+         setLoader(false);
+         waitTimeToResendVerification()
+         waitTime("", errors?.msg)
+     } else if (verifyIncom === "success" && props.navigation.isFocused()) {
+         setLoader(false)
+         dispatch(cleanup())
+         dispatch(delivery())
+         props.navigation.navigate("CheckoutSuccess", { amount: orders.total_amount, delivery_price: orders?.delivery_type?.price  })
+     }
+
+
+   }, [errors, verify, verificationStatus, verifyIncom]);
 
 
    const goBack = () => props.navigation.goBack();
@@ -269,6 +346,27 @@ const InCompleteOrderDetails = (props) => {
             close={closeBottomSheet}
             showResendPin={showResendCodeBtn}
          />
+
+            <ModalView
+               bottomSheetPrompt={bottomSheetPrompt}
+               onPress={closeSheet}
+               proceed ={proceedWithToken}
+               viewList ={seeList}
+               listCount = {trapError}
+               // isVisible={visible}
+                />
+
+          
+
+            <ListItemView
+               bottomSheetList={bottomSheetList}
+               onPressList={closeSheetList}
+               proceed ={proceedWithTokenList}
+               result={incompleteOrderCurrentPage}
+            
+                />
+              
+       
       </View>
    )
 };
