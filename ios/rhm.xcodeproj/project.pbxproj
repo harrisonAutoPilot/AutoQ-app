@@ -522,7 +522,7 @@
 				CODE_SIGN_ENTITLEMENTS = rhm/rhm.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 2SA448U55G;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = rhm/Info.plist;
@@ -531,7 +531,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -556,7 +556,7 @@
 				CODE_SIGN_ENTITLEMENTS = rhm/rhm.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 2SA448U55G;
 				INFOPLIST_FILE = rhm/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Remedial Agent";
@@ -564,7 +564,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

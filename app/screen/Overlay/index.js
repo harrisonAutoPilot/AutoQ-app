@@ -230,7 +230,7 @@ const Overlay = (props) => {
                 draggable={true}
                 animateOnMount={true}
                 handleIndicatorStyle={{ display: "none" }}
-            // hasDraggableIcon={true}
+          
             >
 
                 <TouchableOpacity onPress={props.onPress} style={styles.modalPaddingLayout}>
