@@ -1,6 +1,7 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getCustomerOrders, placeOrder, reOrder,reAddToCart, trackOrder, verifyOrder, verifyCode, getCustomerPendingOrders} from "@Request/CustomerOrder";
+import {getCustomerOrders, placeOrder, reOrder,reAddToCart, trackOrder, verifyOrder, verifyCode,getIncompleteItems,verifyCodeIncomplete, getCustomerPendingOrders} from "@Request/CustomerOrder";
 import dict from "@Helper/dict";
+
 
 export const orderSlice = createSlice({
     name: "order",
@@ -9,13 +10,17 @@ export const orderSlice = createSlice({
         status: "idle",
         addToCart: "idle",
         errors: {},
+        errorIncomplete:{},
         added:{},
         errorsCheck:{},
         update: "idle",
         orderDetail : {},
         loaded: "idle",
         verify: "idle",
+        verifyIncom:"idle",
         verificationStatus:"idle",
+        incompleteOrderCurrentPage: {},
+        incompleteOrders :[],
         pendingOrders: [],
         trackOrderStatus: "idle",
         trackOrderList: [],
@@ -25,11 +30,14 @@ export const orderSlice = createSlice({
     reducers:{
         cleanup: (state) => {
             state.errors = {}
+            state.errorIncomplete = {}
             state.errorsCheck = {}
             state.update = "idle"
             state.verify = "idle"
+            state.verifyIncom = "idle"
             state.verificationStatus = "idle"
             state.pendingOrders = []
+            state.incompleteOrders = []
             state.trackOrderList= []
             state.trackOrderStatus = "idle"
         },
@@ -37,9 +45,11 @@ export const orderSlice = createSlice({
             state.status = "idle"
             state.orders = []
             state.ordersCurrentPage = {}
+            state.incompleteOrderCurrentPage = {}
         },
         cleanReOrder: (state) => {
             state.errors = {}
+            state.errorIncomplete = {}
             state.errorsCheck = {}
             state.update = "idle"
             state.addToCart = "idle"
@@ -48,17 +58,20 @@ export const orderSlice = createSlice({
             state.trackOrderList= []
             state.trackOrderStatus = "idle"
             state.verify = "idle"
+            state.verifyIncom = "idle"
             state.verificationStatus = "idle"
         },
         cleanErr: (state) => {
             state.errors = {}
             state.errorsCheck = {}
+            state.errorIncomplete = {}
         },
         cleanVerify: (state) => {
             state.verificationStatus = "idle"
         },
         cleanfailedOrder: (state) => {
             state.errors = {}
+            state.errorIncomplete = {}
             state.errorsCheck = {}
             // state.update = "idle",
             state.verify = "idle"
@@ -142,19 +155,46 @@ export const orderSlice = createSlice({
             builder
             .addCase(verifyCode.pending, state => {
                 state.errors = {};
-                state.errorsCheck = {}
+                state.errorIncomplete ={};
+                state.errorsCheck = {};
                 state.verify = "pending";
             
             })
             .addCase(verifyCode.fulfilled, (state, action) => {
                 state.errors = {}; 
                 state.errorsCheck = {};
+                state.errorIncomplete = {};
                 state.verify =  "success";
 
             })
             .addCase(verifyCode.rejected, (state, { payload }) => {
                 state.errors = payload;
                 state.verify =  "failed";
+                state.errorsCheck = payload;
+                state.errorIncomplete = payload;
+             
+            })
+
+
+
+            builder
+            .addCase(verifyCodeIncomplete.pending, state => {
+                state.errors = {};
+                state.errorsCheck = {}
+                state.verifyIncom = "pending";
+            
+            })
+            .addCase(verifyCodeIncomplete.fulfilled, (state, action) => {
+                console.log('the verify coooo', action.payload);
+                state.errors = {}; 
+                state.errorsCheck = {};
+                state.verifyIncom =  "success";
+
+            })
+            .addCase(verifyCodeIncomplete.rejected, (state, { payload }) => {
+                state.errors = payload;
+                console.log("the verify coooo", payload);
+                state.verifyIncom =  "failed";
                 state.errorsCheck = payload;
              
             })
@@ -213,6 +253,25 @@ export const orderSlice = createSlice({
                 state.errors = payload;
                 state.added = {}
             })
+
+            builder
+            .addCase(getIncompleteItems.pending, state => {
+                state.errors = {};
+                state.loaded = "pending"
+            })
+            .addCase(getIncompleteItems.fulfilled, (state, action) => {
+                //state.incompleteOrders = dict(state.incompleteOrders, action.payload.orders);
+                state.incompleteOrderCurrentPage = action.payload;
+                console.log("the redux incomplete",action.payload);
+                state.errors = {};
+                state.loaded = "success";
+            })
+            .addCase(getIncompleteItems.rejected, (state, { payload }) => {
+                state.errors = payload;
+                state.incompleteOrders = [];
+                state.loaded = "failed";
+            })
+
 
     }
 

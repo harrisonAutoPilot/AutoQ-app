@@ -48,10 +48,22 @@ export const verifyCode = createAsyncThunk("order/verify_code",
       return apiRequest(Axios.post('api/v1/agent/orders/verify', code), thunkAPI)
    });
 
+   export const verifyCodeIncomplete = createAsyncThunk("order/verify_code/incomplete",
+   async (code, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.post('api/v1/agent/orders/verify?without=1', code), thunkAPI)
+   });
 
 // this is the endpoint re-add incomplete order to cart
 export const reAddToCart = createAsyncThunk("add/order/cart",
    async (id, thunkAPI) => {
       const Axios = await AxiosBase();
       return apiRequest(Axios.get(`api/v1/order_groups/${id}/add_to_cart`), thunkAPI)
+   });
+
+// this is the endpoint to get the incomplete Items
+export const getIncompleteItems = createAsyncThunk("item/incomplete",
+   async (id, thunkAPI) => {
+      const Axios = await AxiosBase();
+      return apiRequest(Axios.get(`api/v1/agent/orders/${id}/out_of_stock`), thunkAPI)
    });

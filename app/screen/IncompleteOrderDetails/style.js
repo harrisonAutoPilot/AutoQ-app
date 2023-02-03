@@ -16,6 +16,29 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     paddingBottom: 5
 },
+modalPadding: {
+  paddingHorizontal: 29.75,
+  flexDirection: 'row',
+  justifyContent: 'center',
+  width: wp('100%'),
+  alignItems: "center",
+  paddingTop: 20,
+  marginTop: -10,
+
+},
+backCover: {
+  position: 'absolute',
+  left: wp('8%'),
+  top: wp('5.5%'),
+},
+modalTitle: {
+  fontSize: 18,
+  fontFamily: "Urbanist-SemiBold",
+  lineHeight: 24,
+  color: "#212121",
+  letterSpacing: 0.2,
+  textAlign: "center"
+},
   headerTitle: {
     position: 'absolute',
     top: hp('2%'),
@@ -31,6 +54,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: "red",
   },
+  addStoreBottomSheet: {
+    borderRadius: 40,
+    overflow: "hidden"
+},
+
   mainContainer: {
     height: "100%",
     // paddingBottom: 15
@@ -256,10 +284,11 @@ const styles = StyleSheet.create({
   addBtnCover: {
     justifyContent: 'space-between',
     width: wp('91%'),
-    // marginRight: wp('10%'),
    paddingVertical: 10,
     color: '#454545',
   },
+
+  
   addressBtn: {
     borderWidth: 1,
     borderColor: '#757575',
@@ -466,7 +495,156 @@ errorCover:{
   zIndex:9000,
   alignSelf:'center',
   alignItems:"center"
-}
+},
+
+// this is for the bottomsheet
+midAlertContainer:{
+  width:"90%",
+ paddingVertical:30,
+  borderWidth:1,
+  borderColor:'rgba(211, 47, 47, 0.4)',
+  backgroundColor:"rgba(211, 47, 47, 0.1)",
+  borderRadius:8,
+  alignSelf:"center",
+  marginVertical:50
+  },
+warnTop:{
+width:"60%",
+alignSelf:'center',
+alignItems:'center',
+
+},
+warnImg:{
+  alignSelf:'center',
+  width:40,
+  height:40,
+  resizeMode:'contain'
+},
+warnText:{
+  color: '#000000',
+  fontSize: 16,
+  fontFamily: "Urbanist-SemiBold",
+  lineHeight: 24,
+  fontWeight: "600",
+  letterSpacing: 0.1,
+},
+contentCover:{
+  width:'82%',
+  alignSelf:'center',
+  alignItems:'center',
+  padding:10,
+  paddingHorizontal:20,
+  flexDirection:'row',
+  justifyContent:'center'
+},
+redText:{
+  color: '#D32F2F',
+  fontSize: 16,
+  fontFamily: "Urbanist-SemiBold",
+  lineHeight: 24,
+  fontWeight: "600",
+  letterSpacing: 0.1,
+},
+blackText:{
+  color: '#000000',
+  fontSize: 16,
+  fontFamily: "Urbanist-SemiBold",
+  lineHeight: 24,
+  fontWeight: "600",
+  letterSpacing: 0.1,
+  textAlign:'center'
+},
+itemBtn:{
+  flexDirection:"row",
+  justifyContent:'center',
+  alignItems:'center',
+  width:'80%',
+  borderWidth:1,
+  borderColor:"#000000",
+  borderRadius:40,
+  alignSelf:'center',
+  paddingVertical:12,
+marginTop:20
+},
+arrowImg:{
+  width:14,
+  height:14,
+  resizeMode:"contain",
+  marginLeft:20,
+},
+addBtnCover2: {
+  justifyContent: 'space-between',
+  width: wp('90%'),
+  alignSelf:'center',
+ paddingVertical: 10,
+  color: '#454545',
+},
+flexCover:{
+  flexDirection:'column',
+  justifyContent:'space-between',
+  width:"100%",
+  alignSelf:'center',
+height:hp('78%')
+},
+viewText:{
+  color:"#424242",
+  fontSize: 14,
+  fontFamily: "Urbanist-SemiBold",
+  lineHeight: 20,
+  fontWeight: "600",
+  letterSpacing: 0.1,
+},
+
+// this is the styles for List
+midListContainer:{
+  width:"90%",
+ paddingVertical:30,
+  borderRadius:8,
+  alignSelf:"center",
+  marginVertical:10
+  },
+  listHeader:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+  },
+  itemTitle:{
+    color:"#000000",
+    fontSize: 14,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 20,
+    fontWeight: "600",
+    letterSpacing: 0.1,
+  },
+  qtyTitle:{
+    color:"#424242",
+    fontSize: 14,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 20,
+    fontWeight: "600",
+    letterSpacing: 0.1,
+  },
+  listContent:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    paddingVertical:3,
+  },
+  itemList:{
+    color:"#424242",
+    fontSize: 16,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 24,
+    fontWeight: "600",
+    letterSpacing: 0.1,
+    textTransform:'capitalize'
+  },
+  qtyList:{
+    color:"#9E9E9E",
+    fontSize: 14,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 20,
+    fontWeight: "600",
+    letterSpacing: 0.1,
+  },
 });
 
 export default styles
