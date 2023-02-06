@@ -154,7 +154,7 @@ const Overlay = (props) => {
                             </View>
                             <View style={styles.contentCover}>
                                 {/* <Text>{props.listCount}</Text> */}
-                            <Text style={styles.blackText}> <Text style={styles.redText}>{props?.listCount?.split(' ').slice(0,2).join(' ')}</Text> {ret}</Text>
+                            <Text style={styles.blackText}> <Text style={styles.redText}>{props?.listCount?.split(' ').slice(0,2).join(' ') === "1 ITEMS" ? "1 ITEM" : props?.listCount?.split(' ').slice(0,2).join(' ')}</Text> {ret}</Text>
                              
                             </View>
 

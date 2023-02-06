@@ -155,10 +155,11 @@ const Overlay = (props) => {
                         <Text style={styles.qtyTitle}>QTY</Text>
                     </View>       
                      
-                       <View style={{height:"80%"}}>
-                        <BottomSheetFlatList
-                            data={results}
+                       <View style={{height:"80%",}}>
+                        <FlatList
+                            data={props?.result}
                             renderItem={ListView}
+                            vertical
                             initialNumToRender={10}
                             keyExtractor={(item) => item?.id}
                             showsVerticalScrollIndicator={false}
