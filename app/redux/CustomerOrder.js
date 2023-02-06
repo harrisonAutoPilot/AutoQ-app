@@ -140,13 +140,11 @@ export const orderSlice = createSlice({
                 state.verificationStatus = "pending"
             })
             .addCase(verifyOrder.fulfilled, (state, action) => {
-            
                 state.verificationStatus = "success"
-                state.errors = {}; 
+                console.log(action.payload, "verify Incomplete order")
 
             })
             .addCase(verifyOrder.rejected, (state, { payload }) => {
-            
                 state.verificationStatus = "failed"
                 state.errors = payload;
               
