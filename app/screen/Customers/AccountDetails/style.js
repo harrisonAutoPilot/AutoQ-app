@@ -47,12 +47,13 @@ export default styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
+        alignSelf:'center'
         // padding:1,
     },
     activeSubHeader: {
         // backgroundColor: "#3858CF",
         // borderRadius: 20,
-        width: "50%",
+        width: "30%",
         borderBottomWidth: 5,
         borderColor: '#469D00'
 
@@ -60,7 +61,7 @@ export default styles = StyleSheet.create({
     inActiveSubHeader: {
         // backgroundColor: "#fff",
         // borderRadius: 20,
-        width: "50%"
+        width: "30%"
     },
     activeSubHeaderText: {
         fontSize: 14,
@@ -776,5 +777,6 @@ export default styles = StyleSheet.create({
     },
     inbtwStore:{
         marginTop: 20
-    }
+    },
+   
 })

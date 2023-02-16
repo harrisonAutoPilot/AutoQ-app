@@ -10,6 +10,7 @@ const data1 = [
         desc:'Fidson Metrone Metronidazole Syr 60ml, Hovid Doxycap (Doxycycline) Caps 100mg.....',
         phone: "09010203040",
         address: "32, Tele Street, Lagos Island, Lagos.",
+        status:"credit",
         
     },
     {
@@ -21,6 +22,7 @@ const data1 = [
         desc:'Fidson Metrone Metronidazole Syr 60ml, Hovid Doxycap (Doxycycline) Caps 100mg.....',
         phone: "09010203040",
         address: "32, Tele Street, Lagos Island, Lagos.",
+        status:"debit",
     },
     {
         id: "3",
@@ -31,6 +33,7 @@ const data1 = [
         desc:'Fidson Metrone Metronidazole Syr 60ml, Hovid Doxycap (Doxycycline) Caps 100mg.....',
         phone: "09010203040",
         address: "32, Tele Street, Lagos Island, Lagos.",
+        status:"credit",
     },
     {
         id: "4",
@@ -41,7 +44,9 @@ const data1 = [
         desc:'Fidson Metrone Metronidazole Syr 60ml, Hovid Doxycap (Doxycycline) Caps 100mg.....',
         phone: "09010203040",
         address: "32, Tele Street, Lagos Island, Lagos.",
+        status:"credit",
     },
+
 
 ]
 
