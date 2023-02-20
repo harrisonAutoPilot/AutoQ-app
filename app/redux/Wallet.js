@@ -1,10 +1,14 @@
 import { createSlice} from "@reduxjs/toolkit";
-import { getWallet} from "@Request/Wallet"
+import { getWallet, getWalletTransaction} from "@Request/Wallet"
+import dict from "@Helper/dict";
 
 export const walletSlice = createSlice({
-    name: "payment_method",
+    // name: "payment_method",
+    name: "wallet",
     initialState: {
         wallet: [],
+        walletItems:[],
+        walletTrans:{},
         status: "idle",
         errors: {},
     },
@@ -26,7 +30,24 @@ export const walletSlice = createSlice({
                 state.wallet = [];
             })
 
+        builder
+        .addCase(getWalletTransaction.pending, state => {
+            state.status = "pending";
+            state.errors = {};
+            state.walletTrans = {};
+        })
+        .addCase(getWalletTransaction.fulfilled, (state, action) => {
+            state.status = "success";
+            state.walletTrans = action.payload;
+            state.walletItems = dict(state.walletItems, action.payload.data)
            
+            state.errors = {};
+        })
+        .addCase(getWalletTransaction.rejected, (state, { payload }) => {
+            state.status = "failed";
+            state.errors = payload;
+            state.walletTrans = {};
+        })     
     }
 });
 

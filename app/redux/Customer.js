@@ -66,9 +66,11 @@ export const customerSlice = createSlice({
             })
             .addCase(updatePendingCustomers.fulfilled, (state, action) => {
                 state.update = "success";
+                console.log("the pendingCustomer success", action.payload);
                 state.errors = {};
             })
             .addCase(updatePendingCustomers.rejected, (state, { payload }) => {
+                console.log("the pendingCustomer error", payload);
                 state.update = "failed";
                 state.errors = payload;
             })
@@ -79,12 +81,12 @@ export const customerSlice = createSlice({
                 state.errors = {};
             })
             .addCase(registerCustomer.fulfilled, (state, action) => {
-               
+                console.log("the registerCustomer success", payload);
                 state.update = "success";
                 state.errors = {};
             })
             .addCase(registerCustomer.rejected, (state, { payload }) => {
-               
+                console.log("the registerCustomer error", payload);
                 state.update = "failed";
                 state.errors = payload;
             })
