@@ -9,13 +9,14 @@ import links from "./data";
 import styles from "./style";
 import { logout } from "@Store/Auth";
 import { getCustomers } from "@Request/Customer";
-import { priceList } from "@Request/PriceList";
+import { priceList , priceListChemist} from "@Request/PriceList";
 import { getPaymentOptions } from "@Request/paymentOptions";
 
 const Drawer = (props) => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
     const [showPriceList, setShowPriceList] = useState(false);
+    const [showPriceListChemist, setShowPriceListChemist] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
 
     // USESELECTOR
@@ -96,6 +97,10 @@ const Drawer = (props) => {
         setShowPriceList(!showPriceList);
         dispatch(priceList(id));
     }
+    const getPriceListChemist = () => {
+        setShowPriceList(!showPriceList);
+        dispatch(priceListChemist());
+    }
 
 
     const List = ({ item }) => (
@@ -130,11 +135,22 @@ const Drawer = (props) => {
         <View style={styles.dropInner}>
             <TouchableOpacity onPress={getPriceList}>
                 <View style={styles.dropItem}>
-                    <Text style={styles.dropList}>Pharmacy/Chemist</Text>
+                    <Text style={styles.dropList}>Pharmacy</Text>
                 </View>
             </TouchableOpacity>
         </View>
     ); 
+
+    const Chemist = () => (
+        <View style={styles.dropInner}>
+            <TouchableOpacity onPress={getPriceListChemist}>
+                <View style={styles.dropItem}>
+                    <Text style={styles.dropListChemist}>Chemist</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    ); 
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -260,10 +276,17 @@ const Drawer = (props) => {
                         {
                             showPriceList ?
                              options.length ?
+                             <>
+                              <View style={styles.dropCoverChemist}>
+                                    <Chemist />
+
+                                </View>
                                 <View style={styles.dropCover}>
                                     <Pharmacy />
                                     <FlatList data={options} renderItem={PriceList} keyExtractor={item => item.id} vertical={true} />
                                 </View>
+                               
+                            </>
                                 :
                                 <View style={styles.dropCover}>
                                      <ActivityIndicator size="small" color="green" />
@@ -271,6 +294,8 @@ const Drawer = (props) => {
                                 :
                                 null
                         }
+
+
 
 
                         <View style={styles.agentView}>

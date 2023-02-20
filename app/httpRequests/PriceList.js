@@ -7,3 +7,9 @@ export const priceList = createAsyncThunk("price_list/all",
         const Axios = await AxiosBase();
         return apiRequest(Axios.get(`/api/v1/products/price_list/download?type=&option=${option}`), thunkAPI)
     });
+
+    export const priceListChemist = createAsyncThunk("price_list/chemist/all",
+    async (_, thunkAPI) => {
+        const Axios = await AxiosBase();
+        return apiRequest(Axios.get(`/api/v1/products/price_list/download?type=chemist`), thunkAPI)
+    });

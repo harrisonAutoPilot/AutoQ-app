@@ -55,13 +55,12 @@ const Wallet = ({props, navigation}) => {
         navigation.navigate("TransactionDetail", {item})
 
     }
-
-    console.log("the wallet2", user.id);
-    
+  
 
     useEffect(() => {
         // I will be replacing the 1880 with user.id
-        const id = 1880;
+        const id = user.id
+        // const id = 1880;
         const no = 1
         const param = {id, no}
         dispatch(getWallet(id))
@@ -107,7 +106,8 @@ const Wallet = ({props, navigation}) => {
     const loadMore = () => {
          // I will be replacing the 1880 with user.id
         setTrackLoaded(true)
-        const id = 1880;
+        // const id = 1880;
+        const id = user.id
         const param = {id:id, no: walletTrans?.current_page + 1}
          dispatch(getWalletTransaction(param));
     
