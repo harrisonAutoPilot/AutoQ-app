@@ -169,6 +169,11 @@ export default styles = StyleSheet.create({
     },
     dropCover:{
         paddingLeft:50,
+        marginTop:-10,
+        paddingBottom:10,
+    },
+    dropCoverChemist:{
+        paddingLeft:50,
         marginTop:-35,
         paddingBottom:10,
     },
@@ -181,6 +186,13 @@ export default styles = StyleSheet.create({
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 16,
         color: "#3858CF",
+        letterSpacing: 0.1 
+    },
+    dropListChemist:{
+        fontSize: 12,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 16,
+        color: "#00b300",
         letterSpacing: 0.1 
     },
     activityIcon: {
