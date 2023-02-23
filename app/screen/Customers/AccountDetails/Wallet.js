@@ -2,25 +2,17 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, Image, TouchableOpacity,RefreshControl, FlatList, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
-
-import { EmptyPlaceHolder } from "@Component";
 import { getWalletTransaction } from "@Request/Wallet";
-import { cleanReOrder } from "@Store/CustomerOrder";
 import styles from "./walletStyle";
 import Loader from "@Screen/Loader";
 import LinearGradient from 'react-native-linear-gradient';
-import CustomerPlaceholderCard from "@Screen/CustomerOrder/CustomerPlaceholderCard";
-import { listCart } from "@Request/Cart";
-import { cleanStatus, cleanList } from "@Store/Cart";
-import { getCustomerOrder } from "@Request/Customer";
 import TransactionCardPlaceholder from "./transactionPlaceholder";
 import EmptyTransaction from "./emptyTransaction"
 import commafy from "@Helper/Commafy"
 import Modal from "./SortBy"
-import data1 from "./data"
 import { getWallet } from "../../../httpRequests/Wallet";
 
-const Wallet = ({props, navigation}) => {
+const Wallet = ({navigation}) => {
    
     const dispatch = useDispatch();
 
@@ -59,8 +51,8 @@ const Wallet = ({props, navigation}) => {
 
     useEffect(() => {
         // I will be replacing the 1880 with user.id
-        const id = user.id
-        // const id = 1880;
+        // const id = user.id
+        const id = 1880;
         const no = 1
         const param = {id, no}
         dispatch(getWallet(id))
@@ -106,8 +98,8 @@ const Wallet = ({props, navigation}) => {
     const loadMore = () => {
          // I will be replacing the 1880 with user.id
         setTrackLoaded(true)
-        // const id = 1880;
-        const id = user.id
+        const id = 1880;
+        // const id = user.id
         const param = {id:id, no: walletTrans?.current_page + 1}
          dispatch(getWalletTransaction(param));
     
