@@ -137,7 +137,7 @@ const CustomersDashboard = (props) => {
                 <View style={styles.subHeader}>
                     <TouchableOpacity style={[styles.firstHeader, activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => { showActive(1); setSearch("") }}>
                         <View>
-                            <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PENDING </Text>
+                            <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PENDING</Text>
                         </View>
                         <View style={styles.firstInnerHeader}>
                             <Text style={styles.firstInnerTitle}>{customers?.pending?.count ? customers?.pending?.count : 0}</Text>

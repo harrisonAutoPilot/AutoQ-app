@@ -64,7 +64,7 @@ export default styles = StyleSheet.create({
         width: "30%"
     },
     activeSubHeaderText: {
-        fontSize: 14,
+        fontSize: 11,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         color: "#469D00",
@@ -72,7 +72,7 @@ export default styles = StyleSheet.create({
         textAlign: "center"
     },
     inActiveSubHeaderText: {
-        fontSize: 14,
+        fontSize: 11,
         fontFamily: "Urbanist-SemiBold",
         lineHeight: 20,
         color: "rgba(66, 66, 66, 1)",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity,SafeAreaView, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
 import EmptyFinance from "@Component/Empty/emptyFinance"
@@ -111,6 +111,7 @@ const MyWallet = (props) => {
 
     return (
         <View style={styles.inputMainHolder}>
+            <SafeAreaView >
             <WalletCard
                 mainBody={styles.mainBody}
                 walletAmount={`${wallet.balance ? commafy(wallet.balance) : 0}`}
@@ -162,7 +163,7 @@ const MyWallet = (props) => {
                 sheet={sheetOpen}
 
             />
-
+</SafeAreaView>
         </View>
     )
 };
