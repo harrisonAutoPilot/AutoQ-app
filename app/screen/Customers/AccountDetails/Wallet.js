@@ -194,6 +194,7 @@ const Wallet = ({navigation}) => {
          </LinearGradient>
         <View style={styles.middleContainer}>
             <Text style={styles.historyText}>Transaction History</Text>
+            {walletItems.length ?
         <TouchableOpacity style={styles.reverseContainer} onPress={sortWallet}>
         <Image 
             source={require("@Assets/image/icon.png")}
@@ -201,6 +202,9 @@ const Wallet = ({navigation}) => {
             />
         <Text style={styles.sortText}>Sort</Text>
         </TouchableOpacity >
+        :
+        null
+        }
         </View>
 
 

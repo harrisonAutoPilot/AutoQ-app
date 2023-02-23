@@ -153,8 +153,13 @@ export default styles = StyleSheet.create({
     },
     // this is for the placeholder
     holderCard:{
+        width:wp('100%'),
         flexDirection:'row',
         marginVertical:10,
+        alignSelf:'center',
+
+
+     
 
     },
     leftCover: {
@@ -166,8 +171,8 @@ export default styles = StyleSheet.create({
 
     },
     mdLine:{
-        width:170,
-        height:12,
+        width:160,
+        height:13,
         backgroundColor:"#e6e6e6",
         borderRadius:8,
         marginVertical:15,
