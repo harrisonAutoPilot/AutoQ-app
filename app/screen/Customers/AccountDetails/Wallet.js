@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, Image, TouchableOpacity,RefreshControl, FlatList, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
+
+
+
 import { getWalletTransaction } from "@Request/Wallet";
 import styles from "./walletStyle";
 import Loader from "@Screen/Loader";
@@ -17,6 +20,7 @@ const Wallet = ({navigation}) => {
     const dispatch = useDispatch();
 
     const {status, walletTrans,walletItems, wallet } = useSelector((state) => state.wallet);
+
     const {user} = useSelector((state) => state.auth);
 
     const [err, setErr] = useState("");
@@ -51,9 +55,10 @@ const Wallet = ({navigation}) => {
 
     useEffect(() => {
         // I will be replacing the 1880 with user.id
-        // const id = user.id
-        const id = 1880;
+        const id = user.id
+
         const no = 1
+        
         const param = {id, no}
         
         dispatch(getWallet(id))
@@ -99,9 +104,11 @@ const Wallet = ({navigation}) => {
     const loadMore = () => {
          // I will be replacing the 1880 with user.id
         setTrackLoaded(true)
-        const id = 1880;
-        // const id = user.id
+
+        const id = user.id
+
         const param = {id:id, no: walletTrans?.current_page + 1}
+
          dispatch(getWalletTransaction(param));
     
     };
@@ -129,9 +136,6 @@ const Wallet = ({navigation}) => {
                     null}
         </View>
     )
-
-    
-
 
 
     const ListView = ({ item }) => (
