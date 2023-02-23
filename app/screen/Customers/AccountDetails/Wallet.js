@@ -63,6 +63,7 @@ const Wallet = ({props, navigation}) => {
         // const id = 1880;
         const no = 1
         const param = {id, no}
+        
         dispatch(getWallet(id))
         
         dispatch(getWalletTransaction(param))  
