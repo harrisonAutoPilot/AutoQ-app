@@ -8,7 +8,7 @@ import { AuthBtn, COHeader as Header } from "@Component/index";
 import { cleanup, cleanfailedOrder, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
-import { getCustomerPendingOrders, verifyOrder, verifyCode ,getIncompleteItems, verifyCodeIncomplete} from "@Request/CustomerOrder";
+import { getCustomerPendingOrders, verifyOrder, verifyCode, getIncompleteItems, verifyCodeIncomplete} from "@Request/CustomerOrder";
 import { cleanup as delivery } from "@Store/DeliveryOptions";
 import { listCart } from "@Request/Cart";
 import { cleanList } from "@Store/Cart";
@@ -162,6 +162,7 @@ const InCompleteOrderDetails = (props) => {
          setLoader(false)
          setTrapError(errorIncomplete?.msg || errors?.msg)
          waitTime("", errors?.msg)
+
        
          if (errors.status === 402){
             setLoader(false)
@@ -170,6 +171,7 @@ const InCompleteOrderDetails = (props) => {
          }
          waitTimeToResendVerification()
       } else if (verify === "success") {
+
          setLoader(false);
          bottomSheet.current.close();
          dispatch(cleanup());
@@ -178,9 +180,11 @@ const InCompleteOrderDetails = (props) => {
       }
 
       if (verificationStatus === "failed" && props.navigation.isFocused()) {
+         console.log(errors?.msg, "verification msg failed")
          waitTime("", errors?.msg)
 
       } else if (verificationStatus === "success" && props.navigation.isFocused()) {
+         console.log(verificationStatus, "verification msg passed")
          waitTimeToResendVerification()
          setSuccessMsg("Verification code sent");
          cleanVerifyCall()

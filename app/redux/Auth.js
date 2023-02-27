@@ -41,15 +41,12 @@ export const authSlice = createSlice({
                 state.user = {};
             })
             .addCase(login.fulfilled, (state, action) => {
-                console.log("the login check",action.payload)
                 state.isAuthenticated = true;
                 state.errors = {};
             })
             .addCase(login.rejected, (state, { payload }) => {
                 state.status = "failed";
                 state.errors = payload;
-                console.log("the login pending", payload)
-                console.log("the errors from redux login", payload)
                 state.isAuthenticated = false
             })
 

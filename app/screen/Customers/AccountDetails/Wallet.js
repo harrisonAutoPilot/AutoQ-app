@@ -51,7 +51,9 @@ const Wallet = (props) => {
     useEffect(() => {
         const id = details.id
         const no = 1
+        
         const param = {id, no}
+        
         dispatch(getWallet(id))
         
         dispatch(getWalletTransaction(param))  
@@ -96,6 +98,7 @@ const Wallet = (props) => {
         setTrackLoaded(true)
         const id = details.id
         const param = {id:id, no: walletTrans?.current_page + 1}
+
          dispatch(getWalletTransaction(param));
     
     };
@@ -123,9 +126,6 @@ const Wallet = (props) => {
                     null}
         </View>
     )
-
-    
-
 
 
     const ListView = ({ item }) => (
