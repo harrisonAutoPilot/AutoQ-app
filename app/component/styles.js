@@ -72,6 +72,14 @@ export default styles = StyleSheet.create({
         marginLeft: 3,
 
     },
+    waveImgNew: {
+        position: 'absolute',
+        marginTop: 4,
+        width: 350,
+        height: 150,
+        marginLeft: 3,
+
+    },
     smNaira: {
         fontSize: 16,
     },

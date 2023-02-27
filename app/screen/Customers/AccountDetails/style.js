@@ -778,5 +778,79 @@ export default styles = StyleSheet.create({
     inbtwStore:{
         marginTop: 20
     },
-   
+
+    // the card
+    walletContainer:{
+        width:wp("90%"),
+        height:100,
+        borderRadius:10,
+        backgroundColor:'red',
+        alignSelf:'center',
+        alignItems:'center',
+        marginVertical:20,
+        justifyContent:'center'
+    },
+    amountText:{
+        color: '#ffffff',
+        fontSize: 22,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 28,
+        letterSpacing: 0.2, 
+        marginTop:10
+    },
+    walletCaption:{
+        color: '#ffffff',
+        fontSize: 14,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 20,
+        letterSpacing: 0.2, 
+    },
+    waveImg:{
+        width:wp("80%"),
+        height:120,
+        resizeMode:'contain',
+        position:'absolute'
+    },
+    middleContainer:{
+        width:wp("90%"),
+        alignSelf:'center',
+        paddingHorizontal:5,
+        flexDirection:"row",
+        justifyContent:'space-between'
+    },
+    historyText:{
+        color: '#212121',
+        fontSize: 16,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 24,
+        letterSpacing: 0.3,   
+    },
+    sortText:{
+        color: '#424242',
+        fontSize: 12,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 16,
+        letterSpacing: 0.3,   
+    },
+    reverseContainer:{
+    flexDirection:"row",
+    justifyContent:'center',
+    borderRadius:20,
+    borderWidth:1,
+    borderColor:"#E0E0E0",
+    paddingHorizontal:10,
+    paddingVertical:5,
+    backgroundColor:"#fafafa"
+    },
+    reverseImg:{
+        width:15,
+        height:15,
+        resizeMode:"contain"
+    },
+    bottomContainer:{
+        width:wp("100%"),
+        height:hp("60%"),
+        // backgroundColor:'red',
+        marginTop:10,
+    },   
 })

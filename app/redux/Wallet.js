@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import { getWallet, getWalletTransaction} from "@Request/Wallet"
+import { getWallet, getLoan, getWalletTransaction, getLoanTransaction} from "@Request/Wallet"
 import dict from "@Helper/dict";
 
 export const walletSlice = createSlice({
@@ -7,8 +7,11 @@ export const walletSlice = createSlice({
     name: "wallet",
     initialState: {
         wallet: [],
+        loan:[],
         walletItems:[],
         walletTrans:{},
+        loanItems:[],
+        loanTrans:{},
         status: "idle",
         errors: {},
     },
@@ -30,6 +33,23 @@ export const walletSlice = createSlice({
                 state.wallet = [];
             })
 
+            builder
+            .addCase(getLoan.pending, state => {
+                state.status = "pending";
+                state.errors = {};
+                state.loan = [];
+            })
+            .addCase(getLoan.fulfilled, (state, action) => {
+                state.loan = action.payload;
+                state.status = "success";
+                state.errors = {};
+            })
+            .addCase(getLoan.rejected, (state, { payload }) => {
+                state.status = "failed";
+                state.errors = payload;
+                state.loan = [];
+            })
+
         builder
         .addCase(getWalletTransaction.pending, state => {
             state.status = "pending";
@@ -47,6 +67,26 @@ export const walletSlice = createSlice({
             state.status = "failed";
             state.errors = payload;
             state.walletTrans = {};
+        })    
+        
+    
+        builder
+        .addCase(getLoanTransaction.pending, state => {
+            state.status = "pending";
+            state.errors = {};
+            state.loanTrans = {};
+        })
+        .addCase(getLoanTransaction.fulfilled, (state, action) => {
+            state.status = "success";
+            state.loanTrans = action.payload;
+            state.loanItems = dict(state.loanItems, action.payload.data)
+           
+            state.errors = {};
+        })
+        .addCase(getLoanTransaction.rejected, (state, { payload }) => {
+            state.status = "failed";
+            state.errors = payload;
+            state.loanTrans = {};
         })     
     }
 });

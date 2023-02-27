@@ -244,7 +244,7 @@ const ConfirmCheckOut = (props) => {
 
                     <View>
                         <Text style={styles.storeNameText}>{category}</Text>
-                        <Text style={styles.storeAddressText}>Balance: ₦{wallet.length ? commafy(wallet) : 0}</Text>
+                        <Text style={styles.storeAddressText}>Balance: ₦{wallet?.length ? commafy(wallet) : 0}</Text>
                     </View>
                 </View>
 

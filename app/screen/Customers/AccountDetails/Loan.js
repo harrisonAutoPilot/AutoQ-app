@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, Image, TouchableOpacity,RefreshControl, FlatList, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
-import { getWalletTransaction, getWallet } from "@Request/Wallet";
+import { getLoanTransaction, getWallet } from "@Request/Wallet";
 import styles from "./walletStyle";
 import Loader from "@Screen/Loader";
 import TransactionCardPlaceholder from "./transactionPlaceholder";
@@ -11,10 +11,12 @@ import commafy from "@Helper/Commafy"
 import Modal from "./SortBy"
 
 
-const Wallet = (props) => {
+const Loan = (props) => {
    
     const dispatch = useDispatch();
-    const {status, walletTrans,walletItems, wallet } = useSelector((state) => state.wallet);
+
+    // const details = props.route.params.details
+    const {status, loanTrans,loanItems} = useSelector((state) => state.wallet);
     const { details, name } = props;
 
 
@@ -43,10 +45,9 @@ const Wallet = (props) => {
     }
 
     const detailsScreen = (item) => {
-        props.navigation.navigate("TransactionDetail", {item, id:1})
+        props.navigation.navigate("TransactionDetail", {item, id:2})
 
     }
-
 
     useEffect(() => {
         const id = details.id
@@ -54,7 +55,7 @@ const Wallet = (props) => {
         const param = {id, no}
         dispatch(getWallet(id))
         
-        dispatch(getWalletTransaction(param))  
+        dispatch(getLoanTransaction(param))  
      
     }, []);
 
@@ -67,7 +68,7 @@ const Wallet = (props) => {
     const sortOrder = (id) => {
         setShowModal2(false);
         closeSheetSort();
-        let ordered = [...walletTrans?.data]
+        let ordered = [...loanTrans?.data]
 
         if (id === 1) {
             let searched = ordered.sort((a, b) => { return a.amount - b.amount })
@@ -95,15 +96,15 @@ const Wallet = (props) => {
     const loadMore = () => {
         setTrackLoaded(true)
         const id = details.id
-        const param = {id:id, no: walletTrans?.current_page + 1}
-         dispatch(getWalletTransaction(param));
+        const param = {id:id, no: loanTrans?.current_page + 1}
+         dispatch(getLoanTransaction(param));
     
     };
 
     const refreshView = useCallback(() => {
         setRefreshing(true);
 
-        dispatch(getWalletTransaction(1));
+        dispatch(getLoanTransaction(1));
         
         wait(3000).then(() => setRefreshing(false));
     }, []);
@@ -131,7 +132,7 @@ const Wallet = (props) => {
     const ListView = ({ item }) => (
         
         <TouchableOpacity onPress={() => detailsScreen(item)}>
-            { item.type === "credit" ?
+            { item.type === "repay" ?
             <View style={styles.cardCover}>
                 <View>
                 <Image 
@@ -140,7 +141,7 @@ const Wallet = (props) => {
                 />
                 </View>
                 <View>
-                    <Text style={styles.creditText}>Wallet Credit</Text>
+                    <Text style={styles.creditText}>Loan Debit</Text>
                     <Text style={styles.dateText}>{item.created_at.substring(0, 10).split('-').reverse().join('-')}</Text>
                 </View>
                 <View>
@@ -156,7 +157,7 @@ const Wallet = (props) => {
                 />
                 </View>
                 <View>
-                    <Text style={styles.creditText}>Wallet Debit</Text>
+                    <Text style={styles.creditText}>Loan Credit</Text>
                     <Text style={styles.dateText}>{item.created_at.substring(0, 10).split('-').reverse().join('-')}</Text>
                 </View>
                 <View>
@@ -179,7 +180,7 @@ const Wallet = (props) => {
     <View style={styles.bottomContainer}>
     <View style={styles.middleContainer}>
             <Text style={styles.historyText}>Transaction History</Text>
-            {walletItems.length ?
+            {loanItems.length ?
         <TouchableOpacity style={styles.reverseContainer} onPress={sortWallet}>
         <Image 
             source={require("@Assets/image/icon.png")}
@@ -195,7 +196,7 @@ const Wallet = (props) => {
     {(status === "pending" || status === "idle") && !trackLoaded ?
         <TransactionCardPlaceholder /> :
           <FlatList
-            data = {!result.length ? walletItems : result}
+            data = {!result.length ? loanItems : result}
             renderItem={ListView}
             ListEmptyComponent={EmptyTransaction}
             showsVerticalScrollIndicator={false}
@@ -209,7 +210,7 @@ const Wallet = (props) => {
                   { length: 100, offset: 100 * index, index }
               )}
                 onEndReached={() => {
-                    if (walletTrans?.current_page < walletTrans?.last_page) {
+                    if (loanTrans?.current_page < loanTrans?.last_page) {
                         loadMore()
                     }
                 }}
@@ -234,4 +235,4 @@ const Wallet = (props) => {
     )
 };
 
-export default Wallet;
+export default Loan;

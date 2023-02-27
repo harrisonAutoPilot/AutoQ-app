@@ -7,6 +7,11 @@ import { COHeader as Header } from "@Component";
 const TransactionDetail = (props) => {
     const goBack = () => props.navigation.goBack();
     const details = props.route.params.item;
+    
+    const id = props.route.params.id;
+
+    console.log("the trans type", id)
+    
 
     return (
         <View style={styles.view}>
@@ -21,25 +26,73 @@ const TransactionDetail = (props) => {
                 </View>
                 <View style={styles.oddCover}>
                     <Text style={styles.titleText}>Amount: </Text>
-                    {details.type === "purchase" ?
+                    {id === 1 ?
+                        <>
+                    {details.type === "purchase" || details.type === "repay" ?
+                   
                         <Text style={styles.valueTextOdd2}>₦{commafy(details.amount)}</Text>
                         :
-                        <Text style={styles.valueTextOdd}>₦{commafy(details.amount)}</Text>}
+                        <Text style={styles.valueTextOdd}>₦{commafy(details.amount)}</Text>
+                   
+                    
+                        }
+                        </>
+                        :
+                        <>
+                    {details.type === "purchase" || details.type === "repay" ?
+                   
+                        <Text style={styles.valueTextOdd}>₦{commafy(details.amount)}</Text>
+                        :
+                        <Text style={styles.valueTextOdd2}>₦{commafy(details.amount)}</Text>
+                   
+                    
+                        }
+                        </>
+                    }
                 </View>
                 <View style={styles.cardCover}>
                     <Text style={styles.titleText}>Transaction Type: </Text>
-                    {details.type === "purchase" ?
-                        <Text style={styles.valueTextOdd2}>Wallet Debit</Text>
+                        {id === 1 ?
+                        <>
+                        {details.type === "purchase" || details.type === "repay" ?
+                        <Text style={styles.valueTextOdd2}> Wallet Debit</Text>
                         :
-                        <Text style={styles.valueTextOdd}>Wallet {details.type === "purchase" ? "Debit" : "Credit"}</Text>}
+                        <Text style={styles.valueTextOdd}>Wallet Credit</Text>}
+                        </>
+                        :
+                        <>
+                        {details.type === "purchase" || details.type === "repay" ?
+                        <Text style={styles.valueTextOdd}>Loan Debit</Text>
+                        :
+                        <Text style={styles.valueTextOdd2}>Loan Credit</Text>}
+                        </>
+                        }
+
+                    
                 </View>
 
                 <View style={styles.oddCover}>
+                
                     <Text style={styles.titleText}>Description: </Text>
-                    {details.type === "purchase" ?
+                    {id === 1 ?
+                    <>
+                    {details.type === "purchase" || details.type === "repay" ?
                         <Text style={styles.valueTextOdd2}>{details.description}</Text>
                         :
-                        <Text style={styles.valueTextOdd}>{details.description}</Text>}
+                        <Text style={styles.valueTextOdd}>{details.description}</Text>
+                    }
+                    </>
+                    :
+                    <>
+                    {details.type === "purchase" || details.type === "repay" ?
+                        <Text style={styles.valueTextOdd}>{details.description}</Text>
+                        :
+                        <Text style={styles.valueTextOdd2}>{details.description}</Text>
+                    }
+                    </>
+
+                }
+
                 </View>
             </View>
         </View>

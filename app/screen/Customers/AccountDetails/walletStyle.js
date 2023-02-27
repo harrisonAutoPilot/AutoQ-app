@@ -48,6 +48,7 @@ export default styles = StyleSheet.create({
         width:wp("90%"),
         alignSelf:'center',
         paddingHorizontal:5,
+        paddingVertical:5,
         flexDirection:"row",
         justifyContent:'space-between'
     },

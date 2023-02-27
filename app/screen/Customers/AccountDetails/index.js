@@ -7,7 +7,7 @@ import { COHeader as Header } from "@Component";
 import InActive from "./Inactive";
 import CustomerInfo from "./Info";
 import Orders from "./Orders";
-import Wallet from "./Wallet"
+import Transaction from "./Transaction";
 import { getCustomerOrder } from "@Request/Customer";
 import { cleanOrder } from "@Store/Customer";
 
@@ -61,7 +61,7 @@ const CustomerDetails = (props) => {
                         <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>ORDERS</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[activeId === 3 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => showActive(3)}>
-                        <Text style={[activeId === 3 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>WALLET</Text>
+                        <Text style={[activeId === 3 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>TRANSACTION</Text>
                     </TouchableOpacity>
 
 
@@ -80,10 +80,10 @@ const CustomerDetails = (props) => {
             detailsScreen={detailsScreen} 
             cart={cart} />
                 :
-            <Wallet 
+            <Transaction
             details={details} 
             detailsScreen={detailsScreen} 
-            cart={cart} 
+            // cart={cart} 
             props={props}
             navigation={props.navigation}/>
         }
