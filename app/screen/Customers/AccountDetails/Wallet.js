@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity,RefreshControl, FlatList, ActivityI
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { getWalletTransaction, getWallet } from "@Request/Wallet";
+import { cleanUpTransaction } from "@Store/Wallet";
 import styles from "./walletStyle";
 import Loader from "@Screen/Loader";
 import TransactionCardPlaceholder from "./transactionPlaceholder";
@@ -49,6 +50,7 @@ const Wallet = (props) => {
 
 
     useEffect(() => {
+        dispatch(cleanUpTransaction())
         const id = details.id
         const no = 1
         
@@ -105,9 +107,10 @@ const Wallet = (props) => {
 
     const refreshView = useCallback(() => {
         setRefreshing(true);
+        const id = details.id
+        const param = {id:id, no: 1}
+        dispatch(getWalletTransaction(param));
 
-        dispatch(getWalletTransaction(1));
-        
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
@@ -195,7 +198,7 @@ const Wallet = (props) => {
     {(status === "pending" || status === "idle") && !trackLoaded ?
         <TransactionCardPlaceholder /> :
           <FlatList
-            data = {!result.length ? walletItems : result}
+             data = {!result.length ? walletItems : result}
             renderItem={ListView}
             ListEmptyComponent={EmptyTransaction}
             showsVerticalScrollIndicator={false}

@@ -15,6 +15,20 @@ export const walletSlice = createSlice({
         status: "idle",
         errors: {},
     },
+    reducers:{
+        cleanup: (state) => {
+            state.errors = {}
+            
+        },
+        cleanUpTransaction: (state) => {
+            state.walletItems = [],
+            state.walletTrans ={},
+            state.loanItems = [],
+            state.loanTrans = {},
+            state.status= "idle"
+           
+        },
+    },
     extraReducers: builder => {
         builder
             .addCase(getWallet.pending, state => {
@@ -79,7 +93,7 @@ export const walletSlice = createSlice({
         .addCase(getLoanTransaction.fulfilled, (state, action) => {
             state.status = "success";
             state.loanTrans = action.payload;
-            state.loanItems = dict(state.loanItems, action.payload.data)
+            state.loanItems = dict(state.loanItems, action.payload?.data)
            
             state.errors = {};
         })
@@ -90,5 +104,6 @@ export const walletSlice = createSlice({
         })     
     }
 });
+export const { cleanup, cleanUpTransaction } = walletSlice.actions
 
 export default walletSlice.reducer;

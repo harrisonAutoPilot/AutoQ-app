@@ -6,6 +6,7 @@ import { getLoanTransaction, getWallet } from "@Request/Wallet";
 import styles from "./walletStyle";
 import Loader from "@Screen/Loader";
 import TransactionCardPlaceholder from "./transactionPlaceholder";
+import { cleanUpTransaction } from "@Store/Wallet";
 import EmptyTransaction from "./emptyTransaction"
 import commafy from "@Helper/Commafy"
 import Modal from "./SortBy"
@@ -16,7 +17,7 @@ const Loan = (props) => {
     const dispatch = useDispatch();
 
     // const details = props.route.params.details
-    const {status, loanTrans,loanItems} = useSelector((state) => state.wallet);
+    const {status, loanTrans,loanItems, loan} = useSelector((state) => state.wallet);
     const { details, name } = props;
 
 
@@ -50,6 +51,7 @@ const Loan = (props) => {
     }
 
     useEffect(() => {
+        dispatch(cleanUpTransaction())
         const id = details.id
         const no = 1
         const param = {id, no}
@@ -103,8 +105,9 @@ const Loan = (props) => {
 
     const refreshView = useCallback(() => {
         setRefreshing(true);
-
-        dispatch(getLoanTransaction(1));
+        const id = details.id
+        const param = {id:id, no:1}
+        dispatch(getLoanTransaction(param));
         
         wait(3000).then(() => setRefreshing(false));
     }, []);
