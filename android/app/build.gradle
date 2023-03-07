@@ -137,8 +137,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         // versionCode 27
         // versionName "3.3" 
-          versionCode 34
-          versionName "4.1" 
+          versionCode 35
+          versionName "4.2" 
         vectorDrawables.useSupportLibrary = true
     }
     splits {
