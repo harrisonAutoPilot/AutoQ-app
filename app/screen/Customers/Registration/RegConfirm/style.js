@@ -187,6 +187,13 @@ export default styles = StyleSheet.create({
     licenseView2:{
         marginTop: 20,
         marginBottom: 5
+    },
+    errorCover:{
+        width:"100%",
+        alignSelf:'center',
+        zIndex:9000,
+       
+        top:20,
     }
 
 })

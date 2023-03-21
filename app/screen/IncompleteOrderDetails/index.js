@@ -4,11 +4,11 @@ import styles from "./style";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
-import { AuthBtn, COHeader as Header, ConfirmDeleteBottomSheet } from "@Component/index";
+import { AuthBtn, COHeader as Header, ConfirmDeleteBottomSheet , FileSizeBottomSheet} from "@Component/index";
 import { cleanup, cleanfailedOrder, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
-import { getCustomerPendingOrders, verifyOrder, verifyCode, getIncompleteItems, verifyCodeIncomplete} from "@Request/CustomerOrder";
+import { getCustomerPendingOrders, verifyOrder, verifyCode, getIncompleteItems, verifyCodeIncomplete, deleteIncompleteOrder} from "@Request/CustomerOrder";
 import { cleanup as delivery } from "@Store/DeliveryOptions";
 import { listCart } from "@Request/Cart";
 import { cleanList } from "@Store/Cart";
@@ -26,6 +26,8 @@ const InCompleteOrderDetails = (props) => {
    const [err, setErr] = useState("");
 
    const [loader, setLoader] = useState(false);
+
+   const [showFileSize, setShowFileSize] = useState(false);
 
    const [trapError, setTrapError] = useState()
 
@@ -49,7 +51,7 @@ const InCompleteOrderDetails = (props) => {
 
 
 
-   const { errors, verify, verificationStatus,errorIncomplete, errorsCheck,incompleteOrderCurrentPage, verifyIncom} = useSelector((state) => state.order);
+   const { errors, verify, deleteOrder, verificationStatus,errorIncomplete, errorsCheck,incompleteOrderCurrentPage, verifyIncom} = useSelector((state) => state.order);
 
    const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -92,9 +94,19 @@ const InCompleteOrderDetails = (props) => {
       bottomSheetList?.current?.present()
    }
 
-   const deleteOrder = () => {
-      // console.log("thee helllo sheet");
-       bottomSheetDelete?.current?.show()
+   const deleteThisOrder = () => {
+        setShowFileSize(true)
+   }
+
+   const cancelDelete = () => {
+      bottomSheetDelete?.current?.close() 
+   }
+
+   const proceedDelete = () => {
+      setLoader(true)
+      console.log("the ooooo",  orders.id)
+      const id = orders.id;
+      dispatch(deleteIncompleteOrder(id));
    }
 
    const proceedWithToken = () => {
@@ -213,8 +225,22 @@ const InCompleteOrderDetails = (props) => {
          props.navigation.navigate("CheckoutSuccess", { amount: orders.total_amount, delivery_price: orders?.delivery_type?.price  })
      }
 
+ if (deleteOrder === "failed" && props.navigation.isFocused()) {
+      bottomSheetDelete?.current?.close() 
+      setLoader(false);
+      waitTime("", errors?.msg)
+  } else if (deleteOrder === "success" && props.navigation.isFocused()) {
+      setShowFileSize(false)
+      setLoader(false)
+      dispatch(cleanup())
+      props.navigation.goBack()
+  
+      //props.navigation.navigate("CheckoutSuccess", { amount: orders.total_amount, delivery_price: orders?.delivery_type?.price  })
+  }
 
-   }, [errors, verify, verificationStatus, verifyIncom]);
+
+
+   }, [errors, verify, verificationStatus, verifyIncom, deleteOrder]);
 
 
    const goBack = () => props.navigation.goBack();
@@ -341,7 +367,7 @@ const InCompleteOrderDetails = (props) => {
                      <View style={[styles.addBtnCover]}>
                         <AuthBtn title="Re-Send Code" style={styles.addressBtn2} styles={styles.btnText2} onPress={resendToken} />
                      </View>
-                     <TouchableOpacity style={styles.deleteCover} onPress={deleteOrder}>
+                     <TouchableOpacity style={styles.deleteCover} onPress={deleteThisOrder}>
                         <Text style={styles.deleteText}>Delete this Order</Text>
                      </TouchableOpacity>
                   </View>
@@ -382,10 +408,20 @@ const InCompleteOrderDetails = (props) => {
             
                 />
 
-                <ConfirmDeleteBottomSheet
+                {/* <ConfirmDeleteBottomSheet
                 bottomSheetDelete ={bottomSheetDelete}
+                proceed={proceedDelete}
+                nope={cancelDelete}
 
-                />
+                /> */}
+                <FileSizeBottomSheet
+                     visibleRetrieve={showFileSize}
+                     returnBack={() => setShowFileSize(false)}
+                     proceed={proceedDelete}
+                     nope={() => setShowFileSize(false)}
+                     title="Confirm Order Delete"
+                     message="Are you sure you want to proceed with the delete ?"
+                     />
               
        
       </View>

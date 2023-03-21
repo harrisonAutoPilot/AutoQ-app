@@ -1,4 +1,4 @@
-import React, { useState, useCallback,} from "react";
+import React, { useState, useCallback,useRef} from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
@@ -10,7 +10,6 @@ import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import { cleanup } from "@Store/Auth";
-import Triangle from "@react-native-toolkit/triangle";
 import { getState } from "@Request/State";
 import { getPendingUserStore } from "@Request/Store";
 import { cleanup as clean } from "@Store/Stores";
@@ -21,12 +20,13 @@ const Registration = (props) => {
     const [activeId, setActiveId] = useState(1);
     const [storePhotoOne, setStorePhotoOne] = useState("");
     const [storePhotoTwo, setStorePhotoTwo] = useState("");
+    const [fileSize, setFileSize] = useState(1);
+   
     
     const details = props.route.params?.items
     const key = props.route.params?.key
     let [data, setData] = useState({})
     let [dataOne, setDataOne] = useState({})
- 
 
     const { pendingStatus, pending } = useSelector((state) => state.store);
 
@@ -105,16 +105,30 @@ const Registration = (props) => {
             includeBase64: true,
             mediaType: 'photo'
         }).then(images => {
+          
             if (id === 1) {
-
+               
                 setStorePhotoOne("License Image Received")
                 const img = images.map(img => {
                     return {path: `data:image/jpg;base64,${img.data}`}
                 })
                 props.setFieldValue('images', img)
             } else {
-                setStorePhotoTwo("Image Received")
+
+                setStorePhotoTwo("Image Received" ) 
+
                 const img = images.map(img => {
+                    // if (img.size > 30000){
+                    //     console.log("the image size", img.size)
+                    //     setFileSize(2)
+                    //     setShowFileSize(true)
+                    //      return 
+                    // }else{
+                    //     //  console.log("the image size", img.size)
+                    //      setFileSize(1)
+                    //      console.log("the size is normal")
+                    // return {path: `data:image/jpg;base64,${img.data}`}
+                    // }
                     return {path: `data:image/jpg;base64,${img.data}`}
                 })
                 props.setFieldValue('images2', img)
@@ -198,6 +212,10 @@ const Registration = (props) => {
             {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={redirectToStepTwo} user_details={props.route.params?.items ? details : undefined}  keys={key}/> : activeId === 2 ?
                 <Step2 user_details={props.route.params?.items ? props.route.params?.items : undefined} details={registerState2} submit={redirectToStepThree} redirect={redirectToStepOne} /> :
                 <Step3 details={registerState3} storePhotoOne={storePhotoOne} storePhotoTwo={storePhotoTwo} licenseImg={licenseImg} submit={submit} redirect={redirectToStepTwoAgain}  />}
+
+
+
+
         </View>
     )
 };

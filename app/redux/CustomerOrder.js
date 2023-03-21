@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {getCustomerOrders, placeOrder, reOrder,reAddToCart, trackOrder, verifyOrder, verifyCode,getIncompleteItems,verifyCodeIncomplete, getCustomerPendingOrders} from "@Request/CustomerOrder";
+import {getCustomerOrders, placeOrder, reOrder,reAddToCart, trackOrder, verifyOrder, verifyCode,getIncompleteItems,verifyCodeIncomplete, getCustomerPendingOrders, deleteIncompleteOrder} from "@Request/CustomerOrder";
 import dict from "@Helper/dict";
 
 
@@ -17,6 +17,7 @@ export const orderSlice = createSlice({
         orderDetail : {},
         loaded: "idle",
         verify: "idle",
+        deleteOrder:"idle",
         verifyIncom:"idle",
         verificationStatus:"idle",
         incompleteOrderCurrentPage: {},
@@ -38,11 +39,13 @@ export const orderSlice = createSlice({
             state.verificationStatus = "idle"
             state.pendingOrders = []
             state.incompleteOrders = []
+            state.deleteOrder = "idle"
             state.trackOrderList= []
             state.trackOrderStatus = "idle"
         },
         cleanOrder: (state) => {
             state.status = "idle"
+            state.deleteOrder ="idle"
             state.orders = []
             state.ordersCurrentPage = {}
             state.incompleteOrderCurrentPage = {}
@@ -53,6 +56,7 @@ export const orderSlice = createSlice({
             state.errorsCheck = {}
             state.update = "idle"
             state.addToCart = "idle"
+            state.deleteOrder = "idle"
             state.orderDetail = {}
             state.added = {}
             state.trackOrderList= []
@@ -269,6 +273,21 @@ export const orderSlice = createSlice({
                 state.errors = payload;
                 state.incompleteOrders = [];
                 state.loaded = "failed";
+            })
+
+            
+            builder
+            .addCase(deleteIncompleteOrder.pending, state => {
+                state.deleteOrder = "pending";
+                state.errors = {};
+            })
+            .addCase(deleteIncompleteOrder.fulfilled, (state, action) => {
+                state.deleteOrder = "success";
+                state.errors = {};
+            })
+            .addCase(deleteIncompleteOrder.rejected, (state, { payload }) => {
+                state.deleteOrder = "failed";
+                state.errors = payload;
             })
 
 

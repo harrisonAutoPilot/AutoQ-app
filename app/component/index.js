@@ -21,6 +21,7 @@ import EmptyCustomer from "./Empty/emptyCustomer"
 import EmptyCategory from "./Empty/emptyCategory"
 import ConfirmBottomSheet from "./ConfirmBottomSheet"
 import ConfirmDeleteBottomSheet from "./ConfirmDeleteBottomSheet"
+import FileSizeBottomSheet from "./FileSizeSheet"
 
-export { FormikValidator,Check,ConfirmBottomSheet,ConfirmDeleteBottomSheet, InputField, AuthBtn, Header, COHeader, 
+export { FormikValidator,Check,FileSizeBottomSheet,ConfirmBottomSheet,ConfirmDeleteBottomSheet, InputField, AuthBtn, Header, COHeader, 
     EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder,EmptyCategory, EmptyStore, EmptyDeal,SuccessMsgViewTwo, ErrorMsg, Success, NavHeader, BtnLg, BtnPre};

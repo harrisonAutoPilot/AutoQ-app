@@ -67,3 +67,10 @@ export const getIncompleteItems = createAsyncThunk("item/incomplete",
       const Axios = await AxiosBase();
       return apiRequest(Axios.get(`api/v1/agent/orders/${id}/out_of_stock`), thunkAPI)
    });
+
+   // this is for the incomplete order
+export const deleteIncompleteOrder = createAsyncThunk("order/delete/incomplete",
+async (id, thunkAPI) => {
+   const Axios = await AxiosBase();
+return apiRequest(Axios.delete(`api/v1/agent/orders/${id}`), thunkAPI)
+    });

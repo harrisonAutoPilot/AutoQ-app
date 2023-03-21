@@ -63,12 +63,12 @@ const Transaction = (props) => {
          <View style={styles.innerCover}>
             {sign && sign === "-" ?
                          <>
-             <Text style={styles.walletTitle}>The user owes an amount of</Text>
+             <Text style={styles.walletTitle}>You owe a balance of</Text>
             <Text style={styles.amountText}>{myBalance ? `₦${commafy(parseInt(myBalance1))}.00` : "0.00"}</Text>
             </>
             :
             <>
-            <Text style={styles.walletTitle}>The user has a Wallet Balance of</Text>
+            <Text style={styles.walletTitle}>You have a Wallet Balance of</Text>
             <Text style={styles.amountText}>{myBalance ? `₦${commafy(parseInt(myBalance1))}.00` : "0.00"}</Text>
             </>
                 }

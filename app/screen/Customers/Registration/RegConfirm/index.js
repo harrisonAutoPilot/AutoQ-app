@@ -30,6 +30,10 @@ const RegConfirm = (props) => {
         setStoreIMg(img)
     }
 
+    // useEffect(() => {
+    //     refreshView("hello odimnobi", "");
+    // }, []);
+
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
@@ -66,10 +70,13 @@ const RegConfirm = (props) => {
             setLoader(false);
             storeSuccess();
         } else if (update === "failed" && props.navigation.isFocused()) {
-            refreshView(errors?.msg, "")
+            setLoader(false);
+            refreshView(errors?.msg, "");
+            console.log("the error log", errors?.msg);
         }
         else {
             setErrMsg("");
+           
         }
     }, [update]);
 
@@ -120,7 +127,9 @@ const RegConfirm = (props) => {
     return (
         <View style={styles.view}>
             <Header title="Confirm Registration" onPress={goBack} styleView={styles.body} styles={styles.headerText} />
-            {errMsg ? <Toast config={toastConfig} /> : null}
+         <View style={styles.errorCover}>
+         {errMsg ? <Toast config={toastConfig} /> : null}
+         </View>
             <ScrollView>
                 <View style={styles.modalView}>
 
