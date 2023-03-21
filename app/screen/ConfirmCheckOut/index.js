@@ -153,7 +153,7 @@ const ConfirmCheckOut = (props) => {
 
     const waitTimeToResendVerification = useCallback(() => {
         wait(15000).then(() => {
-            console.log("called me cont")
+            // console.log("called me cont")
             setShowResendCodeBtn(true);
         });
 

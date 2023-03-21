@@ -20,6 +20,7 @@ import EmptyFinance from "./Empty/emptyFinance"
 import EmptyCustomer from "./Empty/emptyCustomer"
 import EmptyCategory from "./Empty/emptyCategory"
 import ConfirmBottomSheet from "./ConfirmBottomSheet"
+import ConfirmDeleteBottomSheet from "./ConfirmDeleteBottomSheet"
 
-export { FormikValidator,Check,ConfirmBottomSheet, InputField, AuthBtn, Header, COHeader, 
+export { FormikValidator,Check,ConfirmBottomSheet,ConfirmDeleteBottomSheet, InputField, AuthBtn, Header, COHeader, 
     EmptyPlaceHolder, WalletCard, AddCartListEmptyBig,EmptyFinance,EmptyCustomer, EmptyOrder,EmptyCategory, EmptyStore, EmptyDeal,SuccessMsgViewTwo, ErrorMsg, Success, NavHeader, BtnLg, BtnPre};

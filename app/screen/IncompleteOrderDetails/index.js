@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Image, ScrollView, FlatList, Platform } from "react-native";
+import { View, Text, Image, ScrollView, FlatList, Platform, TouchableOpacity  } from "react-native";
 import styles from "./style";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 
-import { AuthBtn, COHeader as Header } from "@Component/index";
+import { AuthBtn, COHeader as Header, ConfirmDeleteBottomSheet } from "@Component/index";
 import { cleanup, cleanfailedOrder, cleanVerify } from "@Store/CustomerOrder";
 import Loader from "@Screen/Loader";
 import BottomSheet from "@Screen/ConfirmCheckOut/ConfirmOrder";
@@ -14,6 +14,8 @@ import { listCart } from "@Request/Cart";
 import { cleanList } from "@Store/Cart";
 import ModalView from "./PromptBottomSheet";
 import ListItemView from "./ListBottomSheet";
+
+
 
 
 
@@ -36,6 +38,8 @@ const InCompleteOrderDetails = (props) => {
    const bottomSheetPrompt = useRef();
 
    const bottomSheet = useRef();
+
+   const bottomSheetDelete = useRef();
 
    const bottomSheetList = useRef()
 
@@ -86,6 +90,11 @@ const InCompleteOrderDetails = (props) => {
    const seeList = () => {
       bottomSheetPrompt?.current?.close()
       bottomSheetList?.current?.present()
+   }
+
+   const deleteOrder = () => {
+      // console.log("thee helllo sheet");
+       bottomSheetDelete?.current?.show()
    }
 
    const proceedWithToken = () => {
@@ -332,6 +341,9 @@ const InCompleteOrderDetails = (props) => {
                      <View style={[styles.addBtnCover]}>
                         <AuthBtn title="Re-Send Code" style={styles.addressBtn2} styles={styles.btnText2} onPress={resendToken} />
                      </View>
+                     <TouchableOpacity style={styles.deleteCover} onPress={deleteOrder}>
+                        <Text style={styles.deleteText}>Delete this Order</Text>
+                     </TouchableOpacity>
                   </View>
 
                </View>
@@ -368,6 +380,11 @@ const InCompleteOrderDetails = (props) => {
                proceed ={proceedWithTokenList}
                result={incompleteOrderCurrentPage}
             
+                />
+
+                <ConfirmDeleteBottomSheet
+                bottomSheetDelete ={bottomSheetDelete}
+
                 />
               
        

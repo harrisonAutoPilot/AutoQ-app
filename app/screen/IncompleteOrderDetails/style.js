@@ -367,7 +367,7 @@ modalTitle: {
     textTransform: "capitalize"
   },
   snTextTwo: {
-    color: '#469D00',
+    color: '#C19C00',
     fontSize: 14,
     fontFamily: "Urbanist-Medium",
     lineHeight: 20,
@@ -393,7 +393,7 @@ modalTitle: {
   },
   StatusCover: {
 
-    backgroundColor: '#E3F6CF',
+    backgroundColor:"rgba(253, 216, 53, 0.1)",
     paddingTop: 4,
     paddingBottom: 4,
     paddingLeft: 16,
@@ -403,7 +403,7 @@ modalTitle: {
 
   },
   statusText: {
-    color: '#469D00',
+    color: '#C19C00',
     fontSize: 14,
     fontFamily: "Urbanist-SemiBold",
     lineHeight: 20,
@@ -471,7 +471,7 @@ modalTitle: {
     textTransform: 'capitalize',
   },
   StatusCoverB: {
-    backgroundColor: 'rgba(233, 235, 249, 1)',
+     backgroundColor: 'rgba(233, 235, 249, 1)',
     paddingTop: 6,
     paddingBottom: 6,
     paddingLeft: 16,
@@ -645,6 +645,25 @@ midListContainer:{
     fontWeight: "600",
     letterSpacing: 0.1,
   },
+  // this is for the delete button
+  deleteCover:{
+    width:wp("90%"),
+    paddingVertical:12,
+    borderWidth:1,
+    borderColor:"#D32F2F",
+    alignSelf:'center',
+    marginVertical:10,
+    alignItems:"center",
+    borderRadius:40
+  },
+  deleteText:{
+    color:"#D32F2F",
+    fontSize: 14,
+    fontFamily: "Urbanist-SemiBold",
+    lineHeight: 20,
+    fontWeight: "600",
+    letterSpacing: 0.1,
+  }
 });
 
 export default styles
