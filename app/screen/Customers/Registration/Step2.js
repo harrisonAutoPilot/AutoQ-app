@@ -60,7 +60,7 @@ const Step2 = (props) => {
                                                         style={styles.label4}
                                                         value={props.values.store_name }
                                                         onBlur={props.handleBlur('store_name')}
-                                                        placeholder="Kingsley"
+                                                        placeholder="e.g. Kingsley pharmacy"
                                                         placeholderTextColor="#757575"
                                                         keyboardType="default"
                                                         onChangeText={(val) => {
@@ -86,7 +86,7 @@ const Step2 = (props) => {
                                                         style={styles.label4}
                                                         value={props.values.address}
                                                         onBlur={props.handleBlur('address')}
-                                                        placeholder="James"
+                                                        placeholder="15 Eric more street ..."
                                                         placeholderTextColor="#757575"
                                                         keyboardType="default"
                                                         onChangeText={(val) => {
