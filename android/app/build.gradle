@@ -135,8 +135,10 @@ android {
         applicationId "com.rhmagent"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 36
-        versionName "4.3"
+        // versionCode 36
+        // versionName "4.3"
+         versionCode 37
+        versionName "4.4"
         vectorDrawables.useSupportLibrary = true
     }
     splits {

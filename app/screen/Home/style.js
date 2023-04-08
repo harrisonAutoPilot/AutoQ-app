@@ -796,7 +796,17 @@ descriptionCover:{
     lineHeight: 28,
     color: "#212121",
     letterSpacing: 0.2,
-  }
+  },
+  cashCover:{
+    width:"100%",
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  cashImg:{
+    width:90,
+    height:40,
+     
+}
 
 });
 

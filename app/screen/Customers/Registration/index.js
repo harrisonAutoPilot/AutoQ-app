@@ -102,7 +102,7 @@ const Registration = (props) => {
 
         ImagePicker.openPicker({
             multiple: true,
-            includeBase64: true,
+            includeBase64: false,
             mediaType: 'photo'
         }).then(images => {
           
@@ -110,7 +110,20 @@ const Registration = (props) => {
                
                 setStorePhotoOne("License Image Received")
                 const img = images.map(img => {
-                    return {path: `data:image/jpg;base64,${img.data}`}
+                    
+                    const uri =
+                    Platform.OS === 'android'
+                      ? img.path
+                      : img.path.replace('file:///', '');
+                  const filename = img.path.split('/').pop();
+                  const match = /\.(\w+)$/.exec(filename);
+                  const ext = match?.[1];
+                  const imageFile = {
+                    uri,
+                    name: `image.${ext}`,
+                    type: img.mime,
+                  };
+                    return (imageFile)
                 })
                 props.setFieldValue('images', img)
             } else {
@@ -118,18 +131,20 @@ const Registration = (props) => {
                 setStorePhotoTwo("Image Received" ) 
 
                 const img = images.map(img => {
-                    // if (img.size > 30000){
-                    //     console.log("the image size", img.size)
-                    //     setFileSize(2)
-                    //     setShowFileSize(true)
-                    //      return 
-                    // }else{
-                    //     //  console.log("the image size", img.size)
-                    //      setFileSize(1)
-                    //      console.log("the size is normal")
-                    // return {path: `data:image/jpg;base64,${img.data}`}
-                    // }
-                    return {path: `data:image/jpg;base64,${img.data}`}
+                    const uri =
+                    Platform.OS === 'android'
+                      ? img.path
+                      : img.path.replace('file:///', '');
+                  const filename = img.path.split('/').pop();
+                  const match = /\.(\w+)$/.exec(filename);
+                  const ext = match?.[1];
+                  const imageFile = {
+                    uri,
+                    name: `image.${ext}`,
+                    type: img.mime,
+                  };
+                    return (imageFile)
+
                 })
                 props.setFieldValue('images2', img)
             }

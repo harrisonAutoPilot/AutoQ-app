@@ -30,10 +30,6 @@ const RegConfirm = (props) => {
         setStoreIMg(img)
     }
 
-    // useEffect(() => {
-    //     refreshView("hello odimnobi", "");
-    // }, []);
-
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
@@ -92,20 +88,23 @@ const RegConfirm = (props) => {
     const submit = () => {
         setLoader(true);
         if (details.key === 1) {
-            dispatch(updatePendingCustomers(details))
+             dispatch(updatePendingCustomers(details))
         }
         else {
-            dispatch(registerCustomer(details))
+           
+             dispatch(registerCustomer(details))
         }
     }
 
+
+
     const RenderItem = ({ item }) => (
-        <TouchableOpacity style={styles.smCardCover} onPress={() => viewDoc(item.path)}>
+        <TouchableOpacity style={styles.smCardCover} onPress={() => viewDoc(item.uri)}>
 
             <View style={styles.smCard}>
-                <Image source={{ uri: item.path }} style={styles.smImg} />
+                <Image source={{ uri: item?.uri }} style={styles.smImg} />
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => viewDoc(item.uri)}>
                 <View>
                     <Text style={styles.viewText}>View</Text>
                 </View>
@@ -114,12 +113,16 @@ const RegConfirm = (props) => {
     );
 
     const RenderItem2 = ({ item }) => (
-        <TouchableOpacity style={styles.smCardCover} onPress={() => viewDoc(item.path)}>
+        <TouchableOpacity style={styles.smCardCover} onPress={() => viewDoc(item.uri)}>
 
             <View style={styles.smCard}>
-                <Image source={{ uri: item.path }} style={styles.smImg} />
+                <Image source={{ uri: item?.uri }} style={styles.smImg} />
             </View>
+            <TouchableOpacity onPress={() => viewDoc(item.uri)}>
+                <View>
             <Text style={styles.viewText}>View</Text>
+            </View>
+            </TouchableOpacity>
         </TouchableOpacity>
     );
 

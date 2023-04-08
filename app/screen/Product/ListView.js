@@ -7,6 +7,8 @@ import styles from "./style";
 const List = (props) => {
     const item = props.item.product ? props.item.product : props.item;
 
+    console.log("the list", item)
+
 
     return (
         <Animated.View style={props.scale ? { transform: [{ scale: props.scale }] }: null}>
@@ -32,6 +34,13 @@ const List = (props) => {
                         <View style={styles.priceView}>
                             <Text style={item.stock_count > 0 ? styles.priceText : styles.outOfStockPriceText}>&#8358;{item.price_per_pack ? commafy(item.price_per_pack) : 0}<Text style={styles.priceRoll}></Text></Text>
                         </View>
+                        {item.cash_and_carry === 1 ?
+                        <View>
+                        <Image source={require("@Assets/image/carry.jpg")} style={styles.cashImg} />
+                        </View>
+                        :
+                        null
+                        }
                         {/* <TouchableOpacity style={styles.priceView2} onPress={props.getItem}>
                             <Icon name="plus" color="#3858CF" size={16} style={styles.icon}/>
                             <Text style={styles.priceText2}>Add to Cart</Text>

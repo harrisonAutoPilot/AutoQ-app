@@ -369,6 +369,11 @@ export default styles = StyleSheet.create({
         alignSelf: "center"
 
     },
+    cashImg:{
+        width:90,
+        height:40,
+    
+    }
 
 
 })

@@ -248,10 +248,18 @@ const Overlay = (props) => {
                     <View>
                         {result?.id ?
                             <View >
+                                
                                 <View style={styles.topModalView}>
                                     <View style={styles.topModalImageView}>
                                         <SmallCard img={result?.product_images} />
                                     </View>
+                                    {result?.cash_and_carry === 1 ?
+                                         <View style={styles.cashCover}>
+                                         <Image source={require("@Assets/image/carry.jpg")} style={styles.cashImg} />
+                                         </View>
+                                         :
+                                         null
+                                         }
                                     <View style={styles.modalTitleView}>
                                         <Text style={styles.modalTitle}>{result?.name}</Text>
                                     </View>
@@ -282,7 +290,10 @@ const Overlay = (props) => {
                                 <View style={styles.modalMiniBody}>
                                 
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Category: <Text style={styles.modalminiSecondTitle}>{result?.category?.display_name}</Text></Text>
+                                        <Text style={styles.modalminiTitle}>Category: <Text style={styles.modalminiSecondTitle}>{result?.category?.display_name} 
+                                       
+                                        </Text></Text>
+
                                     </View>
                                     <View style={styles.modalminiSecondView}>
                                         <Text style={styles.modalminiTitle}>Available: {result?.stock_count > 0 ? <Text style={{ color: "#469D00" }}>In Stock ({commafy(result.stock_count)})</Text> : <Text style={{ color: "red" }}>Out of Stock</Text>}</Text>

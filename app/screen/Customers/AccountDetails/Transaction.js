@@ -36,9 +36,13 @@ const Transaction = (props) => {
 
 
 
-    const myBalance = wallet.wallet_balance - (wallet.loan_balance)
-    const sign = String(myBalance).charAt(0)
-    const myBalance1 = String(myBalance).substring(1)
+    const sign = String(wallet?.balance).charAt(0)
+    const myBalance = String(wallet?.balance)
+    const myBalance1 = myBalance.replace('-', '')
+    const myBalancee = parseInt(myBalance1)
+
+
+    console.log("the customer balance ..", wallet)
 
 
 
@@ -63,13 +67,13 @@ const Transaction = (props) => {
          <View style={styles.innerCover}>
             {sign && sign === "-" ?
                          <>
-             <Text style={styles.walletTitle}>You owe a balance of</Text>
-            <Text style={styles.amountText}>{myBalance ? `₦${commafy(parseInt(myBalance1))}.00` : "0.00"}</Text>
+             <Text style={styles.walletTitle}>You have a credit balance of</Text>
+            <Text style={styles.amountText}>{myBalancee && myBalancee ? `₦${commafy(parseInt(myBalancee))}` : "0.00"}</Text>
             </>
             :
             <>
-            <Text style={styles.walletTitle}>You have a Wallet Balance of</Text>
-            <Text style={styles.amountText}>{myBalance ? `₦${commafy(parseInt(myBalance1))}.00` : "0.00"}</Text>
+            <Text style={styles.walletTitle}>You owe a balance of</Text>
+            <Text style={styles.amountText}>{myBalancee && myBalancee ? `₦${commafy(parseInt(myBalancee))}` : "0.00"}</Text>
             </>
                 }
    </View>
