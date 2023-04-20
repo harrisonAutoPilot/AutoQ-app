@@ -147,7 +147,7 @@ const Wallet = (props) => {
                     <Text style={styles.dateText}>{item.created_at.substring(0, 10).split('-').reverse().join('-')}</Text>
                 </View>
                 <View>
-                    <Text style={styles.priceText}><Text style={styles.blueSign}>+ </Text><Text style={styles.nairaText}>₦ </Text>{commafy(item.amount)}</Text>
+                    <Text style={styles.priceText}><Text style={styles.blueSign}>+ </Text><Text style={styles.nairaText}>₦ </Text>{commafy(item.amount?.replace('-', '').toLowerCase())}</Text>
                 </View>
             </View>
 :
@@ -163,7 +163,7 @@ const Wallet = (props) => {
                     <Text style={styles.dateText}>{item.created_at.substring(0, 10).split('-').reverse().join('-')}</Text>
                 </View>
                 <View>
-                    <Text style={styles.priceText}><Text style={styles.redSign}>- </Text><Text style={styles.nairaText}>₦</Text>{commafy(item.amount)}</Text>
+                    <Text style={styles.priceText}><Text style={styles.redSign}>- </Text><Text style={styles.nairaText}>₦</Text>{commafy(item.amount?.replace('-', '').toLowerCase())}</Text>
                 </View>
             </View>
 }

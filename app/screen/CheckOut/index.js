@@ -141,7 +141,7 @@ const CheckOut = (props) => {
     const renderItem2 = ({ item }) => (
         <View style={styles.listCover}>
             <View style={styles.imgCover}>
-                <Image source={{ uri: `${URL}${item.product?.product_images[0]?.url}` }} style={styles.drugImg} />
+                <Image source={{ uri: `${item.product?.product_images[0]?.url}` }} style={styles.drugImg} />
             </View>
 
             <View style={styles.detailCover}>

@@ -86,7 +86,7 @@ const Deals = (props) => {
         
         <TouchableOpacity style={styles.listContainer} onPress={() => getItem(item)}>
             <View style={styles.listContainerImageView}>
-              <Image source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }} style={styles.image} resizeMode="contain" /> 
+              <Image source={{ uri: `${item?.product?.product_images[0]?.url}` }} style={styles.image} resizeMode="contain" /> 
             </View>
 
             <View style={styles.listTitleView} >
@@ -130,7 +130,7 @@ const Deals = (props) => {
             data={dealsItems}
             keyExtractor={item => item.id}
             renderItem={ListItem}
-            ListEmptyComponent={checkRefresh === "idle" ? ProductPlaceholderCard : EmptyCategory}
+            ListEmptyComponent={EmptyCategory}
             onEndReachedThreshold={0.5}
             onEndReached={() => {
                 if (deals?.current_page < deals?.last_page) {

@@ -41,9 +41,9 @@ const TransactionDetail = (props) => {
                         <>
                     {details.type === "purchase" || details.type === "repay" ?
                    
-                        <Text style={styles.valueTextOdd}>₦{commafy(details.amount)}</Text>
+                        <Text style={styles.valueTextOdd}>₦{commafy(details.amount?.replace('-', '').toLowerCase())}</Text>
                         :
-                        <Text style={styles.valueTextOdd2}>₦{commafy(details.amount)}</Text>
+                        <Text style={styles.valueTextOdd2}>₦{commafy(details.amount?.replace('-', '').toLowerCase())}</Text>
                    
                     
                         }

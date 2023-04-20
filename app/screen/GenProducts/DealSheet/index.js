@@ -221,7 +221,7 @@ console.log("the result oooo", result)
                         <View>
 
                             <View style={styles.topModalImageView}>
-                                <SmallCard img={result?.product?.product_images} style={styles.smallCardCover} />
+                             <SmallCard img={result?.product?.product_images} style={styles.smallCardCover} /> 
                             </View>
 
                             <View style={styles.promoContainer}>

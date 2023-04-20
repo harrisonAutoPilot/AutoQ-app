@@ -129,7 +129,7 @@ const Catalogue = props => {
   const staticObj = {
     id: 354667, 
     category: 'All Products', 
-    image_url: "product_images/HiiT3VOyHP7l6EFUgpG4mEER5DqZAZbD4XpjW1Ed37071.webp",
+    image_url: "https://cdn.remedial.health/product_images/pbeX5jDYmP4xCaMdZmKvQYYkqCAxbatgpcTkUqPO29041.webp",
     display_name: "All Products",
     name:"All Product"
   };
@@ -171,7 +171,7 @@ console.log("the search", categories)
         }>
         <View style={styles.listContainerImageView}>
           <Image
-            source={{uri: `${URL}${item.image_url}`}}
+            source={{uri: `${item.image_url}`}}
             style={styles.image}
             resizeMode="cover"
           />

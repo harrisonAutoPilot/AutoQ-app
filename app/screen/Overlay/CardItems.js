@@ -15,7 +15,7 @@ const CardItem = ({ item, index }) => {
   return (
     <View style={styles.container} key={item.key}>
     <Image
-      source={{ uri: `${URL}${item.url}` }}
+      source={{ uri:`${item.url}` }}
       style={styles.image}
     />
   </View>

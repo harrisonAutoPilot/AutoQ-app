@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { View, Text, TouchableOpacity, Image, Platform, Animated } from "react-native";
+import { View, Text, TouchableOpacity, Image, Platform } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector, useDispatch } from "react-redux";
 import Toast from 'react-native-toast-message';
 import { BottomSheetScrollView, useBottomSheetTimingConfigs, BottomSheetModal, BottomSheetModalProvider, BottomSheetTextInput, } from '@gorhom/bottom-sheet';
-import {
+import Animated, {
     Easing, Extrapolate,
     interpolate,
     useAnimatedStyle,

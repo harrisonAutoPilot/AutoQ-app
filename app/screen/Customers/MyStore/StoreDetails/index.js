@@ -102,7 +102,7 @@ const StoreDetails = (props) => {
 
         <TouchableOpacity onPress={() => viewDoc(item.path)} >
             <View style={styles.fileCover} key={item.id}>
-                <Image source={{uri: `${URL}${item.url}`}} style={styles.certImg} />
+                <Image source={{uri: `${item.url}`}} style={styles.certImg} />
             </View>
         </TouchableOpacity>
 

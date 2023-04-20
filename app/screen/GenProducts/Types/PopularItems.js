@@ -72,7 +72,7 @@ export default PopularItems = (props) => {
 
 <TouchableOpacity style={styles.listContainer} onPress={() => getItem(item)}>
             <View style={styles.listContainerImageView}>
-              <Image source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }} style={styles.image} resizeMode="contain" /> 
+              <Image source={{ uri: `${item?.product_images[0]?.url}` }} style={styles.image} resizeMode="contain" /> 
             </View>
 
             <View style={styles.listTitleView} >

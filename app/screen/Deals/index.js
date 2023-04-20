@@ -151,7 +151,7 @@ const Deals = (props) => {
         <View style={styles.listItem}>
                     <View style={styles.imgCard}>
                     <Image
-                        source={{ uri: `${URL}${item?.product?.product_images[0]?.url}` }}
+                        source={{ uri: `${item?.product?.product_images[0]?.url}` }}
                         style={styles.dealImg}
                     />
                     <Image source={require("@Assets/image/dealRed.png")} style={styles.dealTagImg} />

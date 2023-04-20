@@ -35,13 +35,7 @@ const LoginStack = createNativeStackNavigator();
 const SplashStack = createNativeStackNavigator();
 const SoftUpdateStack = createNativeStackNavigator();
 
-export const SplashStackNavigator = () => {
-    return (
-        <SplashStack.Group >
-            <SplashStack.Screen name="Splash" component={SplashScreen} />
-        </SplashStack.Group>
-    )
-};
+
 
 export const SoftUpdateNavigator = () => {
     return (
@@ -54,6 +48,13 @@ export const SoftUpdateNavigator = () => {
     )
 };
 
+export const SplashStackNavigator = () => {
+    return (
+        <SplashStack.Group >
+            <SplashStack.Screen name="Splash" component={SplashScreen} />
+        </SplashStack.Group>
+    )
+};
 
 export const RootStackNavigator = () => {
 

@@ -14,7 +14,7 @@ const List = (props) => {
         <Animated.View style={props.scale ? { transform: [{ scale: props.scale }] }: null}>
             <TouchableOpacity style={styles.listContainer} onPress={props.getItem}>
                 <View style={styles.listContainerImageView}>
-                    <Image source={{ uri: `${URL}${item?.product_images[0]?.url}` }} style={styles.image} resizeMode="contain" />
+                    <Image source={{ uri: `${item?.product_images[0]?.url}` }} style={styles.image} resizeMode="contain" />
                 </View>
 
                 <View style={styles.listTitleView} >
