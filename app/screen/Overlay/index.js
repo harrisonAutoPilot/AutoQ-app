@@ -299,7 +299,7 @@ const Overlay = (props) => {
                                         <Text style={styles.modalminiTitle}>Available: {result?.stock_count > 0 ? <Text style={{ color: "#469D00" }}>In Stock ({commafy(result.stock_count)})</Text> : <Text style={{ color: "red" }}>Out of Stock</Text>}</Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
-                                        <Text style={styles.modalminiTitle}>Price/Roll: <Text style={{ color: "#469D00" }}>&#8358;{commafy(result?.price_per_pack)}</Text></Text>
+                                        <Text style={styles.modalminiTitle}>Price/Pack: <Text style={{ color: "#469D00" }}>&#8358;{commafy(result?.price_per_pack)}</Text></Text>
                                     </View>
                                     <View style={styles.modalminiSecondView}>
                                         <Text style={styles.modalminiTitle}>Carton Quantity: <Text style={{ color: "#469D00" }}>{result?.quantity_per_carton}</Text></Text>

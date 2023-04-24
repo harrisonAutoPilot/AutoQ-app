@@ -81,7 +81,7 @@ export default Kessington = (props) => {
                 <View style={styles.listTitleView} >
                     <View style={styles.listTitleView2}>
                         <View style={styles.listTitleView22}>
-                            <Text style={styles.listTitle}>{item?.name}HELLO</Text>
+                            <Text style={styles.listTitle}>{item?.name}</Text>
                         </View>
                         {props.creditType ?
                             <View style={styles.crossCover}>
