@@ -661,5 +661,25 @@ badgeText: {
     position: "absolute",
     top: -70,
 },
+infoStyle:{
+  flexDirection:'row',
+  justifyContent:'space-between',
+  padding:10,
+  borderRadius:6,
+  backgroundColor:'#BA1A1A',
+  alignSelf:'center',
+  alignItems:'center',
+  marginTop:10,
+  width:wp('98%')
+    },
+    infoText:{
+      color: '#fff',
+      fontSize: 12,
+      fontFamily: "Urbanist-Regular",
+      lineHeight: 20,
+      fontWeight: "600",
+      letterSpacing: 0.1,
+      textAlign:'center'
+    }
 
     })

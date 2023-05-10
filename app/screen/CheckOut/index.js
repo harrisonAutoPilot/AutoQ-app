@@ -266,7 +266,9 @@ const CheckOut = (props) => {
 
                             </View> */}
                             <View style={styles.bottomDownCover}>
-
+                            <View style={styles.infoStyle}>
+                            <Text style={styles.infoText}> Kindly Note that Orders with cash-and-carry products will be split into two invoices</Text>
+                            </View>
                                 <View style={styles.subtotalCover}>
                                     <Text style={styles.subText}>Subtotal</Text>
                                     <Text style={styles.subText}>₦{items.total_amount !== undefined ? commafy(items.total_amount) : 0}</Text>
@@ -285,7 +287,7 @@ const CheckOut = (props) => {
 
                                 :
                                 <>
-   <DashedLine style={styles.dashStyle} dashLength={3} dashThickness={1} dashGap={2}  dashColor='#BDBDBD' />
+                                 <DashedLine style={styles.dashStyle} dashLength={3} dashThickness={1} dashGap={2}  dashColor='#BDBDBD' />
                                 <View style={styles.totalBorderCover1}>
                               
                                     <Text style={styles.totalBorderText}>Total</Text>

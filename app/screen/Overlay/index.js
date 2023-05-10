@@ -260,6 +260,7 @@ const Overlay = (props) => {
                                          :
                                          null
                                          }
+                                   
                                     <View style={styles.modalTitleView}>
                                         <Text style={styles.modalTitle}>{result?.name}</Text>
                                     </View>

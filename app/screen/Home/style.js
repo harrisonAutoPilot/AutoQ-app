@@ -806,7 +806,26 @@ descriptionCover:{
     width:90,
     height:40,
      
-}
+},
+infoStyle:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    padding:10,
+    borderRadius:6,
+    backgroundColor:'#BA1A1A',
+    alignSelf:'center',
+    alignItems:'center'
+      },
+      infoText:{
+        color: '#fff',
+        fontSize: 14,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 20,
+        fontWeight: "600",
+        letterSpacing: 0.1,
+        textAlign:'center'
+      }
+    
 
 });
 

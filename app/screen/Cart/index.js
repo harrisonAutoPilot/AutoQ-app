@@ -29,7 +29,7 @@ const Cart = (props) => {
     const [copyCart, setCopyCart] = useState([]);
     const [copySearchData, setCopySearchData] = useState([]);
     const [selDel, setSelDel] = useState([])
-    const [scrollText, setScrollText] = useState(true);
+    const [delayTime, setDelayTime] = useState(true);
     const [itemDeleted] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [showConfirmSelected, setShowConfirmSelected] = useState(false);
@@ -40,6 +40,7 @@ const Cart = (props) => {
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [ slength , setSlength] = useState(false)
     const [searchCartCalled, setSearchCartCalled] = useState(false)
+
 
     const { items, removeCart, removeMultipleCart,searchStatus, removeAllCart, errors,
         updateCartItems, loaded, listItems, searchCartsData, searchedCarts } = useSelector((state) => state.cart);
@@ -53,6 +54,14 @@ const Cart = (props) => {
      const redirectToSearch =()=>{
         setShowSearch(true)
     }
+
+
+    useEffect(() => {
+       
+        setTimeout(() => {
+            setDelayTime(false) 
+          }, 10000);
+    }, [delayTime])
 
 
 
@@ -628,6 +637,8 @@ useEffect(() => {
         }
 
 
+
+        console.log("the items",items?.carts?.data?.indexOf('cash_and_carry') > -1)
       
 
     let { width } = Dimensions.get('window');
@@ -727,10 +738,15 @@ useEffect(() => {
 
             <View style={styles.bottomCover}>
                 {items.carts?.data?.length ?
+                  <>
+                    {delayTime  ?
+                        <View style={styles.infoStyle}>
+                            <Text style={styles.infoText}> Kindly Note that Orders with cash-and-carry products will be split into two invoices</Text>
+                        </View>
+                        :
+
                     <View style={styles.deleteBarContainer}>
                         <Text style={styles.selText}>{selDel.length ? selDel.length : null}</Text>
-
-
                         <View style={styles.deleteBtnContainer}>
 
                             {
@@ -750,8 +766,11 @@ useEffect(() => {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    }
+                    </>
                     :
                     null
+                 
                 }
 
                 {

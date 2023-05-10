@@ -488,5 +488,26 @@ export default styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: 0.3,
     fontWeight: "600",
-  }
+  },
+  infoStyle:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    padding:10,
+    borderRadius:4,
+    backgroundColor:'#BA1A1A',
+    alignSelf:'center',
+    alignItems:'center',
+    marginTop:3,
+    marginBottom:8,
+    width:wp('98%')
+      },
+      infoText:{
+        color: '#fff',
+        fontSize: 12,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 20,
+        fontWeight: "600",
+        letterSpacing: 0.1,
+        textAlign:'center'
+      }
 })

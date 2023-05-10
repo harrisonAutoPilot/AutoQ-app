@@ -102,7 +102,27 @@ const styles = StyleSheet.create({
         color: "rgba(33, 33, 33, 1)",
         letterSpacing: 0.1,
         textAlign: "center"
-    }
+    },
+    infoStyle:{
+        width:wp('90%'),
+        alignSelf:'center',
+        padding:10,
+        marginTop:20,
+        // paddingHorizontal:10,
+        backgroundColor:'rgba(255, 255, 255, 0.1)',
+        borderRadius:6,
+    },
+    infoText:{
+        color: '#fff',
+        fontSize: 14,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 20,
+        fontWeight: "800",
+        letterSpacing: 0.1,
+        textAlign:'center',
+        textTransform:"uppercase"
+        
+      }
 
 });
 

@@ -11,7 +11,7 @@ import { cleanOrder } from "@Store/CustomerOrder";
 
 const CheckoutSuccess = (props) => {
   const dispatch = useDispatch();
-  const {amount, delivery_price} = props.route.params
+  // const {amount, delivery_price} = props.route.params
 
   const goBack = () => {
     dispatch(cleanup())
@@ -49,15 +49,16 @@ const CheckoutSuccess = (props) => {
         <Text style={styles.topText}>Order Confirmed!</Text>
         <Text style={styles.downText}>Your order has been confirmed. You'll receive an SMS shortly</Text>
       </View>
+      
 
       <View style={styles.midCover}>
             <View style={styles.midItem}>
                <Text style={styles.itemText}>Subtotal:</Text>
-               <Text style={styles.itemText}>{amount ? commafy(amount - delivery_price) : 0}</Text>
+              <Text style={styles.itemText}>{amount ? commafy(amount - delivery_price) : 0}</Text> 
             </View>
             <View style={styles.midItem}>
                <Text style={styles.itemText}>Delivery Fee:</Text>
-               <Text style={styles.itemText}>₦{delivery_price ? commafy(delivery_price): 0}</Text>
+               <Text style={styles.itemText}>₦{delivery_price ? commafy(delivery_price): 0}</Text> 
             </View>
 
             <View style={styles.midItemColor}>
@@ -68,6 +69,9 @@ const CheckoutSuccess = (props) => {
          </View>
 
       <View style={styles.orderItem}>
+      <View style={styles.infoStyle}>
+      <Text style={styles.infoText}> Kindly Note that Orders with cash-and-carry products will be split into two invoices</Text>
+      </View>
       </View>
 
       <View style={styles.sucBtnCover}>
