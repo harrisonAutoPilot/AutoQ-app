@@ -6,18 +6,19 @@ import {
   TouchableOpacity,
   Keyboard,
   FlatList,
+  RefreshControl,
   TouchableWithoutFeedback,
   Dimensions,
   Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
-import {RecyclerListView, DataProvider, LayoutProvider} from 'recyclerlistview';
-
+import Acon from 'react-native-vector-icons/AntDesign';
 import {searchProducts} from '@Request/Product';
 import CatelogueCardPlaceholder from './CatelogueCardPlaceholder';
 import {InputField, Header} from '@Component';
 import {browseCategories} from '@Request/Category';
+import PriceBottomSheet from "./PriceBottomSheet"
 import styles from './style';
 
 
@@ -31,26 +32,41 @@ const Catalogue = props => {
   const [searchCategory, setSearchCategory] = useState('');
   const [searchCategoryArray, setSearchCategoryArray] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [result, setResult] = useState([])
+  const [priceCat, setPriceCat] = useState("CHEMIST")
+  const [objectValues, setObjectValues] = useState()
   const [err, setErr] = useState('');
   const flatListRef = useRef();
+
+  const bottomSheet = useRef();
 
   const toTop = () =>
     flatListRef.current.scrollToOffset({animated: true, offset: 0});
 
-  const {categories} = useSelector(state => state.category);
+  const {categories, status} = useSelector(state => state.category);
   const {searchedProducts} = useSelector(state => state.product);
-
   const openNotification = () => props.navigation.navigate('Notification');
   const openCart = () => props.navigation.navigate('Cart');
   const openDrawer = () => props.navigation.openDrawer();
-  const redirectToSearch = () => props.navigation.navigate('Search');
+  const redirectToSearch = () => props.navigation.navigate('Search', {objectValues});
   const gotoGen = () =>  props.navigation.navigate("GenProducts")
    
   const carouselRef = useRef(null);
 
+  const sortPrice = (item) => {
+    console.log("the item", item)
+    setPriceCat(item)
+    bottomSheet.current.close()
+  }
+
+
   useEffect(() => {
     dispatch(browseCategories());
   }, []);
+
+
+
+
 
   useEffect(() => {
     if (searchCategory.length) {
@@ -60,8 +76,11 @@ const Catalogue = props => {
     }
   }, [searchCategory]);
 
+
+
   const searchCategoryItem = () => {
-    dispatch(searchProducts(searchCategory.toLowerCase()));
+    const search = searchCategory.toLowerCase();
+    dispatch(searchProducts({search,type:objectValues.option, idd:objectValues.idd }))
     setSearchCategoryArray(searchedProducts);
     toTop();
   };
@@ -74,57 +93,28 @@ const Catalogue = props => {
   const refreshView = useCallback(() => {
     setRefreshing(true);
     dispatch(browseCategories());
-    wait(2000).then(() => setRefreshing(false));
+    if(status === "success"){
+      setRefreshing(false)
+    }
   }, []);
 
-  const getAllProducts = (category, display_name, id) => {
-    props.navigation.navigate('Product', {
-      category,
-      display_name,
-      category_id: id,
-    });
-  };
 
+
+  const getAllProducts = (category, display_name, id) => {
+     props.navigation.navigate('Product', {
+      category,
+      priceCat,
+      display_name,
+      category_id:id, 
+      objectValues,
+      
+    })
+
+}
 
 
 
   const dismissKeyboard = () => Keyboard.dismiss();
-
-  let {width} = Dimensions.get('window');
-
-  const [dataProvider, setDataProvider] = useState(
-    new DataProvider((r1, r2) => {
-      return r1 !== r2;
-    }),
-  );
-
-  const [layoutProvider] = useState(
-    new LayoutProvider(
-      index => {
-        if (index % 2 === 0) {
-          return ViewTypes.HALF_RIGHT;
-        } else {
-          return ViewTypes.HALF_LEFT;
-        }
-      },
-      (type, dim) => {
-        switch (type) {
-          case ViewTypes.HALF_LEFT:
-            dim.width = width / 2 - 30;
-            dim.height = 190;
-            break;
-
-          case ViewTypes.HALF_RIGHT:
-            dim.width = width / 2 - 5;
-            dim.height = 190;
-            break;
-          default:
-            dim.width = 0;
-            dim.height = 0;
-        }
-      },
-    ),
-  );
 
   const staticObj = {
     id: 354667, 
@@ -134,40 +124,41 @@ const Catalogue = props => {
     name:"All Product"
   };
 
+  const callPrice = () => {
+    bottomSheet.current.show();
 
-  const rowRenderer = (type, data) => {
-    return <ListView item={data} />
-      
-  }
+  };
 
-console.log("the search", categories)
+
 
   useEffect(() => {
     if (searchCategoryArray.length) {
-      setDataProvider(prevState => prevState.cloneWithRows(searchCategory));
-    } else if (categories.length) {
+      setResult(searchCategory)
+    } else if (categories.length) { 
       const result = [staticObj, ...categories]
-      setDataProvider(prevState => prevState.cloneWithRows(result));
-    }
-  }, [categories, searchCategoryArray]);
+      setResult(result)
+    }else if (priceCat){
+        // setPriceCat(priceCat)
+        const result = [staticObj, ...categories]
+        setResult(result)
+      }
+    
+  }, [categories, searchCategoryArray, priceCat]);
 
-  console.log('categories list', searchCategory);
 
   const ListView = ({item}) => (
-    <View>
+    
+
+     <View>
       <TouchableOpacity
         style={[styles.listContainer, styles.elevation]}
         onPress={() =>
-          {item.id === 354667 ?
+          
+          {item.id === 354667 ? 
             gotoGen()
             :
-          getAllProducts(
-            item.name,
-            !searchCategoryArray.length
-              ? item.display_name
-              : item.category?.display_name,
-            item.id,
-          )}
+           getAllProducts(item.name, !searchCategoryArray.length ? item.display_name  : item.category?.display_name,item.id)
+          }
         }>
         <View style={styles.listContainerImageView}>
           <Image
@@ -190,7 +181,7 @@ console.log("the search", categories)
         </View>
       </TouchableOpacity>
     </View>
-  );
+  )
 
   return (
     <View style={styles.main}>
@@ -224,27 +215,52 @@ console.log("the search", categories)
 
       <View style={styles.mainBody}>
         <Text style={globalStyles.title}>PRODUCT CATALOG</Text>
+        <View style={styles.inputHolder2}>
+          <View style={styles.labelView}>
+              <Text style={styles.label}>Select Product Pricing type</Text>
+          </View>
+            <TouchableOpacity style={styles.selectCover} onPress={callPrice}>
+              <Text style={styles.selectOption}>{priceCat}</Text>
+              <Acon name='caretdown' color="#79747E" size={14} />
+            </TouchableOpacity>
 
+       </View>
         {err ? (
           <View style={globalStyles.errMainView}>
             <Text style={globalStyles.failedResponseText}>{err}</Text>
           </View>
         ) : null}
 
-        {dataProvider && dataProvider.getSize() > 0 ? (
-          <>
-            
-            <RecyclerListView
-              style={{width: '100%'}}
-              rowRenderer={rowRenderer}
-              dataProvider={dataProvider}
-              layoutProvider={layoutProvider}
-            />
-          </>
+        {categories && categories.length > 0 ? (
+          <View style={styles.flexCover}>
+           <FlatList
+            columnWrapperStyle= {{flexWrap: "wrap", justifyContent:'space-between'}}
+            showsVerticalScrollIndicator={false}
+            numColumns = {2}
+            vertical
+            data={result}
+            renderItem={ListView}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={refreshView} />
+              }
+            ListFooterComponent={<View style={{ height: 50 }} />}
+            keyExtractor={item => item.id}
+
+            /> 
+          
+        
+          </View>
         ) : (
           <CatelogueCardPlaceholder />
         )}
       </View>
+
+      <PriceBottomSheet
+       bottomSheet={bottomSheet} 
+       props={props}
+       objList = {(item) =>  setObjectValues(item)}
+       sort={sortPrice}
+       />
     </View>
   );
 };

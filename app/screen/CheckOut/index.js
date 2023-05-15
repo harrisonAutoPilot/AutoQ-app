@@ -267,7 +267,7 @@ const CheckOut = (props) => {
                             </View> */}
                             <View style={styles.bottomDownCover}>
                             <View style={styles.infoStyle}>
-                            <Text style={styles.infoText}> Kindly Note that Orders with cash-and-carry products will be split into two invoices</Text>
+                            <Text style={styles.infoText}> Kindly Note that Orders with cash-and-carry products will be split into two order</Text>
                             </View>
                                 <View style={styles.subtotalCover}>
                                     <Text style={styles.subText}>Subtotal</Text>

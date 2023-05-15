@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, RefreshControl, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from 'react-native-vector-icons/Feather';
+import Acon from 'react-native-vector-icons/AntDesign';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-message';
-
+import { useIsFocused } from '@react-navigation/native';
 import styles from "./style";
 import { searchProducts } from "@Request/Product";
 import { SuccessMsgViewTwo, COHeader as Header } from "@Component/index";
@@ -12,11 +14,14 @@ import BottomSheet from "@Screen/Overlay";
 import List from "./ListView";
 import ProductPlaceholderCard from "./ProductPlaceholderCard";
 import { listCart } from "@Request/Cart";
+import PriceBottomSheet from "../Catalogue/PriceBottomSheet"
 
 import { cleanup, cleanProducts } from "@Store/Product";
 import { getPaymentOptions } from "@Request/paymentOptions";
 
 const Products = (props) => {
+    // const odi = props?.route.params?.priceCat;
+    const isFocused = useIsFocused();
 
     const dispatch = useDispatch();
    
@@ -30,17 +35,26 @@ const Products = (props) => {
 
     const [visible, setVisible] = useState(false);
 
+    const [priceCat, setPriceCat] = useState (props?.route.params?.priceCat)
+
     const [searchArray, setSearchArray] = useState([]);
+
+    const [objectValues, setObjectValues] = useState(props?.route.params?.objectValues)
 
 
     const bottomSheet = useRef();
 
+    const bottomSheetPrice = useRef();
+
     const { status, errors, searchedProducts, searchProductsData } = useSelector((state) => state.product);
     const { items } = useSelector((state) => state.cart);
 
+   
 
     useEffect(() => {
-        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1}));
+  
+   
+        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1, type:objectValues?.option, idd:objectValues?.idd}));
 
         dispatch(listCart(1));
 
@@ -54,9 +68,27 @@ const Products = (props) => {
         }
     }, []);
 
+    useEffect(() => {
+  
+   
+        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1, type:objectValues?.option, idd:objectValues?.idd}));
+
+        dispatch(listCart(1));
+
+        return () => {
+
+            dispatch(cleanup())
+
+            dispatch(cleanProducts());
+        }
+    }, [objectValues]);
+
+   
     const loadMore = () => {
-        dispatch(searchProducts({ search: props.route.params?.category, category_id:props.route.params?.category_id, no: searchProductsData?.current_page + 1 }));
+        dispatch(searchProducts({ search: props.route.params?.category, category_id:props.route.params?.category_id, no: searchProductsData?.current_page + 1,type:objectValues.option, idd:objectValues.idd }));
     }
+
+console.log("the option log", objectValues?.idd)
 
     useEffect(() => {
         if (status === "failed" && props.navigation.isFocused()) {
@@ -77,6 +109,18 @@ const Products = (props) => {
         
     };
 
+    const callPrice = () => {
+        bottomSheetPrice?.current?.show();
+    
+      };
+
+    const sortPrice = (item) => {
+      setPriceCat(item)
+      console.log("the selected", item)
+      bottomSheetPrice?.current?.close()
+    }
+
+
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
@@ -84,12 +128,12 @@ const Products = (props) => {
     const refreshView = useCallback(() => {
         setErr("");
         setRefreshing(true);
-        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1}));
+        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1,type:objectValues.option,idd:objectValues.idd}));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
 
-    const goBack = () => props.navigation.navigate("Catalogue");
+    const goBack = () => props.navigation.goBack();
     const redirectToFilter = () => props.navigation.navigate("Filter", { display_name: props.route.params?.display_name, category: props.route.params?.category, name: "Product" });
     const redirectToSearch = () => props.navigation.navigate("Search");
 
@@ -108,12 +152,14 @@ const Products = (props) => {
     // Get the ID of the product to filter and show the Modal
     const getItem = (id) => {
         filterProduct(id);
+        console.log("the id", id)
         setVisible(true);
         bottomSheet.current?.present()
     };
 
     // Filter Products and show them in the Modal
     const filterProduct = (id) => {
+        console.log("the filter", id)
         let resultArray = searchedProducts.filter(item => item.id === id)[0];
         return setResult(resultArray)
     };
@@ -152,6 +198,11 @@ const Products = (props) => {
             {successMsg ? <Toast config={toastConfig} /> : null}
 
             <View style={styles.mainBody}>
+                <TouchableOpacity style={styles.cartCover} onPress={callPrice}>
+                    <Acon name="tag" color="#fff" size={16} />
+                    <Text style={styles.cartText}>{priceCat}</Text>
+                    <Acon name="down" color="#fff" size={14} />
+                </TouchableOpacity>
                 <View style={styles.header}>
                     <View style={styles.miniHeaderView}>
                         <Icon name="grid" size={14} color="#616161" />
@@ -205,7 +256,14 @@ const Products = (props) => {
                 isVisible={visible}
             />
 
-        </View>
+                <PriceBottomSheet
+                bottomSheet={bottomSheetPrice} 
+                props={props}
+                objList = {(item) =>  setObjectValues(item)}
+                sort={sortPrice}
+                />
+
+        </View> 
     )
 };
 

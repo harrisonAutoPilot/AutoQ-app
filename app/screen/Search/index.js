@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { InputField } from "@Component/index";
 import { browseCategories } from "@Request/Category";
 import { searchProducts } from "@Request/Product";
+import Acon from 'react-native-vector-icons/AntDesign';
 import styles from "./style";
 import ListItems from "@Screen/Product/ListView";
 import BottomSheet from "@Screen/Overlay";
@@ -13,11 +14,14 @@ import ProductPlaceholderCard from "@Screen/Product/ProductPlaceholderCard";
 import Loader from "@Screen/Loader";
 import { getPaymentOptions } from "@Request/paymentOptions";
 import { cleanup, cleanProducts } from "@Store/Product";
+import PriceBottomSheet from "@Screen/Catalogue/PriceBottomSheet";
 
 const Search = (props) => {
     const dispatch = useDispatch();
  
     const [refreshing, setRefreshing] = useState(false);
+
+    const bottomSheetPrice = useRef();
 
     const [search, setSearch] = useState("");
 
@@ -26,6 +30,10 @@ const Search = (props) => {
     const [active, setActive] = useState("");
 
     const [searchArray, setSearchArray] = useState([]);
+
+    const [priceCat, setPriceCat] = useState("CHEMIST")
+
+    const [objectValues, setObjectValues] = useState(props?.route.params?.objectValues)
 
     const [searchCategoryArray, setSearchCategoryArray] = useState([]);
 
@@ -57,6 +65,18 @@ const Search = (props) => {
 
     const redirectToRequest = () => props.navigation.navigate("ProductRequest");
 
+
+    const sortPrice = (item) => {
+        console.log("the item", item)
+        setPriceCat(item)
+        bottomSheetPrice.current.close()
+      }
+    
+    const callPrice = () => {
+        bottomSheetPrice?.current?.show();
+    
+      };
+
     useEffect(() => {
         dispatch(browseCategories());
         dispatch(getPaymentOptions());
@@ -87,14 +107,27 @@ const Search = (props) => {
             setSearchArray([]);
             setRequest(false)
         }
-        if (searchCategory.length) {
+        if (searchCategory.length && objectValues) {
             searchCategoryItem();
         } else if (!searchCategory.length) {
             setSearching(false)
             setSearchCategoryArray([]);
             setRequest(false)
         }
-    }, [search.length, searchCategory]);
+    }, [search.length, searchCategory, objectValues]);
+
+
+    useEffect(() => {
+  
+        if (active === "") {
+        cleanAllCategory()
+        }else{
+            searchCategoryItem();
+        }
+       
+
+    }, [objectValues]);
+
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -108,8 +141,8 @@ const Search = (props) => {
         setSearchArray([])
         setCategoryId(id)
         setCategory(category)
-        setSearchName(category);
-        dispatch(searchProducts({ search: category,category_id: id, no:1 }));
+        setSearchName(category)
+        dispatch(searchProducts({ search: category,category_id: id, no:1, type:objectValues?.option, idd:objectValues?.idd}));
         setActive(category);
         setCreditParams("")
       
@@ -142,15 +175,15 @@ const Search = (props) => {
     }, [props.route.params?.item]);
 
 
-    console.log("ytttt", props.route.params?.category);
+
 
     const searchCategoryItem = () => {
         setRequest(true);
         setSearchName(searchCategory);
         dispatch(cleanProducts());
-        dispatch(searchProducts({ search: searchCategory.toLowerCase(), category_id: categoryId, no: 1 }))
+        dispatch(searchProducts({ search: searchCategory.toLowerCase(), category_id: categoryId, no: 1,type:objectValues?.option, idd:objectValues?.idd }))
         setSearching(true)
-        console.log("the category", searchCategory)
+    
          setSearchCategoryArray(searchedProducts)
     };
 
@@ -170,7 +203,7 @@ const Search = (props) => {
                 setSearchCategoryArray([]);
             }
     
-            console.log("this is to check the category", props?.route?.params?.item)
+            // console.log("this is to check the category", props?.route?.params?.item)
         }, [searchedProducts])
 
     // Add Items to Wishlist
@@ -188,7 +221,7 @@ const Search = (props) => {
     const refreshView = useCallback(() => {
         setRefreshing(true);
         dispatch(cleanProducts())
-        dispatch(searchProducts({ search: searchName, category_id : categoryId, no:1 }));
+        dispatch(searchProducts({ search: searchName, category_id : categoryId, no:1,type:objectValues.option, idd:objectValues.idd }));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
@@ -229,7 +262,7 @@ const Search = (props) => {
     };
 
     const loadMore = () => {
-        dispatch(searchProducts({ search: searchName, no: searchProductsData?.current_page + 1 }));
+        dispatch(searchProducts({ search: searchName, no: searchProductsData?.current_page + 1, type:objectValues.option, idd:objectValues.idd  }));
     };
 
     const cleanAllCategory = () => {
@@ -298,6 +331,11 @@ const Search = (props) => {
                 />
 
             </View>
+            <TouchableOpacity style={styles.cartCover} onPress={callPrice}>
+                    <Acon name="tag" color="#fff" size={16} />
+                    <Text style={styles.cartText}>{priceCat}</Text>
+                    <Acon name="down" color="#fff" size={14} />
+                </TouchableOpacity>
             <View style={styles.filterCover}>
                 <View style={styles.header}>
                     <View style={styles.miniHeaderView}>
@@ -310,7 +348,7 @@ const Search = (props) => {
                         <TouchableOpacity style={[styles.miniHeaderView2, styles.filterView]} onPress={redirectToFilter}>
                             <Icon name="chevron-down" size={14} color="#212121" />
                             <View style={styles.margin}>
-                                <Text style={styles.filterText}>Filter</Text>
+                                <Text style={styles.filterText}>Filter3</Text>
                             </View>
                         </TouchableOpacity> : null}
                 </View>
@@ -369,6 +407,12 @@ const Search = (props) => {
                     : null
             }
 
+        <PriceBottomSheet
+            bottomSheet={bottomSheetPrice} 
+            props={props}
+            objList = {(item) =>  setObjectValues(item)}
+            sort={sortPrice}
+            />
 
         </View>
     )

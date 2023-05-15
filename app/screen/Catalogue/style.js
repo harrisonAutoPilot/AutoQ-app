@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from "react-native";
+import { Platform,Dimensions, StyleSheet } from "react-native";
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
@@ -14,7 +14,7 @@ export default styles = StyleSheet.create({
         flex: 1
     },
     main:{
-        height: "100%",
+        height: hp('100%'),
         flexGrow: 1
     },
     placeholderCover:{
@@ -28,7 +28,7 @@ export default styles = StyleSheet.create({
         marginTop: 15,
         borderRadius: 16,
         backgroundColor: '#F5F5F5',
-        marginBottom: 20
+        marginBottom: 5
     },
     listContainer2: {
         width: wp('95%'),
@@ -211,6 +211,73 @@ export default styles = StyleSheet.create({
         color: "#757575",
         letterSpacing: 0.1,
         textTransform: "capitalize"
+    },
+    // this is for the select pricing
+    inputHolder2: {
+        borderWidth: 1,
+        borderColor: "#BDBDBD",
+        paddingVertical: Platform.OS === "ios" ? 18 : 16,
+        paddingHorizontal: 10,
+        marginTop: Dimensions.get("window").height / 40,
+        marginBottom:10,
+        borderRadius: 5
+    },
+    inputMainHolder: {
+
+        backgroundColor: '#ffffff',
+        height: hp('100%'),
+    },
+    labelView: {
+        position: "absolute",
+        top: -10,
+        left: 10,
+        backgroundColor: "#fff",
+        paddingHorizontal: 5
+    },
+    labelView1: {
+        position: "absolute",
+        top: -10,
+        left: 10,
+        backgroundColor: "#f3f4f5",
+        paddingHorizontal: 5
+    },
+    label: {
+        fontSize: 12,
+        fontFamily: "Urbanist-Regular",
+        lineHeight: 16,
+        color: "rgba(97, 97, 97, 1)",
+        letterSpacing: 0.2,
+        fontWeight: "600"
+    },
+    innerLabel: {
+        fontSize: 16,
+        fontFamily: "Urbanist-Regular",
+        // lineHeight: 24,
+        color: "rgba(33, 33, 33, 1)",
+        letterSpacing: 0.3,
+        fontWeight: "400",
+        marginTop: 5,
+        width: "70%"
+    },
+    selectCover:{
+        flexDirection:"row",
+        justifyContent:'space-between',
+        paddingHorizontal:8,
+    },
+    selectOption:{
+        fontSize: 16,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 20,
+        color: "#424242",
+        letterSpacing: 0.2,
+        fontWeight: "600",
+        textTransform:'uppercase'
+    },
+    flexCover:{
+        width:wp('100%'),
+    //     flexDirection:'row',
+       justifyContent:'space-between',
+        paddingRight:25,
     }
 
 })

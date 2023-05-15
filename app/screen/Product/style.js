@@ -166,7 +166,7 @@ export default styles = StyleSheet.create({
         justifyContent:'space-between'
     },
     mainBody: {
-        paddingTop: 14,
+    
         paddingHorizontal: 16
     },
     body: {
@@ -372,7 +372,28 @@ export default styles = StyleSheet.create({
     cashImg:{
         width:90,
         height:40,
-    
+    },
+    cartCover:{
+        width:wp("100%"),
+        padding:10,
+        backgroundColor:"#469D00",
+        flexDirection:"row",
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'center',
+        marginBottom:14,
+        marginTop:-10,
+    },
+    cartText:{
+        color: '#fff',
+        fontSize: 16,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 20,
+        letterSpacing: 0.2,
+        textAlign: "center",
+        justifyContent: "center",
+        alignSelf: "center",
+        marginHorizontal:10, 
     }
 
 

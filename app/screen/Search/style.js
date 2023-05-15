@@ -188,4 +188,26 @@ export default styles = StyleSheet.create({
     headerSubLastIconView: {
         paddingLeft: 15
     },
+    cartCover:{
+        width:wp("100%"),
+        padding:10,
+        backgroundColor:"#469D00",
+        flexDirection:"row",
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'center',
+        marginBottom:14,
+        marginTop:-18,
+    },
+    cartText:{
+        color: '#fff',
+        fontSize: 16,
+        fontFamily: "Urbanist-SemiBold",
+        lineHeight: 20,
+        letterSpacing: 0.2,
+        textAlign: "center",
+        justifyContent: "center",
+        alignSelf: "center",
+        marginHorizontal:10, 
+    }
 })

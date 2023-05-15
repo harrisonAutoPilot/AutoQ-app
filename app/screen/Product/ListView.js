@@ -6,10 +6,7 @@ import styles from "./style";
 
 const List = (props) => {
     const item = props.item.product ? props.item.product : props.item;
-
-    console.log("the list", item)
-
-
+    
     return (
         <Animated.View style={props.scale ? { transform: [{ scale: props.scale }] }: null}>
             <TouchableOpacity style={styles.listContainer} onPress={props.getItem}>
