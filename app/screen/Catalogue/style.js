@@ -146,6 +146,7 @@ export default styles = StyleSheet.create({
     },
     blueColor: {
         backgroundColor: '#00319D',
+        padding:2,
     },
     searchIcon: {
         paddingHorizontal: 10,

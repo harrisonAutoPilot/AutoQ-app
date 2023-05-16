@@ -31,9 +31,9 @@ const Search = (props) => {
 
     const [searchArray, setSearchArray] = useState([]);
 
-    const [priceCat, setPriceCat] = useState("CHEMIST")
+    const [priceCat, setPriceCat] = useState (props?.route.params?.priceCat)
 
-    const [objectValues, setObjectValues] = useState(props?.route.params?.objectValues)
+    const [objectValues, setObjectValues] = useState(props?.route.params?.objectValues && props?.route.params?.objectValues)
 
     const [searchCategoryArray, setSearchCategoryArray] = useState([]);
 
@@ -67,7 +67,7 @@ const Search = (props) => {
 
 
     const sortPrice = (item) => {
-        console.log("the item", item)
+  
         setPriceCat(item)
         bottomSheetPrice.current.close()
       }
@@ -107,14 +107,14 @@ const Search = (props) => {
             setSearchArray([]);
             setRequest(false)
         }
-        if (searchCategory.length && objectValues) {
+        if (searchCategory.length) {
             searchCategoryItem();
         } else if (!searchCategory.length) {
             setSearching(false)
             setSearchCategoryArray([]);
             setRequest(false)
         }
-    }, [search.length, searchCategory, objectValues]);
+    }, [search.length, searchCategory]);
 
 
     useEffect(() => {
@@ -127,6 +127,7 @@ const Search = (props) => {
        
 
     }, [objectValues]);
+
 
 
     const wait = (timeout) => {
@@ -203,7 +204,7 @@ const Search = (props) => {
                 setSearchCategoryArray([]);
             }
     
-            // console.log("this is to check the category", props?.route?.params?.item)
+          
         }, [searchedProducts])
 
     // Add Items to Wishlist
@@ -262,7 +263,7 @@ const Search = (props) => {
     };
 
     const loadMore = () => {
-        dispatch(searchProducts({ search: searchName, no: searchProductsData?.current_page + 1, type:objectValues.option, idd:objectValues.idd  }));
+        dispatch(searchProducts({ search: searchName, no: searchProductsData?.current_page + 1, type:objectValues?.option, idd:objectValues?.idd  }));
     };
 
     const cleanAllCategory = () => {
@@ -333,7 +334,7 @@ const Search = (props) => {
             </View>
             <TouchableOpacity style={styles.cartCover} onPress={callPrice}>
                     <Acon name="tag" color="#fff" size={16} />
-                    <Text style={styles.cartText}>{priceCat}</Text>
+                    <Text style={styles.cartText}>{objectValues?.type}</Text>
                     <Acon name="down" color="#fff" size={14} />
                 </TouchableOpacity>
             <View style={styles.filterCover}>

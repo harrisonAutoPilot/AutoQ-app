@@ -210,13 +210,13 @@ console.log("the option log", objectValues?.idd)
                             <Text style={[styles.inputTitle, styles.color]} numberOfLines={1}>All {props.route.params?.display_name}</Text>
                         </View>
                     </View>
-                    {searchedProducts.length ?
+                    {/* {searchedProducts.length ?
                         <TouchableOpacity style={[styles.miniHeaderView2, styles.filterView]} onPress={redirectToFilter}>
                             <Icon name="chevron-down" size={14} color="#212121" />
                             <View style={styles.margin}>
                                 <Text style={styles.filterText}>Filter</Text>
                             </View>
-                        </TouchableOpacity> : null}
+                        </TouchableOpacity> : null} */}
                 </View>
 
                 {err ? <View style={[globalStyles.errMainView, { marginBottom: 10 }]}>

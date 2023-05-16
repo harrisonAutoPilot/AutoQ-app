@@ -6,7 +6,7 @@ const apiRequest = async (asyncFn, thunkAPI, route) => {
 
    try {
       const { data } = await asyncFn;
-      console.log("the url", data )
+      // console.log("the url", data )
       if (route === "auth" ) {
          const token = data.token;
          const key = Config.KEY;

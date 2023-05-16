@@ -48,7 +48,7 @@ const Catalogue = props => {
   const openNotification = () => props.navigation.navigate('Notification');
   const openCart = () => props.navigation.navigate('Cart');
   const openDrawer = () => props.navigation.openDrawer();
-  const redirectToSearch = () => props.navigation.navigate('Search', {objectValues});
+  const redirectToSearch = () => props.navigation.navigate('Search', {objectValues, priceCat});
   const gotoGen = () =>  props.navigation.navigate("GenProducts")
    
   const carouselRef = useRef(null);
