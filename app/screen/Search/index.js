@@ -349,7 +349,7 @@ const Search = (props) => {
                         <TouchableOpacity style={[styles.miniHeaderView2, styles.filterView]} onPress={redirectToFilter}>
                             <Icon name="chevron-down" size={14} color="#212121" />
                             <View style={styles.margin}>
-                                <Text style={styles.filterText}>Filter3</Text>
+                                <Text style={styles.filterText}>Filter</Text>
                             </View>
                         </TouchableOpacity> : null}
                 </View>

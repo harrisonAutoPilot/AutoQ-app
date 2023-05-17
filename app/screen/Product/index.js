@@ -85,7 +85,7 @@ const Products = (props) => {
 
    
     const loadMore = () => {
-        dispatch(searchProducts({ search: props.route.params?.category, category_id:props.route.params?.category_id, no: searchProductsData?.current_page + 1,type:objectValues.option, idd:objectValues.idd }));
+        dispatch(searchProducts({ search: props.route.params?.category, category_id:props.route.params?.category_id, no: searchProductsData?.current_page + 1,type:objectValues?.option, idd:objectValues?.idd }));
     }
 
 console.log("the option log", objectValues?.idd)
@@ -128,7 +128,7 @@ console.log("the option log", objectValues?.idd)
     const refreshView = useCallback(() => {
         setErr("");
         setRefreshing(true);
-        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1,type:objectValues.option,idd:objectValues.idd}));
+        dispatch(searchProducts({search: props.route.params?.category, category_id:props.route.params?.category_id, no:1,type:objectValues?.option,idd:objectValues?.idd}));
         wait(3000).then(() => setRefreshing(false));
     }, []);
 
