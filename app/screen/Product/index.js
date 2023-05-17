@@ -14,7 +14,7 @@ import BottomSheet from "@Screen/Overlay";
 import List from "./ListView";
 import ProductPlaceholderCard from "./ProductPlaceholderCard";
 import { listCart } from "@Request/Cart";
-import PriceBottomSheet from "../Catalogue/PriceBottomSheet"
+import PriceBottomSheet from "./PriceBottomSheet"
 
 import { cleanup, cleanProducts } from "@Store/Product";
 import { getPaymentOptions } from "@Request/paymentOptions";

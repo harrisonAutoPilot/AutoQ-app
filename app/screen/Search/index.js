@@ -14,7 +14,7 @@ import ProductPlaceholderCard from "@Screen/Product/ProductPlaceholderCard";
 import Loader from "@Screen/Loader";
 import { getPaymentOptions } from "@Request/paymentOptions";
 import { cleanup, cleanProducts } from "@Store/Product";
-import PriceBottomSheet from "@Screen/Catalogue/PriceBottomSheet";
+import PriceBottomSheet from "./PriceBottomSheet";
 
 const Search = (props) => {
     const dispatch = useDispatch();
@@ -411,7 +411,7 @@ const Search = (props) => {
         <PriceBottomSheet
             bottomSheet={bottomSheetPrice} 
             props={props}
-            objList = {(item) =>  setObjectValues(item)}
+            objList = {(item) => setObjectValues(item)}
             sort={sortPrice}
             />
 
