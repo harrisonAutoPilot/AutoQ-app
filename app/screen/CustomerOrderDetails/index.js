@@ -41,6 +41,8 @@ const CustomerOrderDetails = (props) => {
       })
    }, []);
 
+   console.log("the order id :", orders.id)
+
    const toastConfig = {
       error: () => (
          <View style={[{ marginHorizontal: 20 }, globalStyles.errMainView2, globalStyles.marginTop]}>
@@ -48,6 +50,9 @@ const CustomerOrderDetails = (props) => {
          </View>
       ),
    };
+
+
+
 
    useEffect(() => {
       if (update === "failed") {
@@ -75,6 +80,8 @@ const CustomerOrderDetails = (props) => {
       dispatch(reOrder(details));
    };
 
+   console.log("the order", orders.id)
+
    const ListView = ({ item, index }) => (
       <View style={styles.cardMidCover}>
          <View style={styles.cardUpTop}>
@@ -96,7 +103,11 @@ const CustomerOrderDetails = (props) => {
    return (
       <View style={styles.main}>
          <Header styleView={styles.body} title="Order Details" onPress={goBack} />
+         <View style={styles.errorPrompt}>
+           {err ? <Toast config={toastConfig} /> : null}
+          </View>
          <ScrollView containerStyle={styles.bottomCover} showsVerticalScrollIndicator={false} horizontal={false}>
+        
             <ScrollView horizontal={true}>
                <View style={styles.mainContainer}>
 
@@ -129,7 +140,7 @@ const CustomerOrderDetails = (props) => {
                      </View>
                   </View>
 
-                  {err ? <Toast config={toastConfig} /> : null}
+                
 
                   <View style={[styles.midCard, styles.elevation]}>
                      <FlatList

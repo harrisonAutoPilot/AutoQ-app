@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Access to Photo Library</string>
 	<key>UIAppFonts</key>
@@ -60,6 +60,14 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 		<string>Urbanist-Medium.ttf</string>
+		<string>AnekLatin-Bold.ttf</string>
+		<string>AnekLatin-ExtraBold.ttf</string>
+		<string>AnekLatin-ExtraLight.ttf</string>
+		<string>AnekLatin-Light.ttf</string>
+		<string>AnekLatin-Medium.ttf</string>
+		<string>AnekLatin-Regular.ttf</string>
+		<string>AnekLatin-SemiBold.ttf</string>
+		<string>AnekLatin-Thin.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

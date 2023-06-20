@@ -11,7 +11,7 @@ import { cleanOrder } from "@Store/CustomerOrder";
 
 const CheckoutSuccess = (props) => {
   const dispatch = useDispatch();
-  // const {amount, delivery_price} = props.route.params
+  const {amount, delivery_price} = props.route.params
 
   const goBack = () => {
     dispatch(cleanup())
