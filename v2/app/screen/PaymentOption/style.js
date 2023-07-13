@@ -37,7 +37,6 @@ categoryDesc: {
     fontFamily: "AnekLatin-Regular",
     lineHeight: 20,
     letterSpacing: 0.25,
-
 },
 
 

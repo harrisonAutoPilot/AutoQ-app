@@ -26,7 +26,6 @@ const Pin = ({ navigation, route }) => {
     const inputRefs = useRef([]);
 
 
-
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };

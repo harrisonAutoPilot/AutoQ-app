@@ -18,10 +18,6 @@ import cartReducer from "./Cart";
 import paymentReducer from "./PaymentMethod";
 
 
-
-
-
-
 import productRequestReducer from "./ProductRequest";
 import paymentOptionReducer from "./paymentOptions";
 import deliveryOptionReducer from "./DeliveryOptions";

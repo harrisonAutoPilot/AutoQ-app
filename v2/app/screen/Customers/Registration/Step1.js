@@ -433,13 +433,13 @@ const RenderType = ({ item }) => {
                                                     ?
 
                                                     <View style={styles.btnCover}>
-                                                         <ContinueBtn
+                                                     <ContinueBtn
                                                         title="Next"
                                                         onPress={userType ? props.handleSubmit : null}
                                                         backgroundColor="#3353CB"
                                                         color="#fff"
                                                        
-                                                    />
+                                                     />
                                                         {/* <BtnLg title="Next" onPress={userType ? props.handleSubmit : null} style={styles.submit} stylea={styles.angleImg} /> */}
                                                     </View> :
                                                     userType === "hospital" && payment === "Select Payment" ?
