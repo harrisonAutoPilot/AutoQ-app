@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 
   cardsDown: {
 
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
     height: hp('30%'),
     flexWrap: 'wrap',
     borderRadius: 1.5,

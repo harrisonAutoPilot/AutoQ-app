@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+// import com.horcrux.svg.RNSvgPackage;
 import io.xogus.reactnative.versioncheck.RNVersionCheckPackage;
 import io.xogus.reactnative.versioncheck.RNVersionCheckPackage;
 import io.xogus.reactnative.versioncheck.RNVersionCheckPackage;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
+          // new RNSvgPackage();
           // packages.add(new MyReactNativePackage());
           return packages;
         }

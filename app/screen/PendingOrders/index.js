@@ -59,7 +59,7 @@ const PendingOrder = (props) => {
         }
       }, []);
 
-console.log("the error", errors);
+
 
   useEffect(() => {
     if (addToCart  === "failed" && props.navigation.isFocused()) {
@@ -202,6 +202,9 @@ console.log("the error", errors);
     const details = (item) => props.navigation.navigate("IncompleteOrderDetails", { item });
 
 
+
+
+
     const loadMore = () => {
         setTrackLoaded(true)
 
@@ -291,7 +294,7 @@ console.log("the error", errors);
 
                 </TouchableWithoutFeedback>
 
-            <View style={styles.bottomCover}>
+            <View style={styles.bottomCoverPending}>
                 {(loaded === "idle" || loaded === "pending") && !trackLoaded  ?
                     <CustomerPlaceholderCard />
                     :

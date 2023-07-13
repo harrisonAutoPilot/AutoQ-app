@@ -49,7 +49,7 @@ const InCompleteOrderDetails = (props) => {
    const orders = props.route.params.item;
 
 
-
+// console.log("the order", orders)
 
    const { errors, verify, deleteOrder, verificationStatus,errorIncomplete, errorsCheck,incompleteOrderCurrentPage, verifyIncom} = useSelector((state) => state.order);
 
@@ -197,7 +197,7 @@ const InCompleteOrderDetails = (props) => {
          bottomSheet.current.close();
          dispatch(cleanup());
          dispatch(getCustomerPendingOrders(1))
-         props.navigation.navigate("CheckoutSuccess", { amount: orders.total_amount, delivery_price: orders?.delivery_type?.price  })
+         props.navigation.navigate("CheckoutSuccess", { amount: orders?.total_amount, delivery_price: orders?.delivery_type?.price  })
       }
 
       if (verificationStatus === "failed" && props.navigation.isFocused()) {
@@ -359,7 +359,7 @@ const InCompleteOrderDetails = (props) => {
                      </View>
                      <View style={styles.cardUpTop}>
                         <Text style={[styles.upTextThree, styles.weight]}>Total</Text>
-                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders.total_amount ? commafy(orders.total_amount) : 0}</Text>
+                        <Text style={[styles.upTextThree, styles.weight]}>₦{orders?.total_amount ? commafy(orders?.total_amount) : 0}</Text>
                      </View>
                   </View>
 

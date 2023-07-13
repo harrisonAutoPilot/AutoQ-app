@@ -12,7 +12,6 @@ export default styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "rgba(238, 238, 238, 1)",
         paddingLeft: 19
-
     },
     body: {
         backgroundColor: "#00319D",
@@ -29,10 +28,8 @@ export default styles = StyleSheet.create({
     },
     mainBody: {
         paddingHorizontal: 20,
-        // flex: 1,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        // backgroundColor:'#fff',
         marginTop: 15,
     },
     view: {
@@ -42,8 +39,6 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between', flexDirection: 'column'
     },
     subHeader: {
-
-        // borderTopLeftRadius: 20,
         backgroundColor: '#ffffff',
         borderColor: "#3858CF",
         borderTopWidth: 0,
@@ -51,51 +46,39 @@ export default styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         paddingBottom: 15,
-        // padding:1,
     },
     activeSubHeader: {
         backgroundColor: "#00319D",
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
-        // borderRadius: 20,
         width: "31%",
         height: 45,
         borderBottomWidth: 0,
-        // borderColor:'#469D00'
-
     },
     activeSubHeaderCorrect: {
         backgroundColor: "red",
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
-        // borderRadius: 20,
         width: "31%",
         height: 45,
         borderBottomWidth: 0,
-        // borderColor:'#469D00'
-
     },
     activeSubHeaderR1: {
         backgroundColor: "red",
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
-        // borderRadius: 20,
         width: "31%",
         height: 45,
         borderBottomWidth: 0,
-        // borderColor:'#469D00'
 
     },
     activeSubHeader2: {
         backgroundColor: "#00319D",
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
-        // borderRadius: 20,
         width: "31%",
         height: 45,
         borderBottomWidth: 0,
-
-        // borderColor:'#469D00'
 
     },
 
@@ -165,7 +148,6 @@ export default styles = StyleSheet.create({
         marginTop: 10,
     },
     miniSubHeader: {
-        // paddingHorizontal: 46,
         paddingVertical: 10,
     },
     inputHolder: {

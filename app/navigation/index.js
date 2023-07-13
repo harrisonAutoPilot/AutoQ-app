@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import FileViewer from "react-native-file-viewer";
 import RNFS from "react-native-fs";
 import { useSelector, useDispatch } from "react-redux";
-import { PermissionsAndroid, View, Text, SafeAreaView } from "react-native";
+import { PermissionsAndroid, View, Text } from "react-native";
 
 import { cleanup } from "@Store/PriceList"
 import styles from "./style";
@@ -35,6 +35,9 @@ const RootNavigator = () => {
         }
     }, [priceStatus]);
 
+
+
+
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     }
@@ -47,8 +50,17 @@ const RootNavigator = () => {
         wait(5000).then(() => setText(""));
     }, []);
 
+    const path = FileViewer.open(path, { showOpenWithDialog: true }) // absolute-path-to-my-local-file.
+    .then(() => {
+      // success
+    })
+    .catch((error) => {
+      // error
+    });
+
+
     const fileDownload = async () => {
-        const localFile = `${RNFS.TemporaryDirectoryPath}/RemedialHealth_Pricelist.pdf`
+        const localFile = `${RNFS.TemporaryDirectoryPath}/RemedialHealth_Pricelist.xlsx`
         ;
         const options = {
           fromUrl: list.path,
@@ -57,6 +69,7 @@ const RootNavigator = () => {
         try {
           await RNFS.downloadFile(options).promise
           await FileViewer.open(localFile);
+          //await exportDataToExcel(localFile)
         } catch (e) {
           console.log(e)
         }

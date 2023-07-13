@@ -422,6 +422,21 @@ const styles = StyleSheet.create({
         width:50,
 
     },
+    bottomCoverPending: {
+        width:"100%",
+        alignSelf:'center',
+        padding: 1,
+        borderRadius: 3,
+        borderWidth: 0,
+        borderStyle: 'solid',
+        borderColor: '#e6e6e6',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height:hp('80%'),
+        flexGrow: 1,
+      },
     reOrderText: {
         color: '#fff',
         fontSize: 9,

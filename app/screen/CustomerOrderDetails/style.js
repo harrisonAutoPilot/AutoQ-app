@@ -32,10 +32,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: "100%",
-    flexGrow: 1,
-    flex: 1
+    backgroundColor:'red',
+    //height: "100%",
+    //flexGrow: 1,
+    //  flex: 1
   },
+
   mainContainer: {
     height: "100%",
     // paddingBottom: 15
@@ -447,14 +449,24 @@ const styles = StyleSheet.create({
     letterSpacing: 0.1,
     textTransform: 'capitalize',
   },
+  errorPrompt:{
+    width:wp('100%'),
+    alignItems:'center',
+    position:'absolute',
+    zIndex:9000,
+    top:hp('15%'),
+    height:50,
+  },
   StatusCoverB: {
     backgroundColor: 'rgba(233, 235, 249, 1)',
-    paddingTop: 6,
+    paddingTop: 4,
     paddingBottom: 6,
     paddingLeft: 16,
     paddingRight: 16,
     borderRadius: 20,
-    // height: 30,
+    // alignItems:'center',
+    // justifyContent:'center',
+    height: 30,
 },
 statusText2: {
   color: 'rgba(0, 49, 157, 1)',

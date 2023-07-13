@@ -135,10 +135,13 @@ android {
         applicationId "com.rhmagent"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        //  versionCode 37
-        // versionName "4.4"
-        versionCode 43
-        versionName "5.0"
+   
+        // versionCode 49
+        // versionName "5.4"
+
+         versionCode 54
+        versionName "6.0"
+        
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }

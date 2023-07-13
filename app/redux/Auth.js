@@ -23,6 +23,9 @@ export const authSlice = createSlice({
             state.update = "idle"
             state.deleteAccount ="idle"
         },
+        getUserDetails: (state, { payload }) => {
+            state.user = { ...state.user, ...payload }
+        },
         logout(state) {
             state.status = "idle"
             state.isAuthenticated = false
@@ -144,6 +147,6 @@ export const authSlice = createSlice({
     }
 });
 
-export const { logout, cleanup } = authSlice.actions
+export const { logout, cleanup,getUserDetails } = authSlice.actions
 
 export default authSlice.reducer;
