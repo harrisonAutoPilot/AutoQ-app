@@ -7,7 +7,7 @@ import styles from "./style";
 const InputField = (props) => {
 
     const { title, placeholder, touched, errors, name,
-        handleBlur, setFieldValue, setFieldTouched, labelType, values, width, err } = props;
+        handleBlur, setFieldValue, setFieldTouched, labelType,values, width, err } = props;
 
     const hasError = errors[name] && touched[name];
 
@@ -39,6 +39,7 @@ const InputField = (props) => {
                     placeholder={placeholder}
                     placeholderTextColor={props.placeholderTextColor}
                     editable={props?.editable}
+                    maxLength={props?.maxLength}
                     multiline={props?.multiline}
                     secureTextEntry={props?.secureTextEntry}
                 />

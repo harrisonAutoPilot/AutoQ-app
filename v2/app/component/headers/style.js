@@ -4,7 +4,9 @@ export default styles = StyleSheet.create({
 
     // LOGIN HEADER
     loginIconContainer: {
-        width: "15%"
+        width: "12%",
+        paddingHorizontal:8,
+        paddingVertical:10,
     },
     loginInnerContainer:{
         flexDirection:"row",
@@ -45,6 +47,18 @@ export default styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#fff",
         borderBottomWidth: 1,
+        borderBottomColor: 'rgba(121, 116, 126, 0.16)',
+    },
+    transactionContainerNew: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        paddingLeft:7,
+        alignItems: 'center',
+        alignSelf: 'center',
+        width: "100%",
+        backgroundColor: "#fff",
+        borderBottomWidth: 0,
         borderBottomColor: 'rgba(121, 116, 126, 0.16)',
     },
     arrowCover: {
@@ -131,8 +145,8 @@ export default styles = StyleSheet.create({
     },
     arrowCoverTransaction:{
         width:"10%",
-        // paddingVertical: 24,
-        paddingHorizontal: 6,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
   
     },
     textCover1:{
@@ -172,4 +186,13 @@ export default styles = StyleSheet.create({
             borderBottomWidth:0,
             borderBottomColor:'rgba(121, 116, 126, 0.16)',
         },
+        backArrow:{
+            width:20,
+            height:20,
+            resizeMode:'contain'
+        },
+        padBtn:{
+           width:90,
+            paddingVertical:10,
+        }
 })

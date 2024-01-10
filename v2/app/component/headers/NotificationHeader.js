@@ -12,7 +12,7 @@ export default NotificationHeader = ({ onPress, onPressFilter, title }) => {
             <View style={style.noteContainer}>
                 <View style={style.arrowCover1}>
 
-                    <TouchableOpacity onPress={onPress}>
+                    <TouchableOpacity style={style.padBtn} onPress={onPress}>
                         <Image
                             source={require("@Assets2/image/backArrow.png")}
                             style={style.backImg}

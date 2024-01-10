@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavHeader as Header } from "@Component";
-import { TransactionHeader } from "@Component2";
+import { TransactionHeaderNew } from "@Component2";
 import styles from "./style";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
@@ -29,12 +29,13 @@ const Registration = (props) => {
     const key = props.route.params?.key
     let [data, setData] = useState({})
     let [dataOne, setDataOne] = useState({})
+    let [dataTwo, setDataTwo] = useState({})
+    const code = '234'
 
     const { pendingStatus, pending } = useSelector((state) => state.store);
 
     const goBack = () => props.navigation.goBack();
 
-console.log("the key", key)
 
     useFocusEffect(
         useCallback(() => {
@@ -50,6 +51,7 @@ console.log("the key", key)
             }
         }, [])
     );
+  
 
     const registerState = {
         phone: details?.phone ? details.phone : "",
@@ -60,7 +62,7 @@ console.log("the key", key)
 
     const registerState2 = {
         store_name: pending.stores && pending?.stores[0]?.name ? pending?.stores[0]?.name : "",
-        address: pending.stores && pending?.stores[0]?.address ? pending?.stores[0]?.address : "",
+       // address: pending.stores && pending?.stores[0]?.address ? pending?.stores[0]?.address : "",
         state_id: pending.stores && pending?.stores[0]?.state_id ? pending?.stores[0]?.state_id : "",
         lga_id: pending.stores && pending?.stores[0]?.lga_id ? pending?.stores[0]?.lga_id : "",
 
@@ -73,15 +75,20 @@ console.log("the key", key)
 
 
     const redirectToStepTwo = (val, type, payment) => {
-        const {firstname, surname, phone, email} = val
-        const newData = {name: `${firstname} ${surname}`, phone, user_type: type, id: details?.id, key, email, credit_option: payment }
+        console.log("my guy new",type, payment)
+        const {firstname, surname,phone, email} = val
+        const newData = {name: `${firstname} ${surname}`,store_address:details?.address,address:details?.address, phone:`${code}${phone}`, user_type: type, id: details?.id, key, email, credit_option: payment }
         setDataOne(newData);
         setActiveId(2)
 
     };
 
-    const redirectToStepThree = (val) => {
-       let newData = Object.assign(dataOne, val);
+    const redirectToStepThree = (val, stateId,  lgaId) => {
+        const addMore = {state_id:stateId, lga_id:lgaId }
+        setDataTwo(addMore);
+        console.log("my guy",dataTwo, addMore)
+        
+       let newData = Object.assign(dataOne, dataTwo, val);
        setData(newData);
         setActiveId(3)
     }
@@ -91,6 +98,7 @@ console.log("the key", key)
     };
 
     const redirectToStepTwoAgain = () => {
+        console.log("my guy ooo")
         setActiveId(2)
         setStorePhotoOne("");
         setStorePhotoTwo("")
@@ -101,6 +109,12 @@ console.log("the key", key)
         setData(newData)
         props.navigation.navigate("RegConfirm", {data})
     };
+
+    // const previewLicence = (val) => {
+    //     let newData = Object.assign(data, val)
+    //     setData(newData)
+    //     props.navigation.navigate("LicencePreview", {data})
+    // };
 
     const licenseImg = (id, props) => {
 
@@ -187,7 +201,7 @@ console.log("the key", key)
 
     return (
         <View style={styles.view}>
-            <TransactionHeader title="Customer Registration" onPress={goBack} />
+            <TransactionHeaderNew title="Customer Registration" onPress={goBack} />
 
             <View style={styles.mainBody}>
 
@@ -253,97 +267,7 @@ console.log("the key", key)
            
 
                 </View>
-                {/* <View style={styles.subHeader}>
-                    {
-                        activeId === 1 ?
-                        <View style={[activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
-                        <View style={{ flexDirection: 'row', zIndex: 90, justifyContent: 'center' }}>
-                        {activeId === 1 ?
-                                <View style={{ zIndex: 20, }}>
-                                    <Icon name="checkbox-marked-circle" color="rgba(51, 83, 203, 1)" size={18} />
-
-                                </View>
-                                : null}
-                            <Text style={styles.activeText}>User Profile</Text>
-                            <Icon name="chevron-right" color="#000" size={16} />
-                        </View>
-                        
-                         </View>
-                    :
-                    <View style={styles.activeSubHeader} >
-                    <View style={{ flexDirection: 'row', zIndex: 90, justifyContent: 'center' }}>
-                        <Text style={styles.activeText}>User Profile</Text>
-                       
-                            <View style={styles.numberCoverUnique}>
-                               <Text style={styles.numberText}>1</Text>
-                            </View>
-                            <Icon name="chevron-right" color="#000" size={16} /> 
-                    </View>
-                   
-
-                </View>
-                    }
-                    <View style={[activeId === 2 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
-                  {
-                      activeId === 2 ?
-                     <View style={[styles.inActiveSubHeader, styles.miniSubHeader]} >
-                            <View style={{ flexDirection: 'row', zIndex: 90, justifyContent: 'center' }}>
-                            
-                            
-                                    <View style={styles.numberCover}>
-                                    <Text style={styles.numberText}>2</Text>
-                                    </View>
-                            <Text style={styles.activeText}>Store</Text>     
-                            </View>
-                        
-
-                        </View>
-                      :
-                       <View style={styles.inActiveSubHeader} >
-                            <View style={{ flexDirection: 'row', zIndex: 90, justifyContent: 'center' }}>
-                                <Text style={styles.activeText}>Store</Text>
-                            
-                                    <View style={styles.numberCover}>
-                                    <Text style={styles.numberText}>2</Text>
-                                    </View>
-                                    <Icon name="chevron-right" color="#000" size={16} /> 
-                            </View>
-                   
-
-                </View>
-                  }
-                       
-                    
-
-                           
-                            {activeId === 3 ?
-                                <View style={{ zIndex: 20, flexDirection: 'row', marginLeft: 30, position: 'absolute', marginTop: 10 }}>
-                                    <Text style={{ color: '#fff', zIndex: 20, marginTop: 2 }}>Document</Text>
-                                    <Image source={require("@Assets/image/CheckCircle.png")} style={{ width: 20, height: 20, marginLeft: 5, marginTop: 2 }} />
-
-                                </View>
-                                : null
-                                }
-                   
-
-
-                    </View>
-                    <View style={[activeId === 3 ? styles.inActiveSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} >
-                    <View style={styles.inActiveSubHeader} >
-                            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                <Text style={styles.activeText}>Document</Text>
-                            
-                                    <View style={styles.numberCover}>
-                                    <Text style={styles.numberText}>3</Text>
-                                    </View>
-                                    <Icon name="chevron-right" color="#000" size={16} /> 
-                            </View>
-                        
-                        </View>
-                    </View>
-                </View> */}
-
-
+               
             </View>
             {activeId === 1 ? <Step1 details={registerState} active={props.route.params?.items ? false : true} submit={redirectToStepTwo} user_details={props.route.params?.items ? details : undefined}  keys={2}/> : activeId === 2 ?
                 <Step2 user_details={props.route.params?.items ? props.route.params?.items : undefined} details={registerState2} submit={redirectToStepThree} redirect={redirectToStepOne} /> :

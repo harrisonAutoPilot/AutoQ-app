@@ -49,6 +49,9 @@ const Home = (props) => {
     
     const redirectToPendingCustomers = () => props.navigation.navigate("CustomersDashboard", {id: 2});
 
+
+    console.log("the agent", agent)
+
     
     useEffect(() => {
         if ((date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12) {

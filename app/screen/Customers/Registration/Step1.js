@@ -41,6 +41,8 @@ const Step1 = (props) => {
         };
     }, [credit]);
 
+
+
     const selectUserType = (id, name) => {
         setActive(id);
         setUserType(name)

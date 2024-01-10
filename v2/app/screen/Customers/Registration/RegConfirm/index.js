@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Image, FlatList } from "react
 import { useDispatch, useSelector } from "react-redux";
 import Toast from 'react-native-toast-message';
 
-import { BtnLg } from "@Component/index";
-import { NavHeader as Header } from "@Component";
+import { TransactionHeader,OnboardinBtn } from "@Component2";
 import styles from './style';
 import { updatePendingCustomers, registerCustomer } from "@Request/Customer";
 import { cleanup } from "@Store/Customer";
@@ -21,6 +20,7 @@ const RegConfirm = (props) => {
     const [storeImg, setStoreIMg] = useState("");
     const details = props.route.params.data;
 
+    // const { previewLicence} = props
     const goBack = () => props.navigation.goBack();
     const storeSuccess = () => props.navigation.navigate("CustomerSuccess", { details });
     const { errors, update } = useSelector((state) => state.customer);
@@ -33,6 +33,18 @@ const RegConfirm = (props) => {
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     };
+
+    let name = details?.name
+    let first_name = name.split(" ")[0]
+    let last_name = name.split(" ")[1]
+    
+    const previewLicence = (images) =>{
+        props.navigation.navigate("LicencePreview",{images})
+    }
+
+    const previewStores = (images2) => {
+        props.navigation.navigate("StorePreview",{images2})
+    }
 
     const refreshView = useCallback((errmsg, sucmsg) => {
         wait(1000).then(() => {
@@ -85,161 +97,125 @@ const RegConfirm = (props) => {
 
     };
 
+
     const submit = () => {
         setLoader(true);
-        if (details.key === 1) {
-             dispatch(updatePendingCustomers(details))
-        }
-        else {
-           
-             dispatch(registerCustomer(details))
-        }
+        dispatch(registerCustomer(details))
+    
     }
 
 
-
-    const RenderItem = ({ item }) => (
-        <TouchableOpacity style={styles.smCardCover} onPress={() => viewDoc(item.uri)}>
-
-            <View style={styles.smCard}>
-                <Image source={{ uri: item?.uri }} style={styles.smImg} />
-            </View>
-            <TouchableOpacity onPress={() => viewDoc(item.uri)}>
+    const Card = ({caption, title}) => (
+        <View style={styles.card}>
+            <View style={styles.listCover}>
                 <View>
-                    <Text style={styles.viewText}>View</Text>
+                    <Text style={styles.itemTitle}>{caption}</Text>
                 </View>
-            </TouchableOpacity>
-        </TouchableOpacity>
-    );
-
-    const RenderItem2 = ({ item }) => (
-        <TouchableOpacity style={styles.smCardCover} onPress={() => viewDoc(item.uri)}>
-
-            <View style={styles.smCard}>
-                <Image source={{ uri: item?.uri }} style={styles.smImg} />
-            </View>
-            <TouchableOpacity onPress={() => viewDoc(item.uri)}>
                 <View>
-            <Text style={styles.viewText}>View</Text>
+                    {
+                        title == "Select Payment" ?
+                        <Text style={styles.itemName}>- -</Text>
+                        :
+                        <Text style={styles.itemName}>{title}</Text>
+                    }
+                </View>
             </View>
-            </TouchableOpacity>
-        </TouchableOpacity>
-    );
+        </View>
+        )
 
+
+        const ImageCard = ({ caption, title, onPress, img}) => (
+            <View style={styles.card}>
+            <View style={styles.listCover}>
+                <View>
+                    <Text style={styles.itemTitle}>{caption}</Text>
+                </View>
+                <View>
+                    {
+                        img == '' ?
+                        <Text style={styles.itemName}>No Image Selected</Text>
+                        :
+                        <TouchableOpacity onPress={onPress}>
+                            <Text style={styles.itemNameLink}>{title}</Text>
+                        </TouchableOpacity>
+                       
+                    }
+                </View>
+            </View>
+        </View>
+        );
+        
 
     return (
         <View style={styles.view}>
-            <Header title="Confirm Registration" onPress={goBack} styleView={styles.body} styles={styles.headerText} />
+             <TransactionHeader title="Confirm Registration" onPress={goBack} />
+           
          <View style={styles.errorCover}>
          {errMsg ? <Toast config={toastConfig} /> : null}
          </View>
             <ScrollView>
                 <View style={styles.modalView}>
 
-                    <View style={styles.card}>
-                        <View style={styles.listCover}>
-                            <View>
-                                <Text style={styles.itemTitle}>Full Name</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.itemName}>{details.name}</Text>
-                            </View>
+                  <Card
+                    caption="Type of store"
+                    title={details.user_type}
+                   
+                    />
+                     <Card
+                        caption="Last Name"
+                        title={last_name}
+                    
+                      />
+                        <Card
+                        caption="First Name"
+                        title={first_name}
+                    
+                         />
+                        <Card
+                        caption="Phone"
+                        title={details.phone}
+                         />
+                         <Card
+                        caption="Store Name"
+                        title={details.store_name}
+                    
+                         />
+                        <Card
+                            caption="Address"
+                            title={details.store_address}
+                         />
+                         <Card
+                            caption="Payment Method"
+                            title={details.credit_option}
+                         />
 
-                        </View>
-                    </View>
+                        <ImageCard
+                            img={details.images}
+                            caption="Pharmacy License"
+                            title="VIEW"
+                            onPress={() =>previewLicence(details.images)}
+                         />
+                         <ImageCard
+                            img={details.images2}
+                            caption="Store Images"
+                            title="VIEW"
+                            onPress={() => previewStores(details.images2)}
+                         />
 
-                    <View style={styles.card}>
-                        <View style={styles.listCover}>
-                            <View>
-                                <Text style={styles.itemTitle}>Store Name:</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.itemName}>{details.store_name}</Text>
-                            </View>
-
-                        </View>
-                    </View>
-
-                    <View style={styles.card}>
-                        <View style={styles.listCover}>
-                            <View>
-                                <Text style={styles.itemTitle}>Phone:</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.itemName}>+{details.phone}</Text>
-                            </View>
-
-                        </View>
-                    </View>
-
-                    <View style={styles.card}>
-                        <View style={styles.listCover}>
-                            <View>
-                                <Text style={styles.itemTitle}>Store Address:</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.itemName}>{details.address}</Text>
-                            </View>
-
-                        </View>
-                    </View>
-
-                    <View style={styles.card}>
-                        <View style={styles.listCover}>
-                            <View>
-                                <Text style={styles.itemTitle}>User Type:</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.itemName}>{details.user_type}</Text>
-                            </View>
-
-                        </View>
-                    </View>
+                   
                 </View>
 
-                <View style={styles.imgCardCover}>
-
-                    <View style={styles.licenseView}>
-                        <Text style={styles.imgName}>License Image</Text>
-                    </View>
-
-                    <FlatList
-                        horizontal={true}
-                        data={details?.images}
-                        renderItem={RenderItem}
-                        keyExtractor={item => item.id}
-                        ListFooterComponent={<View style={{ height: 50 }} />}
-                        showsHorizontalScrollIndicator={false}
-
-                    />
-
-
-                    <View style={styles.licenseView2}>
-                        <Text style={styles.imgName}>Store Image</Text>
-                    </View>
-
-                    <FlatList
-                        horizontal={true}
-                        data={details?.images2}
-                        renderItem={RenderItem2}
-                        keyExtractor={item => item.id}
-                        ListFooterComponent={<View style={{ height: 50 }} />}
-                        showsHorizontalScrollIndicator={false}
-
-                    />
-
-                </View>
+                
                 
             </ScrollView>
             <View style={styles.btnCover}>
-                    <BtnLg title="Confirm & Submit" onPress={submit} style={styles.submit} stylea={styles.angleImg} styles={styles.preText1} />
-                </View>
-            <ViewDocument
-                visibleDocument={showDocument}
-                returnBack={() => setShowDocument(false)}
-                img={storeImg}
+            <OnboardinBtn
+                title="Confirm & Submit"
+                backgroundColor="#3353CB"
+                color="#fff"
+                onPress={submit}
             />
-
+                </View>
             <Loader isVisible={loader} />
         </View>
     )

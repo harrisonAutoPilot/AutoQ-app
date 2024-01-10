@@ -20,18 +20,21 @@ export const agentSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(getAgent.pending, state => {
+                console.log("the endpoint pending")
                 state.status = "pending";
                 state.errors = {};
                 state.agent = {};
                 state.loaded = "pending"
             })
             .addCase(getAgent.fulfilled, (state, action) => {
+                console.log("the agents response", action.payload)
                 state.agent = action.payload;
                 state.status = "success";
                 state.errors = {};
                 state.loaded = "success";
             })
             .addCase(getAgent.rejected, (state, { payload }) => {
+                console.log("the endpoint failes",payload)
                 state.status = "failed";
                 state.errors = payload;
                 state.agent = {};

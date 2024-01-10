@@ -1,22 +1,37 @@
 import { StyleSheet, Platform } from "react-native";
 
-
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+  } from 'react-native-responsive-screen';
 export default styles = StyleSheet.create({
     mainContainer: {
         backgroundColor: "#fff",
         flex: 1,
-        paddingTop: Platform.OS == "android" ? 30 : 0,
+        paddingTop: Platform.OS == "android" ? 5 : 0,
+    },
+    flexBody:{
+        position:'absolute',
+       
+     
+        
     },
     signupTitleContainer: {
         paddingHorizontal: 28,
         height: "100%"
+    },
+    carImg:{
+        width:wp('100%'),
+        height:270,
+        zIndex:-1,
+        resizeMode:'contain'
     },
     signupPinTitleContainer: {
         paddingHorizontal: 28,
         flex: 1
     },
     signupTitle: {
-        color: "#171B2C",
+        color: "#fff",
         fontSize: 28,
         fontFamily: "AnekLatin-SemiBold",
         lineHeight: 36,
@@ -81,6 +96,11 @@ export default styles = StyleSheet.create({
     },
 
     // Form Details
+    formContainerNew: {
+        marginTop: 140,
+        flex: 1,
+        
+    },
     formContainer: {
         marginTop: 20,
         flex: 1,

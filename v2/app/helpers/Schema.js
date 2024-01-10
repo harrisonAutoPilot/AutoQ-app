@@ -34,7 +34,7 @@ const addStoreSchema2 = yup.object({
   store_name:yup.string().trim().required("Store name is required"),
   // address: yup.string().trim().required("Store Address is required").trim().min(10, "Store Address must be at least 10 characters"),
   state_id: yup.string().required("State is required"),
-  lga_id: yup.string().required("LGA is required")
+  // lga_id: yup.string().required("LGA is required")
 });
 
 
@@ -69,7 +69,7 @@ const storeSignupSchema = yup.object({
 
 const checkSignupSchema = yup.object({
   state_id: yup.string().required("State is required"),
-  lgas: yup.string().required("LGA is required")
+  // lgas: yup.string().required("LGA is required")
 });
 
 const stateSignupSchema = yup.object({

@@ -8,6 +8,14 @@ export default styles = StyleSheet.create({
         paddingVertical: 16,
         alignItems: "center",
     },
+    onProceedBtnContainer:{
+        width:'45%',
+        flexDirection:'row',
+        justifyContent:'center',
+        borderRadius: 100,
+        paddingVertical: 16,
+        alignItems: "center",
+    },
     homeDetailsBtnContainer:{
         flexDirection:'row',
         justifyContent:'center',

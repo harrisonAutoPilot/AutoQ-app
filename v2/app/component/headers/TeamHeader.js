@@ -13,7 +13,7 @@ export default TeamHeader = ({onPress,onPressFilter, title}) => {
             <View style={style.teamContainer}>
                     <View  style={style.arrowCover1}>
                       
-                        <TouchableOpacity  onPress={onPress}>
+                        <TouchableOpacity style={style.padBtn} onPress={onPress}>
                         <Image 
                             source={require("@Assets2/image/trailing-icon.png")}
                             style={style.backImThinny}

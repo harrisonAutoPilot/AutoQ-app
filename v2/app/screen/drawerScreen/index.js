@@ -302,12 +302,14 @@ const DrawerScreen = (props) => {
                         {user.picture_url === null ? (
                             <Image
                             style={styles.userImg}
-                            source={require('@Assets2/image/mee.jpg')}
+                            source={require('@Assets2/image/personIcon_2.png')}
                             />
                         ) : (
                             <Image
-                            style={styles.agentImg}
-                            source={{uri: `${URL}${user?.picture_url}`}}
+                            // style={styles.agentImg}
+                            style={styles.userImg}
+                            // source={{uri: `${URL}${user?.picture_url}`}}
+                            source={require('@Assets2/image/personIcon_2.png')}
                             />
                         )}
                         <Image

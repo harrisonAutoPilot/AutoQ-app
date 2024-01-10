@@ -3,19 +3,26 @@ import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl } from "r
 import { useSelector, useDispatch } from "react-redux";
 import { InputField } from "@Component";
 import Icon from 'react-native-vector-icons/Ionicons';
+import Zcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PlaceholderCard from "./PlaceHolderCard";
 import styles from "./style";
 import { getCustomers} from "@Request/Customer";
 import EmptyActive from "./empty/emptyActive"
+import data from "./completeData"
 import FilterBottomSheet from "./FilterBottomSheet";
+import CompletedDetail from "./CompletedDetail"
 
 const Active = (props) => {
     const dispatch = useDispatch();
     const [refreshing, setRefreshing] = useState(false);
     const [sheetOpen, setSheetOpen] = useState(false);
     const [result, setResult] = useState([]);
+    const [search, setSearch] = useState('');
     const bottomSheetS = useRef();
     const flatListRef = React.useRef();
+    const [showRetrieve, setShowRetrieve] = useState(false);
+    const [passValue, setPassValue] = useState('');
+
 
     const { status, errors, customers } = useSelector((state) => state.customer);
 
@@ -36,38 +43,37 @@ const Active = (props) => {
    
       }
     
+ 
+    
      const applyFilter =(item)=>{
-      setDuration(item)
+      sortOrder(item)
       bottomSheetS.current.close()
-      console.log("what i selected", item)
      }
 
-    const sortOrder = (id) => {
+     const sortOrder = (id) => {
         
-        let customer = [...customers?.active?.users];
+      let customer = [...data];
 
-        if (id === 1) {
-            let searched = customer.sort((a, b) => { return  a.name.localeCompare(b.name) })
-            toTop()
-            return setResult(searched);
-        } else if (id === 2) {
-            let searched = customer.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) });
-            toTop()
-            return setResult(searched)
-        } 
-        // else if (id === 3) {
-        //     let searched = customer.sort((a, b) => {
-        //         if (a.stores[0].address.toLowerCase() < b.stores[0].address.toLowerCase()) return -1;
-        //     });
-        //     toTop()
-        //     return setResult(searched)
-        // } 
-        else if (id === 4) {
-            let searched = customer.sort((a, b) => { return new Date(a.created_at) - new Date(b.created_at) })
-            toTop()
-            return setResult(searched)
-        }
-    }
+      if (id === 1) {
+          let searched = customer.sort((a, b) => { return  a.name.localeCompare(b.name) })
+          toTop()
+          return setResult(searched);
+      } else if (id === 2) {
+          let searched = customer.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) })
+          toTop()
+          return setResult(searched)
+      } 
+      else if (id === 3) {
+        let searched = customer.sort((a, b) => { return new Date(b.profession) - new Date(a.profession) })
+        toTop()
+        return setResult(searched)
+    } 
+      else if (id === 4) {
+          let searched = customer.sort((a, b) => { return new Date(a.date) - new Date(b.date) })
+          toTop()
+          return setResult(searched)
+      }
+  }
 
     const openSheetSort = () => {
         setSheetOpen(true)
@@ -84,22 +90,91 @@ const Active = (props) => {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    const ListView = ({ item, index }) => {
 
-        return (
-             <TouchableOpacity style={styles.cardCover} onPress={() => props.details(item)}  key={item.id}>
-            <View>
-                <Text style={styles.customerName}>{item.name}</Text>
-                <Text style={styles.customerPhone}>+{item.phone}</Text>
-                <Text style={styles.customerAddress}>{item?.stores[0].address}</Text>
-            </View>
-            <View style={styles.customerPendingStatusCover}>
-                <Text style={styles.customerPendingText}>Active</Text>
-            </View>
-        </TouchableOpacity>
-            
-        )
+    const request = (item) => {
+      setPassValue(item);
+     setShowRetrieve(true)
+    
+    }
+  
+    const closeBrief =() => {
+      setShowRetrieve(false)
+    }
+  
+
+    useEffect(() => {
+
+      if (search.length) {
+  
+        filterResult();
+  
+      }
+  
+    }, [search.length]);
+
+
+  const filterResult = () => {
+
+      let searched = data?.filter(val => {
+  
+        if (val?.name !== null && val?.name.toLowerCase().includes(search.toLowerCase())) {
+  
+          return val
+        }
+      });
+  
+      return setResult(searched)
+  
     };
+
+
+
+      const ListView = ({ item, index }) => {
+        return (
+            <TouchableOpacity onPress={() => request(item)}  key={item.id}>
+              <View style={styles.cardBottom}>
+                    <View style={styles.bottomCardInner}>
+                      <View style={styles.imgCoverComplete}>
+                      <Image
+                        style={styles.barImg}
+                        source={{uri: item.img}}
+                      />
+                     
+                      </View>
+                      <View style={styles.bottomCardLeft}>
+                        <Text style={styles.barTextRed}> Name:{item.name}</Text>
+                        <Text style={styles.barTextSm}>PROFESSION:{item.profession}</Text>
+                        <Text style={styles.barTextSm}>Service Fee: ₦{item.service_fee}</Text>
+                       <View style={{flexDirection: 'row'}}>
+                        <View style={styles.iconCoverCanPink}>
+                          <Zcon name='calendar-clock' color="#ff9900" size={18} />
+                          <Text style={styles.barTextSmSucStart}>{item.start_date}</Text>
+                      </View>
+                     
+                      <View style={styles.iconCoverCanSuc}>
+                          <Zcon name='calendar-check' color="#00b300" size={18} />
+                          <Text style={styles.barTextSmSuc}>{item.end_date}</Text>
+                      </View>
+                     </View>
+                     <View style={styles.iconCoverCanRight}>
+                     <Image source={require('@Assets2/image/feedback.png')} style={styles.smImg} />
+                          <Text style={styles.barTextSmRight}>{item.review}</Text>
+                      </View>
+                      </View>
+      
+                      
+                    </View>
+                    
+                    <View>
+                      
+                    </View>
+                  </View>
+    
+       </TouchableOpacity>
+           
+       )
+    };
+     
 
 
     return (
@@ -130,12 +205,10 @@ const Active = (props) => {
               null
             }
             <View style={styles.bottomCover}>
-
-            {status === "pending" || status === "idle" ? <PlaceholderCard />
-                :
+           
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={!result.length ? customers?.active?.users : result }
+                    data={!result.length ? data : result }
                     keyExtractor={item => item.id}
                     ListEmptyComponent={EmptyActive}
                     renderItem={ListView}
@@ -147,7 +220,7 @@ const Active = (props) => {
                     }
                     extraData={customers?.active?.users}
                 />
-}
+
 
             </View>
 
@@ -158,6 +231,13 @@ const Active = (props) => {
                 apply={applyFilter}
                 objList = {(item) =>  setObjectValues(item)}
                 sort={changeDuration}
+                />
+              <CompletedDetail
+                  visibleRetrieve={showRetrieve}
+                  returnBack={() => setShowRetrieve(false)}
+                  title="Completed Job Details"
+                  message={passValue}
+                  submit={closeBrief}
                 />
 
         </View>

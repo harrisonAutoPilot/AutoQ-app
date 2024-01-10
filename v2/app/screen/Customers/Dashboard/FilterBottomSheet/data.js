@@ -8,7 +8,7 @@ export const data =
    "type": "Z -A",
     },
    {"id": 3, 
-   "type": "Recent",
+   "type": "Profession",
   },
   {"id": 4, 
    "type": "Earliest",

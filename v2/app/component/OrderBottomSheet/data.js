@@ -1,41 +1,50 @@
 const track = [
   
     {
-        id: " ",
-        type: "Being Processed"
+        type: "Being Processed",
+        id: "0"
     },
     {
-        id: 1,
-        type: "Shipped"
+        type: "Shipped",
+        id: "1"
     },
     {
-        id: 2,
-        type: "Delivered"
+        type: "Delivered",
+        id: "2",
     },
     {
-        id: 3,
-        type: "Cancelled"
+        type: "Cancelled",
+        id: "3"
     },
     {
-        id: 4,
-        type: "Order Confirmed"
+        type: "Order Confirmed",
+        id: "4"
     },
     {
-        id: 5,
-        type: "New"
+        type: "Account Confirmed",
+        id: "10"
     },
     {
-        id: 6,
-        type: "Final Check"
+        type: "New",
+        id: "5"
     },
     {
-        id: 9,
-        type: "Awaiting Delivery"
+        type: "Final Check",
+        id: "6"
     },
     {
-        id: 10,
-        type: "Account Confirmed"
-    }
+        type: "Incomplete",
+        id: "7"
+    },
+    {
+        type: "unresolved",
+        id: "8"
+    },
+    {
+        type: "Awaiting Delivery",
+        id: "9"
+       
+    },
 ];
 
 
@@ -51,7 +60,7 @@ const period = [
     },
     {
         id: "last_3_months",
-        type: "Last 3 Month"
+        type: "Select Range"
     },
 ];
 

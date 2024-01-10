@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from "./style";
-import InActive from "./Inactive";
 import Pending from "./Pending";
+import InActive from "./InActive";
 import Active from "./Active";
 import { getCustomers } from "@Request/Customer";
 import { cleanup } from "@Store/Customer";
@@ -117,7 +117,7 @@ const CustomersDashboard = (props) => {
               <View style={styles.topNav}>
                     <View style={styles.leftNav}>
                         <View style={styles.greetCover}>
-                            <Text style={styles.nameText}>Customers</Text>
+                            <Text style={styles.nameText}>My Requests</Text>
                         </View>
                     </View>
               <View style={styles.rightNav}>
@@ -145,15 +145,15 @@ const CustomersDashboard = (props) => {
             <View style={styles.subHeader}>
                     <TouchableOpacity style={[styles.firstHeader, activeId === 1 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => { showActive(1); setSearch("") }}>
                         <View>
-                            <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>PENDING</Text>
+                            <Text style={[activeId === 1 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>CANCELLED</Text>
                         </View>
                        
                     </TouchableOpacity>
                     <TouchableOpacity style={[activeId == 2 ? styles.activeSubHeader : styles.inActiveSubHeader]} onPress={() => { showActive(2); setSearch("") }}>
-                        <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText]}>ACTIVE</Text>
+                        <Text style={[activeId === 2 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText]}>ONGOING</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[activeId === 3 ? styles.activeSubHeader : styles.inActiveSubHeader, styles.miniSubHeader]} onPress={() => { showActive(3); setSearch("") }}>
-                        <Text style={[activeId === 3 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>INACTIVE</Text>
+                        <Text style={[activeId === 3 ? styles.activeSubHeaderText : styles.inActiveSubHeaderText, styles.miniSubHeaderText]}>COMPLETED</Text>
                     </TouchableOpacity>
             </View>
 
@@ -180,7 +180,7 @@ const CustomersDashboard = (props) => {
                 
             </View>
 
-            {activeId === 1 ? <Pending details={reg_details} myName="Pending"  result={result}/> : activeId === 2 ? <Active details={custom_details} myName="Active" result={result}/> : <InActive details={custom_details} myName="Inactive" result={result}/>}
+            {activeId === 1 ? <InActive details={reg_details} myName="InActive"  result={result}/> : activeId === 2 ? <Pending details={custom_details} myName="Pending" result={result}/> : <Active details={custom_details} myName="Active" result={result}/>}
 
 
         </View>

@@ -26,6 +26,7 @@ const PaymentOption = (props) => {
   const selectUserType = item => {
     setActive(item.id);
     setOption(item.name);
+    props.returnBack(item.name);
 
   };
 
@@ -52,13 +53,14 @@ const PaymentOption = (props) => {
     if (props.id) {
       setActive(props.id.id);
       setOption(props.id.name)
+      props.returnBack(props.id.name);
     }
   }, [props.id]);
 
 
-  const closeModal = () => {
-    props.returnBack(option);
-  };
+  // const closeModal = () => {
+  //   props.returnBack(option);
+  // };
 
   const renderItem = ({ item }) => (
 
@@ -94,20 +96,21 @@ const PaymentOption = (props) => {
 
 
     
-    <Animated.View>
-
+    <Animated.View style={item.id == active && animatedStyles}>
 
     <TouchableOpacity
-        style={styles.renderItemContainer}>
+          style={[styles.renderItemContainer,
+          item.id === active && styles.activeRenderItemContainer]}
+          onPress={() => selectUserType(item)}>
 
         <View style={styles.categoryTitleView}>
-            <Text style={styles.categoryTitle}>{item.title}</Text>
-            { active === item.id &&
-                <Text style={styles.categoryDesc}>{item.desc}</Text>
+            <Text style={styles.categoryTitle}>{item.name}</Text>
+           { active && active === item.id &&
+                <Text style={styles.categoryDesc}>{item.price_increment}% price increment</Text>
             }
-        </View>
+         </View>
 
-        <View>
+        <View >
             {
                 active !== item.id
                     ?

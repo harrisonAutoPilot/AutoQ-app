@@ -41,8 +41,7 @@ categoryDesc: {
 
 
 categoryTitleView: {
-    width:wp('80%'),
-    paddingHorizontal:20,
+    width:wp('60%'),
     alignItems:'center',
     justifyContent:'space-between',
     flexDirection:'row',
@@ -84,7 +83,8 @@ codeCover: {
 },
 itemCover:{
 width:wp('90%'),
-alignSelf:'center'
+alignSelf:'center',
+alignItems:'center'
 },
   bioTitleCover: {
     width: wp('100%'),

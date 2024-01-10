@@ -10,10 +10,10 @@ import styles from "./style";
 const SortBottomSheet = (props) => {
   const [activeId, setActiveId] = useState("")
 
-  const selectItem = (item) => {
-    props.sort(item?.id)
-    setActiveId(item?.id)
-  }
+  // const selectItem = (item) => {
+  //   props.sort(item?.id)
+  //   setActiveId(item?.id)
+  // }
 
  
 

@@ -23,13 +23,18 @@ view:{
     height: "100%",
     backgroundColor: "#fff"
 },
-// this is where is started the registration tab
-// formContainer:{
-//     width:"100%",
-//    },
+containerInner:{
+flexDirection:'column',
+justifyContent:'space-between',
+height:hp('74%'),
+flex:1,
+ },
    formFlexInside:{
     width:"100%",
-    paddingHorizontal:20,
+    flexDirection:'column',
+    justifyContent:'space-between',
+    height:hp('80%'),
+    flexGrow:1,
     zIndex:-2
    },
 
@@ -199,7 +204,6 @@ numberText:{
         paddingTop: 10,
         borderColor: '#f5f5f5',
         flexDirection:'column',
-        paddingHorizontal:20,
         borderWidth: 0,
         flexGrow: 1,            // all the available vertical space will be occupied by it
         justifyContent: 'space-between' // will create the gutter between body and footer
@@ -207,16 +211,21 @@ numberText:{
 formContainer:{
     flexDirection:"column",
     justifyContent:"space-between",
-    height:Platform.OS === 'android' ? hp('60%') : hp('63%'),
+    // height:Platform.OS === 'android' ? hp('50%') : hp('63%'),
     },
     formContainerStep2:{
         flexDirection:"column",
         justifyContent:"space-between",
-        height:Platform.OS === 'android' ? hp('85%') : hp('85%'),
+       // height:Platform.OS === 'android' ? hp('42%') : hp('80%'),
        },
     listContainer:{
-    marginTop:20
+    marginHorizontal:10,
+ 
     },
+    listContainerNew:{
+        margin:10,
+        marginTop:0,
+        },
     typeContainer:{
         marginTop:1
         },
@@ -239,14 +248,14 @@ formContainer:{
       flexDirection: "row",
       justifyContent:"space-between"
     },
-    codeCover:{
-      width:wp("28%"),
-      alignItems:"center",
-      alignSelf:"center",
-      justifyContent:"center",
-      marginRight:5
+    // codeCover:{
+    //   width:wp("25%"),
+    //   alignItems:"center",
+    //   alignSelf:"center",
+    //   justifyContent:"center",
+    //   marginRight:5
     
-    },
+    // },
     smErrCover: {
       position: 'absolute',
       width: wp("100%"),
@@ -268,7 +277,7 @@ formContainer:{
         paddingVertical:10,
     },
     toastCover: {
-      bottom:Platform.OS === "android" ? hp('4%') : hp('12%'),
+      bottom:Platform.OS === "android" ? hp('20%') : hp('12%'),
       alignSelf: 'center',
       width: wp('100%'),
       zIndex: 9000,
@@ -367,15 +376,15 @@ formContainer:{
         letterSpacing: 0.2,
     },
     codeCover: {
-        width: wp("28%"),
+        width: wp("27%"),
         alignItems:"flex-start",
         alignSelf: "center",
         marginTop:14,
         justifyContent: "center",
         marginRight: 10,
         padding:15,
-        paddingVertical:16,
-        borderWidth:1.3,
+        paddingVertical:17,
+        borderWidth:2,
         borderRadius:6,
         borderColor: "#5A5D72"
       },
@@ -388,9 +397,9 @@ formContainer:{
       },
           btnCover: {
         borderTopColor: "#F5F5F5",
-  
         paddingBottom: 30
     },
+
       bioTitleCover: {
         width: wp('100%'),
         padding:20,
@@ -468,8 +477,25 @@ formContainer:{
         paddingHorizontal: 20,
         marginTop: Platform.OS === "android" ? Dimensions.get("window").height / 2.6 : Dimensions.get("window").height / 2.9,
     },
- 
-
+    btnDoubleCover:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        borderTopColor: "#F5F5F5",
+        borderTopWidth: 1,
+        padding: 20,
+        justifyContent: 'space-between',
+        //marginTop: Platform.OS === "android" ? Dimensions.get("window").height / 1.5 : Dimensions.get("window").height / 2.9,  
+    },
+    btnDoubleCoverThird:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        borderTopColor: "#F5F5F5",
+        padding:20,
+        borderTopWidth: 1,
+        paddingVertical: 20,
+        justifyContent: 'space-between',
+        //marginTop: Platform.OS === "android" ? Dimensions.get("window").height / 1.5 : Dimensions.get("window").height / 2.9,  
+    },
 
 
 
@@ -1702,18 +1728,7 @@ formContainer:{
     //     color: "#212121", 
     //     marginTop:10,    
     // },
-    // paymentInputCover:{
-    //     width:wp('90%'),
-    //     borderWidth:1,
-    //     borderColor:'#E0E0E0',
-    //     borderRadius:5,
-    //     height:60,
-    //     alignSelf:'center',
-    //     marginTop:5,
-    //     flexDirection:'row',
-    //     justifyContent:'space-between'
 
-    // },
     // innerPaymentCover:{
     //     flexDirection:'row',
     //     width:100,

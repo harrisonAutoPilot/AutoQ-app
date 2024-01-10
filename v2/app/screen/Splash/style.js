@@ -3,7 +3,7 @@ import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: "#3858CF",
+        backgroundColor: "#fff",
         height: hp('100%'),
         width: Dimensions.get("window").width
     },
@@ -15,6 +15,11 @@ const styles = StyleSheet.create({
     image: {
         width: 100,
         height: 100
+    },
+    successImg:{
+        resizeMode:'contain',
+        width:90,
+        height:90,
     }
 });
 

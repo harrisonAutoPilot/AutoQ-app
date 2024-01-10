@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
 
 import styles from "./style";
-import { ContinueBtn, FormikValidator } from "@Component2";
+import { ContinueBtn,PreviousBtn, ProceedBtn, FormikValidator } from "@Component2";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { addStoreSchemaImg } from "@Helper/Schema";
 
@@ -15,39 +15,37 @@ const Step3 = (props) => {
 
 
 
+const Card = ({ bottom,icon, title, imgCount, onPressIn, onPressChange}) => (
+<TouchableOpacity onPressIn={onPressIn}>
 
-const Card = ({ bottom,icon, title, imgCount, onPressIn}) => (
-    <TouchableOpacity onPressIn={onPressIn}>
-    <View style={styles.imgCardCover}>
-    <View style={styles.leftCover}>
-       <Icon name={icon} size={20} />
-       <View>
-       <Text style={styles.pharmaText}>{title}</Text>
-        <Text style={styles.addText}>Add {title}</Text>
-     </View>
-    </View>
-    <View style={styles.rightCover}>
-       
-    {
-        imgCount.length > 0 ?
-        <View style={styles.savedCover}>
-        <Text style={styles.savedText}>saved</Text>
+        <View style={styles.imgCardCover}>
+        <View style={styles.leftCover}>
+            <Icon name={icon} size={20} />
+          <View>
+            <Text style={styles.pharmaText}>{title}</Text>
+            <Text style={styles.addText}>Add {title}</Text>
+           </View>
+            </View>
+        <View style={styles.rightCover}>
+
+            {
+                imgCount.length > 0 ?
+                <View style={styles.savedCover}>
+                <Text style={styles.savedText}>saved</Text>
+                </View>
+                :
+                null
+            }
+            {
+                bottom === 'true' ?
+                <View  style={styles.bottomLine}/>
+                :
+                null
+            }
+              <Icon name="chevron-right" size={24} />
         </View>
-        :
-        null
-    }
-       {
-        bottom === 'true' ?
-        <Icon name="chevron-right" size={24} />
-        :
-        null
-       }
-     
-      
-    </View>
-    </View>
-       
-    <View  style={styles.bottomLine}/>
+        </View>
+
     </TouchableOpacity>
 
 )
@@ -75,6 +73,7 @@ const Card = ({ bottom,icon, title, imgCount, onPressIn}) => (
                                         validationSchema={addStoreSchemaImg}
                                         onSubmit={(values, actions) => {
                                             submit(values)
+                                        
                                         }}
                                     >
                                         {props => (
@@ -85,7 +84,7 @@ const Card = ({ bottom,icon, title, imgCount, onPressIn}) => (
                                                     styles.scrollContentContainer,
                                                 ]}>
                                      
-                                           
+                                           <View style={styles.containerInner}>
                                                     <View style={[styles.registerInputHolder, props.touched.images && props.errors.images ? styles.inputErrHolder : null]}>
                                                        
 
@@ -99,6 +98,7 @@ const Card = ({ bottom,icon, title, imgCount, onPressIn}) => (
                                                             props.setFieldTouched('images', true, false);
 
                                                         }}
+                                                     
                                                         />
                                                         <Card
                                                         title="Store Images"
@@ -110,20 +110,29 @@ const Card = ({ bottom,icon, title, imgCount, onPressIn}) => (
                                                             props.setFieldTouched('images2', true, false);
 
                                                         }}
+                                                      
+                                                        
                                                         />
 
 
-                                        </View> 
-                                             </ScrollView>
-                                             <View style={styles.btnStep3Cover}>
-                                                {/* <BtnPre title="Previous" onPress={redirect} style={styles.submitStep3} stylea={styles.angleImg} styles={styles.preText} /> */}
-                                                <ContinueBtn
+                                                   </View> 
+                                        <View style={styles.btnDoubleCover}>
+                                             <PreviousBtn
+                                                    title="Previous"
+                                                    onPress={redirect} 
+                                                    backgroundColor="#3353CB"
+                                                    color="#fff"   
+                                                    />
+                                                <ProceedBtn
                                                     title="Next"
                                                     onPress={props.handleSubmit} 
                                                     backgroundColor="#3353CB"
                                                     color="#fff"   
                                                     />
                                             </View>
+                                            </View>
+                                                </ScrollView>
+                                            
                                             </View>
                                         )}
 

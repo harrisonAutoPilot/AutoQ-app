@@ -48,6 +48,11 @@ const FormStoreDetailsBottomSheet = (props) => {
         return <Animated.View style={containerStyle} />;
     };
 
+    const wait = timeout => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+      };
+    
+
 
     const animationConfigs = useBottomSheetTimingConfigs({
         duration: 350,
@@ -70,7 +75,7 @@ const FormStoreDetailsBottomSheet = (props) => {
                 ref={props.bottomSheetRef}
                 index={1}
                 initialSnapIndex={1}
-                snapPoints={['90%', "90%"]}
+                snapPoints={['70%', "70%"]}
                 style={styles.bottomSheetContainer}
                 animationConfigs={animationConfigs}
                 backdropComponent={CustomBackdrop}
@@ -108,20 +113,25 @@ const FormStoreDetailsBottomSheet = (props) => {
                                     description: styles.labelTitle
                                 }}
                                 placeholder='Search Address'
+                                autoFocus = {true}
+                                fetchDetails={true}
                                 onPress={(data, details = null) => {
-                                    prop.setFieldTouched("store_address", true, false);
-                                    prop.setFieldValue("store_address", details?.description);
+                                    // prop.setFieldTouched("store_address", true, false);
+                                    console.log("the details", details)
+                                    // prop.setFieldValue("store_address", details?.description);
                                     close();
+                                    props.showPanel(details)
                                 }}
-                                textInputProps={{
-                                    onChangeText: (text) => {
-                                        prop.setFieldValue("store_address", text);
-                                    }
-                                }}
+                                // textInputProps={{
+                                //     onChangeText: (text) => {
+                                //         prop.setFieldValue("store_address", text);
+                                //     }
+                                // }}
                                 query={{
                                     key: "AIzaSyDLDpaD54vnybCiA1y3Qym10e2G-i3_wiE",
                                     language: 'en',
                                 }}
+                        
                                 enablePoweredByContainer={false}
                                 minLength={2}
                                 listEmptyComponent={() => <View style={styles.notFoundView}>

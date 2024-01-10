@@ -15,7 +15,7 @@ import styles from "./style";
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIcon from "react-native-vector-icons/MaterialIcons";
-import { InputField, FormikValidator, OnboardinBtn,ContinueBtn, SuccessMsgBottom} from "@Component2";
+import { InputField, FormikValidator, OnboardinBtn,PreviousBtn,ProceedBtn, SuccessMsgBottom} from "@Component2";
 import { addStoreSchema2 } from "@Helper2/Schema";
 import { getState } from '@Request2/State';
 import { cleanState } from '@Store2/State';
@@ -29,7 +29,7 @@ import disable from "@Helper2/disable";
 import { countryCodeList, } from "@Request2/Auth";
 import { cleanCountryCodeStatus } from "@Store2/Auth";
 import SelectPayment from "./SelectPayment";
-// import SelectState from "./SelectState"
+import ConfirmModal from '../Registration/confirmModal';
 // import SelectLga from "./SelectLga"
 
 const Step2 = (props) => {
@@ -42,16 +42,21 @@ const Step2 = (props) => {
 
     const { user } = useSelector((state) => state.auth);
 
+    const [lga, setLga] = useState([])
+
     const { states, stateStatus } = useSelector(state => state.state);
 
-console.log("the submittt", props.submit)
+console.log("the submittt", myValues)
 
     const bottomSheetCode = useRef(null);
 
     const addressBottomSheet = useRef(null);
 
+    const ebube= "jesus"
+
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  
 
   const [myStoreImg, setMyStoreImg] = useState([]);
 
@@ -67,7 +72,9 @@ console.log("the submittt", props.submit)
 
   const [stateId, setStateId] = useState(null);
 
-  const [lgaId, setLgaId] = useState(null);
+  const [testLga, setTestLga] = useState();
+
+  const [lgaId, setLgaId] = useState([]);
 
   const [err, setErr] = useState(null);
 
@@ -84,6 +91,9 @@ console.log("the submittt", props.submit)
   const [addressNotFound, setAddressNotFound] = useState(false);
 
 
+  const closeModal = () => setShowConfirmModal(false);
+
+
 
 
       const waitTime = useCallback(() => {
@@ -97,8 +107,18 @@ console.log("the submittt", props.submit)
         });
     
     }, []);
+
+
+    const confirmProcess = () => {
+      setShowConfirmModal(true);
+    }
     
     
+    const wait = timeout => {
+      return new Promise(resolve => setTimeout(resolve, timeout));
+    };
+
+
       const checkAddressExists = (data) => {
     
         dispatch(cleanCheckAddress());
@@ -111,13 +131,14 @@ console.log("the submittt", props.submit)
           .unwrap()
           .then((suc) => {
     
-              submit(data);
+              submit(data, stateId,lgaId);
     
           }).catch((err) => {
             // handle error here
             setLoader(false);
     
             setErrMsg(err?.msg);
+            console.log("the errror", err?.msg)
     
             waitTime()
           })
@@ -133,14 +154,13 @@ console.log("the submittt", props.submit)
     
       const showAddressFound = (props) => {
     
-        props.setFieldValue("address", "")
-        console.log("the address", props.values.store_address)
+        props.setFieldValue("address", myValues?.store_address)
     
         setAddressNotFound(false);
     
       }
     
-      console.log("the address", props?.values) 
+      console.log("the address", myValues?.store_address) 
     
       const showAddressBottomsheet = (props) => {
     
@@ -150,12 +170,21 @@ console.log("the submittt", props.submit)
     
       };
     
+
+      const proceed = () => {
+
+        setShowConfirmModal(false);
+    
+        checkAddressExists(myValues)
+      };
+    
     
       const closeAddressBottomsheet = () => {
-    
+
         dismissKeyboard()
     
         addressBottomSheet.current?.close();
+
     
       };
     
@@ -197,17 +226,20 @@ console.log("the submittt", props.submit)
           const response = await dispatch(getState());
     
           setData(response.payload);
+          prop.setFieldValue("state_id", stateId);
     
         } else {
     
           setData(states)
+          prop.setFieldValue("state_id", stateId);
+         
     
         }
       };
     
     
       const getLgaDetails = (prop, name) => {
-    
+   
         showDropDownBottomSheet();
     
         setData([]);
@@ -222,7 +254,7 @@ console.log("the submittt", props.submit)
     
     
         if (states.length) {
-    
+         
           const response = states.filter(lga => {
     
             return lga.name === prop.values.state_id
@@ -230,6 +262,7 @@ console.log("the submittt", props.submit)
           });
     
           setData(response[0]?.lgas);
+   
         }
       };
     
@@ -246,52 +279,28 @@ console.log("the submittt", props.submit)
     
       };
     
-      const removeLicence = (mylicenseImg, item, props) => {
-    
-        let arr = mylicenseImg;
-    
-        arr = arr.filter(x => x !== item);
-    
-        props.setFieldValue('images', arr)
-    
-        setMyLicenceImg(arr)
-    
-      }
-    
-    
-      const removeStore = (myStoreImg, item, props) => {
-    
-        let arr = myStoreImg;
-    
-        arr = arr.filter(x => x !== item);
-    
-        props.setFieldValue('images2', arr)
-    
-        setMyStoreImg(arr)
-    
-      }
-      const wait = timeout => {
-        return new Promise(resolve => setTimeout(resolve, timeout));
-      };
+ 
     
 
     return (
        
 
       
-                <View style={{flex:1}}>
-                   
+                <View style={styles.bottomCover1}>
+               
                         <TouchableWithoutFeedback onPress={dismissKeyboard}>
                             <View style={{justifyContent:'space-between'}}>
 
-                                <View style={styles.formContainer}>
+                                <View >
                                 <TouchableWithoutFeedback onPress={dismissKeyboard}>
-                                    <View style={styles.formContainer}>
+                                    <View >
                                    <FormikValidator
                                         initialValues={registerState2}
                                         validationSchema={addStoreSchema2}
-                                        onSubmit={(values, actions) => {
-                                            submit(values)
+                                        onSubmit={(values,ebube) => {
+                                            // submit(values)
+                                            setMyValues(values);
+                                            confirmProcess(values);
                                         }}
                                         
                                     >
@@ -300,7 +309,7 @@ console.log("the submittt", props.submit)
 
                                                 <View>
                                                 <View style={styles.formFlexInside}>
-                                                    <View style={styles.formInputFieldFlex}>
+                                              <View style={styles.formInputFieldFlex}>
                                                     <View style={styles.inputContainer}>
                                                         <InputField
                                                         title="Store Name"
@@ -378,19 +387,33 @@ console.log("the submittt", props.submit)
 
                                                         }
                                                     </View>
+                                  
                                                     </View>
+                                                    <View style={styles.btnDoubleCover}>
+                                                      <PreviousBtn
+                                                            title="Previous"
+                                                            onPress={redirect} 
+                                                            backgroundColor="#3353CB"
+                                                            color="#fff"   
+                                                            />
+                                                        <ProceedBtn
+                                                            title="Next"
+                                                            onPress={props.handleSubmit} 
+                                                            backgroundColor="#3353CB"
+                                                            color="#fff"   
+                                                            />
+                                                     </View>
                                                 </View>
+                                                
                                                 </View>
 
-                                            <View style={styles.submitBtnContainerStep2}>
-                                            <ContinueBtn
-                                            title="Next"
-                                            onPress={props.handleSubmit} 
-                                            backgroundColor="#3353CB"
-                                            color="#fff"   
-                                              />
-                                              
-                                            </View>
+                                             {errMsg && <View style={styles.toastCover}>
+                                              <View style={styles.errView} >
+                                                <MIcon name="error-outline" size={22} color="#fff" />
+                                                <Text style={styles.errText}>{errMsg}</Text>
+                                              </View>
+
+                                            </View>}
 
                                         </View>
                                         )}
@@ -398,19 +421,12 @@ console.log("the submittt", props.submit)
                                     </View>
                                 </TouchableWithoutFeedback>
                                 </View>
-
+                    
+                      
                             </View>
 
                         </TouchableWithoutFeedback>
-                      
-
-                    {errMsg && <View style={styles.toastCover}>
-                        <View style={styles.errView} >
-                        <MIcon name="error-outline" size={22} color="#fff" />
-                        <Text style={styles.errText}>{errMsg}</Text>
-                        </View>
-
-                        </View>}
+                        
                         <Loader isVisible={loader} />
                         <CountryCodeBottomSheet
                             bottomSheetRef={bottomSheetCode}
@@ -422,22 +438,31 @@ console.log("the submittt", props.submit)
                             itemKey="name"
                             err={err}
                             ids={keys == 3 ? setLgaId : setStateId}
+                            
                             getProps={getProps}
                             propsname={propsname}
                         />
 
-
+                    <ConfirmModal
+                            visibleModal={showConfirmModal}
+                            returnBack={closeModal}
+                            proceed={proceed}
+                          />
                         <AddressBottomSheet
                             bottomSheetRef={addressBottomSheet}
                             closeBottomSheet={closeAddressBottomsheet}
                             prop={addressProps}
                             setAddressNotFound={showAddressNotFound}
                             wait={close}
-                        />
-                       
+                        /> 
+              
                 </View>
-            
+             
+     
 
+      
+                       
+              
            
            
        

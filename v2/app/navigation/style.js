@@ -76,11 +76,23 @@ export default styles = StyleSheet.create({
         paddingVertical:5,
     },
     uniqueStyle:{
-        width:50,
-        height:50,
-        borderRadius:100,
-        backgroundColor:"rgba(51, 83, 203, 1)",
+        width:60,
+        height:60,
+         borderRadius:100,
+        backgroundColor:"#9ACD32",
+        // padding:20,
+        marginTop:-20,
+        position:'absolute',
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        borderWidth:0,
+        borderColor:'#f5f5f5',
+       
+    },
+    uniqueText:{
+        fontSize: 12,
+        fontFamily: "AnekLatin-Regular",
+        letterSpacing: 0.2,
+        color: "#fff"
     }
 })

@@ -2,6 +2,12 @@ import { StyleSheet, Dimensions, Platform } from "react-native";
 
 
 const styles = StyleSheet.create({
+
+    container:{
+        flex: 1,
+        paddingTop: 100,
+        backgroundColor: 'lightgray',
+    },
     filterHeader:{
         flexDirection: "row",
         justifyContent: "space-between",
@@ -61,6 +67,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         marginTop: 26,
         marginBottom: 26
+    },
+    smDateBtn:{
+        backgroundColor:'rgba(51, 83, 203, 1)',
+        borderRadius:3,
+        paddingHorizontal:8,
+        paddingVertical:5,
+    },
+    smDateBtnText:{
+        fontSize: 8,
+        fontFamily: "AnekLatin-Regular",
+        color: "#fff",
+        letterSpacing: 0.25
     }
 
     

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Keyboard, TouchableWithoutFeedback, SafeAreaView } from "react-native";
+import { View, Text, Keyboard,Image, TouchableWithoutFeedback, SafeAreaView } from "react-native";
 import { useDispatch } from "react-redux";
 import ProgressBar from "./ProgressBar";
 
@@ -67,22 +67,24 @@ const FormDetails = ({ navigation }) => {
                 color="#1B1B1F"
                 onPress={goBack} >
                
-                <ProgressBar
-                    percentage={'22%'}
-                />
+               
             </LoginHeader>
 
+                <View style={styles.flexBody}>
+                <Image source={require('@Assets2/image/74521518-broken-car-on-the-road-and-unhappy-driver-with-red-warning-triangle-black-and-white-concept.jpg')}
+                 style={styles.carImg} />
+                </View>
             <SafeAreaView>
 
                 <View style={styles.signupTitleContainer}>
 
-                    <Text style={styles.signupTitle}>Name</Text>
+                    
 
-                    <Text style={styles.signupDesc}>This should match your official ID</Text>
+                   
 
 
-                    <View style={styles.formContainer}>
-
+                    <View style={styles.formContainerNew}>
+                    <Text style={styles.signupTitle}>Welcome! Create Account</Text>
                         <TouchableWithoutFeedback onPress={dismissKeyboard}>
 
                             <View style={styles.formFlex}>
@@ -121,13 +123,22 @@ const FormDetails = ({ navigation }) => {
                                                     width="100%"
                                                 />
                                                  <InputField
-                                                    title="Other Names (Optional)"
-                                                    placeholder=""
+                                                    title="Email"
+                                                    placeholder="Email Address"
                                                     placeholderTextColor="#757575"
-                                                    name="other_name"
+                                                    name="email"
                                                     {...props}
                                                     width="100%"
                                                 />
+                                                  <InputField
+                                                    title="Phone"
+                                                    placeholder="Phone number"
+                                                    placeholderTextColor="#757575"
+                                                    name="phone"
+                                                    {...props}
+                                                    width="100%"
+                                                />
+                                                 
                                             </View>
 
                                             <View style={styles.submitBtnContainer}>

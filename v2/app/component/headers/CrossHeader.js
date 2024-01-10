@@ -12,7 +12,7 @@ export default CrossHeader = ({onPress, title}) => {
             <View style={style.crossContainer}>
                     <View  style={style.arrowCover}>
                         {/* <StatusBar backgroundColor={"#fff"}/> */}
-                        <TouchableOpacity  onPress={onPress}>
+                        <TouchableOpacity style={style.padBtn}  onPress={onPress}>
                         <Image 
                            source={require("@Assets2/image/trailing-icon.png")}
                             style={style.crossImg}

@@ -1,45 +1,6 @@
-// import React from 'react';
-// import { View, Text, StatusBar, TouchableOpacity } from 'react-native';
-// // import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import {
-//   createStackNavigator,
-//   CardStyleInterpolators,
-//   TransitionPresets,
-// } from '@react-navigation/stack';
-
-// import Notification from '@Screen2/Notification';
-// import NotificationDetails from '@Screen2/Notification/notificationDetails';
-
-// // Routes
-// import SplashScreen from '@Screen2/Splash';
-// import Onboarding from '@Screen2/onboarding';
-// import Login from '@Screen2/login/phoneNumber';
-// import Pin from '@Screen2/login/pin';
-// import ForgotPin from '@Screen2/login/resetPin';
-// import ResetPwdSuccess from '@Screen2/login/resetPin/resetPinSuccess';
-// import SelectCategorySignUp from '@Screen2/signup/SelectCategory';
-// import FormDetailsSignUp from '@Screen2/signup/FormDetails';
-// import FormEmailDetailsSignUp from '@Screen2/signup/FormEmailDetails';
-// import FormPhoneDetailsSignUp from '@Screen2/signup/FormPhoneDetails';
-// import FormStateDetailsSignUp from '@Screen2/signup/FormStateDetails';
-// import FormPinDetailsSignUp from '@Screen2/signup/FormPinDetails';
-// import FormImageUploadSignUp from '@Screen2/signup/FormImageUpload';
-// import FormConfirmPinDetailsSignUp from '@Screen2/signup/FormConfirmPinDetails';
-// import PhoneVerification from '@Screen2/signup/PhoneVerification';
-// import AwaitVerification from '@Screen2/signup/awaitVerification';
-// import SignUpSuccess from '@Screen2/signup/signUpSuccess';
-// import SoftUpdate from '@Screen2/SoftUpdate';
-
-
-
 import React from "react";
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createStackNavigator, CardStyleInterpolators, TransitionPresets } from "@react-navigation/stack";
-// Routes
-// import SplashScreen from "@Screen/Splash";
-// import Login from "@Screen/Login";
 import CustomerOrderDetails from "@Screen/CustomerOrderDetails";
-// import DrawerNavigator from "./Drawer";
 import Deals from "@Screen/Deals";
 // import ForgotPin from "@Screen/ForgotPin";
 
@@ -55,7 +16,9 @@ import CustomerDetails from "@Screen2/Customers/AccountDetails";
 import CustomerRegistration from "@Screen2/Customers/Registration";
 import CheckoutSuccess from "@Screen/CheckoutSuccess";
 import CustomerSuccess from "@Screen/CustomerSuccess";
-import RegConfirm from "@Screen/Customers/Registration/RegConfirm";
+import RegConfirm from "@Screen2/Customers/Registration/RegConfirm";
+import LicencePreview from "@Screen2/Customers/Registration/LicencePreview"
+import StorePreview from "@Screen2/Customers/Registration/StorePreview"
 import SoftUpdate from "@Screen/SoftUpdate";
 import InCompleteOrderDetails from "@Screen/IncompleteOrderDetails";
 import GenProducts from "@Screen/GenProducts"
@@ -65,6 +28,25 @@ import MyStore from "@Screen2/myStore";
 import StoreSuccess from "@Screen2/myStore/addStore/storeSuccess"
 import StoreDetails from "@Screen2/myStore/storeDetails"
 import AddStore from "@Screen2/myStore/addStore";
+import WorkerDetails from "@Screen2/workerDetails"
+import SpareParts from "@Screen2/Spareparts"
+
+// this is for the workers
+import FormDetailsWorker from '@Screen2/worker/FormDetailsWorker'
+import FormStateDetailsWorker from '@Screen2/worker/FormStateDetailsWorker'
+import FormIDUploadWorker from '@Screen2/worker/FormIDUploadWorker'
+import FormImageUploadWorker from '@Screen2/worker/FormImageUploadWorker'
+import FormGuarrantorWorker from '@Screen2/worker/FormGuarrantorWorker'
+
+// this is for the spare part dealers
+import FormDetailsDealer from '@Screen2/signupDealer/FormDetails'
+import FormStateDetailsDealer from '@Screen2/signupDealer/FormStateDetailsDealer'
+import FormIDUploadDealer from '@Screen2/signupDealer/FormIDUploadDealer'
+import SignUpPinDealer from '@Screen2/signupDealer/FormPinDetailsDealer'
+
+import MapViewScreen from '@Screen2/MapView'
+
+import SearchList from "@Screen2/SearchList"
 
 
 // The new screens
@@ -80,6 +62,7 @@ import TabHomeNavigator from './Tab';
 
 import SplashScreen from '@Screen2/Splash';
 import Onboarding from '@Screen2/onboarding';
+import OnboardingTest from '@Screen2/test/onboarding';
 import Login from '@Screen2/login/phoneNumber';
 import Pin from '@Screen2/login/pin';
 import ForgotPin from '@Screen2/login/resetPin';
@@ -102,7 +85,6 @@ import OrderDetails from "@Screen2/orderDetails";
 import OrderStatus from "@Screen2/order/orderStatus";
 // import Deals from "@Screen2/products/Deals";
 import Order from "@Screen2/order";
-// import MyStore from "@Screen2/myStore";
 
 const RootStack = createStackNavigator();
 const LoginStack = createStackNavigator();
@@ -133,15 +115,6 @@ export const PhoneVerificationStackNavigator = () => {
 
     )
 };
-
-// export const AdminVerificationStackNavigator = () => {
-//     return (
-//         <AdminVerificationStack.Group>
-//             <AdminVerificationStack.Screen name="AwaitVerification" component={AwaitVerification} options={{ gestureEnabled: false, gestureDirection: "horizontal" }} />
-//         </AdminVerificationStack.Group>
-
-//     )
-// };
 
 export const SplashStackNavigator = () => {
     return (
@@ -214,6 +187,7 @@ export const RootStackNavigator = () => {
 
             <RootStack.Group>
                 <RootStack.Screen name="GenProducts" component={GenProducts} />
+                {/* <RootStack.Screen name="SpareParts" component={SpareParts} /> */}
             </RootStack.Group>
 
             <RootStack.Group>
@@ -227,6 +201,14 @@ export const RootStackNavigator = () => {
                 <RootStack.Screen name="TransactionDetail" component={TransactionDetail} />
             </RootStack.Group>
 
+            
+            <RootStack.Group>
+                <RootStack.Screen name="MapViewScreen" component={MapViewScreen} />
+                <RootStack.Screen name="SearchList" component={SearchList} />
+                <RootStack.Screen name="WorkerDetails" component={WorkerDetails} />
+                
+                
+            </RootStack.Group>
 
             <RootStack.Group>
                 <RootStack.Screen name="CustomerDetails" component={CustomerDetails} />
@@ -235,6 +217,8 @@ export const RootStackNavigator = () => {
                 <RootStack.Screen name="AddStore" component={AddStore} />
                 <RootStack.Screen name="StoreDetails" component={StoreDetails} />
                 <RootStack.Screen name="RegConfirm" component={RegConfirm} />
+                <RootStack.Screen name="LicencePreview" component={LicencePreview} />
+                <RootStack.Screen name="StorePreview" component={StorePreview} />
                 <RootStack.Screen name="CustomerSuccess" component={CustomerSuccess} />
             </RootStack.Group>
 
@@ -247,6 +231,7 @@ export const RootStackNavigator = () => {
 export const LoginStackNavigator = () => {
     return (
         <LoginStack.Group>
+            {/* <LoginStack.Screen name="OnboardingTest" component={OnboardingTest} /> */}
             <LoginStack.Screen name="Onboarding" component={Onboarding} />
             <LoginStack.Screen name="Login" component={Login} />
             <LoginStack.Screen name="Pin" component={Pin} />
@@ -261,8 +246,19 @@ export const LoginStackNavigator = () => {
             <LoginStack.Screen name="ResetPwdSuccess" component={ResetPwdSuccess} />
             <LoginStack.Screen name="FormStateDetails" component={FormStateDetailsSignUp} />
             <LoginStack.Screen name="AwaitVerification" component={AwaitVerification} />
-           
-           
+            <LoginStack.Screen name="FormDetailsWorker" component={FormDetailsWorker} />
+            <LoginStack.Screen name="FormStateDetailsWorker" component={FormStateDetailsWorker} />
+            <LoginStack.Screen name="FormIDUploadWorker" component={FormIDUploadWorker} />
+            <LoginStack.Screen name="FormImageUploadWorker" component={FormImageUploadWorker} />
+            <LoginStack.Screen name="FormGuarrantorWorker" component={FormGuarrantorWorker} />
+            <LoginStack.Screen name="FormDetailsDealer" component={FormDetailsDealer} />
+            <LoginStack.Screen name="FormStateDetailsDealer" component={FormStateDetailsDealer} />
+            <LoginStack.Screen name="FormIDUploadDealer" component={FormIDUploadDealer} />
+            <LoginStack.Screen name="SignUpPinDealer" component={SignUpPinDealer} />
+            
+            
+            
+            
         </LoginStack.Group>
 
     )

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect,useCallback, useState} from 'react';
 import {View, Text,StatusBar, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -52,6 +52,22 @@ const Home = props => {
     }, [user.status]);
 
 
+    const goToMap = () =>{
+      props.navigation.navigate('MapViewScreen', {item:'MOBILE MECHANIC'})
+    }
+
+    const redirectToElectrician = () =>{
+      props.navigation.navigate('MapViewScreen', {item:'CAR ELECTRICIAN'})
+    }
+
+    const redirectToGarage = () =>{
+      props.navigation.navigate('MapViewScreen', {item:'NEARBY GARAGE'})
+    }
+
+    const redirectToPanel = () =>{
+      props.navigation.navigate('MapViewScreen', {item:'PANEL BEATER'})
+    }
+
   useEffect(() => {
     if ((date.getHours() > 0 || date.getHours() == 0) && date.getHours() < 12) {
       setDayTime('Good Morning');
@@ -79,7 +95,29 @@ const Home = props => {
     dispatch(getDeals({no: 1}));
   }, []);
 
-  const CardList = ({imageOne, imageTwo, title, count, style, styleOne, onPress}) => (
+  // const CardList = ({imageOne, imageTwo, title, count, style, styleOne, onPress}) => (
+  //   <TouchableOpacity style={style} onPress={onPress}>
+  //     <Image style={styleOne} source={imageOne} />
+  //     <View style={styles.cardTop}>
+  //       <Image style={styles.smIconImg} source={imageTwo} />
+  //       <Text style={styles.numberText}>{count}</Text>
+  //     </View>
+
+  //     <View>
+  //       <Text style={styles.captionText}>{title}</Text>
+  //     </View>
+ 
+  //   </TouchableOpacity>
+  // );
+  const CardList = useCallback(({
+    imageOne,
+    imageTwo,
+    title,
+    count,
+    style,
+    styleOne,
+    onPress,
+  }) => (
     <TouchableOpacity style={style} onPress={onPress}>
       <Image style={styleOne} source={imageOne} />
       <View style={styles.cardTop}>
@@ -90,18 +128,17 @@ const Home = props => {
       <View>
         <Text style={styles.captionText}>{title}</Text>
       </View>
- 
     </TouchableOpacity>
-  );
+  ), []);
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={"rgba(221, 225, 255, 3)"}
+      <StatusBar backgroundColor={"#fff"}
        barStyle="dark-content"
         />
        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <LinearGradient
-        colors={['#ffffff', 'rgba(221, 225, 255, 3)']}
+        colors={['#ffffff', '#fff']}
         start={{x: 0, y: 2}}
         end={{x: 0, y: 0}}
         style={styles.mainContainer}>
@@ -111,12 +148,14 @@ const Home = props => {
               {user.picture_url === null ? (
                 <Image
                   style={styles.userImg}
-                  source={require('@Assets2/image/mee.jpg')}
+                  source={require('@Assets2/image/personIcon_2.png')}
                 />
               ) : (
                 <Image
-                  style={styles.agentImg}
-                  source={{uri: `${URL}${user?.picture_url}`}}
+                  // style={styles.agentImg}
+                  style={styles.userImg}
+                  source={require('@Assets2/image/personIcon_2.png')}
+                  // source={{uri: `${URL}${user?.picture_url}`}}
                 />
               )}
               <Image
@@ -156,61 +195,46 @@ const Home = props => {
           </View>
         </View>
        
-        <View style={styles.toggleCover}>
-                {
-                  toggleSwitch ?
-                  <Text style={styles.toggleText}>I'm online</Text>
-                  :
-                  <Text style={styles.toggleTextOff}>I'm offline</Text>
-                }
-             
-              
-
-              <ToggleSwitch
-                isOn={toggleSwitch}
-                onColor="rgba(105, 189, 123, 1)"
-                offColor="#f5f5f5"
-                size="small"
-                onToggle={isOn => setToggleSwitch(isOn)}
-              />
-            </View>
+     
           <View style={styles.middleContainer}>
            
             <CardList
+              onPress={goToMap}
               style={styles.innerCard}
               styleOne={styles.waveImg1}
               imageOne={require('@Assets2/image/waveGroup1.png')}
-              imageTwo={require('@Assets2/image/lab_profile.png')}
-              title="NEW & PENDING REGISTRATION"
-              count={agent.users_count}
+              imageTwo={require('@Assets2/image/auto-mechanic-cartoon-character-vector.jpg')}
+              title="GET MOBILE MECHANICS"
+              // count={agent.users_count}
             />
 
             <CardList
-              onPress={redirectToCustomerOrders}
+              onPress={redirectToGarage}
               style={styles.innerCardTwo}
               styleOne={styles.waveImg1}
               imageOne={require('@Assets2/image/wave2.png')}
-              imageTwo={require('@Assets2/image/inventory_2.png')}
-              title="ALL ORDERS"
-              count={agent.orders_count}
+              imageTwo={require('@Assets2/image/female-automotive-mechanic-repair-car-free-vector.jpg')}
+              title="ACCESS NEARBY GARAGE"
+              // count={agent.orders_count}
             />
             <CardList
+            onPress={redirectToPanel}
               style={styles.innerCardThree}
               styleOne={styles.waveImg}
-              imageOne={require('@Assets2/image/sunWave.png')}
-              imageTwo={require('@Assets2/image/Tag.png')}
-              title="SPECIAL DEALS"
-              count={deals?.total}
+              // imageOne={require('@Assets2/image/sunWave.png')}
+              imageTwo={require('@Assets2/image/car-body-frame-repair-vector-260nw-348348671.jpg')}
+              title="GET NEARBY PANEL BEATER"
+              // count={deals?.total}
             />
 
             <CardList
-             onPress={redirectToPendingCustomers}
+             onPress={redirectToElectrician}
               style={styles.innerCardFour}
               styleOne={styles.waveImg1}
               imageOne={require('@Assets2/image/wave2.png')}
-              imageTwo={require('@Assets2/image/account_circle_off.png')}
-              title="INACTIVE CUSTOMERS"
-              count={customers?.inactive?.count}
+              imageTwo={require('@Assets2/image/car-electrician-logo-template-auto-260nw-234164944.jpg')}
+              title="GET NEARBY CAR ELECTRICIAN"
+              // count={customers?.inactive?.count}
             />
 
             <View style={styles.cardBottom}>

@@ -11,8 +11,8 @@ const FilterBottomSheet = (props) => {
   const [activeId, setActiveId] = useState('A - Z')
 
   const selectItem = (item) => {
-    props.sort(item.type)
-    props.objList(item)
+    // props.sort(item.type)
+    // props.objList(item)
     setActiveId(item?.id)
    
   }
